@@ -13,3 +13,96 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String       @id @default(uuid())
+  name        String?
+  email       String?      @unique
+  password    String?
+  verified    Boolean?     @default(false)
+  role        String?      @default("user")
+  mobileNo    String?      @unique
+  country     String?
+  city        String?
+  address     String?
+  postalCode  String?
+  profilePic  String?
+  bio         String?
+  online      Boolean?     @default(false)
+  lastSeen    DateTime?
+  rating      Float?       @default(0)
+  accountType String?      @default("personal")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  quotePost   QuotePost[]
+  quoteReply  QuoteReply[]
+  quoteLike   QuoteLike[]
+}
+
+model ForumMainCategory {
+  id      String   @id @default(uuid())
+  name    String?
+  enabled Boolean? @default(false)
+}
+
+model ForumSubCategory {
+  id      String   @id @default(uuid())
+  name    String?
+  enabled Boolean? @default(false)
+}
+
+model QuotePost {
+  id               String       @id @default(uuid())
+  title            String?
+  description      String?
+  userId           String?
+  categoryId       String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  totalNetWeight   Float?       @default(0)
+  totalGrossWeight Float?       @default(0)
+  volumetricWeight Float?       @default(0)
+  transitInsurance Boolean?     @default(false)
+  width            Float?       @default(0)
+  height           Float?       @default(0)
+  length           Float?       @default(0)
+  viewCount        Int?         @default(0)
+  likesCount       Int?         @default(0)
+  commentsCount    Int?         @default(0)
+  dangerousGoods   Boolean?     @default(false)
+  status           String?      @default("pending")
+  fromPostalCode   String?
+  toPostalCode     String?
+  fromCity         String?
+  toCity           String?
+  fromCountry      String?
+  toCountry        String?
+  fromAddress      String?
+  toAddress        String?
+  fromState        String?
+  toState          String?
+  postCategory     String?
+  shipmentType     String?      @default("domestic")
+  shipmentMode     String?
+  quoteReply       QuoteReply[]
+  quoteLike        QuoteLike[]
+  user             User?        @relation(fields: [userId], references: [id])
+}
+
+model QuoteReply {
+  id            String    @id @default(uuid())
+  userId        String
+  postId        String
+  parentReplyId String
+  createdAt     DateTime  @default(now())
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post          QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model QuoteLike {
+  id     String    @id @default(uuid())
+  userId String
+  postId String
+  user   User      @relation(fields: [userId], references: [id])
+  post   QuotePost @relation(fields: [postId], references: [id])
+}

@@ -120,9 +120,112 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  verified: 'verified',
+  role: 'role',
+  mobileNo: 'mobileNo',
+  country: 'country',
+  city: 'city',
+  address: 'address',
+  postalCode: 'postalCode',
+  profilePic: 'profilePic',
+  bio: 'bio',
+  online: 'online',
+  lastSeen: 'lastSeen',
+  rating: 'rating',
+  accountType: 'accountType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ForumMainCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled'
+};
+
+exports.Prisma.ForumSubCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled'
+};
+
+exports.Prisma.QuotePostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  totalNetWeight: 'totalNetWeight',
+  totalGrossWeight: 'totalGrossWeight',
+  volumetricWeight: 'volumetricWeight',
+  transitInsurance: 'transitInsurance',
+  width: 'width',
+  height: 'height',
+  length: 'length',
+  viewCount: 'viewCount',
+  likesCount: 'likesCount',
+  commentsCount: 'commentsCount',
+  dangerousGoods: 'dangerousGoods',
+  status: 'status',
+  fromPostalCode: 'fromPostalCode',
+  toPostalCode: 'toPostalCode',
+  fromCity: 'fromCity',
+  toCity: 'toCity',
+  fromCountry: 'fromCountry',
+  toCountry: 'toCountry',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  fromState: 'fromState',
+  toState: 'toState',
+  postCategory: 'postCategory',
+  shipmentType: 'shipmentType',
+  shipmentMode: 'shipmentMode'
+};
+
+exports.Prisma.QuoteReplyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  parentReplyId: 'parentReplyId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.QuoteLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-
+  User: 'User',
+  ForumMainCategory: 'ForumMainCategory',
+  ForumSubCategory: 'ForumSubCategory',
+  QuotePost: 'QuotePost',
+  QuoteReply: 'QuoteReply',
+  QuoteLike: 'QuoteLike'
 };
 
 /**
