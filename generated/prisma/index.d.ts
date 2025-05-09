@@ -1324,15 +1324,15 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    quoteLike: number
     quotePost: number
     quoteReply: number
-    quoteLike: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quoteLike?: boolean | UserCountOutputTypeCountQuoteLikeArgs
     quotePost?: boolean | UserCountOutputTypeCountQuotePostArgs
     quoteReply?: boolean | UserCountOutputTypeCountQuoteReplyArgs
-    quoteLike?: boolean | UserCountOutputTypeCountQuoteLikeArgs
   }
 
   // Custom InputTypes
@@ -1349,6 +1349,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteLikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountQuotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QuotePostWhereInput
   }
@@ -1360,26 +1367,19 @@ export namespace Prisma {
     where?: QuoteReplyWhereInput
   }
 
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteLikeWhereInput
-  }
-
 
   /**
    * Count Type QuotePostCountOutputType
    */
 
   export type QuotePostCountOutputType = {
-    quoteReply: number
     quoteLike: number
+    quoteReply: number
   }
 
   export type QuotePostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quoteReply?: boolean | QuotePostCountOutputTypeCountQuoteReplyArgs
     quoteLike?: boolean | QuotePostCountOutputTypeCountQuoteLikeArgs
+    quoteReply?: boolean | QuotePostCountOutputTypeCountQuoteReplyArgs
   }
 
   // Custom InputTypes
@@ -1396,15 +1396,15 @@ export namespace Prisma {
   /**
    * QuotePostCountOutputType without action
    */
-  export type QuotePostCountOutputTypeCountQuoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteReplyWhereInput
+  export type QuotePostCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteLikeWhereInput
   }
 
   /**
    * QuotePostCountOutputType without action
    */
-  export type QuotePostCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteLikeWhereInput
+  export type QuotePostCountOutputTypeCountQuoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteReplyWhereInput
   }
 
 
@@ -1722,9 +1722,9 @@ export namespace Prisma {
     accountType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     quotePost?: boolean | User$quotePostArgs<ExtArgs>
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
-    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1796,9 +1796,9 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "verified" | "role" | "mobileNo" | "country" | "city" | "address" | "postalCode" | "profilePic" | "bio" | "online" | "lastSeen" | "rating" | "accountType" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     quotePost?: boolean | User$quotePostArgs<ExtArgs>
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
-    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1807,9 +1807,9 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       quotePost: Prisma.$QuotePostPayload<ExtArgs>[]
       quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
-      quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2225,9 +2225,9 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    quoteLike<T extends User$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quotePost<T extends User$quotePostArgs<ExtArgs> = {}>(args?: Subset<T, User$quotePostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteReply<T extends User$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    quoteLike<T extends User$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2664,6 +2664,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.quoteLike
+   */
+  export type User$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteLike
+     */
+    select?: QuoteLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteLike
+     */
+    omit?: QuoteLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteLikeInclude<ExtArgs> | null
+    where?: QuoteLikeWhereInput
+    orderBy?: QuoteLikeOrderByWithRelationInput | QuoteLikeOrderByWithRelationInput[]
+    cursor?: QuoteLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuoteLikeScalarFieldEnum | QuoteLikeScalarFieldEnum[]
+  }
+
+  /**
    * User.quotePost
    */
   export type User$quotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2709,30 +2733,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
-  }
-
-  /**
-   * User.quoteLike
-   */
-  export type User$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the QuoteLike
-     */
-    select?: QuoteLikeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the QuoteLike
-     */
-    omit?: QuoteLikeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuoteLikeInclude<ExtArgs> | null
-    where?: QuoteLikeWhereInput
-    orderBy?: QuoteLikeOrderByWithRelationInput | QuoteLikeOrderByWithRelationInput[]
-    cursor?: QuoteLikeWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuoteLikeScalarFieldEnum | QuoteLikeScalarFieldEnum[]
   }
 
   /**
@@ -5138,9 +5138,9 @@ export namespace Prisma {
     postCategory?: boolean
     shipmentType?: boolean
     shipmentMode?: boolean
-    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
+    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5253,9 +5253,9 @@ export namespace Prisma {
 
   export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "categoryId" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postCategory" | "shipmentType" | "shipmentMode", ExtArgs["result"]["quotePost"]>
   export type QuotePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
+    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5268,9 +5268,9 @@ export namespace Prisma {
   export type $QuotePostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuotePost"
     objects: {
-      quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
       quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs> | null
+      quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5699,9 +5699,9 @@ export namespace Prisma {
    */
   export interface Prisma__QuotePostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    quoteReply<T extends QuotePost$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteLike<T extends QuotePost$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends QuotePost$userArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    quoteReply<T extends QuotePost$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6159,30 +6159,6 @@ export namespace Prisma {
   }
 
   /**
-   * QuotePost.quoteReply
-   */
-  export type QuotePost$quoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the QuoteReply
-     */
-    select?: QuoteReplySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the QuoteReply
-     */
-    omit?: QuoteReplyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuoteReplyInclude<ExtArgs> | null
-    where?: QuoteReplyWhereInput
-    orderBy?: QuoteReplyOrderByWithRelationInput | QuoteReplyOrderByWithRelationInput[]
-    cursor?: QuoteReplyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
-  }
-
-  /**
    * QuotePost.quoteLike
    */
   export type QuotePost$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6223,6 +6199,30 @@ export namespace Prisma {
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
+  }
+
+  /**
+   * QuotePost.quoteReply
+   */
+  export type QuotePost$quoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReply
+     */
+    select?: QuoteReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteReply
+     */
+    omit?: QuoteReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteReplyInclude<ExtArgs> | null
+    where?: QuoteReplyWhereInput
+    orderBy?: QuoteReplyOrderByWithRelationInput | QuoteReplyOrderByWithRelationInput[]
+    cursor?: QuoteReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
   }
 
   /**
@@ -6408,8 +6408,8 @@ export namespace Prisma {
     postId?: boolean
     parentReplyId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6418,8 +6418,8 @@ export namespace Prisma {
     postId?: boolean
     parentReplyId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6428,8 +6428,8 @@ export namespace Prisma {
     postId?: boolean
     parentReplyId?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectScalar = {
@@ -6442,23 +6442,23 @@ export namespace Prisma {
 
   export type QuoteReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId" | "parentReplyId" | "createdAt", ExtArgs["result"]["quoteReply"]>
   export type QuoteReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $QuoteReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuoteReply"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       post: Prisma.$QuotePostPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6860,8 +6860,8 @@ export namespace Prisma {
    */
   export interface Prisma__QuoteReplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7458,24 +7458,24 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     postId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     postId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     postId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectScalar = {
@@ -7486,23 +7486,23 @@ export namespace Prisma {
 
   export type QuoteLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId", ExtArgs["result"]["quoteLike"]>
   export type QuoteLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type QuoteLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type QuoteLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $QuoteLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuoteLike"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       post: Prisma.$QuotePostPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7902,8 +7902,8 @@ export namespace Prisma {
    */
   export interface Prisma__QuoteLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8583,9 +8583,9 @@ export namespace Prisma {
     accountType?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    quoteLike?: QuoteLikeListRelationFilter
     quotePost?: QuotePostListRelationFilter
     quoteReply?: QuoteReplyListRelationFilter
-    quoteLike?: QuoteLikeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8608,9 +8608,9 @@ export namespace Prisma {
     accountType?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    quoteLike?: QuoteLikeOrderByRelationAggregateInput
     quotePost?: QuotePostOrderByRelationAggregateInput
     quoteReply?: QuoteReplyOrderByRelationAggregateInput
-    quoteLike?: QuoteLikeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8636,9 +8636,9 @@ export namespace Prisma {
     accountType?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    quoteLike?: QuoteLikeListRelationFilter
     quotePost?: QuotePostListRelationFilter
     quoteReply?: QuoteReplyListRelationFilter
-    quoteLike?: QuoteLikeListRelationFilter
   }, "id" | "email" | "mobileNo">
 
   export type UserOrderByWithAggregationInput = {
@@ -8813,9 +8813,9 @@ export namespace Prisma {
     postCategory?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     shipmentMode?: StringNullableFilter<"QuotePost"> | string | null
-    quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    quoteReply?: QuoteReplyListRelationFilter
   }
 
   export type QuotePostOrderByWithRelationInput = {
@@ -8851,9 +8851,9 @@ export namespace Prisma {
     postCategory?: SortOrderInput | SortOrder
     shipmentType?: SortOrderInput | SortOrder
     shipmentMode?: SortOrderInput | SortOrder
-    quoteReply?: QuoteReplyOrderByRelationAggregateInput
     quoteLike?: QuoteLikeOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
+    quoteReply?: QuoteReplyOrderByRelationAggregateInput
   }
 
   export type QuotePostWhereUniqueInput = Prisma.AtLeast<{
@@ -8892,9 +8892,9 @@ export namespace Prisma {
     postCategory?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     shipmentMode?: StringNullableFilter<"QuotePost"> | string | null
-    quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    quoteReply?: QuoteReplyListRelationFilter
   }, "id">
 
   export type QuotePostOrderByWithAggregationInput = {
@@ -8984,8 +8984,8 @@ export namespace Prisma {
     postId?: StringFilter<"QuoteReply"> | string
     parentReplyId?: StringFilter<"QuoteReply"> | string
     createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type QuoteReplyOrderByWithRelationInput = {
@@ -8994,8 +8994,8 @@ export namespace Prisma {
     postId?: SortOrder
     parentReplyId?: SortOrder
     createdAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     post?: QuotePostOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type QuoteReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -9007,8 +9007,8 @@ export namespace Prisma {
     postId?: StringFilter<"QuoteReply"> | string
     parentReplyId?: StringFilter<"QuoteReply"> | string
     createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type QuoteReplyOrderByWithAggregationInput = {
@@ -9040,16 +9040,16 @@ export namespace Prisma {
     id?: StringFilter<"QuoteLike"> | string
     userId?: StringFilter<"QuoteLike"> | string
     postId?: StringFilter<"QuoteLike"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type QuoteLikeOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    user?: UserOrderByWithRelationInput
     post?: QuotePostOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type QuoteLikeWhereUniqueInput = Prisma.AtLeast<{
@@ -9059,8 +9059,8 @@ export namespace Prisma {
     NOT?: QuoteLikeWhereInput | QuoteLikeWhereInput[]
     userId?: StringFilter<"QuoteLike"> | string
     postId?: StringFilter<"QuoteLike"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type QuoteLikeOrderByWithAggregationInput = {
@@ -9101,9 +9101,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
-    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9126,9 +9126,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9151,9 +9151,9 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
-    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9176,9 +9176,9 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9363,9 +9363,9 @@ export namespace Prisma {
     postCategory?: string | null
     shipmentType?: string | null
     shipmentMode?: string | null
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     user?: UserCreateNestedOneWithoutQuotePostInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostUncheckedCreateInput = {
@@ -9401,8 +9401,8 @@ export namespace Prisma {
     postCategory?: string | null
     shipmentType?: string | null
     shipmentMode?: string | null
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostUpdateInput = {
@@ -9437,9 +9437,9 @@ export namespace Prisma {
     postCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     user?: UserUpdateOneWithoutQuotePostNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostUncheckedUpdateInput = {
@@ -9475,8 +9475,8 @@ export namespace Prisma {
     postCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostCreateManyInput = {
@@ -9587,8 +9587,8 @@ export namespace Prisma {
     id?: string
     parentReplyId: string
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutQuoteReplyInput
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    user: UserCreateNestedOneWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateInput = {
@@ -9603,8 +9603,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     parentReplyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateInput = {
@@ -9639,8 +9639,8 @@ export namespace Prisma {
 
   export type QuoteLikeCreateInput = {
     id?: string
-    user: UserCreateNestedOneWithoutQuoteLikeInput
     post: QuotePostCreateNestedOneWithoutQuoteLikeInput
+    user: UserCreateNestedOneWithoutQuoteLikeInput
   }
 
   export type QuoteLikeUncheckedCreateInput = {
@@ -9651,8 +9651,8 @@ export namespace Prisma {
 
   export type QuoteLikeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutQuoteLikeNestedInput
     post?: QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput
+    user?: UserUpdateOneRequiredWithoutQuoteLikeNestedInput
   }
 
   export type QuoteLikeUncheckedUpdateInput = {
@@ -9745,6 +9745,12 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type QuoteLikeListRelationFilter = {
+    every?: QuoteLikeWhereInput
+    some?: QuoteLikeWhereInput
+    none?: QuoteLikeWhereInput
+  }
+
   export type QuotePostListRelationFilter = {
     every?: QuotePostWhereInput
     some?: QuotePostWhereInput
@@ -9757,15 +9763,13 @@ export namespace Prisma {
     none?: QuoteReplyWhereInput
   }
 
-  export type QuoteLikeListRelationFilter = {
-    every?: QuoteLikeWhereInput
-    some?: QuoteLikeWhereInput
-    none?: QuoteLikeWhereInput
-  }
-
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type QuoteLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type QuotePostOrderByRelationAggregateInput = {
@@ -9773,10 +9777,6 @@ export namespace Prisma {
   }
 
   export type QuoteReplyOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type QuoteLikeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10139,14 +10139,14 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type QuotePostScalarRelationFilter = {
     is?: QuotePostWhereInput
     isNot?: QuotePostWhereInput
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type QuoteReplyCountOrderByAggregateInput = {
@@ -10191,6 +10191,13 @@ export namespace Prisma {
     postId?: SortOrder
   }
 
+  export type QuoteLikeCreateNestedManyWithoutUserInput = {
+    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
+    createMany?: QuoteLikeCreateManyUserInputEnvelope
+    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  }
+
   export type QuotePostCreateNestedManyWithoutUserInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -10205,7 +10212,7 @@ export namespace Prisma {
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
   }
 
-  export type QuoteLikeCreateNestedManyWithoutUserInput = {
+  export type QuoteLikeUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
     createMany?: QuoteLikeCreateManyUserInputEnvelope
@@ -10224,13 +10231,6 @@ export namespace Prisma {
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutUserInput | QuoteReplyCreateOrConnectWithoutUserInput[]
     createMany?: QuoteReplyCreateManyUserInputEnvelope
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-  }
-
-  export type QuoteLikeUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
-    createMany?: QuoteLikeCreateManyUserInputEnvelope
-    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -10261,6 +10261,20 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type QuoteLikeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
+    upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: QuoteLikeCreateManyUserInputEnvelope
+    set?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    disconnect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    delete?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    update?: QuoteLikeUpdateWithWhereUniqueWithoutUserInput | QuoteLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: QuoteLikeUpdateManyWithWhereWithoutUserInput | QuoteLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
+  }
+
   export type QuotePostUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -10289,7 +10303,7 @@ export namespace Prisma {
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
-  export type QuoteLikeUpdateManyWithoutUserNestedInput = {
+  export type QuoteLikeUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
     upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
@@ -10331,27 +10345,6 @@ export namespace Prisma {
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
-  export type QuoteLikeUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
-    upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: QuoteLikeCreateManyUserInputEnvelope
-    set?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    disconnect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    delete?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    update?: QuoteLikeUpdateWithWhereUniqueWithoutUserInput | QuoteLikeUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: QuoteLikeUpdateManyWithWhereWithoutUserInput | QuoteLikeUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
-  }
-
-  export type QuoteReplyCreateNestedManyWithoutPostInput = {
-    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
-    createMany?: QuoteReplyCreateManyPostInputEnvelope
-    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-  }
-
   export type QuoteLikeCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteLikeCreateWithoutPostInput, QuoteLikeUncheckedCreateWithoutPostInput> | QuoteLikeCreateWithoutPostInput[] | QuoteLikeUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutPostInput | QuoteLikeCreateOrConnectWithoutPostInput[]
@@ -10365,7 +10358,7 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type QuoteReplyUncheckedCreateNestedManyWithoutPostInput = {
+  export type QuoteReplyCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
     createMany?: QuoteReplyCreateManyPostInputEnvelope
@@ -10379,26 +10372,19 @@ export namespace Prisma {
     connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
   }
 
+  export type QuoteReplyUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
+    createMany?: QuoteReplyCreateManyPostInputEnvelope
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type QuoteReplyUpdateManyWithoutPostNestedInput = {
-    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
-    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
-    createMany?: QuoteReplyCreateManyPostInputEnvelope
-    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    update?: QuoteReplyUpdateWithWhereUniqueWithoutPostInput | QuoteReplyUpdateWithWhereUniqueWithoutPostInput[]
-    updateMany?: QuoteReplyUpdateManyWithWhereWithoutPostInput | QuoteReplyUpdateManyWithWhereWithoutPostInput[]
-    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
   export type QuoteLikeUpdateManyWithoutPostNestedInput = {
@@ -10425,7 +10411,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuotePostInput, UserUpdateWithoutQuotePostInput>, UserUncheckedUpdateWithoutQuotePostInput>
   }
 
-  export type QuoteReplyUncheckedUpdateManyWithoutPostNestedInput = {
+  export type QuoteReplyUpdateManyWithoutPostNestedInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
     upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
@@ -10453,10 +10439,18 @@ export namespace Prisma {
     deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutQuoteReplyInput = {
-    create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
-    connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
-    connect?: UserWhereUniqueInput
+  export type QuoteReplyUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
+    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: QuoteReplyCreateManyPostInputEnvelope
+    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    update?: QuoteReplyUpdateWithWhereUniqueWithoutPostInput | QuoteReplyUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: QuoteReplyUpdateManyWithWhereWithoutPostInput | QuoteReplyUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
   export type QuotePostCreateNestedOneWithoutQuoteReplyInput = {
@@ -10465,12 +10459,10 @@ export namespace Prisma {
     connect?: QuotePostWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutQuoteReplyNestedInput = {
+  export type UserCreateNestedOneWithoutQuoteReplyInput = {
     create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
-    upsert?: UserUpsertWithoutQuoteReplyInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteReplyInput, UserUpdateWithoutQuoteReplyInput>, UserUncheckedUpdateWithoutQuoteReplyInput>
   }
 
   export type QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput = {
@@ -10481,10 +10473,12 @@ export namespace Prisma {
     update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput, QuotePostUpdateWithoutQuoteReplyInput>, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
   }
 
-  export type UserCreateNestedOneWithoutQuoteLikeInput = {
-    create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
-    connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
+  export type UserUpdateOneRequiredWithoutQuoteReplyNestedInput = {
+    create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
+    upsert?: UserUpsertWithoutQuoteReplyInput
     connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteReplyInput, UserUpdateWithoutQuoteReplyInput>, UserUncheckedUpdateWithoutQuoteReplyInput>
   }
 
   export type QuotePostCreateNestedOneWithoutQuoteLikeInput = {
@@ -10493,12 +10487,10 @@ export namespace Prisma {
     connect?: QuotePostWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutQuoteLikeNestedInput = {
+  export type UserCreateNestedOneWithoutQuoteLikeInput = {
     create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
-    upsert?: UserUpsertWithoutQuoteLikeInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteLikeInput, UserUpdateWithoutQuoteLikeInput>, UserUncheckedUpdateWithoutQuoteLikeInput>
   }
 
   export type QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput = {
@@ -10507,6 +10499,14 @@ export namespace Prisma {
     upsert?: QuotePostUpsertWithoutQuoteLikeInput
     connect?: QuotePostWhereUniqueInput
     update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput, QuotePostUpdateWithoutQuoteLikeInput>, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutQuoteLikeNestedInput = {
+    create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
+    upsert?: UserUpsertWithoutQuoteLikeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteLikeInput, UserUpdateWithoutQuoteLikeInput>, UserUncheckedUpdateWithoutQuoteLikeInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10699,6 +10699,26 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type QuoteLikeCreateWithoutUserInput = {
+    id?: string
+    post: QuotePostCreateNestedOneWithoutQuoteLikeInput
+  }
+
+  export type QuoteLikeUncheckedCreateWithoutUserInput = {
+    id?: string
+    postId: string
+  }
+
+  export type QuoteLikeCreateOrConnectWithoutUserInput = {
+    where: QuoteLikeWhereUniqueInput
+    create: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type QuoteLikeCreateManyUserInputEnvelope = {
+    data: QuoteLikeCreateManyUserInput | QuoteLikeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type QuotePostCreateWithoutUserInput = {
     id?: string
     title?: string | null
@@ -10731,8 +10751,8 @@ export namespace Prisma {
     postCategory?: string | null
     shipmentType?: string | null
     shipmentMode?: string | null
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostUncheckedCreateWithoutUserInput = {
@@ -10767,8 +10787,8 @@ export namespace Prisma {
     postCategory?: string | null
     shipmentType?: string | null
     shipmentMode?: string | null
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostCreateOrConnectWithoutUserInput = {
@@ -10805,24 +10825,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type QuoteLikeCreateWithoutUserInput = {
-    id?: string
-    post: QuotePostCreateNestedOneWithoutQuoteLikeInput
-  }
-
-  export type QuoteLikeUncheckedCreateWithoutUserInput = {
-    id?: string
-    postId: string
-  }
-
-  export type QuoteLikeCreateOrConnectWithoutUserInput = {
+  export type QuoteLikeUpsertWithWhereUniqueWithoutUserInput = {
     where: QuoteLikeWhereUniqueInput
+    update: XOR<QuoteLikeUpdateWithoutUserInput, QuoteLikeUncheckedUpdateWithoutUserInput>
     create: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput>
   }
 
-  export type QuoteLikeCreateManyUserInputEnvelope = {
-    data: QuoteLikeCreateManyUserInput | QuoteLikeCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type QuoteLikeUpdateWithWhereUniqueWithoutUserInput = {
+    where: QuoteLikeWhereUniqueInput
+    data: XOR<QuoteLikeUpdateWithoutUserInput, QuoteLikeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type QuoteLikeUpdateManyWithWhereWithoutUserInput = {
+    where: QuoteLikeScalarWhereInput
+    data: XOR<QuoteLikeUpdateManyMutationInput, QuoteLikeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type QuoteLikeScalarWhereInput = {
+    AND?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
+    OR?: QuoteLikeScalarWhereInput[]
+    NOT?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
+    id?: StringFilter<"QuoteLike"> | string
+    userId?: StringFilter<"QuoteLike"> | string
+    postId?: StringFilter<"QuoteLike"> | string
   }
 
   export type QuotePostUpsertWithWhereUniqueWithoutUserInput = {
@@ -10906,55 +10931,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
   }
 
-  export type QuoteLikeUpsertWithWhereUniqueWithoutUserInput = {
-    where: QuoteLikeWhereUniqueInput
-    update: XOR<QuoteLikeUpdateWithoutUserInput, QuoteLikeUncheckedUpdateWithoutUserInput>
-    create: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput>
-  }
-
-  export type QuoteLikeUpdateWithWhereUniqueWithoutUserInput = {
-    where: QuoteLikeWhereUniqueInput
-    data: XOR<QuoteLikeUpdateWithoutUserInput, QuoteLikeUncheckedUpdateWithoutUserInput>
-  }
-
-  export type QuoteLikeUpdateManyWithWhereWithoutUserInput = {
-    where: QuoteLikeScalarWhereInput
-    data: XOR<QuoteLikeUpdateManyMutationInput, QuoteLikeUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type QuoteLikeScalarWhereInput = {
-    AND?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
-    OR?: QuoteLikeScalarWhereInput[]
-    NOT?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
-    id?: StringFilter<"QuoteLike"> | string
-    userId?: StringFilter<"QuoteLike"> | string
-    postId?: StringFilter<"QuoteLike"> | string
-  }
-
-  export type QuoteReplyCreateWithoutPostInput = {
-    id?: string
-    parentReplyId: string
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutQuoteReplyInput
-  }
-
-  export type QuoteReplyUncheckedCreateWithoutPostInput = {
-    id?: string
-    userId: string
-    parentReplyId: string
-    createdAt?: Date | string
-  }
-
-  export type QuoteReplyCreateOrConnectWithoutPostInput = {
-    where: QuoteReplyWhereUniqueInput
-    create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
-  }
-
-  export type QuoteReplyCreateManyPostInputEnvelope = {
-    data: QuoteReplyCreateManyPostInput | QuoteReplyCreateManyPostInput[]
-    skipDuplicates?: boolean
-  }
-
   export type QuoteLikeCreateWithoutPostInput = {
     id?: string
     user: UserCreateNestedOneWithoutQuoteLikeInput
@@ -10995,8 +10971,8 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuotePostInput = {
@@ -11019,8 +10995,8 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutQuotePostInput = {
@@ -11028,20 +11004,28 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
   }
 
-  export type QuoteReplyUpsertWithWhereUniqueWithoutPostInput = {
+  export type QuoteReplyCreateWithoutPostInput = {
+    id?: string
+    parentReplyId: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutQuoteReplyInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutPostInput = {
+    id?: string
+    userId: string
+    parentReplyId: string
+    createdAt?: Date | string
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutPostInput = {
     where: QuoteReplyWhereUniqueInput
-    update: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
     create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
   }
 
-  export type QuoteReplyUpdateWithWhereUniqueWithoutPostInput = {
-    where: QuoteReplyWhereUniqueInput
-    data: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
-  }
-
-  export type QuoteReplyUpdateManyWithWhereWithoutPostInput = {
-    where: QuoteReplyScalarWhereInput
-    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutPostInput>
+  export type QuoteReplyCreateManyPostInputEnvelope = {
+    data: QuoteReplyCreateManyPostInput | QuoteReplyCreateManyPostInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuoteLikeUpsertWithWhereUniqueWithoutPostInput = {
@@ -11091,8 +11075,8 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuotePostInput = {
@@ -11115,61 +11099,24 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutQuoteReplyInput = {
-    id?: string
-    name?: string | null
-    email?: string | null
-    password?: string | null
-    verified?: boolean | null
-    role?: string | null
-    mobileNo?: string | null
-    country?: string | null
-    city?: string | null
-    address?: string | null
-    postalCode?: string | null
-    profilePic?: string | null
-    bio?: string | null
-    online?: boolean | null
-    lastSeen?: Date | string | null
-    rating?: number | null
-    accountType?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    quotePost?: QuotePostCreateNestedManyWithoutUserInput
-    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+  export type QuoteReplyUpsertWithWhereUniqueWithoutPostInput = {
+    where: QuoteReplyWhereUniqueInput
+    update: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
+    create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
   }
 
-  export type UserUncheckedCreateWithoutQuoteReplyInput = {
-    id?: string
-    name?: string | null
-    email?: string | null
-    password?: string | null
-    verified?: boolean | null
-    role?: string | null
-    mobileNo?: string | null
-    country?: string | null
-    city?: string | null
-    address?: string | null
-    postalCode?: string | null
-    profilePic?: string | null
-    bio?: string | null
-    online?: boolean | null
-    lastSeen?: Date | string | null
-    rating?: number | null
-    accountType?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+  export type QuoteReplyUpdateWithWhereUniqueWithoutPostInput = {
+    where: QuoteReplyWhereUniqueInput
+    data: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
   }
 
-  export type UserCreateOrConnectWithoutQuoteReplyInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
+  export type QuoteReplyUpdateManyWithWhereWithoutPostInput = {
+    where: QuoteReplyScalarWhereInput
+    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutPostInput>
   }
 
   export type QuotePostCreateWithoutQuoteReplyInput = {
@@ -11249,63 +11196,57 @@ export namespace Prisma {
     create: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
   }
 
-  export type UserUpsertWithoutQuoteReplyInput = {
-    update: XOR<UserUpdateWithoutQuoteReplyInput, UserUncheckedUpdateWithoutQuoteReplyInput>
+  export type UserCreateWithoutQuoteReplyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutQuoteReplyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutQuoteReplyInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutQuoteReplyInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutQuoteReplyInput, UserUncheckedUpdateWithoutQuoteReplyInput>
-  }
-
-  export type UserUpdateWithoutQuoteReplyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    accountType?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
-    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutQuoteReplyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    city?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    accountType?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type QuotePostUpsertWithoutQuoteReplyInput = {
@@ -11391,6 +11332,142 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
+  export type UserUpsertWithoutQuoteReplyInput = {
+    update: XOR<UserUpdateWithoutQuoteReplyInput, UserUncheckedUpdateWithoutQuoteReplyInput>
+    create: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutQuoteReplyInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutQuoteReplyInput, UserUncheckedUpdateWithoutQuoteReplyInput>
+  }
+
+  export type UserUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type QuotePostCreateWithoutQuoteLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postCategory?: string | null
+    shipmentType?: string | null
+    shipmentMode?: string | null
+    user?: UserCreateNestedOneWithoutQuotePostInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postCategory?: string | null
+    shipmentType?: string | null
+    shipmentMode?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutQuoteLikeInput = {
+    where: QuotePostWhereUniqueInput
+    create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
+  }
+
   export type UserCreateWithoutQuoteLikeInput = {
     id?: string
     name?: string | null
@@ -11444,81 +11521,87 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
   }
 
-  export type QuotePostCreateWithoutQuoteLikeInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
-  }
-
-  export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    userId?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type QuotePostCreateOrConnectWithoutQuoteLikeInput = {
-    where: QuotePostWhereUniqueInput
+  export type QuotePostUpsertWithoutQuoteLikeInput = {
+    update: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
     create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
+    where?: QuotePostWhereInput
+  }
+
+  export type QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput = {
+    where?: QuotePostWhereInput
+    data: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
+  }
+
+  export type QuotePostUpdateWithoutQuoteLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneWithoutQuotePostNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type UserUpsertWithoutQuoteLikeInput = {
@@ -11580,87 +11663,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type QuotePostUpsertWithoutQuoteLikeInput = {
-    update: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
-    create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
-    where?: QuotePostWhereInput
-  }
-
-  export type QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput = {
-    where?: QuotePostWhereInput
-    data: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
-  }
-
-  export type QuotePostUpdateWithoutQuoteLikeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
-  }
-
-  export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+  export type QuoteLikeCreateManyUserInput = {
+    id?: string
+    postId: string
   }
 
   export type QuotePostCreateManyUserInput = {
@@ -11704,9 +11709,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type QuoteLikeCreateManyUserInput = {
-    id?: string
-    postId: string
+  export type QuoteLikeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    post?: QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput
+  }
+
+  export type QuoteLikeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QuoteLikeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuotePostUpdateWithoutUserInput = {
@@ -11741,8 +11756,8 @@ export namespace Prisma {
     postCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutUserInput = {
@@ -11777,8 +11792,8 @@ export namespace Prisma {
     postCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostUncheckedUpdateManyWithoutUserInput = {
@@ -11836,19 +11851,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QuoteLikeUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    post?: QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput
-  }
-
-  export type QuoteLikeUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    postId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type QuoteLikeUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    postId?: StringFieldUpdateOperationsInput | string
+  export type QuoteLikeCreateManyPostInput = {
+    id?: string
+    userId: string
   }
 
   export type QuoteReplyCreateManyPostInput = {
@@ -11858,9 +11863,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type QuoteLikeCreateManyPostInput = {
-    id?: string
-    userId: string
+  export type QuoteLikeUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutQuoteLikeNestedInput
+  }
+
+  export type QuoteLikeUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QuoteLikeUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuoteReplyUpdateWithoutPostInput = {
@@ -11882,21 +11897,6 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     parentReplyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuoteLikeUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutQuoteLikeNestedInput
-  }
-
-  export type QuoteLikeUncheckedUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type QuoteLikeUncheckedUpdateManyWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const userRoutes = require('./routes/user.routes.js')
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -15,5 +16,7 @@ app.get('/api', (req, res) => {
     message: ' Shree Ganeshay Namah || Radhay Radhay',
   });
 });
+
+app.use('/api/user', userRoutes);
 
 module.exports = app;

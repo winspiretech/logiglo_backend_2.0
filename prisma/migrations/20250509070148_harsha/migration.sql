@@ -109,13 +109,13 @@ CREATE UNIQUE INDEX "User_mobileNo_key" ON "User"("mobileNo");
 ALTER TABLE "QuotePost" ADD CONSTRAINT "QuotePost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuoteReply" ADD CONSTRAINT "QuoteReply_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "QuoteReply" ADD CONSTRAINT "QuoteReply_postId_fkey" FOREIGN KEY ("postId") REFERENCES "QuotePost"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuoteLike" ADD CONSTRAINT "QuoteLike_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "QuoteReply" ADD CONSTRAINT "QuoteReply_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuoteLike" ADD CONSTRAINT "QuoteLike_postId_fkey" FOREIGN KEY ("postId") REFERENCES "QuotePost"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuoteLike" ADD CONSTRAINT "QuoteLike_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

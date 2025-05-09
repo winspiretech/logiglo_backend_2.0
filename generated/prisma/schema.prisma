@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -34,9 +28,9 @@ model User {
   accountType String?      @default("personal")
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  quoteLike   QuoteLike[]
   quotePost   QuotePost[]
   quoteReply  QuoteReply[]
-  quoteLike   QuoteLike[]
 }
 
 model ForumMainCategory {
@@ -84,9 +78,9 @@ model QuotePost {
   postCategory     String?
   shipmentType     String?      @default("domestic")
   shipmentMode     String?
-  quoteReply       QuoteReply[]
   quoteLike        QuoteLike[]
   user             User?        @relation(fields: [userId], references: [id])
+  quoteReply       QuoteReply[]
 }
 
 model QuoteReply {
@@ -95,14 +89,14 @@ model QuoteReply {
   postId        String
   parentReplyId String
   createdAt     DateTime  @default(now())
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   post          QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model QuoteLike {
   id     String    @id @default(uuid())
   userId String
   postId String
-  user   User      @relation(fields: [userId], references: [id])
   post   QuotePost @relation(fields: [postId], references: [id])
+  user   User      @relation(fields: [userId], references: [id])
 }
