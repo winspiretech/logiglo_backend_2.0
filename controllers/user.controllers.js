@@ -1,6 +1,6 @@
 const { ApiResponse } = require('../utils/apiResponse');
 const { UserSchema } = require('../validation/userSchema.validation');
-const { prisma } = require('../models/prismaClient');
+const  prisma  = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
@@ -64,7 +64,7 @@ const loginUser = async (req, res, next) => {
         name: existingUser.name,
         email: existingUser.email
       },
-      process.env.TOKEN_SECRET,
+      process.env.TOKEN_SECRET || "radha",
       {
         expiresIn : "7d"
       }

@@ -1,5 +1,5 @@
 // models/prismaClient.js
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../generated/prisma');
 const bcrypt = require('bcrypt');
 
 const SALT_ROUNDS = 10;
@@ -24,4 +24,4 @@ const prisma = new PrismaClient().$extends({
   },
 });
 
-module.exports = { prisma };
+module.exports = prisma;

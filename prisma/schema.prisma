@@ -1,11 +1,12 @@
 generator client {
   provider = "prisma-client-js"
-
+  output = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+
 }
 
 model User {
@@ -28,43 +29,49 @@ model User {
   accountType String?      @default("personal")
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  quoteLike   QuoteLike[]
   quotePost   QuotePost[]
   quoteReply  QuoteReply[]
+  quoteLike   QuoteLike[]
+  generalPost GeneralPost[]
 }
 
 model ForumMainCategory {
   id      String   @id @default(uuid())
   name    String?
   enabled Boolean? @default(false)
+  subCategory ForumSubCategory[]
 }
 
 model ForumSubCategory {
   id      String   @id @default(uuid())
   name    String?
   enabled Boolean? @default(false)
+  mainCategoryId String
+  mainCategory ForumMainCategory @relation(fields: [mainCategoryId], references: [id])
 }
 
 model QuotePost {
-  id               String       @id @default(uuid())
+  id               String    @id @default(uuid())
   title            String?
   description      String?
-  userId           String?
+  userId           String
+  name             String?
   categoryId       String?
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  totalNetWeight   Float?       @default(0)
-  totalGrossWeight Float?       @default(0)
-  volumetricWeight Float?       @default(0)
-  transitInsurance Boolean?     @default(false)
-  width            Float?       @default(0)
-  height           Float?       @default(0)
-  length           Float?       @default(0)
-  viewCount        Int?         @default(0)
-  likesCount       Int?         @default(0)
-  commentsCount    Int?         @default(0)
-  dangerousGoods   Boolean?     @default(false)
-  status           String?      @default("pending")
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @updatedAt
+  totalNetWeight   Float?
+  totalGrossWeight Float?
+  volumetricWeight Float?
+  transitInsurance Boolean?
+  width            Float?
+  height           Float?
+  length           Float?
+  viewCount        Int?
+  likesCount       Int?
+  commentsCount    Int?
+  dangerousGoods   Boolean?
+  status           String?   @default("pending")
+  rejectionReason  String?
   fromPostalCode   String?
   toPostalCode     String?
   fromCity         String?
@@ -75,28 +82,49 @@ model QuotePost {
   toAddress        String?
   fromState        String?
   toState          String?
-  postCategory     String?
-  shipmentType     String?      @default("domestic")
-  shipmentMode     String?
-  quoteLike        QuoteLike[]
-  user             User?        @relation(fields: [userId], references: [id])
-  quoteReply       QuoteReply[]
+  postMainCategory String?
+  postSubCategory  String?
+  shipmentType     String?
+
+  quoteReply QuoteReply[]
+  quoteLike  QuoteLike[]
+  user       User?        @relation(fields: [userId], references: [id])
 }
 
 model QuoteReply {
-  id            String    @id @default(uuid())
-  userId        String
-  postId        String
-  parentReplyId String
-  createdAt     DateTime  @default(now())
-  post          QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String    @id @default(uuid())
+  userId          String
+  postId          String
+  parentReplyId   String?
+  description     String?
+  createdAt       DateTime  @default(now())
+  status          String?   @default("pending")
+  rejectionReason String?
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post            QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model QuoteLike {
   id     String    @id @default(uuid())
   userId String
   postId String
-  post   QuotePost @relation(fields: [postId], references: [id])
   user   User      @relation(fields: [userId], references: [id])
+  post   QuotePost @relation(fields: [postId], references: [id])
 }
+model GeneralPost {
+  id          String    @id @default(uuid())
+  title       String?
+  description String?
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  viewCount   Int?
+  likesCount  Int?
+  commentsCount Int?
+  status      String?   @default("pending")
+  rejectionReason String?
+  generalPostMainCategory String?
+  generalPostSubCategory  String?
+  user User @relation(fields: [userId], references: [id])
+}
+

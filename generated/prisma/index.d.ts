@@ -43,6 +43,11 @@ export type QuoteReply = $Result.DefaultSelection<Prisma.$QuoteReplyPayload>
  * 
  */
 export type QuoteLike = $Result.DefaultSelection<Prisma.$QuoteLikePayload>
+/**
+ * Model GeneralPost
+ * 
+ */
+export type GeneralPost = $Result.DefaultSelection<Prisma.$GeneralPostPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -228,6 +233,16 @@ export class PrismaClient<
     * ```
     */
   get quoteLike(): Prisma.QuoteLikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.generalPost`: Exposes CRUD operations for the **GeneralPost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GeneralPosts
+    * const generalPosts = await prisma.generalPost.findMany()
+    * ```
+    */
+  get generalPost(): Prisma.GeneralPostDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -673,7 +688,8 @@ export namespace Prisma {
     ForumSubCategory: 'ForumSubCategory',
     QuotePost: 'QuotePost',
     QuoteReply: 'QuoteReply',
-    QuoteLike: 'QuoteLike'
+    QuoteLike: 'QuoteLike',
+    GeneralPost: 'GeneralPost'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -692,7 +708,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike"
+      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1140,6 +1156,80 @@ export namespace Prisma {
           }
         }
       }
+      GeneralPost: {
+        payload: Prisma.$GeneralPostPayload<ExtArgs>
+        fields: Prisma.GeneralPostFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GeneralPostFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GeneralPostFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          findFirst: {
+            args: Prisma.GeneralPostFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GeneralPostFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          findMany: {
+            args: Prisma.GeneralPostFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>[]
+          }
+          create: {
+            args: Prisma.GeneralPostCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          createMany: {
+            args: Prisma.GeneralPostCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GeneralPostCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>[]
+          }
+          delete: {
+            args: Prisma.GeneralPostDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          update: {
+            args: Prisma.GeneralPostUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          deleteMany: {
+            args: Prisma.GeneralPostDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GeneralPostUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GeneralPostUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>[]
+          }
+          upsert: {
+            args: Prisma.GeneralPostUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralPostPayload>
+          }
+          aggregate: {
+            args: Prisma.GeneralPostAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGeneralPost>
+          }
+          groupBy: {
+            args: Prisma.GeneralPostGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GeneralPostGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GeneralPostCountArgs<ExtArgs>
+            result: $Utils.Optional<GeneralPostCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1230,6 +1320,7 @@ export namespace Prisma {
     quotePost?: QuotePostOmit
     quoteReply?: QuoteReplyOmit
     quoteLike?: QuoteLikeOmit
+    generalPost?: GeneralPostOmit
   }
 
   /* Types for Logging */
@@ -1324,15 +1415,17 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    quoteLike: number
     quotePost: number
     quoteReply: number
+    quoteLike: number
+    generalPost: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quoteLike?: boolean | UserCountOutputTypeCountQuoteLikeArgs
     quotePost?: boolean | UserCountOutputTypeCountQuotePostArgs
     quoteReply?: boolean | UserCountOutputTypeCountQuoteReplyArgs
+    quoteLike?: boolean | UserCountOutputTypeCountQuoteLikeArgs
+    generalPost?: boolean | UserCountOutputTypeCountGeneralPostArgs
   }
 
   // Custom InputTypes
@@ -1349,13 +1442,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteLikeWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountQuotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QuotePostWhereInput
   }
@@ -1367,19 +1453,64 @@ export namespace Prisma {
     where?: QuoteReplyWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteLikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGeneralPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralPostWhereInput
+  }
+
+
+  /**
+   * Count Type ForumMainCategoryCountOutputType
+   */
+
+  export type ForumMainCategoryCountOutputType = {
+    subCategory: number
+  }
+
+  export type ForumMainCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subCategory?: boolean | ForumMainCategoryCountOutputTypeCountSubCategoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ForumMainCategoryCountOutputType without action
+   */
+  export type ForumMainCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumMainCategoryCountOutputType
+     */
+    select?: ForumMainCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ForumMainCategoryCountOutputType without action
+   */
+  export type ForumMainCategoryCountOutputTypeCountSubCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ForumSubCategoryWhereInput
+  }
+
 
   /**
    * Count Type QuotePostCountOutputType
    */
 
   export type QuotePostCountOutputType = {
-    quoteLike: number
     quoteReply: number
+    quoteLike: number
   }
 
   export type QuotePostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quoteLike?: boolean | QuotePostCountOutputTypeCountQuoteLikeArgs
     quoteReply?: boolean | QuotePostCountOutputTypeCountQuoteReplyArgs
+    quoteLike?: boolean | QuotePostCountOutputTypeCountQuoteLikeArgs
   }
 
   // Custom InputTypes
@@ -1396,15 +1527,15 @@ export namespace Prisma {
   /**
    * QuotePostCountOutputType without action
    */
-  export type QuotePostCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteLikeWhereInput
+  export type QuotePostCountOutputTypeCountQuoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteReplyWhereInput
   }
 
   /**
    * QuotePostCountOutputType without action
    */
-  export type QuotePostCountOutputTypeCountQuoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuoteReplyWhereInput
+  export type QuotePostCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteLikeWhereInput
   }
 
 
@@ -1722,9 +1853,10 @@ export namespace Prisma {
     accountType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     quotePost?: boolean | User$quotePostArgs<ExtArgs>
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
+    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
+    generalPost?: boolean | User$generalPostArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1796,9 +1928,10 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "verified" | "role" | "mobileNo" | "country" | "city" | "address" | "postalCode" | "profilePic" | "bio" | "online" | "lastSeen" | "rating" | "accountType" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     quotePost?: boolean | User$quotePostArgs<ExtArgs>
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
+    quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
+    generalPost?: boolean | User$generalPostArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1807,9 +1940,10 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       quotePost: Prisma.$QuotePostPayload<ExtArgs>[]
       quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
+      quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
+      generalPost: Prisma.$GeneralPostPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2225,9 +2359,10 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    quoteLike<T extends User$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quotePost<T extends User$quotePostArgs<ExtArgs> = {}>(args?: Subset<T, User$quotePostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteReply<T extends User$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quoteLike<T extends User$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalPost<T extends User$generalPostArgs<ExtArgs> = {}>(args?: Subset<T, User$generalPostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2664,30 +2799,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.quoteLike
-   */
-  export type User$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the QuoteLike
-     */
-    select?: QuoteLikeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the QuoteLike
-     */
-    omit?: QuoteLikeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuoteLikeInclude<ExtArgs> | null
-    where?: QuoteLikeWhereInput
-    orderBy?: QuoteLikeOrderByWithRelationInput | QuoteLikeOrderByWithRelationInput[]
-    cursor?: QuoteLikeWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuoteLikeScalarFieldEnum | QuoteLikeScalarFieldEnum[]
-  }
-
-  /**
    * User.quotePost
    */
   export type User$quotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2733,6 +2844,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
+  }
+
+  /**
+   * User.quoteLike
+   */
+  export type User$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteLike
+     */
+    select?: QuoteLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteLike
+     */
+    omit?: QuoteLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteLikeInclude<ExtArgs> | null
+    where?: QuoteLikeWhereInput
+    orderBy?: QuoteLikeOrderByWithRelationInput | QuoteLikeOrderByWithRelationInput[]
+    cursor?: QuoteLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuoteLikeScalarFieldEnum | QuoteLikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.generalPost
+   */
+  export type User$generalPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    where?: GeneralPostWhereInput
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    cursor?: GeneralPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
   }
 
   /**
@@ -2902,6 +3061,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     enabled?: boolean
+    subCategory?: boolean | ForumMainCategory$subCategoryArgs<ExtArgs>
+    _count?: boolean | ForumMainCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumMainCategory"]>
 
   export type ForumMainCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2923,10 +3084,18 @@ export namespace Prisma {
   }
 
   export type ForumMainCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled", ExtArgs["result"]["forumMainCategory"]>
+  export type ForumMainCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subCategory?: boolean | ForumMainCategory$subCategoryArgs<ExtArgs>
+    _count?: boolean | ForumMainCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ForumMainCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ForumMainCategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $ForumMainCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ForumMainCategory"
-    objects: {}
+    objects: {
+      subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string | null
@@ -3325,6 +3494,7 @@ export namespace Prisma {
    */
   export interface Prisma__ForumMainCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    subCategory<T extends ForumMainCategory$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategory$subCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3374,6 +3544,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumMainCategory to fetch.
      */
     where: ForumMainCategoryWhereUniqueInput
@@ -3392,6 +3566,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumMainCategory to fetch.
      */
     where: ForumMainCategoryWhereUniqueInput
@@ -3409,6 +3587,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumMainCategory
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
     /**
      * Filter, which ForumMainCategory to fetch.
      */
@@ -3458,6 +3640,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumMainCategory to fetch.
      */
     where?: ForumMainCategoryWhereInput
@@ -3506,6 +3692,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumMainCategories to fetch.
      */
     where?: ForumMainCategoryWhereInput
@@ -3548,6 +3738,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumMainCategory
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
     /**
      * The data needed to create a ForumMainCategory.
      */
@@ -3596,6 +3790,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumMainCategory
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
     /**
      * The data needed to update a ForumMainCategory.
      */
@@ -3663,6 +3861,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * The filter to search for the ForumMainCategory to update in case it exists.
      */
     where: ForumMainCategoryWhereUniqueInput
@@ -3689,6 +3891,10 @@ export namespace Prisma {
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    /**
      * Filter which ForumMainCategory to delete.
      */
     where: ForumMainCategoryWhereUniqueInput
@@ -3709,6 +3915,30 @@ export namespace Prisma {
   }
 
   /**
+   * ForumMainCategory.subCategory
+   */
+  export type ForumMainCategory$subCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumSubCategory
+     */
+    select?: ForumSubCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumSubCategory
+     */
+    omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    where?: ForumSubCategoryWhereInput
+    orderBy?: ForumSubCategoryOrderByWithRelationInput | ForumSubCategoryOrderByWithRelationInput[]
+    cursor?: ForumSubCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ForumSubCategoryScalarFieldEnum | ForumSubCategoryScalarFieldEnum[]
+  }
+
+  /**
    * ForumMainCategory without action
    */
   export type ForumMainCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3720,6 +3950,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumMainCategory
      */
     omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
   }
 
 
@@ -3737,18 +3971,21 @@ export namespace Prisma {
     id: string | null
     name: string | null
     enabled: boolean | null
+    mainCategoryId: string | null
   }
 
   export type ForumSubCategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
     enabled: boolean | null
+    mainCategoryId: string | null
   }
 
   export type ForumSubCategoryCountAggregateOutputType = {
     id: number
     name: number
     enabled: number
+    mainCategoryId: number
     _all: number
   }
 
@@ -3757,18 +3994,21 @@ export namespace Prisma {
     id?: true
     name?: true
     enabled?: true
+    mainCategoryId?: true
   }
 
   export type ForumSubCategoryMaxAggregateInputType = {
     id?: true
     name?: true
     enabled?: true
+    mainCategoryId?: true
   }
 
   export type ForumSubCategoryCountAggregateInputType = {
     id?: true
     name?: true
     enabled?: true
+    mainCategoryId?: true
     _all?: true
   }
 
@@ -3848,6 +4088,7 @@ export namespace Prisma {
     id: string
     name: string | null
     enabled: boolean | null
+    mainCategoryId: string
     _count: ForumSubCategoryCountAggregateOutputType | null
     _min: ForumSubCategoryMinAggregateOutputType | null
     _max: ForumSubCategoryMaxAggregateOutputType | null
@@ -3871,35 +4112,54 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     enabled?: boolean
+    mainCategoryId?: boolean
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumSubCategory"]>
 
   export type ForumSubCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     enabled?: boolean
+    mainCategoryId?: boolean
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumSubCategory"]>
 
   export type ForumSubCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     enabled?: boolean
+    mainCategoryId?: boolean
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumSubCategory"]>
 
   export type ForumSubCategorySelectScalar = {
     id?: boolean
     name?: boolean
     enabled?: boolean
+    mainCategoryId?: boolean
   }
 
-  export type ForumSubCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled", ExtArgs["result"]["forumSubCategory"]>
+  export type ForumSubCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled" | "mainCategoryId", ExtArgs["result"]["forumSubCategory"]>
+  export type ForumSubCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
+  }
+  export type ForumSubCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
+  }
+  export type ForumSubCategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
+  }
 
   export type $ForumSubCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ForumSubCategory"
-    objects: {}
+    objects: {
+      mainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string | null
       enabled: boolean | null
+      mainCategoryId: string
     }, ExtArgs["result"]["forumSubCategory"]>
     composites: {}
   }
@@ -4294,6 +4554,7 @@ export namespace Prisma {
    */
   export interface Prisma__ForumSubCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    mainCategory<T extends ForumMainCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategoryDefaultArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4326,6 +4587,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ForumSubCategory", 'String'>
     readonly name: FieldRef<"ForumSubCategory", 'String'>
     readonly enabled: FieldRef<"ForumSubCategory", 'Boolean'>
+    readonly mainCategoryId: FieldRef<"ForumSubCategory", 'String'>
   }
     
 
@@ -4342,6 +4604,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
     /**
      * Filter, which ForumSubCategory to fetch.
      */
@@ -4361,6 +4627,10 @@ export namespace Prisma {
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumSubCategory to fetch.
      */
     where: ForumSubCategoryWhereUniqueInput
@@ -4378,6 +4648,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
     /**
      * Filter, which ForumSubCategory to fetch.
      */
@@ -4427,6 +4701,10 @@ export namespace Prisma {
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumSubCategory to fetch.
      */
     where?: ForumSubCategoryWhereInput
@@ -4475,6 +4753,10 @@ export namespace Prisma {
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    /**
      * Filter, which ForumSubCategories to fetch.
      */
     where?: ForumSubCategoryWhereInput
@@ -4518,9 +4800,13 @@ export namespace Prisma {
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    /**
      * The data needed to create a ForumSubCategory.
      */
-    data?: XOR<ForumSubCategoryCreateInput, ForumSubCategoryUncheckedCreateInput>
+    data: XOR<ForumSubCategoryCreateInput, ForumSubCategoryUncheckedCreateInput>
   }
 
   /**
@@ -4551,6 +4837,10 @@ export namespace Prisma {
      */
     data: ForumSubCategoryCreateManyInput | ForumSubCategoryCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4565,6 +4855,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
     /**
      * The data needed to update a ForumSubCategory.
      */
@@ -4617,6 +4911,10 @@ export namespace Prisma {
      * Limit how many ForumSubCategories to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4631,6 +4929,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
     /**
      * The filter to search for the ForumSubCategory to update in case it exists.
      */
@@ -4657,6 +4959,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
     /**
      * Filter which ForumSubCategory to delete.
      */
@@ -4689,6 +4995,10 @@ export namespace Prisma {
      * Omit specific fields from the ForumSubCategory
      */
     omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
   }
 
 
@@ -4733,6 +5043,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     userId: string | null
+    name: string | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4748,6 +5059,7 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
+    rejectionReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -4758,9 +5070,9 @@ export namespace Prisma {
     toAddress: string | null
     fromState: string | null
     toState: string | null
-    postCategory: string | null
+    postMainCategory: string | null
+    postSubCategory: string | null
     shipmentType: string | null
-    shipmentMode: string | null
   }
 
   export type QuotePostMaxAggregateOutputType = {
@@ -4768,6 +5080,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     userId: string | null
+    name: string | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4783,6 +5096,7 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
+    rejectionReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -4793,9 +5107,9 @@ export namespace Prisma {
     toAddress: string | null
     fromState: string | null
     toState: string | null
-    postCategory: string | null
+    postMainCategory: string | null
+    postSubCategory: string | null
     shipmentType: string | null
-    shipmentMode: string | null
   }
 
   export type QuotePostCountAggregateOutputType = {
@@ -4803,6 +5117,7 @@ export namespace Prisma {
     title: number
     description: number
     userId: number
+    name: number
     categoryId: number
     createdAt: number
     updatedAt: number
@@ -4818,6 +5133,7 @@ export namespace Prisma {
     commentsCount: number
     dangerousGoods: number
     status: number
+    rejectionReason: number
     fromPostalCode: number
     toPostalCode: number
     fromCity: number
@@ -4828,9 +5144,9 @@ export namespace Prisma {
     toAddress: number
     fromState: number
     toState: number
-    postCategory: number
+    postMainCategory: number
+    postSubCategory: number
     shipmentType: number
-    shipmentMode: number
     _all: number
   }
 
@@ -4864,6 +5180,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    name?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4879,6 +5196,7 @@ export namespace Prisma {
     commentsCount?: true
     dangerousGoods?: true
     status?: true
+    rejectionReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -4889,9 +5207,9 @@ export namespace Prisma {
     toAddress?: true
     fromState?: true
     toState?: true
-    postCategory?: true
+    postMainCategory?: true
+    postSubCategory?: true
     shipmentType?: true
-    shipmentMode?: true
   }
 
   export type QuotePostMaxAggregateInputType = {
@@ -4899,6 +5217,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    name?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4914,6 +5233,7 @@ export namespace Prisma {
     commentsCount?: true
     dangerousGoods?: true
     status?: true
+    rejectionReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -4924,9 +5244,9 @@ export namespace Prisma {
     toAddress?: true
     fromState?: true
     toState?: true
-    postCategory?: true
+    postMainCategory?: true
+    postSubCategory?: true
     shipmentType?: true
-    shipmentMode?: true
   }
 
   export type QuotePostCountAggregateInputType = {
@@ -4934,6 +5254,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    name?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -4949,6 +5270,7 @@ export namespace Prisma {
     commentsCount?: true
     dangerousGoods?: true
     status?: true
+    rejectionReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -4959,9 +5281,9 @@ export namespace Prisma {
     toAddress?: true
     fromState?: true
     toState?: true
-    postCategory?: true
+    postMainCategory?: true
+    postSubCategory?: true
     shipmentType?: true
-    shipmentMode?: true
     _all?: true
   }
 
@@ -5055,10 +5377,11 @@ export namespace Prisma {
     id: string
     title: string | null
     description: string | null
-    userId: string | null
+    userId: string
+    name: string | null
     categoryId: string | null
-    createdAt: Date
-    updatedAt: Date
+    createdAt: Date | null
+    updatedAt: Date | null
     totalNetWeight: number | null
     totalGrossWeight: number | null
     volumetricWeight: number | null
@@ -5071,6 +5394,7 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
+    rejectionReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -5081,9 +5405,9 @@ export namespace Prisma {
     toAddress: string | null
     fromState: string | null
     toState: string | null
-    postCategory: string | null
+    postMainCategory: string | null
+    postSubCategory: string | null
     shipmentType: string | null
-    shipmentMode: string | null
     _count: QuotePostCountAggregateOutputType | null
     _avg: QuotePostAvgAggregateOutputType | null
     _sum: QuotePostSumAggregateOutputType | null
@@ -5110,6 +5434,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    name?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5125,6 +5450,7 @@ export namespace Prisma {
     commentsCount?: boolean
     dangerousGoods?: boolean
     status?: boolean
+    rejectionReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -5135,12 +5461,12 @@ export namespace Prisma {
     toAddress?: boolean
     fromState?: boolean
     toState?: boolean
-    postCategory?: boolean
+    postMainCategory?: boolean
+    postSubCategory?: boolean
     shipmentType?: boolean
-    shipmentMode?: boolean
+    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
-    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5149,6 +5475,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    name?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5164,6 +5491,7 @@ export namespace Prisma {
     commentsCount?: boolean
     dangerousGoods?: boolean
     status?: boolean
+    rejectionReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -5174,9 +5502,9 @@ export namespace Prisma {
     toAddress?: boolean
     fromState?: boolean
     toState?: boolean
-    postCategory?: boolean
+    postMainCategory?: boolean
+    postSubCategory?: boolean
     shipmentType?: boolean
-    shipmentMode?: boolean
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5185,6 +5513,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    name?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5200,6 +5529,7 @@ export namespace Prisma {
     commentsCount?: boolean
     dangerousGoods?: boolean
     status?: boolean
+    rejectionReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -5210,9 +5540,9 @@ export namespace Prisma {
     toAddress?: boolean
     fromState?: boolean
     toState?: boolean
-    postCategory?: boolean
+    postMainCategory?: boolean
+    postSubCategory?: boolean
     shipmentType?: boolean
-    shipmentMode?: boolean
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5221,6 +5551,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    name?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5236,6 +5567,7 @@ export namespace Prisma {
     commentsCount?: boolean
     dangerousGoods?: boolean
     status?: boolean
+    rejectionReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -5246,16 +5578,16 @@ export namespace Prisma {
     toAddress?: boolean
     fromState?: boolean
     toState?: boolean
-    postCategory?: boolean
+    postMainCategory?: boolean
+    postSubCategory?: boolean
     shipmentType?: boolean
-    shipmentMode?: boolean
   }
 
-  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "categoryId" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postCategory" | "shipmentType" | "shipmentMode", ExtArgs["result"]["quotePost"]>
+  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "categoryId" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "shipmentType", ExtArgs["result"]["quotePost"]>
   export type QuotePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
-    quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5268,18 +5600,19 @@ export namespace Prisma {
   export type $QuotePostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuotePost"
     objects: {
+      quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
       quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs> | null
-      quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string | null
       description: string | null
-      userId: string | null
+      userId: string
+      name: string | null
       categoryId: string | null
-      createdAt: Date
-      updatedAt: Date
+      createdAt: Date | null
+      updatedAt: Date | null
       totalNetWeight: number | null
       totalGrossWeight: number | null
       volumetricWeight: number | null
@@ -5292,6 +5625,7 @@ export namespace Prisma {
       commentsCount: number | null
       dangerousGoods: boolean | null
       status: string | null
+      rejectionReason: string | null
       fromPostalCode: string | null
       toPostalCode: string | null
       fromCity: string | null
@@ -5302,9 +5636,9 @@ export namespace Prisma {
       toAddress: string | null
       fromState: string | null
       toState: string | null
-      postCategory: string | null
+      postMainCategory: string | null
+      postSubCategory: string | null
       shipmentType: string | null
-      shipmentMode: string | null
     }, ExtArgs["result"]["quotePost"]>
     composites: {}
   }
@@ -5699,9 +6033,9 @@ export namespace Prisma {
    */
   export interface Prisma__QuotePostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    quoteReply<T extends QuotePost$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteLike<T extends QuotePost$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends QuotePost$userArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    quoteReply<T extends QuotePost$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5735,6 +6069,7 @@ export namespace Prisma {
     readonly title: FieldRef<"QuotePost", 'String'>
     readonly description: FieldRef<"QuotePost", 'String'>
     readonly userId: FieldRef<"QuotePost", 'String'>
+    readonly name: FieldRef<"QuotePost", 'String'>
     readonly categoryId: FieldRef<"QuotePost", 'String'>
     readonly createdAt: FieldRef<"QuotePost", 'DateTime'>
     readonly updatedAt: FieldRef<"QuotePost", 'DateTime'>
@@ -5750,6 +6085,7 @@ export namespace Prisma {
     readonly commentsCount: FieldRef<"QuotePost", 'Int'>
     readonly dangerousGoods: FieldRef<"QuotePost", 'Boolean'>
     readonly status: FieldRef<"QuotePost", 'String'>
+    readonly rejectionReason: FieldRef<"QuotePost", 'String'>
     readonly fromPostalCode: FieldRef<"QuotePost", 'String'>
     readonly toPostalCode: FieldRef<"QuotePost", 'String'>
     readonly fromCity: FieldRef<"QuotePost", 'String'>
@@ -5760,9 +6096,9 @@ export namespace Prisma {
     readonly toAddress: FieldRef<"QuotePost", 'String'>
     readonly fromState: FieldRef<"QuotePost", 'String'>
     readonly toState: FieldRef<"QuotePost", 'String'>
-    readonly postCategory: FieldRef<"QuotePost", 'String'>
+    readonly postMainCategory: FieldRef<"QuotePost", 'String'>
+    readonly postSubCategory: FieldRef<"QuotePost", 'String'>
     readonly shipmentType: FieldRef<"QuotePost", 'String'>
-    readonly shipmentMode: FieldRef<"QuotePost", 'String'>
   }
     
 
@@ -6159,6 +6495,30 @@ export namespace Prisma {
   }
 
   /**
+   * QuotePost.quoteReply
+   */
+  export type QuotePost$quoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReply
+     */
+    select?: QuoteReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteReply
+     */
+    omit?: QuoteReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteReplyInclude<ExtArgs> | null
+    where?: QuoteReplyWhereInput
+    orderBy?: QuoteReplyOrderByWithRelationInput | QuoteReplyOrderByWithRelationInput[]
+    cursor?: QuoteReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
+  }
+
+  /**
    * QuotePost.quoteLike
    */
   export type QuotePost$quoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6202,30 +6562,6 @@ export namespace Prisma {
   }
 
   /**
-   * QuotePost.quoteReply
-   */
-  export type QuotePost$quoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the QuoteReply
-     */
-    select?: QuoteReplySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the QuoteReply
-     */
-    omit?: QuoteReplyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuoteReplyInclude<ExtArgs> | null
-    where?: QuoteReplyWhereInput
-    orderBy?: QuoteReplyOrderByWithRelationInput | QuoteReplyOrderByWithRelationInput[]
-    cursor?: QuoteReplyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
-  }
-
-  /**
    * QuotePost without action
    */
   export type QuotePostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6259,7 +6595,10 @@ export namespace Prisma {
     userId: string | null
     postId: string | null
     parentReplyId: string | null
+    description: string | null
     createdAt: Date | null
+    status: string | null
+    rejectionReason: string | null
   }
 
   export type QuoteReplyMaxAggregateOutputType = {
@@ -6267,7 +6606,10 @@ export namespace Prisma {
     userId: string | null
     postId: string | null
     parentReplyId: string | null
+    description: string | null
     createdAt: Date | null
+    status: string | null
+    rejectionReason: string | null
   }
 
   export type QuoteReplyCountAggregateOutputType = {
@@ -6275,7 +6617,10 @@ export namespace Prisma {
     userId: number
     postId: number
     parentReplyId: number
+    description: number
     createdAt: number
+    status: number
+    rejectionReason: number
     _all: number
   }
 
@@ -6285,7 +6630,10 @@ export namespace Prisma {
     userId?: true
     postId?: true
     parentReplyId?: true
+    description?: true
     createdAt?: true
+    status?: true
+    rejectionReason?: true
   }
 
   export type QuoteReplyMaxAggregateInputType = {
@@ -6293,7 +6641,10 @@ export namespace Prisma {
     userId?: true
     postId?: true
     parentReplyId?: true
+    description?: true
     createdAt?: true
+    status?: true
+    rejectionReason?: true
   }
 
   export type QuoteReplyCountAggregateInputType = {
@@ -6301,7 +6652,10 @@ export namespace Prisma {
     userId?: true
     postId?: true
     parentReplyId?: true
+    description?: true
     createdAt?: true
+    status?: true
+    rejectionReason?: true
     _all?: true
   }
 
@@ -6381,8 +6735,11 @@ export namespace Prisma {
     id: string
     userId: string
     postId: string
-    parentReplyId: string
+    parentReplyId: string | null
+    description: string | null
     createdAt: Date
+    status: string | null
+    rejectionReason: string | null
     _count: QuoteReplyCountAggregateOutputType | null
     _min: QuoteReplyMinAggregateOutputType | null
     _max: QuoteReplyMaxAggregateOutputType | null
@@ -6407,9 +6764,12 @@ export namespace Prisma {
     userId?: boolean
     postId?: boolean
     parentReplyId?: boolean
+    description?: boolean
     createdAt?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    status?: boolean
+    rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6417,9 +6777,12 @@ export namespace Prisma {
     userId?: boolean
     postId?: boolean
     parentReplyId?: boolean
+    description?: boolean
     createdAt?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    status?: boolean
+    rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6427,9 +6790,12 @@ export namespace Prisma {
     userId?: boolean
     postId?: boolean
     parentReplyId?: boolean
+    description?: boolean
     createdAt?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    status?: boolean
+    rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectScalar = {
@@ -6437,35 +6803,41 @@ export namespace Prisma {
     userId?: boolean
     postId?: boolean
     parentReplyId?: boolean
+    description?: boolean
     createdAt?: boolean
+    status?: boolean
+    rejectionReason?: boolean
   }
 
-  export type QuoteReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId" | "parentReplyId" | "createdAt", ExtArgs["result"]["quoteReply"]>
+  export type QuoteReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId" | "parentReplyId" | "description" | "createdAt" | "status" | "rejectionReason", ExtArgs["result"]["quoteReply"]>
   export type QuoteReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
 
   export type $QuoteReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuoteReply"
     objects: {
-      post: Prisma.$QuotePostPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$QuotePostPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
       postId: string
-      parentReplyId: string
+      parentReplyId: string | null
+      description: string | null
       createdAt: Date
+      status: string | null
+      rejectionReason: string | null
     }, ExtArgs["result"]["quoteReply"]>
     composites: {}
   }
@@ -6860,8 +7232,8 @@ export namespace Prisma {
    */
   export interface Prisma__QuoteReplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6895,7 +7267,10 @@ export namespace Prisma {
     readonly userId: FieldRef<"QuoteReply", 'String'>
     readonly postId: FieldRef<"QuoteReply", 'String'>
     readonly parentReplyId: FieldRef<"QuoteReply", 'String'>
+    readonly description: FieldRef<"QuoteReply", 'String'>
     readonly createdAt: FieldRef<"QuoteReply", 'DateTime'>
+    readonly status: FieldRef<"QuoteReply", 'String'>
+    readonly rejectionReason: FieldRef<"QuoteReply", 'String'>
   }
     
 
@@ -7458,24 +7833,24 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     postId?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     postId?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     postId?: boolean
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteLike"]>
 
   export type QuoteLikeSelectScalar = {
@@ -7486,23 +7861,23 @@ export namespace Prisma {
 
   export type QuoteLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId", ExtArgs["result"]["quoteLike"]>
   export type QuoteLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
   export type QuoteLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
   export type QuoteLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | QuotePostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | QuotePostDefaultArgs<ExtArgs>
   }
 
   export type $QuoteLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuoteLike"
     objects: {
-      post: Prisma.$QuotePostPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$QuotePostPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7902,8 +8277,8 @@ export namespace Prisma {
    */
   export interface Prisma__QuoteLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8351,6 +8726,1210 @@ export namespace Prisma {
 
 
   /**
+   * Model GeneralPost
+   */
+
+  export type AggregateGeneralPost = {
+    _count: GeneralPostCountAggregateOutputType | null
+    _avg: GeneralPostAvgAggregateOutputType | null
+    _sum: GeneralPostSumAggregateOutputType | null
+    _min: GeneralPostMinAggregateOutputType | null
+    _max: GeneralPostMaxAggregateOutputType | null
+  }
+
+  export type GeneralPostAvgAggregateOutputType = {
+    viewCount: number | null
+    likesCount: number | null
+    commentsCount: number | null
+  }
+
+  export type GeneralPostSumAggregateOutputType = {
+    viewCount: number | null
+    likesCount: number | null
+    commentsCount: number | null
+  }
+
+  export type GeneralPostMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    viewCount: number | null
+    likesCount: number | null
+    commentsCount: number | null
+    status: string | null
+    rejectionReason: string | null
+    generalPostMainCategory: string | null
+    generalPostSubCategory: string | null
+  }
+
+  export type GeneralPostMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    viewCount: number | null
+    likesCount: number | null
+    commentsCount: number | null
+    status: string | null
+    rejectionReason: string | null
+    generalPostMainCategory: string | null
+    generalPostSubCategory: string | null
+  }
+
+  export type GeneralPostCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    viewCount: number
+    likesCount: number
+    commentsCount: number
+    status: number
+    rejectionReason: number
+    generalPostMainCategory: number
+    generalPostSubCategory: number
+    _all: number
+  }
+
+
+  export type GeneralPostAvgAggregateInputType = {
+    viewCount?: true
+    likesCount?: true
+    commentsCount?: true
+  }
+
+  export type GeneralPostSumAggregateInputType = {
+    viewCount?: true
+    likesCount?: true
+    commentsCount?: true
+  }
+
+  export type GeneralPostMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    viewCount?: true
+    likesCount?: true
+    commentsCount?: true
+    status?: true
+    rejectionReason?: true
+    generalPostMainCategory?: true
+    generalPostSubCategory?: true
+  }
+
+  export type GeneralPostMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    viewCount?: true
+    likesCount?: true
+    commentsCount?: true
+    status?: true
+    rejectionReason?: true
+    generalPostMainCategory?: true
+    generalPostSubCategory?: true
+  }
+
+  export type GeneralPostCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    viewCount?: true
+    likesCount?: true
+    commentsCount?: true
+    status?: true
+    rejectionReason?: true
+    generalPostMainCategory?: true
+    generalPostSubCategory?: true
+    _all?: true
+  }
+
+  export type GeneralPostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralPost to aggregate.
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralPosts to fetch.
+     */
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GeneralPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GeneralPosts
+    **/
+    _count?: true | GeneralPostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GeneralPostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GeneralPostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GeneralPostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GeneralPostMaxAggregateInputType
+  }
+
+  export type GetGeneralPostAggregateType<T extends GeneralPostAggregateArgs> = {
+        [P in keyof T & keyof AggregateGeneralPost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGeneralPost[P]>
+      : GetScalarType<T[P], AggregateGeneralPost[P]>
+  }
+
+
+
+
+  export type GeneralPostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralPostWhereInput
+    orderBy?: GeneralPostOrderByWithAggregationInput | GeneralPostOrderByWithAggregationInput[]
+    by: GeneralPostScalarFieldEnum[] | GeneralPostScalarFieldEnum
+    having?: GeneralPostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GeneralPostCountAggregateInputType | true
+    _avg?: GeneralPostAvgAggregateInputType
+    _sum?: GeneralPostSumAggregateInputType
+    _min?: GeneralPostMinAggregateInputType
+    _max?: GeneralPostMaxAggregateInputType
+  }
+
+  export type GeneralPostGroupByOutputType = {
+    id: string
+    title: string | null
+    description: string | null
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    viewCount: number | null
+    likesCount: number | null
+    commentsCount: number | null
+    status: string | null
+    rejectionReason: string | null
+    generalPostMainCategory: string | null
+    generalPostSubCategory: string | null
+    _count: GeneralPostCountAggregateOutputType | null
+    _avg: GeneralPostAvgAggregateOutputType | null
+    _sum: GeneralPostSumAggregateOutputType | null
+    _min: GeneralPostMinAggregateOutputType | null
+    _max: GeneralPostMaxAggregateOutputType | null
+  }
+
+  type GetGeneralPostGroupByPayload<T extends GeneralPostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GeneralPostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GeneralPostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GeneralPostGroupByOutputType[P]>
+            : GetScalarType<T[P], GeneralPostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GeneralPostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    viewCount?: boolean
+    likesCount?: boolean
+    commentsCount?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    generalPostMainCategory?: boolean
+    generalPostSubCategory?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalPost"]>
+
+  export type GeneralPostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    viewCount?: boolean
+    likesCount?: boolean
+    commentsCount?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    generalPostMainCategory?: boolean
+    generalPostSubCategory?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalPost"]>
+
+  export type GeneralPostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    viewCount?: boolean
+    likesCount?: boolean
+    commentsCount?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    generalPostMainCategory?: boolean
+    generalPostSubCategory?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalPost"]>
+
+  export type GeneralPostSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    viewCount?: boolean
+    likesCount?: boolean
+    commentsCount?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    generalPostMainCategory?: boolean
+    generalPostSubCategory?: boolean
+  }
+
+  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory", ExtArgs["result"]["generalPost"]>
+  export type GeneralPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GeneralPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GeneralPostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $GeneralPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GeneralPost"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string | null
+      description: string | null
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+      viewCount: number | null
+      likesCount: number | null
+      commentsCount: number | null
+      status: string | null
+      rejectionReason: string | null
+      generalPostMainCategory: string | null
+      generalPostSubCategory: string | null
+    }, ExtArgs["result"]["generalPost"]>
+    composites: {}
+  }
+
+  type GeneralPostGetPayload<S extends boolean | null | undefined | GeneralPostDefaultArgs> = $Result.GetResult<Prisma.$GeneralPostPayload, S>
+
+  type GeneralPostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GeneralPostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GeneralPostCountAggregateInputType | true
+    }
+
+  export interface GeneralPostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GeneralPost'], meta: { name: 'GeneralPost' } }
+    /**
+     * Find zero or one GeneralPost that matches the filter.
+     * @param {GeneralPostFindUniqueArgs} args - Arguments to find a GeneralPost
+     * @example
+     * // Get one GeneralPost
+     * const generalPost = await prisma.generalPost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GeneralPostFindUniqueArgs>(args: SelectSubset<T, GeneralPostFindUniqueArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GeneralPost that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GeneralPostFindUniqueOrThrowArgs} args - Arguments to find a GeneralPost
+     * @example
+     * // Get one GeneralPost
+     * const generalPost = await prisma.generalPost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GeneralPostFindUniqueOrThrowArgs>(args: SelectSubset<T, GeneralPostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralPost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostFindFirstArgs} args - Arguments to find a GeneralPost
+     * @example
+     * // Get one GeneralPost
+     * const generalPost = await prisma.generalPost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GeneralPostFindFirstArgs>(args?: SelectSubset<T, GeneralPostFindFirstArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralPost that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostFindFirstOrThrowArgs} args - Arguments to find a GeneralPost
+     * @example
+     * // Get one GeneralPost
+     * const generalPost = await prisma.generalPost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GeneralPostFindFirstOrThrowArgs>(args?: SelectSubset<T, GeneralPostFindFirstOrThrowArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GeneralPosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GeneralPosts
+     * const generalPosts = await prisma.generalPost.findMany()
+     * 
+     * // Get first 10 GeneralPosts
+     * const generalPosts = await prisma.generalPost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const generalPostWithIdOnly = await prisma.generalPost.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GeneralPostFindManyArgs>(args?: SelectSubset<T, GeneralPostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GeneralPost.
+     * @param {GeneralPostCreateArgs} args - Arguments to create a GeneralPost.
+     * @example
+     * // Create one GeneralPost
+     * const GeneralPost = await prisma.generalPost.create({
+     *   data: {
+     *     // ... data to create a GeneralPost
+     *   }
+     * })
+     * 
+     */
+    create<T extends GeneralPostCreateArgs>(args: SelectSubset<T, GeneralPostCreateArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GeneralPosts.
+     * @param {GeneralPostCreateManyArgs} args - Arguments to create many GeneralPosts.
+     * @example
+     * // Create many GeneralPosts
+     * const generalPost = await prisma.generalPost.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GeneralPostCreateManyArgs>(args?: SelectSubset<T, GeneralPostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GeneralPosts and returns the data saved in the database.
+     * @param {GeneralPostCreateManyAndReturnArgs} args - Arguments to create many GeneralPosts.
+     * @example
+     * // Create many GeneralPosts
+     * const generalPost = await prisma.generalPost.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GeneralPosts and only return the `id`
+     * const generalPostWithIdOnly = await prisma.generalPost.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GeneralPostCreateManyAndReturnArgs>(args?: SelectSubset<T, GeneralPostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GeneralPost.
+     * @param {GeneralPostDeleteArgs} args - Arguments to delete one GeneralPost.
+     * @example
+     * // Delete one GeneralPost
+     * const GeneralPost = await prisma.generalPost.delete({
+     *   where: {
+     *     // ... filter to delete one GeneralPost
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GeneralPostDeleteArgs>(args: SelectSubset<T, GeneralPostDeleteArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GeneralPost.
+     * @param {GeneralPostUpdateArgs} args - Arguments to update one GeneralPost.
+     * @example
+     * // Update one GeneralPost
+     * const generalPost = await prisma.generalPost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GeneralPostUpdateArgs>(args: SelectSubset<T, GeneralPostUpdateArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GeneralPosts.
+     * @param {GeneralPostDeleteManyArgs} args - Arguments to filter GeneralPosts to delete.
+     * @example
+     * // Delete a few GeneralPosts
+     * const { count } = await prisma.generalPost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GeneralPostDeleteManyArgs>(args?: SelectSubset<T, GeneralPostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GeneralPosts
+     * const generalPost = await prisma.generalPost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GeneralPostUpdateManyArgs>(args: SelectSubset<T, GeneralPostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralPosts and returns the data updated in the database.
+     * @param {GeneralPostUpdateManyAndReturnArgs} args - Arguments to update many GeneralPosts.
+     * @example
+     * // Update many GeneralPosts
+     * const generalPost = await prisma.generalPost.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GeneralPosts and only return the `id`
+     * const generalPostWithIdOnly = await prisma.generalPost.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GeneralPostUpdateManyAndReturnArgs>(args: SelectSubset<T, GeneralPostUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GeneralPost.
+     * @param {GeneralPostUpsertArgs} args - Arguments to update or create a GeneralPost.
+     * @example
+     * // Update or create a GeneralPost
+     * const generalPost = await prisma.generalPost.upsert({
+     *   create: {
+     *     // ... data to create a GeneralPost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GeneralPost we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GeneralPostUpsertArgs>(args: SelectSubset<T, GeneralPostUpsertArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GeneralPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostCountArgs} args - Arguments to filter GeneralPosts to count.
+     * @example
+     * // Count the number of GeneralPosts
+     * const count = await prisma.generalPost.count({
+     *   where: {
+     *     // ... the filter for the GeneralPosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends GeneralPostCountArgs>(
+      args?: Subset<T, GeneralPostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GeneralPostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GeneralPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GeneralPostAggregateArgs>(args: Subset<T, GeneralPostAggregateArgs>): Prisma.PrismaPromise<GetGeneralPostAggregateType<T>>
+
+    /**
+     * Group by GeneralPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralPostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GeneralPostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GeneralPostGroupByArgs['orderBy'] }
+        : { orderBy?: GeneralPostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GeneralPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGeneralPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GeneralPost model
+   */
+  readonly fields: GeneralPostFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GeneralPost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GeneralPostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GeneralPost model
+   */
+  interface GeneralPostFieldRefs {
+    readonly id: FieldRef<"GeneralPost", 'String'>
+    readonly title: FieldRef<"GeneralPost", 'String'>
+    readonly description: FieldRef<"GeneralPost", 'String'>
+    readonly userId: FieldRef<"GeneralPost", 'String'>
+    readonly createdAt: FieldRef<"GeneralPost", 'DateTime'>
+    readonly updatedAt: FieldRef<"GeneralPost", 'DateTime'>
+    readonly viewCount: FieldRef<"GeneralPost", 'Int'>
+    readonly likesCount: FieldRef<"GeneralPost", 'Int'>
+    readonly commentsCount: FieldRef<"GeneralPost", 'Int'>
+    readonly status: FieldRef<"GeneralPost", 'String'>
+    readonly rejectionReason: FieldRef<"GeneralPost", 'String'>
+    readonly generalPostMainCategory: FieldRef<"GeneralPost", 'String'>
+    readonly generalPostSubCategory: FieldRef<"GeneralPost", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GeneralPost findUnique
+   */
+  export type GeneralPostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralPost to fetch.
+     */
+    where: GeneralPostWhereUniqueInput
+  }
+
+  /**
+   * GeneralPost findUniqueOrThrow
+   */
+  export type GeneralPostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralPost to fetch.
+     */
+    where: GeneralPostWhereUniqueInput
+  }
+
+  /**
+   * GeneralPost findFirst
+   */
+  export type GeneralPostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralPost to fetch.
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralPosts to fetch.
+     */
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralPosts.
+     */
+    cursor?: GeneralPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralPosts.
+     */
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralPost findFirstOrThrow
+   */
+  export type GeneralPostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralPost to fetch.
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralPosts to fetch.
+     */
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralPosts.
+     */
+    cursor?: GeneralPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralPosts.
+     */
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralPost findMany
+   */
+  export type GeneralPostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralPosts to fetch.
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralPosts to fetch.
+     */
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GeneralPosts.
+     */
+    cursor?: GeneralPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralPosts.
+     */
+    skip?: number
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralPost create
+   */
+  export type GeneralPostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GeneralPost.
+     */
+    data: XOR<GeneralPostCreateInput, GeneralPostUncheckedCreateInput>
+  }
+
+  /**
+   * GeneralPost createMany
+   */
+  export type GeneralPostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GeneralPosts.
+     */
+    data: GeneralPostCreateManyInput | GeneralPostCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GeneralPost createManyAndReturn
+   */
+  export type GeneralPostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * The data used to create many GeneralPosts.
+     */
+    data: GeneralPostCreateManyInput | GeneralPostCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralPost update
+   */
+  export type GeneralPostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GeneralPost.
+     */
+    data: XOR<GeneralPostUpdateInput, GeneralPostUncheckedUpdateInput>
+    /**
+     * Choose, which GeneralPost to update.
+     */
+    where: GeneralPostWhereUniqueInput
+  }
+
+  /**
+   * GeneralPost updateMany
+   */
+  export type GeneralPostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GeneralPosts.
+     */
+    data: XOR<GeneralPostUpdateManyMutationInput, GeneralPostUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralPosts to update
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * Limit how many GeneralPosts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralPost updateManyAndReturn
+   */
+  export type GeneralPostUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * The data used to update GeneralPosts.
+     */
+    data: XOR<GeneralPostUpdateManyMutationInput, GeneralPostUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralPosts to update
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * Limit how many GeneralPosts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralPost upsert
+   */
+  export type GeneralPostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GeneralPost to update in case it exists.
+     */
+    where: GeneralPostWhereUniqueInput
+    /**
+     * In case the GeneralPost found by the `where` argument doesn't exist, create a new GeneralPost with this data.
+     */
+    create: XOR<GeneralPostCreateInput, GeneralPostUncheckedCreateInput>
+    /**
+     * In case the GeneralPost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GeneralPostUpdateInput, GeneralPostUncheckedUpdateInput>
+  }
+
+  /**
+   * GeneralPost delete
+   */
+  export type GeneralPostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    /**
+     * Filter which GeneralPost to delete.
+     */
+    where: GeneralPostWhereUniqueInput
+  }
+
+  /**
+   * GeneralPost deleteMany
+   */
+  export type GeneralPostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralPosts to delete
+     */
+    where?: GeneralPostWhereInput
+    /**
+     * Limit how many GeneralPosts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralPost without action
+   */
+  export type GeneralPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8401,7 +9980,8 @@ export namespace Prisma {
   export const ForumSubCategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    enabled: 'enabled'
+    enabled: 'enabled',
+    mainCategoryId: 'mainCategoryId'
   };
 
   export type ForumSubCategoryScalarFieldEnum = (typeof ForumSubCategoryScalarFieldEnum)[keyof typeof ForumSubCategoryScalarFieldEnum]
@@ -8412,6 +9992,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     userId: 'userId',
+    name: 'name',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -8427,6 +10008,7 @@ export namespace Prisma {
     commentsCount: 'commentsCount',
     dangerousGoods: 'dangerousGoods',
     status: 'status',
+    rejectionReason: 'rejectionReason',
     fromPostalCode: 'fromPostalCode',
     toPostalCode: 'toPostalCode',
     fromCity: 'fromCity',
@@ -8437,9 +10019,9 @@ export namespace Prisma {
     toAddress: 'toAddress',
     fromState: 'fromState',
     toState: 'toState',
-    postCategory: 'postCategory',
-    shipmentType: 'shipmentType',
-    shipmentMode: 'shipmentMode'
+    postMainCategory: 'postMainCategory',
+    postSubCategory: 'postSubCategory',
+    shipmentType: 'shipmentType'
   };
 
   export type QuotePostScalarFieldEnum = (typeof QuotePostScalarFieldEnum)[keyof typeof QuotePostScalarFieldEnum]
@@ -8450,7 +10032,10 @@ export namespace Prisma {
     userId: 'userId',
     postId: 'postId',
     parentReplyId: 'parentReplyId',
-    createdAt: 'createdAt'
+    description: 'description',
+    createdAt: 'createdAt',
+    status: 'status',
+    rejectionReason: 'rejectionReason'
   };
 
   export type QuoteReplyScalarFieldEnum = (typeof QuoteReplyScalarFieldEnum)[keyof typeof QuoteReplyScalarFieldEnum]
@@ -8463,6 +10048,25 @@ export namespace Prisma {
   };
 
   export type QuoteLikeScalarFieldEnum = (typeof QuoteLikeScalarFieldEnum)[keyof typeof QuoteLikeScalarFieldEnum]
+
+
+  export const GeneralPostScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    viewCount: 'viewCount',
+    likesCount: 'likesCount',
+    commentsCount: 'commentsCount',
+    status: 'status',
+    rejectionReason: 'rejectionReason',
+    generalPostMainCategory: 'generalPostMainCategory',
+    generalPostSubCategory: 'generalPostSubCategory'
+  };
+
+  export type GeneralPostScalarFieldEnum = (typeof GeneralPostScalarFieldEnum)[keyof typeof GeneralPostScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8583,9 +10187,10 @@ export namespace Prisma {
     accountType?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    quoteLike?: QuoteLikeListRelationFilter
     quotePost?: QuotePostListRelationFilter
     quoteReply?: QuoteReplyListRelationFilter
+    quoteLike?: QuoteLikeListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8608,9 +10213,10 @@ export namespace Prisma {
     accountType?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    quoteLike?: QuoteLikeOrderByRelationAggregateInput
     quotePost?: QuotePostOrderByRelationAggregateInput
     quoteReply?: QuoteReplyOrderByRelationAggregateInput
+    quoteLike?: QuoteLikeOrderByRelationAggregateInput
+    generalPost?: GeneralPostOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8636,9 +10242,10 @@ export namespace Prisma {
     accountType?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    quoteLike?: QuoteLikeListRelationFilter
     quotePost?: QuotePostListRelationFilter
     quoteReply?: QuoteReplyListRelationFilter
+    quoteLike?: QuoteLikeListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
   }, "id" | "email" | "mobileNo">
 
   export type UserOrderByWithAggregationInput = {
@@ -8700,12 +10307,14 @@ export namespace Prisma {
     id?: StringFilter<"ForumMainCategory"> | string
     name?: StringNullableFilter<"ForumMainCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumMainCategory"> | boolean | null
+    subCategory?: ForumSubCategoryListRelationFilter
   }
 
   export type ForumMainCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
+    subCategory?: ForumSubCategoryOrderByRelationAggregateInput
   }
 
   export type ForumMainCategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -8715,6 +10324,7 @@ export namespace Prisma {
     NOT?: ForumMainCategoryWhereInput | ForumMainCategoryWhereInput[]
     name?: StringNullableFilter<"ForumMainCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumMainCategory"> | boolean | null
+    subCategory?: ForumSubCategoryListRelationFilter
   }, "id">
 
   export type ForumMainCategoryOrderByWithAggregationInput = {
@@ -8742,12 +10352,16 @@ export namespace Prisma {
     id?: StringFilter<"ForumSubCategory"> | string
     name?: StringNullableFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
+    mainCategoryId?: StringFilter<"ForumSubCategory"> | string
+    mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
   }
 
   export type ForumSubCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
+    mainCategoryId?: SortOrder
+    mainCategory?: ForumMainCategoryOrderByWithRelationInput
   }
 
   export type ForumSubCategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -8757,12 +10371,15 @@ export namespace Prisma {
     NOT?: ForumSubCategoryWhereInput | ForumSubCategoryWhereInput[]
     name?: StringNullableFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
+    mainCategoryId?: StringFilter<"ForumSubCategory"> | string
+    mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
   }, "id">
 
   export type ForumSubCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
+    mainCategoryId?: SortOrder
     _count?: ForumSubCategoryCountOrderByAggregateInput
     _max?: ForumSubCategoryMaxOrderByAggregateInput
     _min?: ForumSubCategoryMinOrderByAggregateInput
@@ -8775,6 +10392,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ForumSubCategory"> | string
     name?: StringNullableWithAggregatesFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableWithAggregatesFilter<"ForumSubCategory"> | boolean | null
+    mainCategoryId?: StringWithAggregatesFilter<"ForumSubCategory"> | string
   }
 
   export type QuotePostWhereInput = {
@@ -8784,10 +10402,11 @@ export namespace Prisma {
     id?: StringFilter<"QuotePost"> | string
     title?: StringNullableFilter<"QuotePost"> | string | null
     description?: StringNullableFilter<"QuotePost"> | string | null
-    userId?: StringNullableFilter<"QuotePost"> | string | null
+    userId?: StringFilter<"QuotePost"> | string
+    name?: StringNullableFilter<"QuotePost"> | string | null
     categoryId?: StringNullableFilter<"QuotePost"> | string | null
-    createdAt?: DateTimeFilter<"QuotePost"> | Date | string
-    updatedAt?: DateTimeFilter<"QuotePost"> | Date | string
+    createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
     totalGrossWeight?: FloatNullableFilter<"QuotePost"> | number | null
     volumetricWeight?: FloatNullableFilter<"QuotePost"> | number | null
@@ -8800,6 +10419,7 @@ export namespace Prisma {
     commentsCount?: IntNullableFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
     status?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     fromCity?: StringNullableFilter<"QuotePost"> | string | null
@@ -8810,22 +10430,23 @@ export namespace Prisma {
     toAddress?: StringNullableFilter<"QuotePost"> | string | null
     fromState?: StringNullableFilter<"QuotePost"> | string | null
     toState?: StringNullableFilter<"QuotePost"> | string | null
-    postCategory?: StringNullableFilter<"QuotePost"> | string | null
+    postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
+    postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
-    shipmentMode?: StringNullableFilter<"QuotePost"> | string | null
+    quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    quoteReply?: QuoteReplyListRelationFilter
   }
 
   export type QuotePostOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    name?: SortOrderInput | SortOrder
     categoryId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     totalNetWeight?: SortOrderInput | SortOrder
     totalGrossWeight?: SortOrderInput | SortOrder
     volumetricWeight?: SortOrderInput | SortOrder
@@ -8838,6 +10459,7 @@ export namespace Prisma {
     commentsCount?: SortOrderInput | SortOrder
     dangerousGoods?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
     fromPostalCode?: SortOrderInput | SortOrder
     toPostalCode?: SortOrderInput | SortOrder
     fromCity?: SortOrderInput | SortOrder
@@ -8848,12 +10470,12 @@ export namespace Prisma {
     toAddress?: SortOrderInput | SortOrder
     fromState?: SortOrderInput | SortOrder
     toState?: SortOrderInput | SortOrder
-    postCategory?: SortOrderInput | SortOrder
+    postMainCategory?: SortOrderInput | SortOrder
+    postSubCategory?: SortOrderInput | SortOrder
     shipmentType?: SortOrderInput | SortOrder
-    shipmentMode?: SortOrderInput | SortOrder
+    quoteReply?: QuoteReplyOrderByRelationAggregateInput
     quoteLike?: QuoteLikeOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
-    quoteReply?: QuoteReplyOrderByRelationAggregateInput
   }
 
   export type QuotePostWhereUniqueInput = Prisma.AtLeast<{
@@ -8863,10 +10485,11 @@ export namespace Prisma {
     NOT?: QuotePostWhereInput | QuotePostWhereInput[]
     title?: StringNullableFilter<"QuotePost"> | string | null
     description?: StringNullableFilter<"QuotePost"> | string | null
-    userId?: StringNullableFilter<"QuotePost"> | string | null
+    userId?: StringFilter<"QuotePost"> | string
+    name?: StringNullableFilter<"QuotePost"> | string | null
     categoryId?: StringNullableFilter<"QuotePost"> | string | null
-    createdAt?: DateTimeFilter<"QuotePost"> | Date | string
-    updatedAt?: DateTimeFilter<"QuotePost"> | Date | string
+    createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
     totalGrossWeight?: FloatNullableFilter<"QuotePost"> | number | null
     volumetricWeight?: FloatNullableFilter<"QuotePost"> | number | null
@@ -8879,6 +10502,7 @@ export namespace Prisma {
     commentsCount?: IntNullableFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
     status?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     fromCity?: StringNullableFilter<"QuotePost"> | string | null
@@ -8889,22 +10513,23 @@ export namespace Prisma {
     toAddress?: StringNullableFilter<"QuotePost"> | string | null
     fromState?: StringNullableFilter<"QuotePost"> | string | null
     toState?: StringNullableFilter<"QuotePost"> | string | null
-    postCategory?: StringNullableFilter<"QuotePost"> | string | null
+    postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
+    postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
-    shipmentMode?: StringNullableFilter<"QuotePost"> | string | null
+    quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    quoteReply?: QuoteReplyListRelationFilter
   }, "id">
 
   export type QuotePostOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    name?: SortOrderInput | SortOrder
     categoryId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    createdAt?: SortOrderInput | SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     totalNetWeight?: SortOrderInput | SortOrder
     totalGrossWeight?: SortOrderInput | SortOrder
     volumetricWeight?: SortOrderInput | SortOrder
@@ -8917,6 +10542,7 @@ export namespace Prisma {
     commentsCount?: SortOrderInput | SortOrder
     dangerousGoods?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
     fromPostalCode?: SortOrderInput | SortOrder
     toPostalCode?: SortOrderInput | SortOrder
     fromCity?: SortOrderInput | SortOrder
@@ -8927,9 +10553,9 @@ export namespace Prisma {
     toAddress?: SortOrderInput | SortOrder
     fromState?: SortOrderInput | SortOrder
     toState?: SortOrderInput | SortOrder
-    postCategory?: SortOrderInput | SortOrder
+    postMainCategory?: SortOrderInput | SortOrder
+    postSubCategory?: SortOrderInput | SortOrder
     shipmentType?: SortOrderInput | SortOrder
-    shipmentMode?: SortOrderInput | SortOrder
     _count?: QuotePostCountOrderByAggregateInput
     _avg?: QuotePostAvgOrderByAggregateInput
     _max?: QuotePostMaxOrderByAggregateInput
@@ -8944,10 +10570,11 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"QuotePost"> | string
     title?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     description?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    userId?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    userId?: StringWithAggregatesFilter<"QuotePost"> | string
+    name?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     categoryId?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"QuotePost"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"QuotePost"> | Date | string
+    createdAt?: DateTimeNullableWithAggregatesFilter<"QuotePost"> | Date | string | null
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableWithAggregatesFilter<"QuotePost"> | number | null
     totalGrossWeight?: FloatNullableWithAggregatesFilter<"QuotePost"> | number | null
     volumetricWeight?: FloatNullableWithAggregatesFilter<"QuotePost"> | number | null
@@ -8960,6 +10587,7 @@ export namespace Prisma {
     commentsCount?: IntNullableWithAggregatesFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableWithAggregatesFilter<"QuotePost"> | boolean | null
     status?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     fromCity?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
@@ -8970,9 +10598,9 @@ export namespace Prisma {
     toAddress?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     fromState?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     toState?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    postCategory?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    postMainCategory?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    postSubCategory?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    shipmentMode?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
   }
 
   export type QuoteReplyWhereInput = {
@@ -8982,20 +10610,26 @@ export namespace Prisma {
     id?: StringFilter<"QuoteReply"> | string
     userId?: StringFilter<"QuoteReply"> | string
     postId?: StringFilter<"QuoteReply"> | string
-    parentReplyId?: StringFilter<"QuoteReply"> | string
+    parentReplyId?: StringNullableFilter<"QuoteReply"> | string | null
+    description?: StringNullableFilter<"QuoteReply"> | string | null
     createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
-    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    status?: StringNullableFilter<"QuoteReply"> | string | null
+    rejectionReason?: StringNullableFilter<"QuoteReply"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
   }
 
   export type QuoteReplyOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    parentReplyId?: SortOrder
+    parentReplyId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    post?: QuotePostOrderByWithRelationInput
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    post?: QuotePostOrderByWithRelationInput
   }
 
   export type QuoteReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -9005,18 +10639,24 @@ export namespace Prisma {
     NOT?: QuoteReplyWhereInput | QuoteReplyWhereInput[]
     userId?: StringFilter<"QuoteReply"> | string
     postId?: StringFilter<"QuoteReply"> | string
-    parentReplyId?: StringFilter<"QuoteReply"> | string
+    parentReplyId?: StringNullableFilter<"QuoteReply"> | string | null
+    description?: StringNullableFilter<"QuoteReply"> | string | null
     createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
-    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    status?: StringNullableFilter<"QuoteReply"> | string | null
+    rejectionReason?: StringNullableFilter<"QuoteReply"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
   }, "id">
 
   export type QuoteReplyOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    parentReplyId?: SortOrder
+    parentReplyId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
     _count?: QuoteReplyCountOrderByAggregateInput
     _max?: QuoteReplyMaxOrderByAggregateInput
     _min?: QuoteReplyMinOrderByAggregateInput
@@ -9029,8 +10669,11 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"QuoteReply"> | string
     userId?: StringWithAggregatesFilter<"QuoteReply"> | string
     postId?: StringWithAggregatesFilter<"QuoteReply"> | string
-    parentReplyId?: StringWithAggregatesFilter<"QuoteReply"> | string
+    parentReplyId?: StringNullableWithAggregatesFilter<"QuoteReply"> | string | null
+    description?: StringNullableWithAggregatesFilter<"QuoteReply"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"QuoteReply"> | Date | string
+    status?: StringNullableWithAggregatesFilter<"QuoteReply"> | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"QuoteReply"> | string | null
   }
 
   export type QuoteLikeWhereInput = {
@@ -9040,16 +10683,16 @@ export namespace Prisma {
     id?: StringFilter<"QuoteLike"> | string
     userId?: StringFilter<"QuoteLike"> | string
     postId?: StringFilter<"QuoteLike"> | string
-    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
   }
 
   export type QuoteLikeOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    post?: QuotePostOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    post?: QuotePostOrderByWithRelationInput
   }
 
   export type QuoteLikeWhereUniqueInput = Prisma.AtLeast<{
@@ -9059,8 +10702,8 @@ export namespace Prisma {
     NOT?: QuoteLikeWhereInput | QuoteLikeWhereInput[]
     userId?: StringFilter<"QuoteLike"> | string
     postId?: StringFilter<"QuoteLike"> | string
-    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
   }, "id">
 
   export type QuoteLikeOrderByWithAggregationInput = {
@@ -9079,6 +10722,103 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"QuoteLike"> | string
     userId?: StringWithAggregatesFilter<"QuoteLike"> | string
     postId?: StringWithAggregatesFilter<"QuoteLike"> | string
+  }
+
+  export type GeneralPostWhereInput = {
+    AND?: GeneralPostWhereInput | GeneralPostWhereInput[]
+    OR?: GeneralPostWhereInput[]
+    NOT?: GeneralPostWhereInput | GeneralPostWhereInput[]
+    id?: StringFilter<"GeneralPost"> | string
+    title?: StringNullableFilter<"GeneralPost"> | string | null
+    description?: StringNullableFilter<"GeneralPost"> | string | null
+    userId?: StringFilter<"GeneralPost"> | string
+    createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    viewCount?: IntNullableFilter<"GeneralPost"> | number | null
+    likesCount?: IntNullableFilter<"GeneralPost"> | number | null
+    commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
+    status?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type GeneralPostOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    viewCount?: SortOrderInput | SortOrder
+    likesCount?: SortOrderInput | SortOrder
+    commentsCount?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    generalPostMainCategory?: SortOrderInput | SortOrder
+    generalPostSubCategory?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type GeneralPostWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GeneralPostWhereInput | GeneralPostWhereInput[]
+    OR?: GeneralPostWhereInput[]
+    NOT?: GeneralPostWhereInput | GeneralPostWhereInput[]
+    title?: StringNullableFilter<"GeneralPost"> | string | null
+    description?: StringNullableFilter<"GeneralPost"> | string | null
+    userId?: StringFilter<"GeneralPost"> | string
+    createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    viewCount?: IntNullableFilter<"GeneralPost"> | number | null
+    likesCount?: IntNullableFilter<"GeneralPost"> | number | null
+    commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
+    status?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type GeneralPostOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    viewCount?: SortOrderInput | SortOrder
+    likesCount?: SortOrderInput | SortOrder
+    commentsCount?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    generalPostMainCategory?: SortOrderInput | SortOrder
+    generalPostSubCategory?: SortOrderInput | SortOrder
+    _count?: GeneralPostCountOrderByAggregateInput
+    _avg?: GeneralPostAvgOrderByAggregateInput
+    _max?: GeneralPostMaxOrderByAggregateInput
+    _min?: GeneralPostMinOrderByAggregateInput
+    _sum?: GeneralPostSumOrderByAggregateInput
+  }
+
+  export type GeneralPostScalarWhereWithAggregatesInput = {
+    AND?: GeneralPostScalarWhereWithAggregatesInput | GeneralPostScalarWhereWithAggregatesInput[]
+    OR?: GeneralPostScalarWhereWithAggregatesInput[]
+    NOT?: GeneralPostScalarWhereWithAggregatesInput | GeneralPostScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GeneralPost"> | string
+    title?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    description?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    userId?: StringWithAggregatesFilter<"GeneralPost"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"GeneralPost"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GeneralPost"> | Date | string
+    viewCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
+    likesCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
+    commentsCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
+    status?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    generalPostMainCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    generalPostSubCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
   }
 
   export type UserCreateInput = {
@@ -9101,9 +10841,10 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9126,9 +10867,10 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9151,9 +10893,10 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9176,9 +10919,10 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9251,24 +10995,28 @@ export namespace Prisma {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    subCategory?: ForumSubCategoryCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryUncheckedCreateInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    subCategory?: ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type ForumMainCategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type ForumMainCategoryCreateManyInput = {
@@ -9293,30 +11041,35 @@ export namespace Prisma {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    mainCategory: ForumMainCategoryCreateNestedOneWithoutSubCategoryInput
   }
 
   export type ForumSubCategoryUncheckedCreateInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    mainCategoryId: string
   }
 
   export type ForumSubCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mainCategory?: ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput
   }
 
   export type ForumSubCategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mainCategoryId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ForumSubCategoryCreateManyInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    mainCategoryId: string
   }
 
   export type ForumSubCategoryUpdateManyMutationInput = {
@@ -9329,15 +11082,17 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mainCategoryId?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuotePostCreateInput = {
     id?: string
     title?: string | null
     description?: string | null
+    name?: string | null
     categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
     totalNetWeight?: number | null
     totalGrossWeight?: number | null
     volumetricWeight?: number | null
@@ -9350,6 +11105,7 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
+    rejectionReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -9360,22 +11116,23 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postCategory?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
     shipmentType?: string | null
-    shipmentMode?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     user?: UserCreateNestedOneWithoutQuotePostInput
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostUncheckedCreateInput = {
     id?: string
     title?: string | null
     description?: string | null
-    userId?: string | null
+    userId: string
+    name?: string | null
     categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
     totalNetWeight?: number | null
     totalGrossWeight?: number | null
     volumetricWeight?: number | null
@@ -9388,6 +11145,7 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
+    rejectionReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -9398,20 +11156,21 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postCategory?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
     shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type QuotePostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -9424,6 +11183,7 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9434,22 +11194,23 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     user?: UserUpdateOneWithoutQuotePostNestedInput
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -9462,6 +11223,7 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9472,21 +11234,22 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type QuotePostCreateManyInput = {
     id?: string
     title?: string | null
     description?: string | null
-    userId?: string | null
+    userId: string
+    name?: string | null
     categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
     totalNetWeight?: number | null
     totalGrossWeight?: number | null
     volumetricWeight?: number | null
@@ -9499,6 +11262,7 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
+    rejectionReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -9509,18 +11273,19 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postCategory?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
     shipmentType?: string | null
-    shipmentMode?: string | null
   }
 
   export type QuotePostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -9533,6 +11298,7 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9543,19 +11309,20 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuotePostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
     volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -9568,6 +11335,7 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9578,69 +11346,90 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteReplyCreateInput = {
     id?: string
-    parentReplyId: string
+    parentReplyId?: string | null
+    description?: string | null
     createdAt?: Date | string
-    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    status?: string | null
+    rejectionReason?: string | null
     user: UserCreateNestedOneWithoutQuoteReplyInput
+    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateInput = {
     id?: string
     userId: string
     postId: string
-    parentReplyId: string
+    parentReplyId?: string | null
+    description?: string | null
     createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
   }
 
   export type QuoteReplyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     postId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteReplyCreateManyInput = {
     id?: string
     userId: string
     postId: string
-    parentReplyId: string
+    parentReplyId?: string | null
+    description?: string | null
     createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
   }
 
   export type QuoteReplyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteReplyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     postId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteLikeCreateInput = {
     id?: string
-    post: QuotePostCreateNestedOneWithoutQuoteLikeInput
     user: UserCreateNestedOneWithoutQuoteLikeInput
+    post: QuotePostCreateNestedOneWithoutQuoteLikeInput
   }
 
   export type QuoteLikeUncheckedCreateInput = {
@@ -9651,8 +11440,8 @@ export namespace Prisma {
 
   export type QuoteLikeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    post?: QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput
     user?: UserUpdateOneRequiredWithoutQuoteLikeNestedInput
+    post?: QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput
   }
 
   export type QuoteLikeUncheckedUpdateInput = {
@@ -9675,6 +11464,117 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralPostCreateInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+  }
+
+  export type GeneralPostUncheckedCreateInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+  }
+
+  export type GeneralPostUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralPostCreateManyInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+  }
+
+  export type GeneralPostUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralPostUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9745,12 +11645,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type QuoteLikeListRelationFilter = {
-    every?: QuoteLikeWhereInput
-    some?: QuoteLikeWhereInput
-    none?: QuoteLikeWhereInput
-  }
-
   export type QuotePostListRelationFilter = {
     every?: QuotePostWhereInput
     some?: QuotePostWhereInput
@@ -9763,13 +11657,21 @@ export namespace Prisma {
     none?: QuoteReplyWhereInput
   }
 
+  export type QuoteLikeListRelationFilter = {
+    every?: QuoteLikeWhereInput
+    some?: QuoteLikeWhereInput
+    none?: QuoteLikeWhereInput
+  }
+
+  export type GeneralPostListRelationFilter = {
+    every?: GeneralPostWhereInput
+    some?: GeneralPostWhereInput
+    none?: GeneralPostWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type QuoteLikeOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type QuotePostOrderByRelationAggregateInput = {
@@ -9777,6 +11679,14 @@ export namespace Prisma {
   }
 
   export type QuoteReplyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuoteLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GeneralPostOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9942,6 +11852,16 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type ForumSubCategoryListRelationFilter = {
+    every?: ForumSubCategoryWhereInput
+    some?: ForumSubCategoryWhereInput
+    none?: ForumSubCategoryWhereInput
+  }
+
+  export type ForumSubCategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ForumMainCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -9960,22 +11880,30 @@ export namespace Prisma {
     enabled?: SortOrder
   }
 
+  export type ForumMainCategoryScalarRelationFilter = {
+    is?: ForumMainCategoryWhereInput
+    isNot?: ForumMainCategoryWhereInput
+  }
+
   export type ForumSubCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     enabled?: SortOrder
+    mainCategoryId?: SortOrder
   }
 
   export type ForumSubCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     enabled?: SortOrder
+    mainCategoryId?: SortOrder
   }
 
   export type ForumSubCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     enabled?: SortOrder
+    mainCategoryId?: SortOrder
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -9999,6 +11927,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10014,6 +11943,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     dangerousGoods?: SortOrder
     status?: SortOrder
+    rejectionReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -10024,9 +11954,9 @@ export namespace Prisma {
     toAddress?: SortOrder
     fromState?: SortOrder
     toState?: SortOrder
-    postCategory?: SortOrder
+    postMainCategory?: SortOrder
+    postSubCategory?: SortOrder
     shipmentType?: SortOrder
-    shipmentMode?: SortOrder
   }
 
   export type QuotePostAvgOrderByAggregateInput = {
@@ -10046,6 +11976,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10061,6 +11992,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     dangerousGoods?: SortOrder
     status?: SortOrder
+    rejectionReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -10071,9 +12003,9 @@ export namespace Prisma {
     toAddress?: SortOrder
     fromState?: SortOrder
     toState?: SortOrder
-    postCategory?: SortOrder
+    postMainCategory?: SortOrder
+    postSubCategory?: SortOrder
     shipmentType?: SortOrder
-    shipmentMode?: SortOrder
   }
 
   export type QuotePostMinOrderByAggregateInput = {
@@ -10081,6 +12013,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    name?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10096,6 +12029,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     dangerousGoods?: SortOrder
     status?: SortOrder
+    rejectionReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -10106,9 +12040,9 @@ export namespace Prisma {
     toAddress?: SortOrder
     fromState?: SortOrder
     toState?: SortOrder
-    postCategory?: SortOrder
+    postMainCategory?: SortOrder
+    postSubCategory?: SortOrder
     shipmentType?: SortOrder
-    shipmentMode?: SortOrder
   }
 
   export type QuotePostSumOrderByAggregateInput = {
@@ -10139,14 +12073,14 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type QuotePostScalarRelationFilter = {
-    is?: QuotePostWhereInput
-    isNot?: QuotePostWhereInput
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type QuotePostScalarRelationFilter = {
+    is?: QuotePostWhereInput
+    isNot?: QuotePostWhereInput
   }
 
   export type QuoteReplyCountOrderByAggregateInput = {
@@ -10154,7 +12088,10 @@ export namespace Prisma {
     userId?: SortOrder
     postId?: SortOrder
     parentReplyId?: SortOrder
+    description?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
   }
 
   export type QuoteReplyMaxOrderByAggregateInput = {
@@ -10162,7 +12099,10 @@ export namespace Prisma {
     userId?: SortOrder
     postId?: SortOrder
     parentReplyId?: SortOrder
+    description?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
   }
 
   export type QuoteReplyMinOrderByAggregateInput = {
@@ -10170,7 +12110,10 @@ export namespace Prisma {
     userId?: SortOrder
     postId?: SortOrder
     parentReplyId?: SortOrder
+    description?: SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
   }
 
   export type QuoteLikeCountOrderByAggregateInput = {
@@ -10191,11 +12134,64 @@ export namespace Prisma {
     postId?: SortOrder
   }
 
-  export type QuoteLikeCreateNestedManyWithoutUserInput = {
-    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
-    createMany?: QuoteLikeCreateManyUserInputEnvelope
-    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  export type GeneralPostCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    viewCount?: SortOrder
+    likesCount?: SortOrder
+    commentsCount?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+    generalPostMainCategory?: SortOrder
+    generalPostSubCategory?: SortOrder
+  }
+
+  export type GeneralPostAvgOrderByAggregateInput = {
+    viewCount?: SortOrder
+    likesCount?: SortOrder
+    commentsCount?: SortOrder
+  }
+
+  export type GeneralPostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    viewCount?: SortOrder
+    likesCount?: SortOrder
+    commentsCount?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+    generalPostMainCategory?: SortOrder
+    generalPostSubCategory?: SortOrder
+  }
+
+  export type GeneralPostMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    viewCount?: SortOrder
+    likesCount?: SortOrder
+    commentsCount?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+    generalPostMainCategory?: SortOrder
+    generalPostSubCategory?: SortOrder
+  }
+
+  export type GeneralPostSumOrderByAggregateInput = {
+    viewCount?: SortOrder
+    likesCount?: SortOrder
+    commentsCount?: SortOrder
   }
 
   export type QuotePostCreateNestedManyWithoutUserInput = {
@@ -10212,11 +12208,18 @@ export namespace Prisma {
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
   }
 
-  export type QuoteLikeUncheckedCreateNestedManyWithoutUserInput = {
+  export type QuoteLikeCreateNestedManyWithoutUserInput = {
     create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
     createMany?: QuoteLikeCreateManyUserInputEnvelope
     connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  }
+
+  export type GeneralPostCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput> | GeneralPostCreateWithoutUserInput[] | GeneralPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutUserInput | GeneralPostCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralPostCreateManyUserInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
   }
 
   export type QuotePostUncheckedCreateNestedManyWithoutUserInput = {
@@ -10231,6 +12234,20 @@ export namespace Prisma {
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutUserInput | QuoteReplyCreateOrConnectWithoutUserInput[]
     createMany?: QuoteReplyCreateManyUserInputEnvelope
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
+  export type QuoteLikeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
+    createMany?: QuoteLikeCreateManyUserInputEnvelope
+    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  }
+
+  export type GeneralPostUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput> | GeneralPostCreateWithoutUserInput[] | GeneralPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutUserInput | GeneralPostCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralPostCreateManyUserInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -10261,20 +12278,6 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type QuoteLikeUpdateManyWithoutUserNestedInput = {
-    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
-    upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: QuoteLikeCreateManyUserInputEnvelope
-    set?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    disconnect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    delete?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
-    update?: QuoteLikeUpdateWithWhereUniqueWithoutUserInput | QuoteLikeUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: QuoteLikeUpdateManyWithWhereWithoutUserInput | QuoteLikeUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
-  }
-
   export type QuotePostUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -10303,7 +12306,7 @@ export namespace Prisma {
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
-  export type QuoteLikeUncheckedUpdateManyWithoutUserNestedInput = {
+  export type QuoteLikeUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
     upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
@@ -10315,6 +12318,20 @@ export namespace Prisma {
     update?: QuoteLikeUpdateWithWhereUniqueWithoutUserInput | QuoteLikeUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: QuoteLikeUpdateManyWithWhereWithoutUserInput | QuoteLikeUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
+  }
+
+  export type GeneralPostUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput> | GeneralPostCreateWithoutUserInput[] | GeneralPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutUserInput | GeneralPostCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutUserInput | GeneralPostUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralPostCreateManyUserInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutUserInput | GeneralPostUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutUserInput | GeneralPostUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
   export type QuotePostUncheckedUpdateManyWithoutUserNestedInput = {
@@ -10345,6 +12362,97 @@ export namespace Prisma {
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
+  export type QuoteLikeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<QuoteLikeCreateWithoutUserInput, QuoteLikeUncheckedCreateWithoutUserInput> | QuoteLikeCreateWithoutUserInput[] | QuoteLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QuoteLikeCreateOrConnectWithoutUserInput | QuoteLikeCreateOrConnectWithoutUserInput[]
+    upsert?: QuoteLikeUpsertWithWhereUniqueWithoutUserInput | QuoteLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: QuoteLikeCreateManyUserInputEnvelope
+    set?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    disconnect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    delete?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+    update?: QuoteLikeUpdateWithWhereUniqueWithoutUserInput | QuoteLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: QuoteLikeUpdateManyWithWhereWithoutUserInput | QuoteLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput> | GeneralPostCreateWithoutUserInput[] | GeneralPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutUserInput | GeneralPostCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutUserInput | GeneralPostUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralPostCreateManyUserInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutUserInput | GeneralPostUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutUserInput | GeneralPostUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
+  }
+
+  export type ForumSubCategoryCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: ForumSubCategoryCreateManyMainCategoryInputEnvelope
+    connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+  }
+
+  export type ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: ForumSubCategoryCreateManyMainCategoryInputEnvelope
+    connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+  }
+
+  export type ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: ForumSubCategoryUpsertWithWhereUniqueWithoutMainCategoryInput | ForumSubCategoryUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: ForumSubCategoryCreateManyMainCategoryInputEnvelope
+    set?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    disconnect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    delete?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    update?: ForumSubCategoryUpdateWithWhereUniqueWithoutMainCategoryInput | ForumSubCategoryUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: ForumSubCategoryUpdateManyWithWhereWithoutMainCategoryInput | ForumSubCategoryUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
+  }
+
+  export type ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: ForumSubCategoryUpsertWithWhereUniqueWithoutMainCategoryInput | ForumSubCategoryUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: ForumSubCategoryCreateManyMainCategoryInputEnvelope
+    set?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    disconnect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    delete?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+    update?: ForumSubCategoryUpdateWithWhereUniqueWithoutMainCategoryInput | ForumSubCategoryUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: ForumSubCategoryUpdateManyWithWhereWithoutMainCategoryInput | ForumSubCategoryUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
+  }
+
+  export type ForumMainCategoryCreateNestedOneWithoutSubCategoryInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutSubCategoryInput
+    connect?: ForumMainCategoryWhereUniqueInput
+  }
+
+  export type ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutSubCategoryInput
+    upsert?: ForumMainCategoryUpsertWithoutSubCategoryInput
+    connect?: ForumMainCategoryWhereUniqueInput
+    update?: XOR<XOR<ForumMainCategoryUpdateToOneWithWhereWithoutSubCategoryInput, ForumMainCategoryUpdateWithoutSubCategoryInput>, ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput>
+  }
+
+  export type QuoteReplyCreateNestedManyWithoutPostInput = {
+    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
+    createMany?: QuoteReplyCreateManyPostInputEnvelope
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
   export type QuoteLikeCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteLikeCreateWithoutPostInput, QuoteLikeUncheckedCreateWithoutPostInput> | QuoteLikeCreateWithoutPostInput[] | QuoteLikeUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutPostInput | QuoteLikeCreateOrConnectWithoutPostInput[]
@@ -10358,7 +12466,7 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type QuoteReplyCreateNestedManyWithoutPostInput = {
+  export type QuoteReplyUncheckedCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
     createMany?: QuoteReplyCreateManyPostInputEnvelope
@@ -10372,19 +12480,26 @@ export namespace Prisma {
     connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
   }
 
-  export type QuoteReplyUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
-    createMany?: QuoteReplyCreateManyPostInputEnvelope
-    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type QuoteReplyUpdateManyWithoutPostNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
+    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: QuoteReplyCreateManyPostInputEnvelope
+    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    update?: QuoteReplyUpdateWithWhereUniqueWithoutPostInput | QuoteReplyUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: QuoteReplyUpdateManyWithWhereWithoutPostInput | QuoteReplyUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
   export type QuoteLikeUpdateManyWithoutPostNestedInput = {
@@ -10411,7 +12526,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuotePostInput, UserUpdateWithoutQuotePostInput>, UserUncheckedUpdateWithoutQuotePostInput>
   }
 
-  export type QuoteReplyUpdateManyWithoutPostNestedInput = {
+  export type QuoteReplyUncheckedUpdateManyWithoutPostNestedInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
     upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
@@ -10439,38 +12554,16 @@ export namespace Prisma {
     deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
   }
 
-  export type QuoteReplyUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
-    connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
-    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutPostInput | QuoteReplyUpsertWithWhereUniqueWithoutPostInput[]
-    createMany?: QuoteReplyCreateManyPostInputEnvelope
-    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
-    update?: QuoteReplyUpdateWithWhereUniqueWithoutPostInput | QuoteReplyUpdateWithWhereUniqueWithoutPostInput[]
-    updateMany?: QuoteReplyUpdateManyWithWhereWithoutPostInput | QuoteReplyUpdateManyWithWhereWithoutPostInput[]
-    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
-  }
-
-  export type QuotePostCreateNestedOneWithoutQuoteReplyInput = {
-    create?: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
-    connectOrCreate?: QuotePostCreateOrConnectWithoutQuoteReplyInput
-    connect?: QuotePostWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutQuoteReplyInput = {
     create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
     connect?: UserWhereUniqueInput
   }
 
-  export type QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput = {
+  export type QuotePostCreateNestedOneWithoutQuoteReplyInput = {
     create?: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
     connectOrCreate?: QuotePostCreateOrConnectWithoutQuoteReplyInput
-    upsert?: QuotePostUpsertWithoutQuoteReplyInput
     connect?: QuotePostWhereUniqueInput
-    update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput, QuotePostUpdateWithoutQuoteReplyInput>, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
   }
 
   export type UserUpdateOneRequiredWithoutQuoteReplyNestedInput = {
@@ -10481,16 +12574,32 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteReplyInput, UserUpdateWithoutQuoteReplyInput>, UserUncheckedUpdateWithoutQuoteReplyInput>
   }
 
-  export type QuotePostCreateNestedOneWithoutQuoteLikeInput = {
-    create?: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
-    connectOrCreate?: QuotePostCreateOrConnectWithoutQuoteLikeInput
+  export type QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput = {
+    create?: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
+    connectOrCreate?: QuotePostCreateOrConnectWithoutQuoteReplyInput
+    upsert?: QuotePostUpsertWithoutQuoteReplyInput
     connect?: QuotePostWhereUniqueInput
+    update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput, QuotePostUpdateWithoutQuoteReplyInput>, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
   }
 
   export type UserCreateNestedOneWithoutQuoteLikeInput = {
     create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type QuotePostCreateNestedOneWithoutQuoteLikeInput = {
+    create?: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
+    connectOrCreate?: QuotePostCreateOrConnectWithoutQuoteLikeInput
+    connect?: QuotePostWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutQuoteLikeNestedInput = {
+    create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
+    upsert?: UserUpsertWithoutQuoteLikeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteLikeInput, UserUpdateWithoutQuoteLikeInput>, UserUncheckedUpdateWithoutQuoteLikeInput>
   }
 
   export type QuotePostUpdateOneRequiredWithoutQuoteLikeNestedInput = {
@@ -10501,12 +12610,18 @@ export namespace Prisma {
     update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput, QuotePostUpdateWithoutQuoteLikeInput>, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
   }
 
-  export type UserUpdateOneRequiredWithoutQuoteLikeNestedInput = {
-    create?: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
-    connectOrCreate?: UserCreateOrConnectWithoutQuoteLikeInput
-    upsert?: UserUpsertWithoutQuoteLikeInput
+  export type UserCreateNestedOneWithoutGeneralPostInput = {
+    create?: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralPostInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuoteLikeInput, UserUpdateWithoutQuoteLikeInput>, UserUncheckedUpdateWithoutQuoteLikeInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutGeneralPostNestedInput = {
+    create?: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralPostInput
+    upsert?: UserUpsertWithoutGeneralPostInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGeneralPostInput, UserUpdateWithoutGeneralPostInput>, UserUncheckedUpdateWithoutGeneralPostInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10699,6 +12814,122 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type QuotePostCreateWithoutUserInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutUserInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutUserInput = {
+    where: QuotePostWhereUniqueInput
+    create: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput>
+  }
+
+  export type QuotePostCreateManyUserInputEnvelope = {
+    data: QuotePostCreateManyUserInput | QuotePostCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QuoteReplyCreateWithoutUserInput = {
+    id?: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutUserInput = {
+    id?: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutUserInput = {
+    where: QuoteReplyWhereUniqueInput
+    create: XOR<QuoteReplyCreateWithoutUserInput, QuoteReplyUncheckedCreateWithoutUserInput>
+  }
+
+  export type QuoteReplyCreateManyUserInputEnvelope = {
+    data: QuoteReplyCreateManyUserInput | QuoteReplyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type QuoteLikeCreateWithoutUserInput = {
     id?: string
     post: QuotePostCreateNestedOneWithoutQuoteLikeInput
@@ -10719,110 +12950,130 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type QuotePostCreateWithoutUserInput = {
+  export type GeneralPostCreateWithoutUserInput = {
     id?: string
     title?: string | null
     description?: string | null
-    categoryId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
     viewCount?: number | null
     likesCount?: number | null
     commentsCount?: number | null
-    dangerousGoods?: boolean | null
     status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
   }
 
-  export type QuotePostUncheckedCreateWithoutUserInput = {
+  export type GeneralPostUncheckedCreateWithoutUserInput = {
     id?: string
     title?: string | null
     description?: string | null
-    categoryId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
     viewCount?: number | null
     likesCount?: number | null
     commentsCount?: number | null
-    dangerousGoods?: boolean | null
     status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
   }
 
-  export type QuotePostCreateOrConnectWithoutUserInput = {
+  export type GeneralPostCreateOrConnectWithoutUserInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput>
+  }
+
+  export type GeneralPostCreateManyUserInputEnvelope = {
+    data: GeneralPostCreateManyUserInput | GeneralPostCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QuotePostUpsertWithWhereUniqueWithoutUserInput = {
     where: QuotePostWhereUniqueInput
+    update: XOR<QuotePostUpdateWithoutUserInput, QuotePostUncheckedUpdateWithoutUserInput>
     create: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput>
   }
 
-  export type QuotePostCreateManyUserInputEnvelope = {
-    data: QuotePostCreateManyUserInput | QuotePostCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type QuotePostUpdateWithWhereUniqueWithoutUserInput = {
+    where: QuotePostWhereUniqueInput
+    data: XOR<QuotePostUpdateWithoutUserInput, QuotePostUncheckedUpdateWithoutUserInput>
   }
 
-  export type QuoteReplyCreateWithoutUserInput = {
-    id?: string
-    parentReplyId: string
-    createdAt?: Date | string
-    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+  export type QuotePostUpdateManyWithWhereWithoutUserInput = {
+    where: QuotePostScalarWhereInput
+    data: XOR<QuotePostUpdateManyMutationInput, QuotePostUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type QuoteReplyUncheckedCreateWithoutUserInput = {
-    id?: string
-    postId: string
-    parentReplyId: string
-    createdAt?: Date | string
+  export type QuotePostScalarWhereInput = {
+    AND?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+    OR?: QuotePostScalarWhereInput[]
+    NOT?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+    id?: StringFilter<"QuotePost"> | string
+    title?: StringNullableFilter<"QuotePost"> | string | null
+    description?: StringNullableFilter<"QuotePost"> | string | null
+    userId?: StringFilter<"QuotePost"> | string
+    name?: StringNullableFilter<"QuotePost"> | string | null
+    categoryId?: StringNullableFilter<"QuotePost"> | string | null
+    createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
+    updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
+    totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
+    totalGrossWeight?: FloatNullableFilter<"QuotePost"> | number | null
+    volumetricWeight?: FloatNullableFilter<"QuotePost"> | number | null
+    transitInsurance?: BoolNullableFilter<"QuotePost"> | boolean | null
+    width?: FloatNullableFilter<"QuotePost"> | number | null
+    height?: FloatNullableFilter<"QuotePost"> | number | null
+    length?: FloatNullableFilter<"QuotePost"> | number | null
+    viewCount?: IntNullableFilter<"QuotePost"> | number | null
+    likesCount?: IntNullableFilter<"QuotePost"> | number | null
+    commentsCount?: IntNullableFilter<"QuotePost"> | number | null
+    dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
+    status?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
+    fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
+    toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
+    fromCity?: StringNullableFilter<"QuotePost"> | string | null
+    toCity?: StringNullableFilter<"QuotePost"> | string | null
+    fromCountry?: StringNullableFilter<"QuotePost"> | string | null
+    toCountry?: StringNullableFilter<"QuotePost"> | string | null
+    fromAddress?: StringNullableFilter<"QuotePost"> | string | null
+    toAddress?: StringNullableFilter<"QuotePost"> | string | null
+    fromState?: StringNullableFilter<"QuotePost"> | string | null
+    toState?: StringNullableFilter<"QuotePost"> | string | null
+    postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
+    postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
+    shipmentType?: StringNullableFilter<"QuotePost"> | string | null
   }
 
-  export type QuoteReplyCreateOrConnectWithoutUserInput = {
+  export type QuoteReplyUpsertWithWhereUniqueWithoutUserInput = {
     where: QuoteReplyWhereUniqueInput
+    update: XOR<QuoteReplyUpdateWithoutUserInput, QuoteReplyUncheckedUpdateWithoutUserInput>
     create: XOR<QuoteReplyCreateWithoutUserInput, QuoteReplyUncheckedCreateWithoutUserInput>
   }
 
-  export type QuoteReplyCreateManyUserInputEnvelope = {
-    data: QuoteReplyCreateManyUserInput | QuoteReplyCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type QuoteReplyUpdateWithWhereUniqueWithoutUserInput = {
+    where: QuoteReplyWhereUniqueInput
+    data: XOR<QuoteReplyUpdateWithoutUserInput, QuoteReplyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type QuoteReplyUpdateManyWithWhereWithoutUserInput = {
+    where: QuoteReplyScalarWhereInput
+    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type QuoteReplyScalarWhereInput = {
+    AND?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
+    OR?: QuoteReplyScalarWhereInput[]
+    NOT?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
+    id?: StringFilter<"QuoteReply"> | string
+    userId?: StringFilter<"QuoteReply"> | string
+    postId?: StringFilter<"QuoteReply"> | string
+    parentReplyId?: StringNullableFilter<"QuoteReply"> | string | null
+    description?: StringNullableFilter<"QuoteReply"> | string | null
+    createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
+    status?: StringNullableFilter<"QuoteReply"> | string | null
+    rejectionReason?: StringNullableFilter<"QuoteReply"> | string | null
   }
 
   export type QuoteLikeUpsertWithWhereUniqueWithoutUserInput = {
@@ -10850,85 +13101,157 @@ export namespace Prisma {
     postId?: StringFilter<"QuoteLike"> | string
   }
 
-  export type QuotePostUpsertWithWhereUniqueWithoutUserInput = {
-    where: QuotePostWhereUniqueInput
-    update: XOR<QuotePostUpdateWithoutUserInput, QuotePostUncheckedUpdateWithoutUserInput>
-    create: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput>
+  export type GeneralPostUpsertWithWhereUniqueWithoutUserInput = {
+    where: GeneralPostWhereUniqueInput
+    update: XOR<GeneralPostUpdateWithoutUserInput, GeneralPostUncheckedUpdateWithoutUserInput>
+    create: XOR<GeneralPostCreateWithoutUserInput, GeneralPostUncheckedCreateWithoutUserInput>
   }
 
-  export type QuotePostUpdateWithWhereUniqueWithoutUserInput = {
-    where: QuotePostWhereUniqueInput
-    data: XOR<QuotePostUpdateWithoutUserInput, QuotePostUncheckedUpdateWithoutUserInput>
+  export type GeneralPostUpdateWithWhereUniqueWithoutUserInput = {
+    where: GeneralPostWhereUniqueInput
+    data: XOR<GeneralPostUpdateWithoutUserInput, GeneralPostUncheckedUpdateWithoutUserInput>
   }
 
-  export type QuotePostUpdateManyWithWhereWithoutUserInput = {
-    where: QuotePostScalarWhereInput
-    data: XOR<QuotePostUpdateManyMutationInput, QuotePostUncheckedUpdateManyWithoutUserInput>
+  export type GeneralPostUpdateManyWithWhereWithoutUserInput = {
+    where: GeneralPostScalarWhereInput
+    data: XOR<GeneralPostUpdateManyMutationInput, GeneralPostUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type QuotePostScalarWhereInput = {
-    AND?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
-    OR?: QuotePostScalarWhereInput[]
-    NOT?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
-    id?: StringFilter<"QuotePost"> | string
-    title?: StringNullableFilter<"QuotePost"> | string | null
-    description?: StringNullableFilter<"QuotePost"> | string | null
-    userId?: StringNullableFilter<"QuotePost"> | string | null
-    categoryId?: StringNullableFilter<"QuotePost"> | string | null
-    createdAt?: DateTimeFilter<"QuotePost"> | Date | string
-    updatedAt?: DateTimeFilter<"QuotePost"> | Date | string
-    totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
-    totalGrossWeight?: FloatNullableFilter<"QuotePost"> | number | null
-    volumetricWeight?: FloatNullableFilter<"QuotePost"> | number | null
-    transitInsurance?: BoolNullableFilter<"QuotePost"> | boolean | null
-    width?: FloatNullableFilter<"QuotePost"> | number | null
-    height?: FloatNullableFilter<"QuotePost"> | number | null
-    length?: FloatNullableFilter<"QuotePost"> | number | null
-    viewCount?: IntNullableFilter<"QuotePost"> | number | null
-    likesCount?: IntNullableFilter<"QuotePost"> | number | null
-    commentsCount?: IntNullableFilter<"QuotePost"> | number | null
-    dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
-    status?: StringNullableFilter<"QuotePost"> | string | null
-    fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
-    toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
-    fromCity?: StringNullableFilter<"QuotePost"> | string | null
-    toCity?: StringNullableFilter<"QuotePost"> | string | null
-    fromCountry?: StringNullableFilter<"QuotePost"> | string | null
-    toCountry?: StringNullableFilter<"QuotePost"> | string | null
-    fromAddress?: StringNullableFilter<"QuotePost"> | string | null
-    toAddress?: StringNullableFilter<"QuotePost"> | string | null
-    fromState?: StringNullableFilter<"QuotePost"> | string | null
-    toState?: StringNullableFilter<"QuotePost"> | string | null
-    postCategory?: StringNullableFilter<"QuotePost"> | string | null
-    shipmentType?: StringNullableFilter<"QuotePost"> | string | null
-    shipmentMode?: StringNullableFilter<"QuotePost"> | string | null
+  export type GeneralPostScalarWhereInput = {
+    AND?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
+    OR?: GeneralPostScalarWhereInput[]
+    NOT?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
+    id?: StringFilter<"GeneralPost"> | string
+    title?: StringNullableFilter<"GeneralPost"> | string | null
+    description?: StringNullableFilter<"GeneralPost"> | string | null
+    userId?: StringFilter<"GeneralPost"> | string
+    createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
+    viewCount?: IntNullableFilter<"GeneralPost"> | number | null
+    likesCount?: IntNullableFilter<"GeneralPost"> | number | null
+    commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
+    status?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
   }
 
-  export type QuoteReplyUpsertWithWhereUniqueWithoutUserInput = {
+  export type ForumSubCategoryCreateWithoutMainCategoryInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+  }
+
+  export type ForumSubCategoryUncheckedCreateWithoutMainCategoryInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+  }
+
+  export type ForumSubCategoryCreateOrConnectWithoutMainCategoryInput = {
+    where: ForumSubCategoryWhereUniqueInput
+    create: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type ForumSubCategoryCreateManyMainCategoryInputEnvelope = {
+    data: ForumSubCategoryCreateManyMainCategoryInput | ForumSubCategoryCreateManyMainCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ForumSubCategoryUpsertWithWhereUniqueWithoutMainCategoryInput = {
+    where: ForumSubCategoryWhereUniqueInput
+    update: XOR<ForumSubCategoryUpdateWithoutMainCategoryInput, ForumSubCategoryUncheckedUpdateWithoutMainCategoryInput>
+    create: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type ForumSubCategoryUpdateWithWhereUniqueWithoutMainCategoryInput = {
+    where: ForumSubCategoryWhereUniqueInput
+    data: XOR<ForumSubCategoryUpdateWithoutMainCategoryInput, ForumSubCategoryUncheckedUpdateWithoutMainCategoryInput>
+  }
+
+  export type ForumSubCategoryUpdateManyWithWhereWithoutMainCategoryInput = {
+    where: ForumSubCategoryScalarWhereInput
+    data: XOR<ForumSubCategoryUpdateManyMutationInput, ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryInput>
+  }
+
+  export type ForumSubCategoryScalarWhereInput = {
+    AND?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
+    OR?: ForumSubCategoryScalarWhereInput[]
+    NOT?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
+    id?: StringFilter<"ForumSubCategory"> | string
+    name?: StringNullableFilter<"ForumSubCategory"> | string | null
+    enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
+    mainCategoryId?: StringFilter<"ForumSubCategory"> | string
+  }
+
+  export type ForumMainCategoryCreateWithoutSubCategoryInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+  }
+
+  export type ForumMainCategoryUncheckedCreateWithoutSubCategoryInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+  }
+
+  export type ForumMainCategoryCreateOrConnectWithoutSubCategoryInput = {
+    where: ForumMainCategoryWhereUniqueInput
+    create: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type ForumMainCategoryUpsertWithoutSubCategoryInput = {
+    update: XOR<ForumMainCategoryUpdateWithoutSubCategoryInput, ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput>
+    create: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
+    where?: ForumMainCategoryWhereInput
+  }
+
+  export type ForumMainCategoryUpdateToOneWithWhereWithoutSubCategoryInput = {
+    where?: ForumMainCategoryWhereInput
+    data: XOR<ForumMainCategoryUpdateWithoutSubCategoryInput, ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput>
+  }
+
+  export type ForumMainCategoryUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type QuoteReplyCreateWithoutPostInput = {
+    id?: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutQuoteReplyInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutPostInput = {
+    id?: string
+    userId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutPostInput = {
     where: QuoteReplyWhereUniqueInput
-    update: XOR<QuoteReplyUpdateWithoutUserInput, QuoteReplyUncheckedUpdateWithoutUserInput>
-    create: XOR<QuoteReplyCreateWithoutUserInput, QuoteReplyUncheckedCreateWithoutUserInput>
+    create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
   }
 
-  export type QuoteReplyUpdateWithWhereUniqueWithoutUserInput = {
-    where: QuoteReplyWhereUniqueInput
-    data: XOR<QuoteReplyUpdateWithoutUserInput, QuoteReplyUncheckedUpdateWithoutUserInput>
-  }
-
-  export type QuoteReplyUpdateManyWithWhereWithoutUserInput = {
-    where: QuoteReplyScalarWhereInput
-    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type QuoteReplyScalarWhereInput = {
-    AND?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
-    OR?: QuoteReplyScalarWhereInput[]
-    NOT?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
-    id?: StringFilter<"QuoteReply"> | string
-    userId?: StringFilter<"QuoteReply"> | string
-    postId?: StringFilter<"QuoteReply"> | string
-    parentReplyId?: StringFilter<"QuoteReply"> | string
-    createdAt?: DateTimeFilter<"QuoteReply"> | Date | string
+  export type QuoteReplyCreateManyPostInputEnvelope = {
+    data: QuoteReplyCreateManyPostInput | QuoteReplyCreateManyPostInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuoteLikeCreateWithoutPostInput = {
@@ -10971,8 +13294,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuotePostInput = {
@@ -10995,8 +13319,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutQuotePostInput = {
@@ -11004,28 +13329,20 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
   }
 
-  export type QuoteReplyCreateWithoutPostInput = {
-    id?: string
-    parentReplyId: string
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutQuoteReplyInput
-  }
-
-  export type QuoteReplyUncheckedCreateWithoutPostInput = {
-    id?: string
-    userId: string
-    parentReplyId: string
-    createdAt?: Date | string
-  }
-
-  export type QuoteReplyCreateOrConnectWithoutPostInput = {
+  export type QuoteReplyUpsertWithWhereUniqueWithoutPostInput = {
     where: QuoteReplyWhereUniqueInput
+    update: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
     create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
   }
 
-  export type QuoteReplyCreateManyPostInputEnvelope = {
-    data: QuoteReplyCreateManyPostInput | QuoteReplyCreateManyPostInput[]
-    skipDuplicates?: boolean
+  export type QuoteReplyUpdateWithWhereUniqueWithoutPostInput = {
+    where: QuoteReplyWhereUniqueInput
+    data: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
+  }
+
+  export type QuoteReplyUpdateManyWithWhereWithoutPostInput = {
+    where: QuoteReplyScalarWhereInput
+    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutPostInput>
   }
 
   export type QuoteLikeUpsertWithWhereUniqueWithoutPostInput = {
@@ -11075,8 +13392,9 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuotePostInput = {
@@ -11099,101 +13417,9 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type QuoteReplyUpsertWithWhereUniqueWithoutPostInput = {
-    where: QuoteReplyWhereUniqueInput
-    update: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
-    create: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput>
-  }
-
-  export type QuoteReplyUpdateWithWhereUniqueWithoutPostInput = {
-    where: QuoteReplyWhereUniqueInput
-    data: XOR<QuoteReplyUpdateWithoutPostInput, QuoteReplyUncheckedUpdateWithoutPostInput>
-  }
-
-  export type QuoteReplyUpdateManyWithWhereWithoutPostInput = {
-    where: QuoteReplyScalarWhereInput
-    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutPostInput>
-  }
-
-  export type QuotePostCreateWithoutQuoteReplyInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
-  }
-
-  export type QuotePostUncheckedCreateWithoutQuoteReplyInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    userId?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type QuotePostCreateOrConnectWithoutQuoteReplyInput = {
-    where: QuotePostWhereUniqueInput
-    create: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutQuoteReplyInput = {
@@ -11216,8 +13442,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuoteReplyInput = {
@@ -11240,8 +13467,9 @@ export namespace Prisma {
     accountType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutQuoteReplyInput = {
@@ -11249,87 +13477,85 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
   }
 
-  export type QuotePostUpsertWithoutQuoteReplyInput = {
-    update: XOR<QuotePostUpdateWithoutQuoteReplyInput, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
+  export type QuotePostCreateWithoutQuoteReplyInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    user?: UserCreateNestedOneWithoutQuotePostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutQuoteReplyInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutQuoteReplyInput = {
+    where: QuotePostWhereUniqueInput
     create: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
-    where?: QuotePostWhereInput
-  }
-
-  export type QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput = {
-    where?: QuotePostWhereInput
-    data: XOR<QuotePostUpdateWithoutQuoteReplyInput, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
-  }
-
-  export type QuotePostUpdateWithoutQuoteReplyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
-  }
-
-  export type QuotePostUncheckedUpdateWithoutQuoteReplyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type UserUpsertWithoutQuoteReplyInput = {
@@ -11363,8 +13589,9 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteReplyInput = {
@@ -11387,85 +13614,96 @@ export namespace Prisma {
     accountType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type QuotePostCreateWithoutQuoteLikeInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    user?: UserCreateNestedOneWithoutQuotePostInput
-    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+  export type QuotePostUpsertWithoutQuoteReplyInput = {
+    update: XOR<QuotePostUpdateWithoutQuoteReplyInput, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
+    create: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
+    where?: QuotePostWhereInput
   }
 
-  export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
-    id?: string
-    title?: string | null
-    description?: string | null
-    userId?: string | null
-    categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    totalNetWeight?: number | null
-    totalGrossWeight?: number | null
-    volumetricWeight?: number | null
-    transitInsurance?: boolean | null
-    width?: number | null
-    height?: number | null
-    length?: number | null
-    viewCount?: number | null
-    likesCount?: number | null
-    commentsCount?: number | null
-    dangerousGoods?: boolean | null
-    status?: string | null
-    fromPostalCode?: string | null
-    toPostalCode?: string | null
-    fromCity?: string | null
-    toCity?: string | null
-    fromCountry?: string | null
-    toCountry?: string | null
-    fromAddress?: string | null
-    toAddress?: string | null
-    fromState?: string | null
-    toState?: string | null
-    postCategory?: string | null
-    shipmentType?: string | null
-    shipmentMode?: string | null
-    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+  export type QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput = {
+    where?: QuotePostWhereInput
+    data: XOR<QuotePostUpdateWithoutQuoteReplyInput, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
   }
 
-  export type QuotePostCreateOrConnectWithoutQuoteLikeInput = {
-    where: QuotePostWhereUniqueInput
-    create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
+  export type QuotePostUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    user?: UserUpdateOneWithoutQuotePostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type UserCreateWithoutQuoteLikeInput = {
@@ -11490,6 +13728,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuoteLikeInput = {
@@ -11514,6 +13753,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutQuoteLikeInput = {
@@ -11521,87 +13761,85 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutQuoteLikeInput, UserUncheckedCreateWithoutQuoteLikeInput>
   }
 
-  export type QuotePostUpsertWithoutQuoteLikeInput = {
-    update: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
+  export type QuotePostCreateWithoutQuoteLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    user?: UserCreateNestedOneWithoutQuotePostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    categoryId?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutQuoteLikeInput = {
+    where: QuotePostWhereUniqueInput
     create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
-    where?: QuotePostWhereInput
-  }
-
-  export type QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput = {
-    where?: QuotePostWhereInput
-    data: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
-  }
-
-  export type QuotePostUpdateWithoutQuoteLikeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneWithoutQuotePostNestedInput
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
-  }
-
-  export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type UserUpsertWithoutQuoteLikeInput = {
@@ -11637,6 +13875,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteLikeInput = {
@@ -11661,20 +13900,220 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type QuoteLikeCreateManyUserInput = {
+  export type QuotePostUpsertWithoutQuoteLikeInput = {
+    update: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
+    create: XOR<QuotePostCreateWithoutQuoteLikeInput, QuotePostUncheckedCreateWithoutQuoteLikeInput>
+    where?: QuotePostWhereInput
+  }
+
+  export type QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput = {
+    where?: QuotePostWhereInput
+    data: XOR<QuotePostUpdateWithoutQuoteLikeInput, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
+  }
+
+  export type QuotePostUpdateWithoutQuoteLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    user?: UserUpdateOneWithoutQuotePostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type UserCreateWithoutGeneralPostInput = {
     id?: string
-    postId: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGeneralPostInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGeneralPostInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type UserUpsertWithoutGeneralPostInput = {
+    update: XOR<UserUpdateWithoutGeneralPostInput, UserUncheckedUpdateWithoutGeneralPostInput>
+    create: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGeneralPostInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGeneralPostInput, UserUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type UserUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type QuotePostCreateManyUserInput = {
     id?: string
     title?: string | null
     description?: string | null
+    name?: string | null
     categoryId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
     totalNetWeight?: number | null
     totalGrossWeight?: number | null
     volumetricWeight?: number | null
@@ -11687,6 +14126,7 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
+    rejectionReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -11697,16 +14137,181 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postCategory?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
     shipmentType?: string | null
-    shipmentMode?: string | null
   }
 
   export type QuoteReplyCreateManyUserInput = {
     id?: string
     postId: string
-    parentReplyId: string
+    parentReplyId?: string | null
+    description?: string | null
     createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type QuoteLikeCreateManyUserInput = {
+    id?: string
+    postId: string
+  }
+
+  export type GeneralPostCreateManyUserInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+  }
+
+  export type QuotePostUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuoteReplyUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuoteReplyUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteLikeUpdateWithoutUserInput = {
@@ -11724,131 +14329,83 @@ export namespace Prisma {
     postId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type QuotePostUpdateWithoutUserInput = {
+  export type GeneralPostUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
-    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type QuotePostUncheckedUpdateWithoutUserInput = {
+  export type GeneralPostUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
-    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
-    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type QuotePostUncheckedUpdateManyWithoutUserInput = {
+  export type GeneralPostUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
-    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    width?: NullableFloatFieldUpdateOperationsInput | number | null
-    height?: NullableFloatFieldUpdateOperationsInput | number | null
-    length?: NullableFloatFieldUpdateOperationsInput | number | null
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
-    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
-    toCity?: NullableStringFieldUpdateOperationsInput | string | null
-    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
-    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    fromState?: NullableStringFieldUpdateOperationsInput | string | null
-    toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
-    shipmentMode?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type QuoteReplyUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+  export type ForumSubCategoryCreateManyMainCategoryInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
   }
 
-  export type QuoteReplyUncheckedUpdateWithoutUserInput = {
+  export type ForumSubCategoryUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    postId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
-  export type QuoteReplyUncheckedUpdateManyWithoutUserInput = {
+  export type ForumSubCategoryUncheckedUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    postId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type QuoteReplyCreateManyPostInput = {
+    id?: string
+    userId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
   }
 
   export type QuoteLikeCreateManyPostInput = {
@@ -11856,11 +14413,34 @@ export namespace Prisma {
     userId: string
   }
 
-  export type QuoteReplyCreateManyPostInput = {
-    id?: string
-    userId: string
-    parentReplyId: string
-    createdAt?: Date | string
+  export type QuoteReplyUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuoteReplyUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteLikeUpdateWithoutPostInput = {
@@ -11876,27 +14456,6 @@ export namespace Prisma {
   export type QuoteLikeUncheckedUpdateManyWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type QuoteReplyUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
-  }
-
-  export type QuoteReplyUncheckedUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuoteReplyUncheckedUpdateManyWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

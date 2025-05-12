@@ -151,7 +151,8 @@ exports.Prisma.ForumMainCategoryScalarFieldEnum = {
 exports.Prisma.ForumSubCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  enabled: 'enabled'
+  enabled: 'enabled',
+  mainCategoryId: 'mainCategoryId'
 };
 
 exports.Prisma.QuotePostScalarFieldEnum = {
@@ -159,6 +160,7 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   title: 'title',
   description: 'description',
   userId: 'userId',
+  name: 'name',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -174,6 +176,7 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   commentsCount: 'commentsCount',
   dangerousGoods: 'dangerousGoods',
   status: 'status',
+  rejectionReason: 'rejectionReason',
   fromPostalCode: 'fromPostalCode',
   toPostalCode: 'toPostalCode',
   fromCity: 'fromCity',
@@ -184,9 +187,9 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   toAddress: 'toAddress',
   fromState: 'fromState',
   toState: 'toState',
-  postCategory: 'postCategory',
-  shipmentType: 'shipmentType',
-  shipmentMode: 'shipmentMode'
+  postMainCategory: 'postMainCategory',
+  postSubCategory: 'postSubCategory',
+  shipmentType: 'shipmentType'
 };
 
 exports.Prisma.QuoteReplyScalarFieldEnum = {
@@ -194,13 +197,32 @@ exports.Prisma.QuoteReplyScalarFieldEnum = {
   userId: 'userId',
   postId: 'postId',
   parentReplyId: 'parentReplyId',
-  createdAt: 'createdAt'
+  description: 'description',
+  createdAt: 'createdAt',
+  status: 'status',
+  rejectionReason: 'rejectionReason'
 };
 
 exports.Prisma.QuoteLikeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   postId: 'postId'
+};
+
+exports.Prisma.GeneralPostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  viewCount: 'viewCount',
+  likesCount: 'likesCount',
+  commentsCount: 'commentsCount',
+  status: 'status',
+  rejectionReason: 'rejectionReason',
+  generalPostMainCategory: 'generalPostMainCategory',
+  generalPostSubCategory: 'generalPostSubCategory'
 };
 
 exports.Prisma.SortOrder = {
@@ -225,7 +247,8 @@ exports.Prisma.ModelName = {
   ForumSubCategory: 'ForumSubCategory',
   QuotePost: 'QuotePost',
   QuoteReply: 'QuoteReply',
-  QuoteLike: 'QuoteLike'
+  QuoteLike: 'QuoteLike',
+  GeneralPost: 'GeneralPost'
 };
 
 /**
