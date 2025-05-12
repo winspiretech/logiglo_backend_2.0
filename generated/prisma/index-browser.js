@@ -203,6 +203,60 @@ exports.Prisma.QuoteLikeScalarFieldEnum = {
   postId: 'postId'
 };
 
+exports.Prisma.AdminScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  institution: 'institution',
+  title: 'title',
+  description: 'description',
+  instructor: 'instructor',
+  logoUrl: 'logoUrl',
+  thumbnailUrl: 'thumbnailUrl',
+  brochureUrl: 'brochureUrl',
+  youtubeShortUrl: 'youtubeShortUrl',
+  educationLevel: 'educationLevel',
+  courseDifficulty: 'courseDifficulty',
+  mode: 'mode',
+  currency: 'currency',
+  price: 'price',
+  duration: 'duration',
+  language: 'language',
+  status: 'status',
+  category: 'category',
+  enrollmentCount: 'enrollmentCount',
+  tags: 'tags',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+};
+
+exports.Prisma.CourseModuleScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  courseId: 'courseId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CourseQueryScalarFieldEnum = {
+  id: 'id',
+  institutionName: 'institutionName',
+  institutionType: 'institutionType',
+  primaryContactName: 'primaryContactName',
+  primaryContactTitle: 'primaryContactTitle',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  websiteUrl: 'websiteUrl',
+  message: 'message',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -217,7 +271,45 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.EducationLevel = exports.$Enums.EducationLevel = {
+  UNDERGRADUATE: 'UNDERGRADUATE',
+  GRADUATE: 'GRADUATE',
+  POSTGRADUATE: 'POSTGRADUATE'
+};
 
+exports.CourseDifficulty = exports.$Enums.CourseDifficulty = {
+  BEGINNER: 'BEGINNER',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED'
+};
+
+exports.CourseMode = exports.$Enums.CourseMode = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  HYBRID: 'HYBRID'
+};
+
+exports.Currency = exports.$Enums.Currency = {
+  INR: 'INR',
+  USD: 'USD',
+  EUR: 'EUR'
+};
+
+exports.CourseStatus = exports.$Enums.CourseStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.InstitutionType = exports.$Enums.InstitutionType = {
+  SCHOOL: 'SCHOOL',
+  COLLEGE: 'COLLEGE',
+  UNIVERSITY: 'UNIVERSITY',
+  COACHING_CENTER: 'COACHING_CENTER',
+  TRAINING_INSTITUTE: 'TRAINING_INSTITUTE',
+  NGO: 'NGO',
+  OTHER: 'OTHER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -225,7 +317,11 @@ exports.Prisma.ModelName = {
   ForumSubCategory: 'ForumSubCategory',
   QuotePost: 'QuotePost',
   QuoteReply: 'QuoteReply',
-  QuoteLike: 'QuoteLike'
+  QuoteLike: 'QuoteLike',
+  Admin: 'Admin',
+  Course: 'Course',
+  CourseModule: 'CourseModule',
+  CourseQuery: 'CourseQuery'
 };
 
 /**
