@@ -25,7 +25,7 @@ module.exports.createQuotePost = async (req, res) => {
 
     const newQuotePost = await prisma.quotePost.create({
       data: {
-        userId,
+        user: { connect: { id: userId } },
         ...data,
       },
     });

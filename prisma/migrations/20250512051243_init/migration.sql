@@ -37,6 +37,7 @@ CREATE TABLE "ForumSubCategory" (
     "id" TEXT NOT NULL,
     "name" TEXT,
     "enabled" BOOLEAN DEFAULT false,
+    "mainCategoryId" TEXT NOT NULL,
 
     CONSTRAINT "ForumSubCategory_pkey" PRIMARY KEY ("id")
 );
@@ -46,22 +47,24 @@ CREATE TABLE "QuotePost" (
     "id" TEXT NOT NULL,
     "title" TEXT,
     "description" TEXT,
-    "userId" TEXT,
+    "userId" TEXT NOT NULL,
+    "name" TEXT,
     "categoryId" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "totalNetWeight" DOUBLE PRECISION DEFAULT 0,
-    "totalGrossWeight" DOUBLE PRECISION DEFAULT 0,
-    "volumetricWeight" DOUBLE PRECISION DEFAULT 0,
-    "transitInsurance" BOOLEAN DEFAULT false,
-    "width" DOUBLE PRECISION DEFAULT 0,
-    "height" DOUBLE PRECISION DEFAULT 0,
-    "length" DOUBLE PRECISION DEFAULT 0,
-    "viewCount" INTEGER DEFAULT 0,
-    "likesCount" INTEGER DEFAULT 0,
-    "commentsCount" INTEGER DEFAULT 0,
-    "dangerousGoods" BOOLEAN DEFAULT false,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "totalNetWeight" DOUBLE PRECISION,
+    "totalGrossWeight" DOUBLE PRECISION,
+    "volumetricWeight" DOUBLE PRECISION,
+    "transitInsurance" BOOLEAN,
+    "width" DOUBLE PRECISION,
+    "height" DOUBLE PRECISION,
+    "length" DOUBLE PRECISION,
+    "viewCount" INTEGER,
+    "likesCount" INTEGER,
+    "commentsCount" INTEGER,
+    "dangerousGoods" BOOLEAN,
     "status" TEXT DEFAULT 'pending',
+    "rejectionReason" TEXT,
     "fromPostalCode" TEXT,
     "toPostalCode" TEXT,
     "fromCity" TEXT,
@@ -72,9 +75,9 @@ CREATE TABLE "QuotePost" (
     "toAddress" TEXT,
     "fromState" TEXT,
     "toState" TEXT,
-    "postCategory" TEXT,
-    "shipmentType" TEXT DEFAULT 'domestic',
-    "shipmentMode" TEXT,
+    "postMainCategory" TEXT,
+    "postSubCategory" TEXT,
+    "shipmentType" TEXT,
 
     CONSTRAINT "QuotePost_pkey" PRIMARY KEY ("id")
 );
@@ -84,8 +87,11 @@ CREATE TABLE "QuoteReply" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
-    "parentReplyId" TEXT NOT NULL,
+    "parentReplyId" TEXT,
+    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" TEXT DEFAULT 'pending',
+    "rejectionReason" TEXT,
 
     CONSTRAINT "QuoteReply_pkey" PRIMARY KEY ("id")
 );
@@ -99,6 +105,25 @@ CREATE TABLE "QuoteLike" (
     CONSTRAINT "QuoteLike_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "GeneralPost" (
+    "id" TEXT NOT NULL,
+    "title" TEXT,
+    "description" TEXT,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "viewCount" INTEGER,
+    "likesCount" INTEGER,
+    "commentsCount" INTEGER,
+    "status" TEXT DEFAULT 'pending',
+    "rejectionReason" TEXT,
+    "generalPostMainCategory" TEXT,
+    "generalPostSubCategory" TEXT,
+
+    CONSTRAINT "GeneralPost_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -106,7 +131,10 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "User_mobileNo_key" ON "User"("mobileNo");
 
 -- AddForeignKey
-ALTER TABLE "QuotePost" ADD CONSTRAINT "QuotePost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ForumSubCategory" ADD CONSTRAINT "ForumSubCategory_mainCategoryId_fkey" FOREIGN KEY ("mainCategoryId") REFERENCES "ForumMainCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuotePost" ADD CONSTRAINT "QuotePost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuoteReply" ADD CONSTRAINT "QuoteReply_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -119,3 +147,6 @@ ALTER TABLE "QuoteLike" ADD CONSTRAINT "QuoteLike_userId_fkey" FOREIGN KEY ("use
 
 -- AddForeignKey
 ALTER TABLE "QuoteLike" ADD CONSTRAINT "QuoteLike_postId_fkey" FOREIGN KEY ("postId") REFERENCES "QuotePost"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "GeneralPost" ADD CONSTRAINT "GeneralPost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
