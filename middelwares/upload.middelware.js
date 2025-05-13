@@ -8,7 +8,7 @@ const fileFilter = (req, file, cb) => {
     const ext = path.extname(file.originalname).toLocaleLowerCase()
 
     if(allowedTypes.includes(ext)){
-        cd(null, true)
+        cb(null, true)
     }else{
         cb(new Error('only images and PDFs are allowed !'))
     }
