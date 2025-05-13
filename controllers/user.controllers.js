@@ -1,5 +1,5 @@
 const { ApiResponse } = require('../utils/ApiResponse');
-const UserSchema = require("../validation/userSchema.validation.js")
+const UserSchema = require('../validation/userSchema.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');

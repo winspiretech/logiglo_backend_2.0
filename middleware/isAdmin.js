@@ -1,18 +1,18 @@
-const prisma = require("../models/prismaClient")
-const jwt = require("jsonwebtoken");
-const { ApiError } = require("../utils/ApiError");
+const prisma = require('../models/prismaClient');
+const jwt = require('jsonwebtoken');
+const { ApiError } = require('../utils/ApiError');
 
 const isAdmin = async (req, res, next) => {
   try {
-    const token = req.cookies["Token"];
+    const token = req.cookies['Token'];
     if (!token) {
-      throw new ApiError(401, "Unauthorized. No token found.");
+      throw new ApiError(401, 'Unauthorized. No token found.');
     }
 
     const decodedData = jwt.verify(token, process.env.TOKEN_SECRET);
 
     if (!decodedData) {
-      throw new ApiError(401, "Unauthorized. No token found.");
+      throw new ApiError(401, 'Unauthorized. No token found.');
     }
 
     const loggedInUser = await prisma.user.findUnique({
@@ -22,16 +22,16 @@ const isAdmin = async (req, res, next) => {
     });
 
     if (!loggedInUser) {
-      throw new ApiError(401, "User not found.");
+      throw new ApiError(401, 'User not found.');
     }
 
-    const {role} = loggedInUser;
+    const { role } = loggedInUser;
 
-    if(role !== "admin"){
-      throw new ApiError(400,"Not an Admin, Access denied")
+    if (role !== 'admin') {
+      throw new ApiError(400, 'Not an Admin, Access denied');
     }
 
-    const {password, ...sendableData} = loggedInUser
+    const { password, ...sendableData } = loggedInUser;
 
     req.user = sendableData; // Add user info to req for downstream use
     next();
