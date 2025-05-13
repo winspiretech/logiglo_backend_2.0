@@ -1,19 +1,31 @@
 const express = require('express');
+const quotePostRoutes = require('./routes/quotePost.routes.js');
+const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
+const userRoutes = require('./routes/user.routes.js');
+const generalPostRoutes = require('./routes/generalPost.routes.js');
+const uploadRoute = require('./routes/uploadImage.routes.js');
+const path = require('path');
 const app = express();
-
 // Middleware to parse JSON bodies
 app.use(express.json());
+//user Route
+app.use('/api/user', userRoutes);
 
-// A simple route
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+//QuotePost Route
+app.use('/api/quotePost', quotePostRoutes);
 
+//General Post Route
+app.use('/api/generalPost', generalPostRoutes);
+//ForumCategory Route
+app.use('/api/forumCategory', forumCategoryRoutes);
 // Example of a route
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.json({
     message: ' Shree Ganeshay Namah || Radhay Radhay',
   });
 });
+// Serve uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/uploadFiles', uploadRoute);
 
 module.exports = app;

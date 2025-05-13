@@ -1,0 +1,394 @@
+{
+  "info": {
+    "name": "QuotePost API Full",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create QuotePost",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"<USER_ID>\",\n  \"title\": \"Sample Post\",\n  \"description\": \"This is a sample post for shipping\",\n  \"postMainCategory\": \"<MAIN_CATEGORY_ID>\",\n  \"postSubCategory\": \"<SUB_CATEGORY_ID>\",\n  \"totalNetWeight\": 10.5,\n  \"totalGrossWeight\": 12,\n  \"volumetricWeight\": 11,\n  \"transitInsurance\": true,\n  \"width\": 50,\n  \"height\": 30,\n  \"length\": 40,\n  \"dangerousGoods\": false,\n  \"status\": \"pending\",\n  \"fromPostalCode\": \"12345\",\n  \"toPostalCode\": \"67890\",\n  \"fromCity\": \"New York\",\n  \"toCity\": \"Los Angeles\",\n  \"fromCountry\": \"USA\",\n  \"toCountry\": \"USA\",\n  \"fromAddress\": \"123 Main St\",\n  \"toAddress\": \"456 Elm St\",\n  \"fromState\": \"NY\",\n  \"toState\": \"CA\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/createquotepost",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "createquotepost"]
+        }
+      }
+    },
+    {
+      "name": "Update QuotePost",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Title\",\n  \"description\": \"Updated description\",\n  \"status\": \"success\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/updatequotepost/<POST_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "updatequotepost", "<POST_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get Draft QuotePosts by User ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getdraftquotepostsbyuserid/<USER_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": [
+            "api",
+            "quotePost",
+            "getdraftquotepostsbyuserid",
+            "<USER_ID>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Pending QuotePosts",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getpendingquoteposts",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getpendingquoteposts"]
+        }
+      }
+    },
+    {
+      "name": "Get Successful QuotePosts",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getsuccessquoteposts",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getsuccessquoteposts"]
+        }
+      }
+    },
+    {
+      "name": "Get QuotePosts by User ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getquotepostsbyuserid/<USER_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getquotepostsbyuserid", "<USER_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get QuoteReplies by Post ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getquotereplybypostid/<POST_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getquotereplybypostid", "<POST_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get QuoteLike Count by Post ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getquotelikecountbypostid/<POST_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getquotelikecountbypostid", "<POST_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get QuotePost by Post ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/quotePost/getquotepostbypostid/<POST_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "quotePost", "getquotepostbypostid", "<POST_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Create ForumMainCategory",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Electronics\",\n  \"enabled\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/forum/createforummaincategory",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "createforummaincategory"]
+        }
+      }
+    },
+    {
+      "name": "Update ForumMainCategory",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Electronics\",\n  \"enabled\": false\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/forum/updateforummaincategory/<CATEGORY_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "updateforummaincategory", "<CATEGORY_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get ForumMainCategory by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/forum/getforummaincategorybyid/<CATEGORY_ID>?includeSubCategories=true&includePosts=true",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "getforummaincategorybyid", "<CATEGORY_ID>"],
+          "query": [
+            { "key": "includeSubCategories", "value": "true" },
+            { "key": "includePosts", "value": "true" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All ForumMainCategories",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/forum/getallforummaincategories",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "getallforummaincategories"]
+        }
+      }
+    },
+    {
+      "name": "Create ForumSubCategory",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Mobile Phones\",\n  \"enabled\": true,\n  \"mainCategoryId\": \"<MAIN_CATEGORY_ID>\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/forum/createforumsubcategory",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "createforumsubcategory"]
+        }
+      }
+    },
+    {
+      "name": "Update ForumSubCategory",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Mobile Phones\",\n  \"enabled\": false\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/forum/updateforumsubcategory/<SUBCATEGORY_ID>",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "updateforumsubcategory", "<SUBCATEGORY_ID>"]
+        }
+      }
+    },
+    {
+      "name": "Get ForumSubCategory by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/forum/getforumsubcategorybyid/<SUBCATEGORY_ID>?includePosts=true",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": [
+            "api",
+            "forum",
+            "getforumsubcategorybyid",
+            "<SUBCATEGORY_ID>"
+          ],
+          "query": [{ "key": "includePosts", "value": "true" }]
+        }
+      }
+    },
+    {
+      "name": "Get All ForumSubCategories",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/forum/getallforumsubcategories",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "forum", "getallforumsubcategories"]
+        }
+      }
+    },
+    {
+      "name": "GeneralPost",
+      "item": [
+        {
+          "name": "Create GeneralPost",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<USER_ID>\",\n  \"content\": \"Sample content for GeneralPost\",\n  \"status\": \"draft\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "create"]
+            }
+          }
+        },
+        {
+          "name": "Update GeneralPost",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated content for GeneralPost\",\n  \"status\": \"published\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/update/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "update", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get GeneralPost by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/get/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "get", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get Replies by GeneralPost ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/replies/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "replies", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get Likes by GeneralPost ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/likes/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "likes", "<POST_ID>"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

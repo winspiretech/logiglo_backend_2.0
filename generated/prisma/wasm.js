@@ -120,9 +120,154 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  verified: 'verified',
+  role: 'role',
+  mobileNo: 'mobileNo',
+  country: 'country',
+  city: 'city',
+  address: 'address',
+  postalCode: 'postalCode',
+  profilePic: 'profilePic',
+  bio: 'bio',
+  online: 'online',
+  lastSeen: 'lastSeen',
+  rating: 'rating',
+  accountType: 'accountType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ForumMainCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled'
+};
+
+exports.Prisma.ForumSubCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled',
+  mainCategoryId: 'mainCategoryId'
+};
+
+exports.Prisma.QuotePostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  totalNetWeight: 'totalNetWeight',
+  totalGrossWeight: 'totalGrossWeight',
+  volumetricWeight: 'volumetricWeight',
+  transitInsurance: 'transitInsurance',
+  width: 'width',
+  height: 'height',
+  length: 'length',
+  viewCount: 'viewCount',
+  likesCount: 'likesCount',
+  commentsCount: 'commentsCount',
+  dangerousGoods: 'dangerousGoods',
+  status: 'status',
+  rejectionReason: 'rejectionReason',
+  fromPostalCode: 'fromPostalCode',
+  toPostalCode: 'toPostalCode',
+  fromCity: 'fromCity',
+  toCity: 'toCity',
+  fromCountry: 'fromCountry',
+  toCountry: 'toCountry',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  fromState: 'fromState',
+  toState: 'toState',
+  postMainCategory: 'postMainCategory',
+  postSubCategory: 'postSubCategory',
+  shipmentType: 'shipmentType'
+};
+
+exports.Prisma.QuoteReplyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  parentReplyId: 'parentReplyId',
+  description: 'description',
+  createdAt: 'createdAt',
+  status: 'status',
+  rejectionReason: 'rejectionReason'
+};
+
+exports.Prisma.QuoteLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId'
+};
+
+exports.Prisma.GeneralPostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  viewCount: 'viewCount',
+  likesCount: 'likesCount',
+  commentsCount: 'commentsCount',
+  status: 'status',
+  rejectionReason: 'rejectionReason',
+  generalPostMainCategory: 'generalPostMainCategory',
+  generalPostSubCategory: 'generalPostSubCategory'
+};
+
+exports.Prisma.GeneralReplyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  parentReplyId: 'parentReplyId',
+  description: 'description',
+  createdAt: 'createdAt',
+  status: 'status',
+  rejectionReason: 'rejectionReason'
+};
+
+exports.Prisma.GeneralLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-
+  User: 'User',
+  ForumMainCategory: 'ForumMainCategory',
+  ForumSubCategory: 'ForumSubCategory',
+  QuotePost: 'QuotePost',
+  QuoteReply: 'QuoteReply',
+  QuoteLike: 'QuoteLike',
+  GeneralPost: 'GeneralPost',
+  GeneralReply: 'GeneralReply',
+  GeneralLike: 'GeneralLike'
 };
 
 /**
