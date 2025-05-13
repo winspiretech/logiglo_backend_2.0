@@ -1,32 +1,11 @@
 const prisma = require('../models/prismaClient');
 const { z } = require('zod');
-
-// Validation schemas
-const forumMainCategorySchema = z.object({
-  name: z.string().nullable().optional(),
-  enabled: z.boolean().nullable().optional(),
-});
-
-const forumSubCategorySchema = z.object({
-  name: z.string().nullable().optional(),
-  enabled: z.boolean().nullable().optional(),
-  mainCategoryId: z.string().uuid(),
-});
-
-const updateForumMainCategorySchema = z.object({
-  name: z.string().nullable().optional(),
-  enabled: z.boolean().nullable().optional(),
-}).refine(data => Object.keys(data).length > 0, {
-  message: "At least one field must be provided for update",
-});
-
-const updateForumSubCategorySchema = z.object({
-  name: z.string().nullable().optional(),
-  enabled: z.boolean().nullable().optional(),
-  mainCategoryId: z.string().uuid().optional(),
-}).refine(data => Object.keys(data).length > 0, {
-  message: "At least one field must be provided for update",
-});
+const {
+  forumMainCategorySchema,
+  forumSubCategorySchema,
+  updateForumMainCategorySchema,
+  updateForumSubCategorySchema,
+} = require('../validation/forum.validation');
 
 // --- ForumMainCategory Controllers ---
 
@@ -72,7 +51,9 @@ module.exports.updateForumMainCategory = async (req, res) => {
     const data = bodyValidation.data;
 
     // Verify category exists
-    const category = await prisma.forumMainCategory.findUnique({ where: { id } });
+    const category = await prisma.forumMainCategory.findUnique({
+      where: { id },
+    });
     if (!category) {
       return res.status(404).json({ error: 'Main category not found' });
     }
@@ -100,10 +81,21 @@ module.exports.getForumMainCategoryById = async (req, res) => {
 
     const { id } = validationResult.data;
     const includeSubCategories = req.query.includeSubCategories === 'true';
+    const includePosts = req.query.includePosts === 'true';
 
     const category = await prisma.forumMainCategory.findUnique({
       where: { id },
-      include: includeSubCategories ? { subCategory: true } : undefined,
+      include: {
+        subCategory: includeSubCategories
+          ? {
+              include: includePosts
+                ? { quotePost: true, generalPost: true }
+                : undefined,
+            }
+          : undefined,
+        quotePost: includePosts,
+        generalPost: includePosts,
+      },
     });
 
     if (!category) {
@@ -186,7 +178,9 @@ module.exports.updateForumSubCategory = async (req, res) => {
     const { mainCategoryId, ...data } = bodyValidation.data;
 
     // Verify sub-category exists
-    const category = await prisma.forumSubCategory.findUnique({ where: { id } });
+    const category = await prisma.forumSubCategory.findUnique({
+      where: { id },
+    });
     if (!category) {
       return res.status(404).json({ error: 'Sub-category not found' });
     }
@@ -224,10 +218,15 @@ module.exports.getForumSubCategoryById = async (req, res) => {
     }
 
     const { id } = validationResult.data;
+    const includePosts = req.query.includePosts === 'true';
 
     const category = await prisma.forumSubCategory.findUnique({
       where: { id },
-      include: { mainCategory: true },
+      include: {
+        mainCategory: true,
+        quotePost: includePosts,
+        generalPost: includePosts,
+      },
     });
 
     if (!category) {

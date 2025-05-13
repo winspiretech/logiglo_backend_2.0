@@ -161,7 +161,6 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   description: 'description',
   userId: 'userId',
   name: 'name',
-  categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   totalNetWeight: 'totalNetWeight',
@@ -214,6 +213,7 @@ exports.Prisma.GeneralPostScalarFieldEnum = {
   title: 'title',
   description: 'description',
   userId: 'userId',
+  createdBy: 'createdBy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   viewCount: 'viewCount',
@@ -225,9 +225,41 @@ exports.Prisma.GeneralPostScalarFieldEnum = {
   generalPostSubCategory: 'generalPostSubCategory'
 };
 
+exports.Prisma.GeneralReplyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  parentReplyId: 'parentReplyId',
+  description: 'description',
+  createdAt: 'createdAt',
+  status: 'status',
+  rejectionReason: 'rejectionReason'
+};
+
+exports.Prisma.GeneralLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId'
+};
+
+exports.Prisma.BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  authorId: 'authorId',
+  status: 'status',
+  createdAt: 'createdAt',
+  category: 'category',
+  image_url: 'image_url'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -240,6 +272,12 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -248,7 +286,10 @@ exports.Prisma.ModelName = {
   QuotePost: 'QuotePost',
   QuoteReply: 'QuoteReply',
   QuoteLike: 'QuoteLike',
-  GeneralPost: 'GeneralPost'
+  GeneralPost: 'GeneralPost',
+  GeneralReply: 'GeneralReply',
+  GeneralLike: 'GeneralLike',
+  Blog: 'Blog'
 };
 
 /**

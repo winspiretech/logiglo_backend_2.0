@@ -48,6 +48,21 @@ export type QuoteLike = $Result.DefaultSelection<Prisma.$QuoteLikePayload>
  * 
  */
 export type GeneralPost = $Result.DefaultSelection<Prisma.$GeneralPostPayload>
+/**
+ * Model GeneralReply
+ * 
+ */
+export type GeneralReply = $Result.DefaultSelection<Prisma.$GeneralReplyPayload>
+/**
+ * Model GeneralLike
+ * 
+ */
+export type GeneralLike = $Result.DefaultSelection<Prisma.$GeneralLikePayload>
+/**
+ * Model Blog
+ * 
+ */
+export type Blog = $Result.DefaultSelection<Prisma.$BlogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -243,6 +258,36 @@ export class PrismaClient<
     * ```
     */
   get generalPost(): Prisma.GeneralPostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.generalReply`: Exposes CRUD operations for the **GeneralReply** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GeneralReplies
+    * const generalReplies = await prisma.generalReply.findMany()
+    * ```
+    */
+  get generalReply(): Prisma.GeneralReplyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.generalLike`: Exposes CRUD operations for the **GeneralLike** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GeneralLikes
+    * const generalLikes = await prisma.generalLike.findMany()
+    * ```
+    */
+  get generalLike(): Prisma.GeneralLikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.blog`: Exposes CRUD operations for the **Blog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Blogs
+    * const blogs = await prisma.blog.findMany()
+    * ```
+    */
+  get blog(): Prisma.BlogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -689,7 +734,10 @@ export namespace Prisma {
     QuotePost: 'QuotePost',
     QuoteReply: 'QuoteReply',
     QuoteLike: 'QuoteLike',
-    GeneralPost: 'GeneralPost'
+    GeneralPost: 'GeneralPost',
+    GeneralReply: 'GeneralReply',
+    GeneralLike: 'GeneralLike',
+    Blog: 'Blog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -708,7 +756,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost"
+      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1230,6 +1278,228 @@ export namespace Prisma {
           }
         }
       }
+      GeneralReply: {
+        payload: Prisma.$GeneralReplyPayload<ExtArgs>
+        fields: Prisma.GeneralReplyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GeneralReplyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GeneralReplyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          findFirst: {
+            args: Prisma.GeneralReplyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GeneralReplyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          findMany: {
+            args: Prisma.GeneralReplyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>[]
+          }
+          create: {
+            args: Prisma.GeneralReplyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          createMany: {
+            args: Prisma.GeneralReplyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GeneralReplyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>[]
+          }
+          delete: {
+            args: Prisma.GeneralReplyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          update: {
+            args: Prisma.GeneralReplyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          deleteMany: {
+            args: Prisma.GeneralReplyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GeneralReplyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GeneralReplyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>[]
+          }
+          upsert: {
+            args: Prisma.GeneralReplyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralReplyPayload>
+          }
+          aggregate: {
+            args: Prisma.GeneralReplyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGeneralReply>
+          }
+          groupBy: {
+            args: Prisma.GeneralReplyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GeneralReplyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GeneralReplyCountArgs<ExtArgs>
+            result: $Utils.Optional<GeneralReplyCountAggregateOutputType> | number
+          }
+        }
+      }
+      GeneralLike: {
+        payload: Prisma.$GeneralLikePayload<ExtArgs>
+        fields: Prisma.GeneralLikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GeneralLikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GeneralLikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          findFirst: {
+            args: Prisma.GeneralLikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GeneralLikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          findMany: {
+            args: Prisma.GeneralLikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>[]
+          }
+          create: {
+            args: Prisma.GeneralLikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          createMany: {
+            args: Prisma.GeneralLikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GeneralLikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>[]
+          }
+          delete: {
+            args: Prisma.GeneralLikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          update: {
+            args: Prisma.GeneralLikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          deleteMany: {
+            args: Prisma.GeneralLikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GeneralLikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GeneralLikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>[]
+          }
+          upsert: {
+            args: Prisma.GeneralLikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeneralLikePayload>
+          }
+          aggregate: {
+            args: Prisma.GeneralLikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGeneralLike>
+          }
+          groupBy: {
+            args: Prisma.GeneralLikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GeneralLikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GeneralLikeCountArgs<ExtArgs>
+            result: $Utils.Optional<GeneralLikeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Blog: {
+        payload: Prisma.$BlogPayload<ExtArgs>
+        fields: Prisma.BlogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BlogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BlogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          findFirst: {
+            args: Prisma.BlogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BlogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          findMany: {
+            args: Prisma.BlogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>[]
+          }
+          create: {
+            args: Prisma.BlogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          createMany: {
+            args: Prisma.BlogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BlogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>[]
+          }
+          delete: {
+            args: Prisma.BlogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          update: {
+            args: Prisma.BlogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          deleteMany: {
+            args: Prisma.BlogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BlogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BlogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>[]
+          }
+          upsert: {
+            args: Prisma.BlogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BlogPayload>
+          }
+          aggregate: {
+            args: Prisma.BlogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBlog>
+          }
+          groupBy: {
+            args: Prisma.BlogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BlogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BlogCountArgs<ExtArgs>
+            result: $Utils.Optional<BlogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1321,6 +1591,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyOmit
     quoteLike?: QuoteLikeOmit
     generalPost?: GeneralPostOmit
+    generalReply?: GeneralReplyOmit
+    generalLike?: GeneralLikeOmit
+    blog?: BlogOmit
   }
 
   /* Types for Logging */
@@ -1419,6 +1692,9 @@ export namespace Prisma {
     quoteReply: number
     quoteLike: number
     generalPost: number
+    generalReply: number
+    generalLike: number
+    blog: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1426,6 +1702,9 @@ export namespace Prisma {
     quoteReply?: boolean | UserCountOutputTypeCountQuoteReplyArgs
     quoteLike?: boolean | UserCountOutputTypeCountQuoteLikeArgs
     generalPost?: boolean | UserCountOutputTypeCountGeneralPostArgs
+    generalReply?: boolean | UserCountOutputTypeCountGeneralReplyArgs
+    generalLike?: boolean | UserCountOutputTypeCountGeneralLikeArgs
+    blog?: boolean | UserCountOutputTypeCountBlogArgs
   }
 
   // Custom InputTypes
@@ -1467,6 +1746,27 @@ export namespace Prisma {
     where?: GeneralPostWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGeneralReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralReplyWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGeneralLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralLikeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBlogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BlogWhereInput
+  }
+
 
   /**
    * Count Type ForumMainCategoryCountOutputType
@@ -1474,10 +1774,14 @@ export namespace Prisma {
 
   export type ForumMainCategoryCountOutputType = {
     subCategory: number
+    quotePost: number
+    generalPost: number
   }
 
   export type ForumMainCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subCategory?: boolean | ForumMainCategoryCountOutputTypeCountSubCategoryArgs
+    quotePost?: boolean | ForumMainCategoryCountOutputTypeCountQuotePostArgs
+    generalPost?: boolean | ForumMainCategoryCountOutputTypeCountGeneralPostArgs
   }
 
   // Custom InputTypes
@@ -1496,6 +1800,60 @@ export namespace Prisma {
    */
   export type ForumMainCategoryCountOutputTypeCountSubCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ForumSubCategoryWhereInput
+  }
+
+  /**
+   * ForumMainCategoryCountOutputType without action
+   */
+  export type ForumMainCategoryCountOutputTypeCountQuotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuotePostWhereInput
+  }
+
+  /**
+   * ForumMainCategoryCountOutputType without action
+   */
+  export type ForumMainCategoryCountOutputTypeCountGeneralPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralPostWhereInput
+  }
+
+
+  /**
+   * Count Type ForumSubCategoryCountOutputType
+   */
+
+  export type ForumSubCategoryCountOutputType = {
+    quotePost: number
+    generalPost: number
+  }
+
+  export type ForumSubCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quotePost?: boolean | ForumSubCategoryCountOutputTypeCountQuotePostArgs
+    generalPost?: boolean | ForumSubCategoryCountOutputTypeCountGeneralPostArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ForumSubCategoryCountOutputType without action
+   */
+  export type ForumSubCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumSubCategoryCountOutputType
+     */
+    select?: ForumSubCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ForumSubCategoryCountOutputType without action
+   */
+  export type ForumSubCategoryCountOutputTypeCountQuotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuotePostWhereInput
+  }
+
+  /**
+   * ForumSubCategoryCountOutputType without action
+   */
+  export type ForumSubCategoryCountOutputTypeCountGeneralPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralPostWhereInput
   }
 
 
@@ -1536,6 +1894,108 @@ export namespace Prisma {
    */
   export type QuotePostCountOutputTypeCountQuoteLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QuoteLikeWhereInput
+  }
+
+
+  /**
+   * Count Type QuoteReplyCountOutputType
+   */
+
+  export type QuoteReplyCountOutputType = {
+    childReplies: number
+  }
+
+  export type QuoteReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    childReplies?: boolean | QuoteReplyCountOutputTypeCountChildRepliesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * QuoteReplyCountOutputType without action
+   */
+  export type QuoteReplyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReplyCountOutputType
+     */
+    select?: QuoteReplyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * QuoteReplyCountOutputType without action
+   */
+  export type QuoteReplyCountOutputTypeCountChildRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuoteReplyWhereInput
+  }
+
+
+  /**
+   * Count Type GeneralPostCountOutputType
+   */
+
+  export type GeneralPostCountOutputType = {
+    generalReply: number
+    generalLike: number
+  }
+
+  export type GeneralPostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    generalReply?: boolean | GeneralPostCountOutputTypeCountGeneralReplyArgs
+    generalLike?: boolean | GeneralPostCountOutputTypeCountGeneralLikeArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GeneralPostCountOutputType without action
+   */
+  export type GeneralPostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPostCountOutputType
+     */
+    select?: GeneralPostCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GeneralPostCountOutputType without action
+   */
+  export type GeneralPostCountOutputTypeCountGeneralReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralReplyWhereInput
+  }
+
+  /**
+   * GeneralPostCountOutputType without action
+   */
+  export type GeneralPostCountOutputTypeCountGeneralLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralLikeWhereInput
+  }
+
+
+  /**
+   * Count Type GeneralReplyCountOutputType
+   */
+
+  export type GeneralReplyCountOutputType = {
+    childReplies: number
+  }
+
+  export type GeneralReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    childReplies?: boolean | GeneralReplyCountOutputTypeCountChildRepliesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GeneralReplyCountOutputType without action
+   */
+  export type GeneralReplyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReplyCountOutputType
+     */
+    select?: GeneralReplyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GeneralReplyCountOutputType without action
+   */
+  export type GeneralReplyCountOutputTypeCountChildRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralReplyWhereInput
   }
 
 
@@ -1857,6 +2317,9 @@ export namespace Prisma {
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     generalPost?: boolean | User$generalPostArgs<ExtArgs>
+    generalReply?: boolean | User$generalReplyArgs<ExtArgs>
+    generalLike?: boolean | User$generalLikeArgs<ExtArgs>
+    blog?: boolean | User$blogArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1932,6 +2395,9 @@ export namespace Prisma {
     quoteReply?: boolean | User$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | User$quoteLikeArgs<ExtArgs>
     generalPost?: boolean | User$generalPostArgs<ExtArgs>
+    generalReply?: boolean | User$generalReplyArgs<ExtArgs>
+    generalLike?: boolean | User$generalLikeArgs<ExtArgs>
+    blog?: boolean | User$blogArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1944,6 +2410,9 @@ export namespace Prisma {
       quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
       quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       generalPost: Prisma.$GeneralPostPayload<ExtArgs>[]
+      generalReply: Prisma.$GeneralReplyPayload<ExtArgs>[]
+      generalLike: Prisma.$GeneralLikePayload<ExtArgs>[]
+      blog: Prisma.$BlogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2363,6 +2832,9 @@ export namespace Prisma {
     quoteReply<T extends User$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteLike<T extends User$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     generalPost<T extends User$generalPostArgs<ExtArgs> = {}>(args?: Subset<T, User$generalPostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalReply<T extends User$generalReplyArgs<ExtArgs> = {}>(args?: Subset<T, User$generalReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalLike<T extends User$generalLikeArgs<ExtArgs> = {}>(args?: Subset<T, User$generalLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    blog<T extends User$blogArgs<ExtArgs> = {}>(args?: Subset<T, User$blogArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2895,6 +3367,78 @@ export namespace Prisma {
   }
 
   /**
+   * User.generalReply
+   */
+  export type User$generalReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    where?: GeneralReplyWhereInput
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    cursor?: GeneralReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * User.generalLike
+   */
+  export type User$generalLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    where?: GeneralLikeWhereInput
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    cursor?: GeneralLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralLikeScalarFieldEnum | GeneralLikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.blog
+   */
+  export type User$blogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    where?: BlogWhereInput
+    orderBy?: BlogOrderByWithRelationInput | BlogOrderByWithRelationInput[]
+    cursor?: BlogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BlogScalarFieldEnum | BlogScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3062,6 +3606,8 @@ export namespace Prisma {
     name?: boolean
     enabled?: boolean
     subCategory?: boolean | ForumMainCategory$subCategoryArgs<ExtArgs>
+    quotePost?: boolean | ForumMainCategory$quotePostArgs<ExtArgs>
+    generalPost?: boolean | ForumMainCategory$generalPostArgs<ExtArgs>
     _count?: boolean | ForumMainCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumMainCategory"]>
 
@@ -3086,6 +3632,8 @@ export namespace Prisma {
   export type ForumMainCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled", ExtArgs["result"]["forumMainCategory"]>
   export type ForumMainCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subCategory?: boolean | ForumMainCategory$subCategoryArgs<ExtArgs>
+    quotePost?: boolean | ForumMainCategory$quotePostArgs<ExtArgs>
+    generalPost?: boolean | ForumMainCategory$generalPostArgs<ExtArgs>
     _count?: boolean | ForumMainCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ForumMainCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3095,6 +3643,8 @@ export namespace Prisma {
     name: "ForumMainCategory"
     objects: {
       subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs>[]
+      quotePost: Prisma.$QuotePostPayload<ExtArgs>[]
+      generalPost: Prisma.$GeneralPostPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3495,6 +4045,8 @@ export namespace Prisma {
   export interface Prisma__ForumMainCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     subCategory<T extends ForumMainCategory$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategory$subCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quotePost<T extends ForumMainCategory$quotePostArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategory$quotePostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalPost<T extends ForumMainCategory$generalPostArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategory$generalPostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3939,6 +4491,54 @@ export namespace Prisma {
   }
 
   /**
+   * ForumMainCategory.quotePost
+   */
+  export type ForumMainCategory$quotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuotePost
+     */
+    select?: QuotePostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuotePost
+     */
+    omit?: QuotePostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuotePostInclude<ExtArgs> | null
+    where?: QuotePostWhereInput
+    orderBy?: QuotePostOrderByWithRelationInput | QuotePostOrderByWithRelationInput[]
+    cursor?: QuotePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuotePostScalarFieldEnum | QuotePostScalarFieldEnum[]
+  }
+
+  /**
+   * ForumMainCategory.generalPost
+   */
+  export type ForumMainCategory$generalPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    where?: GeneralPostWhereInput
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    cursor?: GeneralPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
+  }
+
+  /**
    * ForumMainCategory without action
    */
   export type ForumMainCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4113,7 +4713,10 @@ export namespace Prisma {
     name?: boolean
     enabled?: boolean
     mainCategoryId?: boolean
+    quotePost?: boolean | ForumSubCategory$quotePostArgs<ExtArgs>
+    generalPost?: boolean | ForumSubCategory$generalPostArgs<ExtArgs>
     mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
+    _count?: boolean | ForumSubCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumSubCategory"]>
 
   export type ForumSubCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4141,7 +4744,10 @@ export namespace Prisma {
 
   export type ForumSubCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled" | "mainCategoryId", ExtArgs["result"]["forumSubCategory"]>
   export type ForumSubCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quotePost?: boolean | ForumSubCategory$quotePostArgs<ExtArgs>
+    generalPost?: boolean | ForumSubCategory$generalPostArgs<ExtArgs>
     mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
+    _count?: boolean | ForumSubCategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ForumSubCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mainCategory?: boolean | ForumMainCategoryDefaultArgs<ExtArgs>
@@ -4153,6 +4759,8 @@ export namespace Prisma {
   export type $ForumSubCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ForumSubCategory"
     objects: {
+      quotePost: Prisma.$QuotePostPayload<ExtArgs>[]
+      generalPost: Prisma.$GeneralPostPayload<ExtArgs>[]
       mainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4554,6 +5162,8 @@ export namespace Prisma {
    */
   export interface Prisma__ForumSubCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    quotePost<T extends ForumSubCategory$quotePostArgs<ExtArgs> = {}>(args?: Subset<T, ForumSubCategory$quotePostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalPost<T extends ForumSubCategory$generalPostArgs<ExtArgs> = {}>(args?: Subset<T, ForumSubCategory$generalPostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mainCategory<T extends ForumMainCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ForumMainCategoryDefaultArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4984,6 +5594,54 @@ export namespace Prisma {
   }
 
   /**
+   * ForumSubCategory.quotePost
+   */
+  export type ForumSubCategory$quotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuotePost
+     */
+    select?: QuotePostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuotePost
+     */
+    omit?: QuotePostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuotePostInclude<ExtArgs> | null
+    where?: QuotePostWhereInput
+    orderBy?: QuotePostOrderByWithRelationInput | QuotePostOrderByWithRelationInput[]
+    cursor?: QuotePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuotePostScalarFieldEnum | QuotePostScalarFieldEnum[]
+  }
+
+  /**
+   * ForumSubCategory.generalPost
+   */
+  export type ForumSubCategory$generalPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    where?: GeneralPostWhereInput
+    orderBy?: GeneralPostOrderByWithRelationInput | GeneralPostOrderByWithRelationInput[]
+    cursor?: GeneralPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralPostScalarFieldEnum | GeneralPostScalarFieldEnum[]
+  }
+
+  /**
    * ForumSubCategory without action
    */
   export type ForumSubCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5044,7 +5702,6 @@ export namespace Prisma {
     description: string | null
     userId: string | null
     name: string | null
-    categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     totalNetWeight: number | null
@@ -5081,7 +5738,6 @@ export namespace Prisma {
     description: string | null
     userId: string | null
     name: string | null
-    categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     totalNetWeight: number | null
@@ -5118,7 +5774,6 @@ export namespace Prisma {
     description: number
     userId: number
     name: number
-    categoryId: number
     createdAt: number
     updatedAt: number
     totalNetWeight: number
@@ -5181,7 +5836,6 @@ export namespace Prisma {
     description?: true
     userId?: true
     name?: true
-    categoryId?: true
     createdAt?: true
     updatedAt?: true
     totalNetWeight?: true
@@ -5218,7 +5872,6 @@ export namespace Prisma {
     description?: true
     userId?: true
     name?: true
-    categoryId?: true
     createdAt?: true
     updatedAt?: true
     totalNetWeight?: true
@@ -5255,7 +5908,6 @@ export namespace Prisma {
     description?: true
     userId?: true
     name?: true
-    categoryId?: true
     createdAt?: true
     updatedAt?: true
     totalNetWeight?: true
@@ -5379,7 +6031,6 @@ export namespace Prisma {
     description: string | null
     userId: string
     name: string | null
-    categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     totalNetWeight: number | null
@@ -5435,7 +6086,6 @@ export namespace Prisma {
     description?: boolean
     userId?: boolean
     name?: boolean
-    categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     totalNetWeight?: boolean
@@ -5466,6 +6116,8 @@ export namespace Prisma {
     shipmentType?: boolean
     quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
@@ -5476,7 +6128,6 @@ export namespace Prisma {
     description?: boolean
     userId?: boolean
     name?: boolean
-    categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     totalNetWeight?: boolean
@@ -5505,6 +6156,8 @@ export namespace Prisma {
     postMainCategory?: boolean
     postSubCategory?: boolean
     shipmentType?: boolean
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5514,7 +6167,6 @@ export namespace Prisma {
     description?: boolean
     userId?: boolean
     name?: boolean
-    categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     totalNetWeight?: boolean
@@ -5543,6 +6195,8 @@ export namespace Prisma {
     postMainCategory?: boolean
     postSubCategory?: boolean
     shipmentType?: boolean
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -5552,7 +6206,6 @@ export namespace Prisma {
     description?: boolean
     userId?: boolean
     name?: boolean
-    categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     totalNetWeight?: boolean
@@ -5583,17 +6236,23 @@ export namespace Prisma {
     shipmentType?: boolean
   }
 
-  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "categoryId" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "shipmentType", ExtArgs["result"]["quotePost"]>
+  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "shipmentType", ExtArgs["result"]["quotePost"]>
   export type QuotePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }
   export type QuotePostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
+    mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | QuotePost$userArgs<ExtArgs>
   }
 
@@ -5602,6 +6261,8 @@ export namespace Prisma {
     objects: {
       quoteReply: Prisma.$QuoteReplyPayload<ExtArgs>[]
       quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
+      subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
+      mainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5610,7 +6271,6 @@ export namespace Prisma {
       description: string | null
       userId: string
       name: string | null
-      categoryId: string | null
       createdAt: Date | null
       updatedAt: Date | null
       totalNetWeight: number | null
@@ -6035,6 +6695,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     quoteReply<T extends QuotePost$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quoteLike<T extends QuotePost$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    subCategory<T extends QuotePost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    mainCategory<T extends QuotePost$mainCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$mainCategoryArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends QuotePost$userArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6070,7 +6732,6 @@ export namespace Prisma {
     readonly description: FieldRef<"QuotePost", 'String'>
     readonly userId: FieldRef<"QuotePost", 'String'>
     readonly name: FieldRef<"QuotePost", 'String'>
-    readonly categoryId: FieldRef<"QuotePost", 'String'>
     readonly createdAt: FieldRef<"QuotePost", 'DateTime'>
     readonly updatedAt: FieldRef<"QuotePost", 'DateTime'>
     readonly totalNetWeight: FieldRef<"QuotePost", 'Float'>
@@ -6543,6 +7204,44 @@ export namespace Prisma {
   }
 
   /**
+   * QuotePost.subCategory
+   */
+  export type QuotePost$subCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumSubCategory
+     */
+    select?: ForumSubCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumSubCategory
+     */
+    omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    where?: ForumSubCategoryWhereInput
+  }
+
+  /**
+   * QuotePost.mainCategory
+   */
+  export type QuotePost$mainCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumMainCategory
+     */
+    select?: ForumMainCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumMainCategory
+     */
+    omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    where?: ForumMainCategoryWhereInput
+  }
+
+  /**
    * QuotePost.user
    */
   export type QuotePost$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6770,6 +7469,9 @@ export namespace Prisma {
     rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
+    childReplies?: boolean | QuoteReply$childRepliesArgs<ExtArgs>
+    _count?: boolean | QuoteReplyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6783,6 +7485,7 @@ export namespace Prisma {
     rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6796,6 +7499,7 @@ export namespace Prisma {
     rejectionReason?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
   export type QuoteReplySelectScalar = {
@@ -6813,14 +7517,19 @@ export namespace Prisma {
   export type QuoteReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
+    childReplies?: boolean | QuoteReply$childRepliesArgs<ExtArgs>
+    _count?: boolean | QuoteReplyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
   }
   export type QuoteReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
+    parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
   }
 
   export type $QuoteReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6828,6 +7537,8 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       post: Prisma.$QuotePostPayload<ExtArgs>
+      parentReply: Prisma.$QuoteReplyPayload<ExtArgs> | null
+      childReplies: Prisma.$QuoteReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7234,6 +7945,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parentReply<T extends QuoteReply$parentReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuoteReply$parentReplyArgs<ExtArgs>>): Prisma__QuoteReplyClient<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    childReplies<T extends QuoteReply$childRepliesArgs<ExtArgs> = {}>(args?: Subset<T, QuoteReply$childRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7664,6 +8377,49 @@ export namespace Prisma {
      * Limit how many QuoteReplies to delete.
      */
     limit?: number
+  }
+
+  /**
+   * QuoteReply.parentReply
+   */
+  export type QuoteReply$parentReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReply
+     */
+    select?: QuoteReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteReply
+     */
+    omit?: QuoteReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteReplyInclude<ExtArgs> | null
+    where?: QuoteReplyWhereInput
+  }
+
+  /**
+   * QuoteReply.childReplies
+   */
+  export type QuoteReply$childRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReply
+     */
+    select?: QuoteReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteReply
+     */
+    omit?: QuoteReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteReplyInclude<ExtArgs> | null
+    where?: QuoteReplyWhereInput
+    orderBy?: QuoteReplyOrderByWithRelationInput | QuoteReplyOrderByWithRelationInput[]
+    cursor?: QuoteReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
   }
 
   /**
@@ -8754,6 +9510,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     userId: string | null
+    createdBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
     viewCount: number | null
@@ -8770,6 +9527,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     userId: string | null
+    createdBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
     viewCount: number | null
@@ -8786,6 +9544,7 @@ export namespace Prisma {
     title: number
     description: number
     userId: number
+    createdBy: number
     createdAt: number
     updatedAt: number
     viewCount: number
@@ -8816,6 +9575,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    createdBy?: true
     createdAt?: true
     updatedAt?: true
     viewCount?: true
@@ -8832,6 +9592,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    createdBy?: true
     createdAt?: true
     updatedAt?: true
     viewCount?: true
@@ -8848,6 +9609,7 @@ export namespace Prisma {
     title?: true
     description?: true
     userId?: true
+    createdBy?: true
     createdAt?: true
     updatedAt?: true
     viewCount?: true
@@ -8951,6 +9713,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     userId: string
+    createdBy: string | null
     createdAt: Date
     updatedAt: Date
     viewCount: number | null
@@ -8986,6 +9749,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    createdBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     viewCount?: boolean
@@ -8996,6 +9760,11 @@ export namespace Prisma {
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
+    generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
+    _count?: boolean | GeneralPostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
   export type GeneralPostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9003,6 +9772,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    createdBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     viewCount?: boolean
@@ -9013,6 +9783,8 @@ export namespace Prisma {
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
   export type GeneralPostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9020,6 +9792,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    createdBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     viewCount?: boolean
@@ -9030,6 +9803,8 @@ export namespace Prisma {
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
   export type GeneralPostSelectScalar = {
@@ -9037,6 +9812,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     userId?: boolean
+    createdBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     viewCount?: boolean
@@ -9048,27 +9824,41 @@ export namespace Prisma {
     generalPostSubCategory?: boolean
   }
 
-  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory", ExtArgs["result"]["generalPost"]>
+  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdBy" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory", ExtArgs["result"]["generalPost"]>
   export type GeneralPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
+    generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
+    _count?: boolean | GeneralPostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GeneralPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
   }
   export type GeneralPostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
+    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
   }
 
   export type $GeneralPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "GeneralPost"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      MainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs> | null
+      subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
+      generalReply: Prisma.$GeneralReplyPayload<ExtArgs>[]
+      generalLike: Prisma.$GeneralLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string | null
       description: string | null
       userId: string
+      createdBy: string | null
       createdAt: Date
       updatedAt: Date
       viewCount: number | null
@@ -9473,6 +10263,10 @@ export namespace Prisma {
   export interface Prisma__GeneralPostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    MainCategory<T extends GeneralPost$MainCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$MainCategoryArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    subCategory<T extends GeneralPost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    generalReply<T extends GeneralPost$generalReplyArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    generalLike<T extends GeneralPost$generalLikeArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9506,6 +10300,7 @@ export namespace Prisma {
     readonly title: FieldRef<"GeneralPost", 'String'>
     readonly description: FieldRef<"GeneralPost", 'String'>
     readonly userId: FieldRef<"GeneralPost", 'String'>
+    readonly createdBy: FieldRef<"GeneralPost", 'String'>
     readonly createdAt: FieldRef<"GeneralPost", 'DateTime'>
     readonly updatedAt: FieldRef<"GeneralPost", 'DateTime'>
     readonly viewCount: FieldRef<"GeneralPost", 'Int'>
@@ -9911,6 +10706,92 @@ export namespace Prisma {
   }
 
   /**
+   * GeneralPost.MainCategory
+   */
+  export type GeneralPost$MainCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumMainCategory
+     */
+    select?: ForumMainCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumMainCategory
+     */
+    omit?: ForumMainCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumMainCategoryInclude<ExtArgs> | null
+    where?: ForumMainCategoryWhereInput
+  }
+
+  /**
+   * GeneralPost.subCategory
+   */
+  export type GeneralPost$subCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumSubCategory
+     */
+    select?: ForumSubCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumSubCategory
+     */
+    omit?: ForumSubCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumSubCategoryInclude<ExtArgs> | null
+    where?: ForumSubCategoryWhereInput
+  }
+
+  /**
+   * GeneralPost.generalReply
+   */
+  export type GeneralPost$generalReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    where?: GeneralReplyWhereInput
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    cursor?: GeneralReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralPost.generalLike
+   */
+  export type GeneralPost$generalLikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    where?: GeneralLikeWhereInput
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    cursor?: GeneralLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralLikeScalarFieldEnum | GeneralLikeScalarFieldEnum[]
+  }
+
+  /**
    * GeneralPost without action
    */
   export type GeneralPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9926,6 +10807,3297 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: GeneralPostInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GeneralReply
+   */
+
+  export type AggregateGeneralReply = {
+    _count: GeneralReplyCountAggregateOutputType | null
+    _min: GeneralReplyMinAggregateOutputType | null
+    _max: GeneralReplyMaxAggregateOutputType | null
+  }
+
+  export type GeneralReplyMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    postId: string | null
+    parentReplyId: string | null
+    description: string | null
+    createdAt: Date | null
+    status: string | null
+    rejectionReason: string | null
+  }
+
+  export type GeneralReplyMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    postId: string | null
+    parentReplyId: string | null
+    description: string | null
+    createdAt: Date | null
+    status: string | null
+    rejectionReason: string | null
+  }
+
+  export type GeneralReplyCountAggregateOutputType = {
+    id: number
+    userId: number
+    postId: number
+    parentReplyId: number
+    description: number
+    createdAt: number
+    status: number
+    rejectionReason: number
+    _all: number
+  }
+
+
+  export type GeneralReplyMinAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+    parentReplyId?: true
+    description?: true
+    createdAt?: true
+    status?: true
+    rejectionReason?: true
+  }
+
+  export type GeneralReplyMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+    parentReplyId?: true
+    description?: true
+    createdAt?: true
+    status?: true
+    rejectionReason?: true
+  }
+
+  export type GeneralReplyCountAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+    parentReplyId?: true
+    description?: true
+    createdAt?: true
+    status?: true
+    rejectionReason?: true
+    _all?: true
+  }
+
+  export type GeneralReplyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralReply to aggregate.
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralReplies to fetch.
+     */
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GeneralReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GeneralReplies
+    **/
+    _count?: true | GeneralReplyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GeneralReplyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GeneralReplyMaxAggregateInputType
+  }
+
+  export type GetGeneralReplyAggregateType<T extends GeneralReplyAggregateArgs> = {
+        [P in keyof T & keyof AggregateGeneralReply]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGeneralReply[P]>
+      : GetScalarType<T[P], AggregateGeneralReply[P]>
+  }
+
+
+
+
+  export type GeneralReplyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralReplyWhereInput
+    orderBy?: GeneralReplyOrderByWithAggregationInput | GeneralReplyOrderByWithAggregationInput[]
+    by: GeneralReplyScalarFieldEnum[] | GeneralReplyScalarFieldEnum
+    having?: GeneralReplyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GeneralReplyCountAggregateInputType | true
+    _min?: GeneralReplyMinAggregateInputType
+    _max?: GeneralReplyMaxAggregateInputType
+  }
+
+  export type GeneralReplyGroupByOutputType = {
+    id: string
+    userId: string
+    postId: string
+    parentReplyId: string | null
+    description: string | null
+    createdAt: Date
+    status: string | null
+    rejectionReason: string | null
+    _count: GeneralReplyCountAggregateOutputType | null
+    _min: GeneralReplyMinAggregateOutputType | null
+    _max: GeneralReplyMaxAggregateOutputType | null
+  }
+
+  type GetGeneralReplyGroupByPayload<T extends GeneralReplyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GeneralReplyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GeneralReplyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GeneralReplyGroupByOutputType[P]>
+            : GetScalarType<T[P], GeneralReplyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GeneralReplySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    parentReplyId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+    childReplies?: boolean | GeneralReply$childRepliesArgs<ExtArgs>
+    _count?: boolean | GeneralReplyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalReply"]>
+
+  export type GeneralReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    parentReplyId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+  }, ExtArgs["result"]["generalReply"]>
+
+  export type GeneralReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    parentReplyId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+  }, ExtArgs["result"]["generalReply"]>
+
+  export type GeneralReplySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    parentReplyId?: boolean
+    description?: boolean
+    createdAt?: boolean
+    status?: boolean
+    rejectionReason?: boolean
+  }
+
+  export type GeneralReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId" | "parentReplyId" | "description" | "createdAt" | "status" | "rejectionReason", ExtArgs["result"]["generalReply"]>
+  export type GeneralReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+    childReplies?: boolean | GeneralReply$childRepliesArgs<ExtArgs>
+    _count?: boolean | GeneralReplyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type GeneralReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+  }
+  export type GeneralReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+    parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
+  }
+
+  export type $GeneralReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GeneralReply"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$GeneralPostPayload<ExtArgs>
+      parentReply: Prisma.$GeneralReplyPayload<ExtArgs> | null
+      childReplies: Prisma.$GeneralReplyPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      postId: string
+      parentReplyId: string | null
+      description: string | null
+      createdAt: Date
+      status: string | null
+      rejectionReason: string | null
+    }, ExtArgs["result"]["generalReply"]>
+    composites: {}
+  }
+
+  type GeneralReplyGetPayload<S extends boolean | null | undefined | GeneralReplyDefaultArgs> = $Result.GetResult<Prisma.$GeneralReplyPayload, S>
+
+  type GeneralReplyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GeneralReplyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GeneralReplyCountAggregateInputType | true
+    }
+
+  export interface GeneralReplyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GeneralReply'], meta: { name: 'GeneralReply' } }
+    /**
+     * Find zero or one GeneralReply that matches the filter.
+     * @param {GeneralReplyFindUniqueArgs} args - Arguments to find a GeneralReply
+     * @example
+     * // Get one GeneralReply
+     * const generalReply = await prisma.generalReply.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GeneralReplyFindUniqueArgs>(args: SelectSubset<T, GeneralReplyFindUniqueArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GeneralReply that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GeneralReplyFindUniqueOrThrowArgs} args - Arguments to find a GeneralReply
+     * @example
+     * // Get one GeneralReply
+     * const generalReply = await prisma.generalReply.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GeneralReplyFindUniqueOrThrowArgs>(args: SelectSubset<T, GeneralReplyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralReply that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyFindFirstArgs} args - Arguments to find a GeneralReply
+     * @example
+     * // Get one GeneralReply
+     * const generalReply = await prisma.generalReply.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GeneralReplyFindFirstArgs>(args?: SelectSubset<T, GeneralReplyFindFirstArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralReply that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyFindFirstOrThrowArgs} args - Arguments to find a GeneralReply
+     * @example
+     * // Get one GeneralReply
+     * const generalReply = await prisma.generalReply.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GeneralReplyFindFirstOrThrowArgs>(args?: SelectSubset<T, GeneralReplyFindFirstOrThrowArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GeneralReplies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GeneralReplies
+     * const generalReplies = await prisma.generalReply.findMany()
+     * 
+     * // Get first 10 GeneralReplies
+     * const generalReplies = await prisma.generalReply.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const generalReplyWithIdOnly = await prisma.generalReply.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GeneralReplyFindManyArgs>(args?: SelectSubset<T, GeneralReplyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GeneralReply.
+     * @param {GeneralReplyCreateArgs} args - Arguments to create a GeneralReply.
+     * @example
+     * // Create one GeneralReply
+     * const GeneralReply = await prisma.generalReply.create({
+     *   data: {
+     *     // ... data to create a GeneralReply
+     *   }
+     * })
+     * 
+     */
+    create<T extends GeneralReplyCreateArgs>(args: SelectSubset<T, GeneralReplyCreateArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GeneralReplies.
+     * @param {GeneralReplyCreateManyArgs} args - Arguments to create many GeneralReplies.
+     * @example
+     * // Create many GeneralReplies
+     * const generalReply = await prisma.generalReply.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GeneralReplyCreateManyArgs>(args?: SelectSubset<T, GeneralReplyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GeneralReplies and returns the data saved in the database.
+     * @param {GeneralReplyCreateManyAndReturnArgs} args - Arguments to create many GeneralReplies.
+     * @example
+     * // Create many GeneralReplies
+     * const generalReply = await prisma.generalReply.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GeneralReplies and only return the `id`
+     * const generalReplyWithIdOnly = await prisma.generalReply.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GeneralReplyCreateManyAndReturnArgs>(args?: SelectSubset<T, GeneralReplyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GeneralReply.
+     * @param {GeneralReplyDeleteArgs} args - Arguments to delete one GeneralReply.
+     * @example
+     * // Delete one GeneralReply
+     * const GeneralReply = await prisma.generalReply.delete({
+     *   where: {
+     *     // ... filter to delete one GeneralReply
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GeneralReplyDeleteArgs>(args: SelectSubset<T, GeneralReplyDeleteArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GeneralReply.
+     * @param {GeneralReplyUpdateArgs} args - Arguments to update one GeneralReply.
+     * @example
+     * // Update one GeneralReply
+     * const generalReply = await prisma.generalReply.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GeneralReplyUpdateArgs>(args: SelectSubset<T, GeneralReplyUpdateArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GeneralReplies.
+     * @param {GeneralReplyDeleteManyArgs} args - Arguments to filter GeneralReplies to delete.
+     * @example
+     * // Delete a few GeneralReplies
+     * const { count } = await prisma.generalReply.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GeneralReplyDeleteManyArgs>(args?: SelectSubset<T, GeneralReplyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralReplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GeneralReplies
+     * const generalReply = await prisma.generalReply.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GeneralReplyUpdateManyArgs>(args: SelectSubset<T, GeneralReplyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralReplies and returns the data updated in the database.
+     * @param {GeneralReplyUpdateManyAndReturnArgs} args - Arguments to update many GeneralReplies.
+     * @example
+     * // Update many GeneralReplies
+     * const generalReply = await prisma.generalReply.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GeneralReplies and only return the `id`
+     * const generalReplyWithIdOnly = await prisma.generalReply.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GeneralReplyUpdateManyAndReturnArgs>(args: SelectSubset<T, GeneralReplyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GeneralReply.
+     * @param {GeneralReplyUpsertArgs} args - Arguments to update or create a GeneralReply.
+     * @example
+     * // Update or create a GeneralReply
+     * const generalReply = await prisma.generalReply.upsert({
+     *   create: {
+     *     // ... data to create a GeneralReply
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GeneralReply we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GeneralReplyUpsertArgs>(args: SelectSubset<T, GeneralReplyUpsertArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GeneralReplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyCountArgs} args - Arguments to filter GeneralReplies to count.
+     * @example
+     * // Count the number of GeneralReplies
+     * const count = await prisma.generalReply.count({
+     *   where: {
+     *     // ... the filter for the GeneralReplies we want to count
+     *   }
+     * })
+    **/
+    count<T extends GeneralReplyCountArgs>(
+      args?: Subset<T, GeneralReplyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GeneralReplyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GeneralReply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GeneralReplyAggregateArgs>(args: Subset<T, GeneralReplyAggregateArgs>): Prisma.PrismaPromise<GetGeneralReplyAggregateType<T>>
+
+    /**
+     * Group by GeneralReply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralReplyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GeneralReplyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GeneralReplyGroupByArgs['orderBy'] }
+        : { orderBy?: GeneralReplyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GeneralReplyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGeneralReplyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GeneralReply model
+   */
+  readonly fields: GeneralReplyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GeneralReply.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GeneralReplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends GeneralPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPostDefaultArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parentReply<T extends GeneralReply$parentReplyArgs<ExtArgs> = {}>(args?: Subset<T, GeneralReply$parentReplyArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    childReplies<T extends GeneralReply$childRepliesArgs<ExtArgs> = {}>(args?: Subset<T, GeneralReply$childRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GeneralReply model
+   */
+  interface GeneralReplyFieldRefs {
+    readonly id: FieldRef<"GeneralReply", 'String'>
+    readonly userId: FieldRef<"GeneralReply", 'String'>
+    readonly postId: FieldRef<"GeneralReply", 'String'>
+    readonly parentReplyId: FieldRef<"GeneralReply", 'String'>
+    readonly description: FieldRef<"GeneralReply", 'String'>
+    readonly createdAt: FieldRef<"GeneralReply", 'DateTime'>
+    readonly status: FieldRef<"GeneralReply", 'String'>
+    readonly rejectionReason: FieldRef<"GeneralReply", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GeneralReply findUnique
+   */
+  export type GeneralReplyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralReply to fetch.
+     */
+    where: GeneralReplyWhereUniqueInput
+  }
+
+  /**
+   * GeneralReply findUniqueOrThrow
+   */
+  export type GeneralReplyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralReply to fetch.
+     */
+    where: GeneralReplyWhereUniqueInput
+  }
+
+  /**
+   * GeneralReply findFirst
+   */
+  export type GeneralReplyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralReply to fetch.
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralReplies to fetch.
+     */
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralReplies.
+     */
+    cursor?: GeneralReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralReplies.
+     */
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralReply findFirstOrThrow
+   */
+  export type GeneralReplyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralReply to fetch.
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralReplies to fetch.
+     */
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralReplies.
+     */
+    cursor?: GeneralReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralReplies.
+     */
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralReply findMany
+   */
+  export type GeneralReplyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralReplies to fetch.
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralReplies to fetch.
+     */
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GeneralReplies.
+     */
+    cursor?: GeneralReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralReplies.
+     */
+    skip?: number
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralReply create
+   */
+  export type GeneralReplyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GeneralReply.
+     */
+    data: XOR<GeneralReplyCreateInput, GeneralReplyUncheckedCreateInput>
+  }
+
+  /**
+   * GeneralReply createMany
+   */
+  export type GeneralReplyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GeneralReplies.
+     */
+    data: GeneralReplyCreateManyInput | GeneralReplyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GeneralReply createManyAndReturn
+   */
+  export type GeneralReplyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * The data used to create many GeneralReplies.
+     */
+    data: GeneralReplyCreateManyInput | GeneralReplyCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralReply update
+   */
+  export type GeneralReplyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GeneralReply.
+     */
+    data: XOR<GeneralReplyUpdateInput, GeneralReplyUncheckedUpdateInput>
+    /**
+     * Choose, which GeneralReply to update.
+     */
+    where: GeneralReplyWhereUniqueInput
+  }
+
+  /**
+   * GeneralReply updateMany
+   */
+  export type GeneralReplyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GeneralReplies.
+     */
+    data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralReplies to update
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * Limit how many GeneralReplies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralReply updateManyAndReturn
+   */
+  export type GeneralReplyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * The data used to update GeneralReplies.
+     */
+    data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralReplies to update
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * Limit how many GeneralReplies to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralReply upsert
+   */
+  export type GeneralReplyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GeneralReply to update in case it exists.
+     */
+    where: GeneralReplyWhereUniqueInput
+    /**
+     * In case the GeneralReply found by the `where` argument doesn't exist, create a new GeneralReply with this data.
+     */
+    create: XOR<GeneralReplyCreateInput, GeneralReplyUncheckedCreateInput>
+    /**
+     * In case the GeneralReply was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GeneralReplyUpdateInput, GeneralReplyUncheckedUpdateInput>
+  }
+
+  /**
+   * GeneralReply delete
+   */
+  export type GeneralReplyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    /**
+     * Filter which GeneralReply to delete.
+     */
+    where: GeneralReplyWhereUniqueInput
+  }
+
+  /**
+   * GeneralReply deleteMany
+   */
+  export type GeneralReplyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralReplies to delete
+     */
+    where?: GeneralReplyWhereInput
+    /**
+     * Limit how many GeneralReplies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralReply.parentReply
+   */
+  export type GeneralReply$parentReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    where?: GeneralReplyWhereInput
+  }
+
+  /**
+   * GeneralReply.childReplies
+   */
+  export type GeneralReply$childRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    where?: GeneralReplyWhereInput
+    orderBy?: GeneralReplyOrderByWithRelationInput | GeneralReplyOrderByWithRelationInput[]
+    cursor?: GeneralReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralReply without action
+   */
+  export type GeneralReplyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GeneralLike
+   */
+
+  export type AggregateGeneralLike = {
+    _count: GeneralLikeCountAggregateOutputType | null
+    _min: GeneralLikeMinAggregateOutputType | null
+    _max: GeneralLikeMaxAggregateOutputType | null
+  }
+
+  export type GeneralLikeMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    postId: string | null
+  }
+
+  export type GeneralLikeMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    postId: string | null
+  }
+
+  export type GeneralLikeCountAggregateOutputType = {
+    id: number
+    userId: number
+    postId: number
+    _all: number
+  }
+
+
+  export type GeneralLikeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+  }
+
+  export type GeneralLikeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+  }
+
+  export type GeneralLikeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    postId?: true
+    _all?: true
+  }
+
+  export type GeneralLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralLike to aggregate.
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralLikes to fetch.
+     */
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GeneralLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GeneralLikes
+    **/
+    _count?: true | GeneralLikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GeneralLikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GeneralLikeMaxAggregateInputType
+  }
+
+  export type GetGeneralLikeAggregateType<T extends GeneralLikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateGeneralLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGeneralLike[P]>
+      : GetScalarType<T[P], AggregateGeneralLike[P]>
+  }
+
+
+
+
+  export type GeneralLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeneralLikeWhereInput
+    orderBy?: GeneralLikeOrderByWithAggregationInput | GeneralLikeOrderByWithAggregationInput[]
+    by: GeneralLikeScalarFieldEnum[] | GeneralLikeScalarFieldEnum
+    having?: GeneralLikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GeneralLikeCountAggregateInputType | true
+    _min?: GeneralLikeMinAggregateInputType
+    _max?: GeneralLikeMaxAggregateInputType
+  }
+
+  export type GeneralLikeGroupByOutputType = {
+    id: string
+    userId: string
+    postId: string
+    _count: GeneralLikeCountAggregateOutputType | null
+    _min: GeneralLikeMinAggregateOutputType | null
+    _max: GeneralLikeMaxAggregateOutputType | null
+  }
+
+  type GetGeneralLikeGroupByPayload<T extends GeneralLikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GeneralLikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GeneralLikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GeneralLikeGroupByOutputType[P]>
+            : GetScalarType<T[P], GeneralLikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GeneralLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalLike"]>
+
+  export type GeneralLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalLike"]>
+
+  export type GeneralLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["generalLike"]>
+
+  export type GeneralLikeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    postId?: boolean
+  }
+
+  export type GeneralLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "postId", ExtArgs["result"]["generalLike"]>
+  export type GeneralLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }
+  export type GeneralLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }
+  export type GeneralLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | GeneralPostDefaultArgs<ExtArgs>
+  }
+
+  export type $GeneralLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GeneralLike"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$GeneralPostPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      postId: string
+    }, ExtArgs["result"]["generalLike"]>
+    composites: {}
+  }
+
+  type GeneralLikeGetPayload<S extends boolean | null | undefined | GeneralLikeDefaultArgs> = $Result.GetResult<Prisma.$GeneralLikePayload, S>
+
+  type GeneralLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GeneralLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GeneralLikeCountAggregateInputType | true
+    }
+
+  export interface GeneralLikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GeneralLike'], meta: { name: 'GeneralLike' } }
+    /**
+     * Find zero or one GeneralLike that matches the filter.
+     * @param {GeneralLikeFindUniqueArgs} args - Arguments to find a GeneralLike
+     * @example
+     * // Get one GeneralLike
+     * const generalLike = await prisma.generalLike.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GeneralLikeFindUniqueArgs>(args: SelectSubset<T, GeneralLikeFindUniqueArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GeneralLike that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GeneralLikeFindUniqueOrThrowArgs} args - Arguments to find a GeneralLike
+     * @example
+     * // Get one GeneralLike
+     * const generalLike = await prisma.generalLike.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GeneralLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, GeneralLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralLike that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeFindFirstArgs} args - Arguments to find a GeneralLike
+     * @example
+     * // Get one GeneralLike
+     * const generalLike = await prisma.generalLike.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GeneralLikeFindFirstArgs>(args?: SelectSubset<T, GeneralLikeFindFirstArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeneralLike that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeFindFirstOrThrowArgs} args - Arguments to find a GeneralLike
+     * @example
+     * // Get one GeneralLike
+     * const generalLike = await prisma.generalLike.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GeneralLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, GeneralLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GeneralLikes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GeneralLikes
+     * const generalLikes = await prisma.generalLike.findMany()
+     * 
+     * // Get first 10 GeneralLikes
+     * const generalLikes = await prisma.generalLike.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const generalLikeWithIdOnly = await prisma.generalLike.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GeneralLikeFindManyArgs>(args?: SelectSubset<T, GeneralLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GeneralLike.
+     * @param {GeneralLikeCreateArgs} args - Arguments to create a GeneralLike.
+     * @example
+     * // Create one GeneralLike
+     * const GeneralLike = await prisma.generalLike.create({
+     *   data: {
+     *     // ... data to create a GeneralLike
+     *   }
+     * })
+     * 
+     */
+    create<T extends GeneralLikeCreateArgs>(args: SelectSubset<T, GeneralLikeCreateArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GeneralLikes.
+     * @param {GeneralLikeCreateManyArgs} args - Arguments to create many GeneralLikes.
+     * @example
+     * // Create many GeneralLikes
+     * const generalLike = await prisma.generalLike.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GeneralLikeCreateManyArgs>(args?: SelectSubset<T, GeneralLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GeneralLikes and returns the data saved in the database.
+     * @param {GeneralLikeCreateManyAndReturnArgs} args - Arguments to create many GeneralLikes.
+     * @example
+     * // Create many GeneralLikes
+     * const generalLike = await prisma.generalLike.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GeneralLikes and only return the `id`
+     * const generalLikeWithIdOnly = await prisma.generalLike.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GeneralLikeCreateManyAndReturnArgs>(args?: SelectSubset<T, GeneralLikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GeneralLike.
+     * @param {GeneralLikeDeleteArgs} args - Arguments to delete one GeneralLike.
+     * @example
+     * // Delete one GeneralLike
+     * const GeneralLike = await prisma.generalLike.delete({
+     *   where: {
+     *     // ... filter to delete one GeneralLike
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GeneralLikeDeleteArgs>(args: SelectSubset<T, GeneralLikeDeleteArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GeneralLike.
+     * @param {GeneralLikeUpdateArgs} args - Arguments to update one GeneralLike.
+     * @example
+     * // Update one GeneralLike
+     * const generalLike = await prisma.generalLike.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GeneralLikeUpdateArgs>(args: SelectSubset<T, GeneralLikeUpdateArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GeneralLikes.
+     * @param {GeneralLikeDeleteManyArgs} args - Arguments to filter GeneralLikes to delete.
+     * @example
+     * // Delete a few GeneralLikes
+     * const { count } = await prisma.generalLike.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GeneralLikeDeleteManyArgs>(args?: SelectSubset<T, GeneralLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GeneralLikes
+     * const generalLike = await prisma.generalLike.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GeneralLikeUpdateManyArgs>(args: SelectSubset<T, GeneralLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeneralLikes and returns the data updated in the database.
+     * @param {GeneralLikeUpdateManyAndReturnArgs} args - Arguments to update many GeneralLikes.
+     * @example
+     * // Update many GeneralLikes
+     * const generalLike = await prisma.generalLike.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GeneralLikes and only return the `id`
+     * const generalLikeWithIdOnly = await prisma.generalLike.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GeneralLikeUpdateManyAndReturnArgs>(args: SelectSubset<T, GeneralLikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GeneralLike.
+     * @param {GeneralLikeUpsertArgs} args - Arguments to update or create a GeneralLike.
+     * @example
+     * // Update or create a GeneralLike
+     * const generalLike = await prisma.generalLike.upsert({
+     *   create: {
+     *     // ... data to create a GeneralLike
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GeneralLike we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GeneralLikeUpsertArgs>(args: SelectSubset<T, GeneralLikeUpsertArgs<ExtArgs>>): Prisma__GeneralLikeClient<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GeneralLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeCountArgs} args - Arguments to filter GeneralLikes to count.
+     * @example
+     * // Count the number of GeneralLikes
+     * const count = await prisma.generalLike.count({
+     *   where: {
+     *     // ... the filter for the GeneralLikes we want to count
+     *   }
+     * })
+    **/
+    count<T extends GeneralLikeCountArgs>(
+      args?: Subset<T, GeneralLikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GeneralLikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GeneralLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GeneralLikeAggregateArgs>(args: Subset<T, GeneralLikeAggregateArgs>): Prisma.PrismaPromise<GetGeneralLikeAggregateType<T>>
+
+    /**
+     * Group by GeneralLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeneralLikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GeneralLikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GeneralLikeGroupByArgs['orderBy'] }
+        : { orderBy?: GeneralLikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GeneralLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGeneralLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GeneralLike model
+   */
+  readonly fields: GeneralLikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GeneralLike.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GeneralLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends GeneralPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPostDefaultArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GeneralLike model
+   */
+  interface GeneralLikeFieldRefs {
+    readonly id: FieldRef<"GeneralLike", 'String'>
+    readonly userId: FieldRef<"GeneralLike", 'String'>
+    readonly postId: FieldRef<"GeneralLike", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GeneralLike findUnique
+   */
+  export type GeneralLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralLike to fetch.
+     */
+    where: GeneralLikeWhereUniqueInput
+  }
+
+  /**
+   * GeneralLike findUniqueOrThrow
+   */
+  export type GeneralLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralLike to fetch.
+     */
+    where: GeneralLikeWhereUniqueInput
+  }
+
+  /**
+   * GeneralLike findFirst
+   */
+  export type GeneralLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralLike to fetch.
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralLikes to fetch.
+     */
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralLikes.
+     */
+    cursor?: GeneralLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralLikes.
+     */
+    distinct?: GeneralLikeScalarFieldEnum | GeneralLikeScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralLike findFirstOrThrow
+   */
+  export type GeneralLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralLike to fetch.
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralLikes to fetch.
+     */
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeneralLikes.
+     */
+    cursor?: GeneralLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeneralLikes.
+     */
+    distinct?: GeneralLikeScalarFieldEnum | GeneralLikeScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralLike findMany
+   */
+  export type GeneralLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which GeneralLikes to fetch.
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeneralLikes to fetch.
+     */
+    orderBy?: GeneralLikeOrderByWithRelationInput | GeneralLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GeneralLikes.
+     */
+    cursor?: GeneralLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeneralLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeneralLikes.
+     */
+    skip?: number
+    distinct?: GeneralLikeScalarFieldEnum | GeneralLikeScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralLike create
+   */
+  export type GeneralLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GeneralLike.
+     */
+    data: XOR<GeneralLikeCreateInput, GeneralLikeUncheckedCreateInput>
+  }
+
+  /**
+   * GeneralLike createMany
+   */
+  export type GeneralLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GeneralLikes.
+     */
+    data: GeneralLikeCreateManyInput | GeneralLikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GeneralLike createManyAndReturn
+   */
+  export type GeneralLikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many GeneralLikes.
+     */
+    data: GeneralLikeCreateManyInput | GeneralLikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralLike update
+   */
+  export type GeneralLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GeneralLike.
+     */
+    data: XOR<GeneralLikeUpdateInput, GeneralLikeUncheckedUpdateInput>
+    /**
+     * Choose, which GeneralLike to update.
+     */
+    where: GeneralLikeWhereUniqueInput
+  }
+
+  /**
+   * GeneralLike updateMany
+   */
+  export type GeneralLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GeneralLikes.
+     */
+    data: XOR<GeneralLikeUpdateManyMutationInput, GeneralLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralLikes to update
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * Limit how many GeneralLikes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralLike updateManyAndReturn
+   */
+  export type GeneralLikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * The data used to update GeneralLikes.
+     */
+    data: XOR<GeneralLikeUpdateManyMutationInput, GeneralLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which GeneralLikes to update
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * Limit how many GeneralLikes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeneralLike upsert
+   */
+  export type GeneralLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GeneralLike to update in case it exists.
+     */
+    where: GeneralLikeWhereUniqueInput
+    /**
+     * In case the GeneralLike found by the `where` argument doesn't exist, create a new GeneralLike with this data.
+     */
+    create: XOR<GeneralLikeCreateInput, GeneralLikeUncheckedCreateInput>
+    /**
+     * In case the GeneralLike was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GeneralLikeUpdateInput, GeneralLikeUncheckedUpdateInput>
+  }
+
+  /**
+   * GeneralLike delete
+   */
+  export type GeneralLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+    /**
+     * Filter which GeneralLike to delete.
+     */
+    where: GeneralLikeWhereUniqueInput
+  }
+
+  /**
+   * GeneralLike deleteMany
+   */
+  export type GeneralLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeneralLikes to delete
+     */
+    where?: GeneralLikeWhereInput
+    /**
+     * Limit how many GeneralLikes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeneralLike without action
+   */
+  export type GeneralLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralLike
+     */
+    select?: GeneralLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralLike
+     */
+    omit?: GeneralLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralLikeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Blog
+   */
+
+  export type AggregateBlog = {
+    _count: BlogCountAggregateOutputType | null
+    _min: BlogMinAggregateOutputType | null
+    _max: BlogMaxAggregateOutputType | null
+  }
+
+  export type BlogMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    authorId: string | null
+    status: string | null
+    createdAt: Date | null
+    category: string | null
+  }
+
+  export type BlogMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    authorId: string | null
+    status: string | null
+    createdAt: Date | null
+    category: string | null
+  }
+
+  export type BlogCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    authorId: number
+    status: number
+    createdAt: number
+    category: number
+    image_url: number
+    _all: number
+  }
+
+
+  export type BlogMinAggregateInputType = {
+    id?: true
+    title?: true
+    authorId?: true
+    status?: true
+    createdAt?: true
+    category?: true
+  }
+
+  export type BlogMaxAggregateInputType = {
+    id?: true
+    title?: true
+    authorId?: true
+    status?: true
+    createdAt?: true
+    category?: true
+  }
+
+  export type BlogCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    authorId?: true
+    status?: true
+    createdAt?: true
+    category?: true
+    image_url?: true
+    _all?: true
+  }
+
+  export type BlogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Blog to aggregate.
+     */
+    where?: BlogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Blogs to fetch.
+     */
+    orderBy?: BlogOrderByWithRelationInput | BlogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BlogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Blogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Blogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Blogs
+    **/
+    _count?: true | BlogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BlogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BlogMaxAggregateInputType
+  }
+
+  export type GetBlogAggregateType<T extends BlogAggregateArgs> = {
+        [P in keyof T & keyof AggregateBlog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBlog[P]>
+      : GetScalarType<T[P], AggregateBlog[P]>
+  }
+
+
+
+
+  export type BlogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BlogWhereInput
+    orderBy?: BlogOrderByWithAggregationInput | BlogOrderByWithAggregationInput[]
+    by: BlogScalarFieldEnum[] | BlogScalarFieldEnum
+    having?: BlogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BlogCountAggregateInputType | true
+    _min?: BlogMinAggregateInputType
+    _max?: BlogMaxAggregateInputType
+  }
+
+  export type BlogGroupByOutputType = {
+    id: string
+    title: string
+    description: JsonValue
+    authorId: string
+    status: string
+    createdAt: Date
+    category: string
+    image_url: string[]
+    _count: BlogCountAggregateOutputType | null
+    _min: BlogMinAggregateOutputType | null
+    _max: BlogMaxAggregateOutputType | null
+  }
+
+  type GetBlogGroupByPayload<T extends BlogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BlogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BlogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BlogGroupByOutputType[P]>
+            : GetScalarType<T[P], BlogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BlogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    authorId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    category?: boolean
+    image_url?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blog"]>
+
+  export type BlogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    authorId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    category?: boolean
+    image_url?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blog"]>
+
+  export type BlogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    authorId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    category?: boolean
+    image_url?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["blog"]>
+
+  export type BlogSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    authorId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    category?: boolean
+    image_url?: boolean
+  }
+
+  export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "authorId" | "status" | "createdAt" | "category" | "image_url", ExtArgs["result"]["blog"]>
+  export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BlogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BlogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BlogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Blog"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: Prisma.JsonValue
+      authorId: string
+      status: string
+      createdAt: Date
+      category: string
+      image_url: string[]
+    }, ExtArgs["result"]["blog"]>
+    composites: {}
+  }
+
+  type BlogGetPayload<S extends boolean | null | undefined | BlogDefaultArgs> = $Result.GetResult<Prisma.$BlogPayload, S>
+
+  type BlogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BlogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BlogCountAggregateInputType | true
+    }
+
+  export interface BlogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Blog'], meta: { name: 'Blog' } }
+    /**
+     * Find zero or one Blog that matches the filter.
+     * @param {BlogFindUniqueArgs} args - Arguments to find a Blog
+     * @example
+     * // Get one Blog
+     * const blog = await prisma.blog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BlogFindUniqueArgs>(args: SelectSubset<T, BlogFindUniqueArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Blog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BlogFindUniqueOrThrowArgs} args - Arguments to find a Blog
+     * @example
+     * // Get one Blog
+     * const blog = await prisma.blog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BlogFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Blog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogFindFirstArgs} args - Arguments to find a Blog
+     * @example
+     * // Get one Blog
+     * const blog = await prisma.blog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BlogFindFirstArgs>(args?: SelectSubset<T, BlogFindFirstArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Blog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogFindFirstOrThrowArgs} args - Arguments to find a Blog
+     * @example
+     * // Get one Blog
+     * const blog = await prisma.blog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BlogFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Blogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Blogs
+     * const blogs = await prisma.blog.findMany()
+     * 
+     * // Get first 10 Blogs
+     * const blogs = await prisma.blog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const blogWithIdOnly = await prisma.blog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BlogFindManyArgs>(args?: SelectSubset<T, BlogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Blog.
+     * @param {BlogCreateArgs} args - Arguments to create a Blog.
+     * @example
+     * // Create one Blog
+     * const Blog = await prisma.blog.create({
+     *   data: {
+     *     // ... data to create a Blog
+     *   }
+     * })
+     * 
+     */
+    create<T extends BlogCreateArgs>(args: SelectSubset<T, BlogCreateArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Blogs.
+     * @param {BlogCreateManyArgs} args - Arguments to create many Blogs.
+     * @example
+     * // Create many Blogs
+     * const blog = await prisma.blog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BlogCreateManyArgs>(args?: SelectSubset<T, BlogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Blogs and returns the data saved in the database.
+     * @param {BlogCreateManyAndReturnArgs} args - Arguments to create many Blogs.
+     * @example
+     * // Create many Blogs
+     * const blog = await prisma.blog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Blogs and only return the `id`
+     * const blogWithIdOnly = await prisma.blog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BlogCreateManyAndReturnArgs>(args?: SelectSubset<T, BlogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Blog.
+     * @param {BlogDeleteArgs} args - Arguments to delete one Blog.
+     * @example
+     * // Delete one Blog
+     * const Blog = await prisma.blog.delete({
+     *   where: {
+     *     // ... filter to delete one Blog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BlogDeleteArgs>(args: SelectSubset<T, BlogDeleteArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Blog.
+     * @param {BlogUpdateArgs} args - Arguments to update one Blog.
+     * @example
+     * // Update one Blog
+     * const blog = await prisma.blog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BlogUpdateArgs>(args: SelectSubset<T, BlogUpdateArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Blogs.
+     * @param {BlogDeleteManyArgs} args - Arguments to filter Blogs to delete.
+     * @example
+     * // Delete a few Blogs
+     * const { count } = await prisma.blog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BlogDeleteManyArgs>(args?: SelectSubset<T, BlogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Blogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Blogs
+     * const blog = await prisma.blog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BlogUpdateManyArgs>(args: SelectSubset<T, BlogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Blogs and returns the data updated in the database.
+     * @param {BlogUpdateManyAndReturnArgs} args - Arguments to update many Blogs.
+     * @example
+     * // Update many Blogs
+     * const blog = await prisma.blog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Blogs and only return the `id`
+     * const blogWithIdOnly = await prisma.blog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BlogUpdateManyAndReturnArgs>(args: SelectSubset<T, BlogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Blog.
+     * @param {BlogUpsertArgs} args - Arguments to update or create a Blog.
+     * @example
+     * // Update or create a Blog
+     * const blog = await prisma.blog.upsert({
+     *   create: {
+     *     // ... data to create a Blog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Blog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BlogUpsertArgs>(args: SelectSubset<T, BlogUpsertArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Blogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogCountArgs} args - Arguments to filter Blogs to count.
+     * @example
+     * // Count the number of Blogs
+     * const count = await prisma.blog.count({
+     *   where: {
+     *     // ... the filter for the Blogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends BlogCountArgs>(
+      args?: Subset<T, BlogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BlogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Blog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BlogAggregateArgs>(args: Subset<T, BlogAggregateArgs>): Prisma.PrismaPromise<GetBlogAggregateType<T>>
+
+    /**
+     * Group by Blog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BlogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BlogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BlogGroupByArgs['orderBy'] }
+        : { orderBy?: BlogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BlogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Blog model
+   */
+  readonly fields: BlogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Blog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BlogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Blog model
+   */
+  interface BlogFieldRefs {
+    readonly id: FieldRef<"Blog", 'String'>
+    readonly title: FieldRef<"Blog", 'String'>
+    readonly description: FieldRef<"Blog", 'Json'>
+    readonly authorId: FieldRef<"Blog", 'String'>
+    readonly status: FieldRef<"Blog", 'String'>
+    readonly createdAt: FieldRef<"Blog", 'DateTime'>
+    readonly category: FieldRef<"Blog", 'String'>
+    readonly image_url: FieldRef<"Blog", 'String[]'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Blog findUnique
+   */
+  export type BlogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter, which Blog to fetch.
+     */
+    where: BlogWhereUniqueInput
+  }
+
+  /**
+   * Blog findUniqueOrThrow
+   */
+  export type BlogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter, which Blog to fetch.
+     */
+    where: BlogWhereUniqueInput
+  }
+
+  /**
+   * Blog findFirst
+   */
+  export type BlogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter, which Blog to fetch.
+     */
+    where?: BlogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Blogs to fetch.
+     */
+    orderBy?: BlogOrderByWithRelationInput | BlogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Blogs.
+     */
+    cursor?: BlogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Blogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Blogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Blogs.
+     */
+    distinct?: BlogScalarFieldEnum | BlogScalarFieldEnum[]
+  }
+
+  /**
+   * Blog findFirstOrThrow
+   */
+  export type BlogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter, which Blog to fetch.
+     */
+    where?: BlogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Blogs to fetch.
+     */
+    orderBy?: BlogOrderByWithRelationInput | BlogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Blogs.
+     */
+    cursor?: BlogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Blogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Blogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Blogs.
+     */
+    distinct?: BlogScalarFieldEnum | BlogScalarFieldEnum[]
+  }
+
+  /**
+   * Blog findMany
+   */
+  export type BlogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter, which Blogs to fetch.
+     */
+    where?: BlogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Blogs to fetch.
+     */
+    orderBy?: BlogOrderByWithRelationInput | BlogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Blogs.
+     */
+    cursor?: BlogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Blogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Blogs.
+     */
+    skip?: number
+    distinct?: BlogScalarFieldEnum | BlogScalarFieldEnum[]
+  }
+
+  /**
+   * Blog create
+   */
+  export type BlogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Blog.
+     */
+    data: XOR<BlogCreateInput, BlogUncheckedCreateInput>
+  }
+
+  /**
+   * Blog createMany
+   */
+  export type BlogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Blogs.
+     */
+    data: BlogCreateManyInput | BlogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Blog createManyAndReturn
+   */
+  export type BlogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * The data used to create many Blogs.
+     */
+    data: BlogCreateManyInput | BlogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Blog update
+   */
+  export type BlogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Blog.
+     */
+    data: XOR<BlogUpdateInput, BlogUncheckedUpdateInput>
+    /**
+     * Choose, which Blog to update.
+     */
+    where: BlogWhereUniqueInput
+  }
+
+  /**
+   * Blog updateMany
+   */
+  export type BlogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Blogs.
+     */
+    data: XOR<BlogUpdateManyMutationInput, BlogUncheckedUpdateManyInput>
+    /**
+     * Filter which Blogs to update
+     */
+    where?: BlogWhereInput
+    /**
+     * Limit how many Blogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Blog updateManyAndReturn
+   */
+  export type BlogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * The data used to update Blogs.
+     */
+    data: XOR<BlogUpdateManyMutationInput, BlogUncheckedUpdateManyInput>
+    /**
+     * Filter which Blogs to update
+     */
+    where?: BlogWhereInput
+    /**
+     * Limit how many Blogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Blog upsert
+   */
+  export type BlogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Blog to update in case it exists.
+     */
+    where: BlogWhereUniqueInput
+    /**
+     * In case the Blog found by the `where` argument doesn't exist, create a new Blog with this data.
+     */
+    create: XOR<BlogCreateInput, BlogUncheckedCreateInput>
+    /**
+     * In case the Blog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BlogUpdateInput, BlogUncheckedUpdateInput>
+  }
+
+  /**
+   * Blog delete
+   */
+  export type BlogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    /**
+     * Filter which Blog to delete.
+     */
+    where: BlogWhereUniqueInput
+  }
+
+  /**
+   * Blog deleteMany
+   */
+  export type BlogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Blogs to delete
+     */
+    where?: BlogWhereInput
+    /**
+     * Limit how many Blogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Blog without action
+   */
+  export type BlogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
   }
 
 
@@ -9993,7 +14165,6 @@ export namespace Prisma {
     description: 'description',
     userId: 'userId',
     name: 'name',
-    categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     totalNetWeight: 'totalNetWeight',
@@ -10055,6 +14226,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     userId: 'userId',
+    createdBy: 'createdBy',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     viewCount: 'viewCount',
@@ -10069,12 +14241,56 @@ export namespace Prisma {
   export type GeneralPostScalarFieldEnum = (typeof GeneralPostScalarFieldEnum)[keyof typeof GeneralPostScalarFieldEnum]
 
 
+  export const GeneralReplyScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    postId: 'postId',
+    parentReplyId: 'parentReplyId',
+    description: 'description',
+    createdAt: 'createdAt',
+    status: 'status',
+    rejectionReason: 'rejectionReason'
+  };
+
+  export type GeneralReplyScalarFieldEnum = (typeof GeneralReplyScalarFieldEnum)[keyof typeof GeneralReplyScalarFieldEnum]
+
+
+  export const GeneralLikeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    postId: 'postId'
+  };
+
+  export type GeneralLikeScalarFieldEnum = (typeof GeneralLikeScalarFieldEnum)[keyof typeof GeneralLikeScalarFieldEnum]
+
+
+  export const BlogScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    authorId: 'authorId',
+    status: 'status',
+    createdAt: 'createdAt',
+    category: 'category',
+    image_url: 'image_url'
+  };
+
+  export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -10091,6 +14307,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -10159,6 +14384,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
   /**
    * Deep Input Types
    */
@@ -10191,6 +14430,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     generalPost?: GeneralPostListRelationFilter
+    generalReply?: GeneralReplyListRelationFilter
+    generalLike?: GeneralLikeListRelationFilter
+    blog?: BlogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10217,6 +14459,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyOrderByRelationAggregateInput
     quoteLike?: QuoteLikeOrderByRelationAggregateInput
     generalPost?: GeneralPostOrderByRelationAggregateInput
+    generalReply?: GeneralReplyOrderByRelationAggregateInput
+    generalLike?: GeneralLikeOrderByRelationAggregateInput
+    blog?: BlogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10246,6 +14491,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
     generalPost?: GeneralPostListRelationFilter
+    generalReply?: GeneralReplyListRelationFilter
+    generalLike?: GeneralLikeListRelationFilter
+    blog?: BlogListRelationFilter
   }, "id" | "email" | "mobileNo">
 
   export type UserOrderByWithAggregationInput = {
@@ -10308,6 +14556,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"ForumMainCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumMainCategory"> | boolean | null
     subCategory?: ForumSubCategoryListRelationFilter
+    quotePost?: QuotePostListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
   }
 
   export type ForumMainCategoryOrderByWithRelationInput = {
@@ -10315,6 +14565,8 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
     subCategory?: ForumSubCategoryOrderByRelationAggregateInput
+    quotePost?: QuotePostOrderByRelationAggregateInput
+    generalPost?: GeneralPostOrderByRelationAggregateInput
   }
 
   export type ForumMainCategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -10325,6 +14577,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"ForumMainCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumMainCategory"> | boolean | null
     subCategory?: ForumSubCategoryListRelationFilter
+    quotePost?: QuotePostListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
   }, "id">
 
   export type ForumMainCategoryOrderByWithAggregationInput = {
@@ -10353,6 +14607,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
     mainCategoryId?: StringFilter<"ForumSubCategory"> | string
+    quotePost?: QuotePostListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
     mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
   }
 
@@ -10361,6 +14617,8 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
     mainCategoryId?: SortOrder
+    quotePost?: QuotePostOrderByRelationAggregateInput
+    generalPost?: GeneralPostOrderByRelationAggregateInput
     mainCategory?: ForumMainCategoryOrderByWithRelationInput
   }
 
@@ -10372,6 +14630,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
     mainCategoryId?: StringFilter<"ForumSubCategory"> | string
+    quotePost?: QuotePostListRelationFilter
+    generalPost?: GeneralPostListRelationFilter
     mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
   }, "id">
 
@@ -10404,7 +14664,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"QuotePost"> | string | null
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
-    categoryId?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
@@ -10435,6 +14694,8 @@ export namespace Prisma {
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
+    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
@@ -10444,7 +14705,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     userId?: SortOrder
     name?: SortOrderInput | SortOrder
-    categoryId?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
     totalNetWeight?: SortOrderInput | SortOrder
@@ -10475,6 +14735,8 @@ export namespace Prisma {
     shipmentType?: SortOrderInput | SortOrder
     quoteReply?: QuoteReplyOrderByRelationAggregateInput
     quoteLike?: QuoteLikeOrderByRelationAggregateInput
+    subCategory?: ForumSubCategoryOrderByWithRelationInput
+    mainCategory?: ForumMainCategoryOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -10487,7 +14749,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"QuotePost"> | string | null
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
-    categoryId?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
@@ -10518,6 +14779,8 @@ export namespace Prisma {
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
+    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
@@ -10527,7 +14790,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     userId?: SortOrder
     name?: SortOrderInput | SortOrder
-    categoryId?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
     updatedAt?: SortOrderInput | SortOrder
     totalNetWeight?: SortOrderInput | SortOrder
@@ -10572,7 +14834,6 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     userId?: StringWithAggregatesFilter<"QuotePost"> | string
     name?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    categoryId?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"QuotePost"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableWithAggregatesFilter<"QuotePost"> | number | null
@@ -10617,6 +14878,8 @@ export namespace Prisma {
     rejectionReason?: StringNullableFilter<"QuoteReply"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    parentReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
+    childReplies?: QuoteReplyListRelationFilter
   }
 
   export type QuoteReplyOrderByWithRelationInput = {
@@ -10630,6 +14893,8 @@ export namespace Prisma {
     rejectionReason?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     post?: QuotePostOrderByWithRelationInput
+    parentReply?: QuoteReplyOrderByWithRelationInput
+    childReplies?: QuoteReplyOrderByRelationAggregateInput
   }
 
   export type QuoteReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -10646,6 +14911,8 @@ export namespace Prisma {
     rejectionReason?: StringNullableFilter<"QuoteReply"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
+    parentReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
+    childReplies?: QuoteReplyListRelationFilter
   }, "id">
 
   export type QuoteReplyOrderByWithAggregationInput = {
@@ -10732,6 +14999,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"GeneralPost"> | string | null
     description?: StringNullableFilter<"GeneralPost"> | string | null
     userId?: StringFilter<"GeneralPost"> | string
+    createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
     updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
     viewCount?: IntNullableFilter<"GeneralPost"> | number | null
@@ -10742,6 +15010,10 @@ export namespace Prisma {
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    MainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
+    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    generalReply?: GeneralReplyListRelationFilter
+    generalLike?: GeneralLikeListRelationFilter
   }
 
   export type GeneralPostOrderByWithRelationInput = {
@@ -10749,6 +15021,7 @@ export namespace Prisma {
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     userId?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     viewCount?: SortOrderInput | SortOrder
@@ -10759,6 +15032,10 @@ export namespace Prisma {
     generalPostMainCategory?: SortOrderInput | SortOrder
     generalPostSubCategory?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    MainCategory?: ForumMainCategoryOrderByWithRelationInput
+    subCategory?: ForumSubCategoryOrderByWithRelationInput
+    generalReply?: GeneralReplyOrderByRelationAggregateInput
+    generalLike?: GeneralLikeOrderByRelationAggregateInput
   }
 
   export type GeneralPostWhereUniqueInput = Prisma.AtLeast<{
@@ -10769,6 +15046,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"GeneralPost"> | string | null
     description?: StringNullableFilter<"GeneralPost"> | string | null
     userId?: StringFilter<"GeneralPost"> | string
+    createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
     updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
     viewCount?: IntNullableFilter<"GeneralPost"> | number | null
@@ -10779,6 +15057,10 @@ export namespace Prisma {
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    MainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
+    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    generalReply?: GeneralReplyListRelationFilter
+    generalLike?: GeneralLikeListRelationFilter
   }, "id">
 
   export type GeneralPostOrderByWithAggregationInput = {
@@ -10786,6 +15068,7 @@ export namespace Prisma {
     title?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     userId?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     viewCount?: SortOrderInput | SortOrder
@@ -10810,6 +15093,7 @@ export namespace Prisma {
     title?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     description?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     userId?: StringWithAggregatesFilter<"GeneralPost"> | string
+    createdBy?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"GeneralPost"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"GeneralPost"> | Date | string
     viewCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
@@ -10819,6 +15103,203 @@ export namespace Prisma {
     rejectionReason?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+  }
+
+  export type GeneralReplyWhereInput = {
+    AND?: GeneralReplyWhereInput | GeneralReplyWhereInput[]
+    OR?: GeneralReplyWhereInput[]
+    NOT?: GeneralReplyWhereInput | GeneralReplyWhereInput[]
+    id?: StringFilter<"GeneralReply"> | string
+    userId?: StringFilter<"GeneralReply"> | string
+    postId?: StringFilter<"GeneralReply"> | string
+    parentReplyId?: StringNullableFilter<"GeneralReply"> | string | null
+    description?: StringNullableFilter<"GeneralReply"> | string | null
+    createdAt?: DateTimeFilter<"GeneralReply"> | Date | string
+    status?: StringNullableFilter<"GeneralReply"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralReply"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
+    parentReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
+    childReplies?: GeneralReplyListRelationFilter
+  }
+
+  export type GeneralReplyOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    parentReplyId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    post?: GeneralPostOrderByWithRelationInput
+    parentReply?: GeneralReplyOrderByWithRelationInput
+    childReplies?: GeneralReplyOrderByRelationAggregateInput
+  }
+
+  export type GeneralReplyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GeneralReplyWhereInput | GeneralReplyWhereInput[]
+    OR?: GeneralReplyWhereInput[]
+    NOT?: GeneralReplyWhereInput | GeneralReplyWhereInput[]
+    userId?: StringFilter<"GeneralReply"> | string
+    postId?: StringFilter<"GeneralReply"> | string
+    parentReplyId?: StringNullableFilter<"GeneralReply"> | string | null
+    description?: StringNullableFilter<"GeneralReply"> | string | null
+    createdAt?: DateTimeFilter<"GeneralReply"> | Date | string
+    status?: StringNullableFilter<"GeneralReply"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralReply"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
+    parentReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
+    childReplies?: GeneralReplyListRelationFilter
+  }, "id">
+
+  export type GeneralReplyOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    parentReplyId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    status?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    _count?: GeneralReplyCountOrderByAggregateInput
+    _max?: GeneralReplyMaxOrderByAggregateInput
+    _min?: GeneralReplyMinOrderByAggregateInput
+  }
+
+  export type GeneralReplyScalarWhereWithAggregatesInput = {
+    AND?: GeneralReplyScalarWhereWithAggregatesInput | GeneralReplyScalarWhereWithAggregatesInput[]
+    OR?: GeneralReplyScalarWhereWithAggregatesInput[]
+    NOT?: GeneralReplyScalarWhereWithAggregatesInput | GeneralReplyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GeneralReply"> | string
+    userId?: StringWithAggregatesFilter<"GeneralReply"> | string
+    postId?: StringWithAggregatesFilter<"GeneralReply"> | string
+    parentReplyId?: StringNullableWithAggregatesFilter<"GeneralReply"> | string | null
+    description?: StringNullableWithAggregatesFilter<"GeneralReply"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GeneralReply"> | Date | string
+    status?: StringNullableWithAggregatesFilter<"GeneralReply"> | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"GeneralReply"> | string | null
+  }
+
+  export type GeneralLikeWhereInput = {
+    AND?: GeneralLikeWhereInput | GeneralLikeWhereInput[]
+    OR?: GeneralLikeWhereInput[]
+    NOT?: GeneralLikeWhereInput | GeneralLikeWhereInput[]
+    id?: StringFilter<"GeneralLike"> | string
+    userId?: StringFilter<"GeneralLike"> | string
+    postId?: StringFilter<"GeneralLike"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
+  }
+
+  export type GeneralLikeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    post?: GeneralPostOrderByWithRelationInput
+  }
+
+  export type GeneralLikeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GeneralLikeWhereInput | GeneralLikeWhereInput[]
+    OR?: GeneralLikeWhereInput[]
+    NOT?: GeneralLikeWhereInput | GeneralLikeWhereInput[]
+    userId?: StringFilter<"GeneralLike"> | string
+    postId?: StringFilter<"GeneralLike"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
+  }, "id">
+
+  export type GeneralLikeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    _count?: GeneralLikeCountOrderByAggregateInput
+    _max?: GeneralLikeMaxOrderByAggregateInput
+    _min?: GeneralLikeMinOrderByAggregateInput
+  }
+
+  export type GeneralLikeScalarWhereWithAggregatesInput = {
+    AND?: GeneralLikeScalarWhereWithAggregatesInput | GeneralLikeScalarWhereWithAggregatesInput[]
+    OR?: GeneralLikeScalarWhereWithAggregatesInput[]
+    NOT?: GeneralLikeScalarWhereWithAggregatesInput | GeneralLikeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GeneralLike"> | string
+    userId?: StringWithAggregatesFilter<"GeneralLike"> | string
+    postId?: StringWithAggregatesFilter<"GeneralLike"> | string
+  }
+
+  export type BlogWhereInput = {
+    AND?: BlogWhereInput | BlogWhereInput[]
+    OR?: BlogWhereInput[]
+    NOT?: BlogWhereInput | BlogWhereInput[]
+    id?: StringFilter<"Blog"> | string
+    title?: StringFilter<"Blog"> | string
+    description?: JsonFilter<"Blog">
+    authorId?: StringFilter<"Blog"> | string
+    status?: StringFilter<"Blog"> | string
+    createdAt?: DateTimeFilter<"Blog"> | Date | string
+    category?: StringFilter<"Blog"> | string
+    image_url?: StringNullableListFilter<"Blog">
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BlogOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    authorId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    category?: SortOrder
+    image_url?: SortOrder
+    author?: UserOrderByWithRelationInput
+  }
+
+  export type BlogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BlogWhereInput | BlogWhereInput[]
+    OR?: BlogWhereInput[]
+    NOT?: BlogWhereInput | BlogWhereInput[]
+    title?: StringFilter<"Blog"> | string
+    description?: JsonFilter<"Blog">
+    authorId?: StringFilter<"Blog"> | string
+    status?: StringFilter<"Blog"> | string
+    createdAt?: DateTimeFilter<"Blog"> | Date | string
+    category?: StringFilter<"Blog"> | string
+    image_url?: StringNullableListFilter<"Blog">
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type BlogOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    authorId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    category?: SortOrder
+    image_url?: SortOrder
+    _count?: BlogCountOrderByAggregateInput
+    _max?: BlogMaxOrderByAggregateInput
+    _min?: BlogMinOrderByAggregateInput
+  }
+
+  export type BlogScalarWhereWithAggregatesInput = {
+    AND?: BlogScalarWhereWithAggregatesInput | BlogScalarWhereWithAggregatesInput[]
+    OR?: BlogScalarWhereWithAggregatesInput[]
+    NOT?: BlogScalarWhereWithAggregatesInput | BlogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Blog"> | string
+    title?: StringWithAggregatesFilter<"Blog"> | string
+    description?: JsonWithAggregatesFilter<"Blog">
+    authorId?: StringWithAggregatesFilter<"Blog"> | string
+    status?: StringWithAggregatesFilter<"Blog"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Blog"> | Date | string
+    category?: StringWithAggregatesFilter<"Blog"> | string
+    image_url?: StringNullableListFilter<"Blog">
   }
 
   export type UserCreateInput = {
@@ -10845,6 +15326,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10871,6 +15355,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
@@ -10897,6 +15384,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10923,6 +15413,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10996,6 +15489,8 @@ export namespace Prisma {
     name?: string | null
     enabled?: boolean | null
     subCategory?: ForumSubCategoryCreateNestedManyWithoutMainCategoryInput
+    quotePost?: QuotePostCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryUncheckedCreateInput = {
@@ -11003,6 +15498,8 @@ export namespace Prisma {
     name?: string | null
     enabled?: boolean | null
     subCategory?: ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryUpdateInput = {
@@ -11010,6 +15507,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subCategory?: ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput
+    quotePost?: QuotePostUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type ForumMainCategoryUncheckedUpdateInput = {
@@ -11017,6 +15516,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     subCategory?: ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput
+    quotePost?: QuotePostUncheckedUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type ForumMainCategoryCreateManyInput = {
@@ -11041,6 +15542,8 @@ export namespace Prisma {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    quotePost?: QuotePostCreateNestedManyWithoutSubCategoryInput
+    generalPost?: GeneralPostCreateNestedManyWithoutSubCategoryInput
     mainCategory: ForumMainCategoryCreateNestedOneWithoutSubCategoryInput
   }
 
@@ -11049,12 +15552,16 @@ export namespace Prisma {
     name?: string | null
     enabled?: boolean | null
     mainCategoryId: string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutSubCategoryInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutSubCategoryInput
   }
 
   export type ForumSubCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUpdateManyWithoutSubCategoryNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutSubCategoryNestedInput
     mainCategory?: ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput
   }
 
@@ -11063,6 +15570,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     mainCategoryId?: StringFieldUpdateOperationsInput | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutSubCategoryNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutSubCategoryNestedInput
   }
 
   export type ForumSubCategoryCreateManyInput = {
@@ -11090,7 +15599,6 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -11116,11 +15624,11 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postMainCategory?: string | null
-    postSubCategory?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user?: UserCreateNestedOneWithoutQuotePostInput
   }
 
@@ -11130,7 +15638,6 @@ export namespace Prisma {
     description?: string | null
     userId: string
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -11168,7 +15675,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -11194,11 +15700,11 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneWithoutQuotePostNestedInput
   }
 
@@ -11208,7 +15714,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -11247,7 +15752,6 @@ export namespace Prisma {
     description?: string | null
     userId: string
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -11283,7 +15787,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -11309,8 +15812,6 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -11320,7 +15821,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -11353,13 +15853,14 @@ export namespace Prisma {
 
   export type QuoteReplyCreateInput = {
     id?: string
-    parentReplyId?: string | null
     description?: string | null
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
     user: UserCreateNestedOneWithoutQuoteReplyInput
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyUncheckedCreateInput = {
@@ -11371,17 +15872,19 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+    childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateInput = {
@@ -11393,6 +15896,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyCreateManyInput = {
@@ -11408,7 +15912,6 @@ export namespace Prisma {
 
   export type QuoteReplyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11470,6 +15973,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     description?: string | null
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -11477,9 +15981,11 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
-    generalPostMainCategory?: string | null
-    generalPostSubCategory?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
   }
 
   export type GeneralPostUncheckedCreateInput = {
@@ -11487,6 +15993,7 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     userId: string
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -11496,12 +16003,15 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type GeneralPostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11509,9 +16019,11 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateInput = {
@@ -11519,6 +16031,7 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11528,6 +16041,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type GeneralPostCreateManyInput = {
@@ -11535,6 +16050,7 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     userId: string
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -11550,6 +16066,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralPostUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11561,20 +16093,198 @@ export namespace Prisma {
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type GeneralPostUncheckedUpdateManyInput = {
+  export type GeneralReplyCreateInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralReplyInput
+    post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
+    parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUncheckedCreateInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
+    parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyCreateManyInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type GeneralReplyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralReplyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralLikeCreateInput = {
+    id?: string
+    user: UserCreateNestedOneWithoutGeneralLikeInput
+    post: GeneralPostCreateNestedOneWithoutGeneralLikeInput
+  }
+
+  export type GeneralLikeUncheckedCreateInput = {
+    id?: string
+    userId: string
+    postId: string
+  }
+
+  export type GeneralLikeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutGeneralLikeNestedInput
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralLikeNestedInput
+  }
+
+  export type GeneralLikeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralLikeCreateManyInput = {
+    id?: string
+    userId: string
+    postId: string
+  }
+
+  export type GeneralLikeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralLikeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BlogCreateInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+    author: UserCreateNestedOneWithoutBlogInput
+  }
+
+  export type BlogUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    authorId: string
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+  }
+
+  export type BlogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+    author?: UserUpdateOneRequiredWithoutBlogNestedInput
+  }
+
+  export type BlogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    authorId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+  }
+
+  export type BlogCreateManyInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    authorId: string
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+  }
+
+  export type BlogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+  }
+
+  export type BlogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    authorId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -11669,6 +16379,24 @@ export namespace Prisma {
     none?: GeneralPostWhereInput
   }
 
+  export type GeneralReplyListRelationFilter = {
+    every?: GeneralReplyWhereInput
+    some?: GeneralReplyWhereInput
+    none?: GeneralReplyWhereInput
+  }
+
+  export type GeneralLikeListRelationFilter = {
+    every?: GeneralLikeWhereInput
+    some?: GeneralLikeWhereInput
+    none?: GeneralLikeWhereInput
+  }
+
+  export type BlogListRelationFilter = {
+    every?: BlogWhereInput
+    some?: BlogWhereInput
+    none?: BlogWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -11687,6 +16415,18 @@ export namespace Prisma {
   }
 
   export type GeneralPostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GeneralReplyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GeneralLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BlogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11917,6 +16657,16 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type ForumSubCategoryNullableScalarRelationFilter = {
+    is?: ForumSubCategoryWhereInput | null
+    isNot?: ForumSubCategoryWhereInput | null
+  }
+
+  export type ForumMainCategoryNullableScalarRelationFilter = {
+    is?: ForumMainCategoryWhereInput | null
+    isNot?: ForumMainCategoryWhereInput | null
+  }
+
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -11928,7 +16678,6 @@ export namespace Prisma {
     description?: SortOrder
     userId?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     totalNetWeight?: SortOrder
@@ -11977,7 +16726,6 @@ export namespace Prisma {
     description?: SortOrder
     userId?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     totalNetWeight?: SortOrder
@@ -12014,7 +16762,6 @@ export namespace Prisma {
     description?: SortOrder
     userId?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     totalNetWeight?: SortOrder
@@ -12083,6 +16830,11 @@ export namespace Prisma {
     isNot?: QuotePostWhereInput
   }
 
+  export type QuoteReplyNullableScalarRelationFilter = {
+    is?: QuoteReplyWhereInput | null
+    isNot?: QuoteReplyWhereInput | null
+  }
+
   export type QuoteReplyCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -12139,6 +16891,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    createdBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     viewCount?: SortOrder
@@ -12161,6 +16914,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    createdBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     viewCount?: SortOrder
@@ -12177,6 +16931,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     userId?: SortOrder
+    createdBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     viewCount?: SortOrder
@@ -12192,6 +16947,153 @@ export namespace Prisma {
     viewCount?: SortOrder
     likesCount?: SortOrder
     commentsCount?: SortOrder
+  }
+
+  export type GeneralPostScalarRelationFilter = {
+    is?: GeneralPostWhereInput
+    isNot?: GeneralPostWhereInput
+  }
+
+  export type GeneralReplyNullableScalarRelationFilter = {
+    is?: GeneralReplyWhereInput | null
+    isNot?: GeneralReplyWhereInput | null
+  }
+
+  export type GeneralReplyCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    parentReplyId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+  }
+
+  export type GeneralReplyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    parentReplyId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+  }
+
+  export type GeneralReplyMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    parentReplyId?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rejectionReason?: SortOrder
+  }
+
+  export type GeneralLikeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type GeneralLikeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type GeneralLikeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type BlogCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    authorId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    category?: SortOrder
+    image_url?: SortOrder
+  }
+
+  export type BlogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    authorId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    category?: SortOrder
+  }
+
+  export type BlogMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    authorId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    category?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type QuotePostCreateNestedManyWithoutUserInput = {
@@ -12222,6 +17124,27 @@ export namespace Prisma {
     connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
   }
 
+  export type GeneralReplyCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput> | GeneralReplyCreateWithoutUserInput[] | GeneralReplyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutUserInput | GeneralReplyCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralReplyCreateManyUserInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type GeneralLikeCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput> | GeneralLikeCreateWithoutUserInput[] | GeneralLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutUserInput | GeneralLikeCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralLikeCreateManyUserInputEnvelope
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+  }
+
+  export type BlogCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput> | BlogCreateWithoutAuthorInput[] | BlogUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: BlogCreateOrConnectWithoutAuthorInput | BlogCreateOrConnectWithoutAuthorInput[]
+    createMany?: BlogCreateManyAuthorInputEnvelope
+    connect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+  }
+
   export type QuotePostUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -12248,6 +17171,27 @@ export namespace Prisma {
     connectOrCreate?: GeneralPostCreateOrConnectWithoutUserInput | GeneralPostCreateOrConnectWithoutUserInput[]
     createMany?: GeneralPostCreateManyUserInputEnvelope
     connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+  }
+
+  export type GeneralReplyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput> | GeneralReplyCreateWithoutUserInput[] | GeneralReplyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutUserInput | GeneralReplyCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralReplyCreateManyUserInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type GeneralLikeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput> | GeneralLikeCreateWithoutUserInput[] | GeneralLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutUserInput | GeneralLikeCreateOrConnectWithoutUserInput[]
+    createMany?: GeneralLikeCreateManyUserInputEnvelope
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+  }
+
+  export type BlogUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput> | BlogCreateWithoutAuthorInput[] | BlogUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: BlogCreateOrConnectWithoutAuthorInput | BlogCreateOrConnectWithoutAuthorInput[]
+    createMany?: BlogCreateManyAuthorInputEnvelope
+    connect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12334,6 +17278,48 @@ export namespace Prisma {
     deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
+  export type GeneralReplyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput> | GeneralReplyCreateWithoutUserInput[] | GeneralReplyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutUserInput | GeneralReplyCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutUserInput | GeneralReplyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralReplyCreateManyUserInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutUserInput | GeneralReplyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutUserInput | GeneralReplyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type GeneralLikeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput> | GeneralLikeCreateWithoutUserInput[] | GeneralLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutUserInput | GeneralLikeCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralLikeUpsertWithWhereUniqueWithoutUserInput | GeneralLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralLikeCreateManyUserInputEnvelope
+    set?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    disconnect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    delete?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    update?: GeneralLikeUpdateWithWhereUniqueWithoutUserInput | GeneralLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralLikeUpdateManyWithWhereWithoutUserInput | GeneralLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+  }
+
+  export type BlogUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput> | BlogCreateWithoutAuthorInput[] | BlogUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: BlogCreateOrConnectWithoutAuthorInput | BlogCreateOrConnectWithoutAuthorInput[]
+    upsert?: BlogUpsertWithWhereUniqueWithoutAuthorInput | BlogUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: BlogCreateManyAuthorInputEnvelope
+    set?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    disconnect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    delete?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    connect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    update?: BlogUpdateWithWhereUniqueWithoutAuthorInput | BlogUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: BlogUpdateManyWithWhereWithoutAuthorInput | BlogUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: BlogScalarWhereInput | BlogScalarWhereInput[]
+  }
+
   export type QuotePostUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -12390,6 +17376,48 @@ export namespace Prisma {
     deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
+  export type GeneralReplyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput> | GeneralReplyCreateWithoutUserInput[] | GeneralReplyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutUserInput | GeneralReplyCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutUserInput | GeneralReplyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralReplyCreateManyUserInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutUserInput | GeneralReplyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutUserInput | GeneralReplyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type GeneralLikeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput> | GeneralLikeCreateWithoutUserInput[] | GeneralLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutUserInput | GeneralLikeCreateOrConnectWithoutUserInput[]
+    upsert?: GeneralLikeUpsertWithWhereUniqueWithoutUserInput | GeneralLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GeneralLikeCreateManyUserInputEnvelope
+    set?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    disconnect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    delete?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    update?: GeneralLikeUpdateWithWhereUniqueWithoutUserInput | GeneralLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GeneralLikeUpdateManyWithWhereWithoutUserInput | GeneralLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+  }
+
+  export type BlogUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput> | BlogCreateWithoutAuthorInput[] | BlogUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: BlogCreateOrConnectWithoutAuthorInput | BlogCreateOrConnectWithoutAuthorInput[]
+    upsert?: BlogUpsertWithWhereUniqueWithoutAuthorInput | BlogUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: BlogCreateManyAuthorInputEnvelope
+    set?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    disconnect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    delete?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    connect?: BlogWhereUniqueInput | BlogWhereUniqueInput[]
+    update?: BlogUpdateWithWhereUniqueWithoutAuthorInput | BlogUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: BlogUpdateManyWithWhereWithoutAuthorInput | BlogUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: BlogScalarWhereInput | BlogScalarWhereInput[]
+  }
+
   export type ForumSubCategoryCreateNestedManyWithoutMainCategoryInput = {
     create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
     connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
@@ -12397,11 +17425,39 @@ export namespace Prisma {
     connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
   }
 
+  export type QuotePostCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput> | QuotePostCreateWithoutMainCategoryInput[] | QuotePostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutMainCategoryInput | QuotePostCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: QuotePostCreateManyMainCategoryInputEnvelope
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+  }
+
+  export type GeneralPostCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput> | GeneralPostCreateWithoutMainCategoryInput[] | GeneralPostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutMainCategoryInput | GeneralPostCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: GeneralPostCreateManyMainCategoryInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+  }
+
   export type ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput = {
     create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
     connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
     createMany?: ForumSubCategoryCreateManyMainCategoryInputEnvelope
     connect?: ForumSubCategoryWhereUniqueInput | ForumSubCategoryWhereUniqueInput[]
+  }
+
+  export type QuotePostUncheckedCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput> | QuotePostCreateWithoutMainCategoryInput[] | QuotePostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutMainCategoryInput | QuotePostCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: QuotePostCreateManyMainCategoryInputEnvelope
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+  }
+
+  export type GeneralPostUncheckedCreateNestedManyWithoutMainCategoryInput = {
+    create?: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput> | GeneralPostCreateWithoutMainCategoryInput[] | GeneralPostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutMainCategoryInput | GeneralPostCreateOrConnectWithoutMainCategoryInput[]
+    createMany?: GeneralPostCreateManyMainCategoryInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
   }
 
   export type ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput = {
@@ -12418,6 +17474,34 @@ export namespace Prisma {
     deleteMany?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
   }
 
+  export type QuotePostUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput> | QuotePostCreateWithoutMainCategoryInput[] | QuotePostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutMainCategoryInput | QuotePostCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: QuotePostUpsertWithWhereUniqueWithoutMainCategoryInput | QuotePostUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: QuotePostCreateManyMainCategoryInputEnvelope
+    set?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    disconnect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    delete?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    update?: QuotePostUpdateWithWhereUniqueWithoutMainCategoryInput | QuotePostUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: QuotePostUpdateManyWithWhereWithoutMainCategoryInput | QuotePostUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+  }
+
+  export type GeneralPostUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput> | GeneralPostCreateWithoutMainCategoryInput[] | GeneralPostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutMainCategoryInput | GeneralPostCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutMainCategoryInput | GeneralPostUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: GeneralPostCreateManyMainCategoryInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutMainCategoryInput | GeneralPostUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutMainCategoryInput | GeneralPostUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
+  }
+
   export type ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput = {
     create?: XOR<ForumSubCategoryCreateWithoutMainCategoryInput, ForumSubCategoryUncheckedCreateWithoutMainCategoryInput> | ForumSubCategoryCreateWithoutMainCategoryInput[] | ForumSubCategoryUncheckedCreateWithoutMainCategoryInput[]
     connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutMainCategoryInput | ForumSubCategoryCreateOrConnectWithoutMainCategoryInput[]
@@ -12432,10 +17516,94 @@ export namespace Prisma {
     deleteMany?: ForumSubCategoryScalarWhereInput | ForumSubCategoryScalarWhereInput[]
   }
 
+  export type QuotePostUncheckedUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput> | QuotePostCreateWithoutMainCategoryInput[] | QuotePostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutMainCategoryInput | QuotePostCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: QuotePostUpsertWithWhereUniqueWithoutMainCategoryInput | QuotePostUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: QuotePostCreateManyMainCategoryInputEnvelope
+    set?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    disconnect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    delete?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    update?: QuotePostUpdateWithWhereUniqueWithoutMainCategoryInput | QuotePostUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: QuotePostUpdateManyWithWhereWithoutMainCategoryInput | QuotePostUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutMainCategoryNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput> | GeneralPostCreateWithoutMainCategoryInput[] | GeneralPostUncheckedCreateWithoutMainCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutMainCategoryInput | GeneralPostCreateOrConnectWithoutMainCategoryInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutMainCategoryInput | GeneralPostUpsertWithWhereUniqueWithoutMainCategoryInput[]
+    createMany?: GeneralPostCreateManyMainCategoryInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutMainCategoryInput | GeneralPostUpdateWithWhereUniqueWithoutMainCategoryInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutMainCategoryInput | GeneralPostUpdateManyWithWhereWithoutMainCategoryInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
+  }
+
+  export type QuotePostCreateNestedManyWithoutSubCategoryInput = {
+    create?: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput> | QuotePostCreateWithoutSubCategoryInput[] | QuotePostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutSubCategoryInput | QuotePostCreateOrConnectWithoutSubCategoryInput[]
+    createMany?: QuotePostCreateManySubCategoryInputEnvelope
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+  }
+
+  export type GeneralPostCreateNestedManyWithoutSubCategoryInput = {
+    create?: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput> | GeneralPostCreateWithoutSubCategoryInput[] | GeneralPostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutSubCategoryInput | GeneralPostCreateOrConnectWithoutSubCategoryInput[]
+    createMany?: GeneralPostCreateManySubCategoryInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+  }
+
   export type ForumMainCategoryCreateNestedOneWithoutSubCategoryInput = {
     create?: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
     connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutSubCategoryInput
     connect?: ForumMainCategoryWhereUniqueInput
+  }
+
+  export type QuotePostUncheckedCreateNestedManyWithoutSubCategoryInput = {
+    create?: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput> | QuotePostCreateWithoutSubCategoryInput[] | QuotePostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutSubCategoryInput | QuotePostCreateOrConnectWithoutSubCategoryInput[]
+    createMany?: QuotePostCreateManySubCategoryInputEnvelope
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+  }
+
+  export type GeneralPostUncheckedCreateNestedManyWithoutSubCategoryInput = {
+    create?: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput> | GeneralPostCreateWithoutSubCategoryInput[] | GeneralPostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutSubCategoryInput | GeneralPostCreateOrConnectWithoutSubCategoryInput[]
+    createMany?: GeneralPostCreateManySubCategoryInputEnvelope
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+  }
+
+  export type QuotePostUpdateManyWithoutSubCategoryNestedInput = {
+    create?: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput> | QuotePostCreateWithoutSubCategoryInput[] | QuotePostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutSubCategoryInput | QuotePostCreateOrConnectWithoutSubCategoryInput[]
+    upsert?: QuotePostUpsertWithWhereUniqueWithoutSubCategoryInput | QuotePostUpsertWithWhereUniqueWithoutSubCategoryInput[]
+    createMany?: QuotePostCreateManySubCategoryInputEnvelope
+    set?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    disconnect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    delete?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    update?: QuotePostUpdateWithWhereUniqueWithoutSubCategoryInput | QuotePostUpdateWithWhereUniqueWithoutSubCategoryInput[]
+    updateMany?: QuotePostUpdateManyWithWhereWithoutSubCategoryInput | QuotePostUpdateManyWithWhereWithoutSubCategoryInput[]
+    deleteMany?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+  }
+
+  export type GeneralPostUpdateManyWithoutSubCategoryNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput> | GeneralPostCreateWithoutSubCategoryInput[] | GeneralPostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutSubCategoryInput | GeneralPostCreateOrConnectWithoutSubCategoryInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutSubCategoryInput | GeneralPostUpsertWithWhereUniqueWithoutSubCategoryInput[]
+    createMany?: GeneralPostCreateManySubCategoryInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutSubCategoryInput | GeneralPostUpdateWithWhereUniqueWithoutSubCategoryInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutSubCategoryInput | GeneralPostUpdateManyWithWhereWithoutSubCategoryInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
   export type ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput = {
@@ -12444,6 +17612,34 @@ export namespace Prisma {
     upsert?: ForumMainCategoryUpsertWithoutSubCategoryInput
     connect?: ForumMainCategoryWhereUniqueInput
     update?: XOR<XOR<ForumMainCategoryUpdateToOneWithWhereWithoutSubCategoryInput, ForumMainCategoryUpdateWithoutSubCategoryInput>, ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput>
+  }
+
+  export type QuotePostUncheckedUpdateManyWithoutSubCategoryNestedInput = {
+    create?: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput> | QuotePostCreateWithoutSubCategoryInput[] | QuotePostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: QuotePostCreateOrConnectWithoutSubCategoryInput | QuotePostCreateOrConnectWithoutSubCategoryInput[]
+    upsert?: QuotePostUpsertWithWhereUniqueWithoutSubCategoryInput | QuotePostUpsertWithWhereUniqueWithoutSubCategoryInput[]
+    createMany?: QuotePostCreateManySubCategoryInputEnvelope
+    set?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    disconnect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    delete?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    connect?: QuotePostWhereUniqueInput | QuotePostWhereUniqueInput[]
+    update?: QuotePostUpdateWithWhereUniqueWithoutSubCategoryInput | QuotePostUpdateWithWhereUniqueWithoutSubCategoryInput[]
+    updateMany?: QuotePostUpdateManyWithWhereWithoutSubCategoryInput | QuotePostUpdateManyWithWhereWithoutSubCategoryInput[]
+    deleteMany?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutSubCategoryNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput> | GeneralPostCreateWithoutSubCategoryInput[] | GeneralPostUncheckedCreateWithoutSubCategoryInput[]
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutSubCategoryInput | GeneralPostCreateOrConnectWithoutSubCategoryInput[]
+    upsert?: GeneralPostUpsertWithWhereUniqueWithoutSubCategoryInput | GeneralPostUpsertWithWhereUniqueWithoutSubCategoryInput[]
+    createMany?: GeneralPostCreateManySubCategoryInputEnvelope
+    set?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    disconnect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    delete?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    connect?: GeneralPostWhereUniqueInput | GeneralPostWhereUniqueInput[]
+    update?: GeneralPostUpdateWithWhereUniqueWithoutSubCategoryInput | GeneralPostUpdateWithWhereUniqueWithoutSubCategoryInput[]
+    updateMany?: GeneralPostUpdateManyWithWhereWithoutSubCategoryInput | GeneralPostUpdateManyWithWhereWithoutSubCategoryInput[]
+    deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
   export type QuoteReplyCreateNestedManyWithoutPostInput = {
@@ -12458,6 +17654,18 @@ export namespace Prisma {
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutPostInput | QuoteLikeCreateOrConnectWithoutPostInput[]
     createMany?: QuoteLikeCreateManyPostInputEnvelope
     connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  }
+
+  export type ForumSubCategoryCreateNestedOneWithoutQuotePostInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutQuotePostInput, ForumSubCategoryUncheckedCreateWithoutQuotePostInput>
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutQuotePostInput
+    connect?: ForumSubCategoryWhereUniqueInput
+  }
+
+  export type ForumMainCategoryCreateNestedOneWithoutQuotePostInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutQuotePostInput, ForumMainCategoryUncheckedCreateWithoutQuotePostInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutQuotePostInput
+    connect?: ForumMainCategoryWhereUniqueInput
   }
 
   export type UserCreateNestedOneWithoutQuotePostInput = {
@@ -12516,6 +17724,26 @@ export namespace Prisma {
     deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
   }
 
+  export type ForumSubCategoryUpdateOneWithoutQuotePostNestedInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutQuotePostInput, ForumSubCategoryUncheckedCreateWithoutQuotePostInput>
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutQuotePostInput
+    upsert?: ForumSubCategoryUpsertWithoutQuotePostInput
+    disconnect?: ForumSubCategoryWhereInput | boolean
+    delete?: ForumSubCategoryWhereInput | boolean
+    connect?: ForumSubCategoryWhereUniqueInput
+    update?: XOR<XOR<ForumSubCategoryUpdateToOneWithWhereWithoutQuotePostInput, ForumSubCategoryUpdateWithoutQuotePostInput>, ForumSubCategoryUncheckedUpdateWithoutQuotePostInput>
+  }
+
+  export type ForumMainCategoryUpdateOneWithoutQuotePostNestedInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutQuotePostInput, ForumMainCategoryUncheckedCreateWithoutQuotePostInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutQuotePostInput
+    upsert?: ForumMainCategoryUpsertWithoutQuotePostInput
+    disconnect?: ForumMainCategoryWhereInput | boolean
+    delete?: ForumMainCategoryWhereInput | boolean
+    connect?: ForumMainCategoryWhereUniqueInput
+    update?: XOR<XOR<ForumMainCategoryUpdateToOneWithWhereWithoutQuotePostInput, ForumMainCategoryUpdateWithoutQuotePostInput>, ForumMainCategoryUncheckedUpdateWithoutQuotePostInput>
+  }
+
   export type UserUpdateOneWithoutQuotePostNestedInput = {
     create?: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuotePostInput
@@ -12566,6 +17794,26 @@ export namespace Prisma {
     connect?: QuotePostWhereUniqueInput
   }
 
+  export type QuoteReplyCreateNestedOneWithoutChildRepliesInput = {
+    create?: XOR<QuoteReplyCreateWithoutChildRepliesInput, QuoteReplyUncheckedCreateWithoutChildRepliesInput>
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutChildRepliesInput
+    connect?: QuoteReplyWhereUniqueInput
+  }
+
+  export type QuoteReplyCreateNestedManyWithoutParentReplyInput = {
+    create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
+    createMany?: QuoteReplyCreateManyParentReplyInputEnvelope
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
+  export type QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput = {
+    create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
+    createMany?: QuoteReplyCreateManyParentReplyInputEnvelope
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
   export type UserUpdateOneRequiredWithoutQuoteReplyNestedInput = {
     create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
@@ -12580,6 +17828,44 @@ export namespace Prisma {
     upsert?: QuotePostUpsertWithoutQuoteReplyInput
     connect?: QuotePostWhereUniqueInput
     update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteReplyInput, QuotePostUpdateWithoutQuoteReplyInput>, QuotePostUncheckedUpdateWithoutQuoteReplyInput>
+  }
+
+  export type QuoteReplyUpdateOneWithoutChildRepliesNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutChildRepliesInput, QuoteReplyUncheckedCreateWithoutChildRepliesInput>
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutChildRepliesInput
+    upsert?: QuoteReplyUpsertWithoutChildRepliesInput
+    disconnect?: QuoteReplyWhereInput | boolean
+    delete?: QuoteReplyWhereInput | boolean
+    connect?: QuoteReplyWhereUniqueInput
+    update?: XOR<XOR<QuoteReplyUpdateToOneWithWhereWithoutChildRepliesInput, QuoteReplyUpdateWithoutChildRepliesInput>, QuoteReplyUncheckedUpdateWithoutChildRepliesInput>
+  }
+
+  export type QuoteReplyUpdateManyWithoutParentReplyNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
+    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput | QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput[]
+    createMany?: QuoteReplyCreateManyParentReplyInputEnvelope
+    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    update?: QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput | QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
+    updateMany?: QuoteReplyUpdateManyWithWhereWithoutParentReplyInput | QuoteReplyUpdateManyWithWhereWithoutParentReplyInput[]
+    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
+  }
+
+  export type QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
+    upsert?: QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput | QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput[]
+    createMany?: QuoteReplyCreateManyParentReplyInputEnvelope
+    set?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    disconnect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    delete?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+    update?: QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput | QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
+    updateMany?: QuoteReplyUpdateManyWithWhereWithoutParentReplyInput | QuoteReplyUpdateManyWithWhereWithoutParentReplyInput[]
+    deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutQuoteLikeInput = {
@@ -12616,12 +17902,265 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ForumMainCategoryCreateNestedOneWithoutGeneralPostInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutGeneralPostInput, ForumMainCategoryUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutGeneralPostInput
+    connect?: ForumMainCategoryWhereUniqueInput
+  }
+
+  export type ForumSubCategoryCreateNestedOneWithoutGeneralPostInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutGeneralPostInput, ForumSubCategoryUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutGeneralPostInput
+    connect?: ForumSubCategoryWhereUniqueInput
+  }
+
+  export type GeneralReplyCreateNestedManyWithoutPostInput = {
+    create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
+    createMany?: GeneralReplyCreateManyPostInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type GeneralLikeCreateNestedManyWithoutPostInput = {
+    create?: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput> | GeneralLikeCreateWithoutPostInput[] | GeneralLikeUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutPostInput | GeneralLikeCreateOrConnectWithoutPostInput[]
+    createMany?: GeneralLikeCreateManyPostInputEnvelope
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+  }
+
+  export type GeneralReplyUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
+    createMany?: GeneralReplyCreateManyPostInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type GeneralLikeUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput> | GeneralLikeCreateWithoutPostInput[] | GeneralLikeUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutPostInput | GeneralLikeCreateOrConnectWithoutPostInput[]
+    createMany?: GeneralLikeCreateManyPostInputEnvelope
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+  }
+
   export type UserUpdateOneRequiredWithoutGeneralPostNestedInput = {
     create?: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
     connectOrCreate?: UserCreateOrConnectWithoutGeneralPostInput
     upsert?: UserUpsertWithoutGeneralPostInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGeneralPostInput, UserUpdateWithoutGeneralPostInput>, UserUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput = {
+    create?: XOR<ForumMainCategoryCreateWithoutGeneralPostInput, ForumMainCategoryUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: ForumMainCategoryCreateOrConnectWithoutGeneralPostInput
+    upsert?: ForumMainCategoryUpsertWithoutGeneralPostInput
+    disconnect?: ForumMainCategoryWhereInput | boolean
+    delete?: ForumMainCategoryWhereInput | boolean
+    connect?: ForumMainCategoryWhereUniqueInput
+    update?: XOR<XOR<ForumMainCategoryUpdateToOneWithWhereWithoutGeneralPostInput, ForumMainCategoryUpdateWithoutGeneralPostInput>, ForumMainCategoryUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput = {
+    create?: XOR<ForumSubCategoryCreateWithoutGeneralPostInput, ForumSubCategoryUncheckedCreateWithoutGeneralPostInput>
+    connectOrCreate?: ForumSubCategoryCreateOrConnectWithoutGeneralPostInput
+    upsert?: ForumSubCategoryUpsertWithoutGeneralPostInput
+    disconnect?: ForumSubCategoryWhereInput | boolean
+    delete?: ForumSubCategoryWhereInput | boolean
+    connect?: ForumSubCategoryWhereUniqueInput
+    update?: XOR<XOR<ForumSubCategoryUpdateToOneWithWhereWithoutGeneralPostInput, ForumSubCategoryUpdateWithoutGeneralPostInput>, ForumSubCategoryUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type GeneralReplyUpdateManyWithoutPostNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutPostInput | GeneralReplyUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: GeneralReplyCreateManyPostInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutPostInput | GeneralReplyUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutPostInput | GeneralReplyUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type GeneralLikeUpdateManyWithoutPostNestedInput = {
+    create?: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput> | GeneralLikeCreateWithoutPostInput[] | GeneralLikeUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutPostInput | GeneralLikeCreateOrConnectWithoutPostInput[]
+    upsert?: GeneralLikeUpsertWithWhereUniqueWithoutPostInput | GeneralLikeUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: GeneralLikeCreateManyPostInputEnvelope
+    set?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    disconnect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    delete?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    update?: GeneralLikeUpdateWithWhereUniqueWithoutPostInput | GeneralLikeUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: GeneralLikeUpdateManyWithWhereWithoutPostInput | GeneralLikeUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+  }
+
+  export type GeneralReplyUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutPostInput | GeneralReplyUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: GeneralReplyCreateManyPostInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutPostInput | GeneralReplyUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutPostInput | GeneralReplyUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type GeneralLikeUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput> | GeneralLikeCreateWithoutPostInput[] | GeneralLikeUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: GeneralLikeCreateOrConnectWithoutPostInput | GeneralLikeCreateOrConnectWithoutPostInput[]
+    upsert?: GeneralLikeUpsertWithWhereUniqueWithoutPostInput | GeneralLikeUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: GeneralLikeCreateManyPostInputEnvelope
+    set?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    disconnect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    delete?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+    update?: GeneralLikeUpdateWithWhereUniqueWithoutPostInput | GeneralLikeUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: GeneralLikeUpdateManyWithWhereWithoutPostInput | GeneralLikeUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutGeneralReplyInput = {
+    create?: XOR<UserCreateWithoutGeneralReplyInput, UserUncheckedCreateWithoutGeneralReplyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralReplyInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GeneralPostCreateNestedOneWithoutGeneralReplyInput = {
+    create?: XOR<GeneralPostCreateWithoutGeneralReplyInput, GeneralPostUncheckedCreateWithoutGeneralReplyInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutGeneralReplyInput
+    connect?: GeneralPostWhereUniqueInput
+  }
+
+  export type GeneralReplyCreateNestedOneWithoutChildRepliesInput = {
+    create?: XOR<GeneralReplyCreateWithoutChildRepliesInput, GeneralReplyUncheckedCreateWithoutChildRepliesInput>
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutChildRepliesInput
+    connect?: GeneralReplyWhereUniqueInput
+  }
+
+  export type GeneralReplyCreateNestedManyWithoutParentReplyInput = {
+    create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
+    createMany?: GeneralReplyCreateManyParentReplyInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput = {
+    create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
+    createMany?: GeneralReplyCreateManyParentReplyInputEnvelope
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutGeneralReplyNestedInput = {
+    create?: XOR<UserCreateWithoutGeneralReplyInput, UserUncheckedCreateWithoutGeneralReplyInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralReplyInput
+    upsert?: UserUpsertWithoutGeneralReplyInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGeneralReplyInput, UserUpdateWithoutGeneralReplyInput>, UserUncheckedUpdateWithoutGeneralReplyInput>
+  }
+
+  export type GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutGeneralReplyInput, GeneralPostUncheckedCreateWithoutGeneralReplyInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutGeneralReplyInput
+    upsert?: GeneralPostUpsertWithoutGeneralReplyInput
+    connect?: GeneralPostWhereUniqueInput
+    update?: XOR<XOR<GeneralPostUpdateToOneWithWhereWithoutGeneralReplyInput, GeneralPostUpdateWithoutGeneralReplyInput>, GeneralPostUncheckedUpdateWithoutGeneralReplyInput>
+  }
+
+  export type GeneralReplyUpdateOneWithoutChildRepliesNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutChildRepliesInput, GeneralReplyUncheckedCreateWithoutChildRepliesInput>
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutChildRepliesInput
+    upsert?: GeneralReplyUpsertWithoutChildRepliesInput
+    disconnect?: GeneralReplyWhereInput | boolean
+    delete?: GeneralReplyWhereInput | boolean
+    connect?: GeneralReplyWhereUniqueInput
+    update?: XOR<XOR<GeneralReplyUpdateToOneWithWhereWithoutChildRepliesInput, GeneralReplyUpdateWithoutChildRepliesInput>, GeneralReplyUncheckedUpdateWithoutChildRepliesInput>
+  }
+
+  export type GeneralReplyUpdateManyWithoutParentReplyNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput | GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput[]
+    createMany?: GeneralReplyCreateManyParentReplyInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput | GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutParentReplyInput | GeneralReplyUpdateManyWithWhereWithoutParentReplyInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
+    upsert?: GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput | GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput[]
+    createMany?: GeneralReplyCreateManyParentReplyInputEnvelope
+    set?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    disconnect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    delete?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+    update?: GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput | GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
+    updateMany?: GeneralReplyUpdateManyWithWhereWithoutParentReplyInput | GeneralReplyUpdateManyWithWhereWithoutParentReplyInput[]
+    deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutGeneralLikeInput = {
+    create?: XOR<UserCreateWithoutGeneralLikeInput, UserUncheckedCreateWithoutGeneralLikeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralLikeInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GeneralPostCreateNestedOneWithoutGeneralLikeInput = {
+    create?: XOR<GeneralPostCreateWithoutGeneralLikeInput, GeneralPostUncheckedCreateWithoutGeneralLikeInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutGeneralLikeInput
+    connect?: GeneralPostWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutGeneralLikeNestedInput = {
+    create?: XOR<UserCreateWithoutGeneralLikeInput, UserUncheckedCreateWithoutGeneralLikeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGeneralLikeInput
+    upsert?: UserUpsertWithoutGeneralLikeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGeneralLikeInput, UserUpdateWithoutGeneralLikeInput>, UserUncheckedUpdateWithoutGeneralLikeInput>
+  }
+
+  export type GeneralPostUpdateOneRequiredWithoutGeneralLikeNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutGeneralLikeInput, GeneralPostUncheckedCreateWithoutGeneralLikeInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutGeneralLikeInput
+    upsert?: GeneralPostUpsertWithoutGeneralLikeInput
+    connect?: GeneralPostWhereUniqueInput
+    update?: XOR<XOR<GeneralPostUpdateToOneWithWhereWithoutGeneralLikeInput, GeneralPostUpdateWithoutGeneralLikeInput>, GeneralPostUncheckedUpdateWithoutGeneralLikeInput>
+  }
+
+  export type BlogCreateimage_urlInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutBlogInput = {
+    create?: XOR<UserCreateWithoutBlogInput, UserUncheckedCreateWithoutBlogInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBlogInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BlogUpdateimage_urlInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutBlogNestedInput = {
+    create?: XOR<UserCreateWithoutBlogInput, UserUncheckedCreateWithoutBlogInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBlogInput
+    upsert?: UserUpsertWithoutBlogInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBlogInput, UserUpdateWithoutBlogInput>, UserUncheckedUpdateWithoutBlogInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -12813,13 +18352,35 @@ export namespace Prisma {
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type QuotePostCreateWithoutUserInput = {
     id?: string
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -12845,11 +18406,11 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postMainCategory?: string | null
-    postSubCategory?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutUserInput = {
@@ -12857,7 +18418,6 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -12902,12 +18462,13 @@ export namespace Prisma {
 
   export type QuoteReplyCreateWithoutUserInput = {
     id?: string
-    parentReplyId?: string | null
     description?: string | null
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutUserInput = {
@@ -12918,6 +18479,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+    childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutUserInput = {
@@ -12954,6 +18516,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     description?: string | null
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -12961,14 +18524,17 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
-    generalPostMainCategory?: string | null
-    generalPostSubCategory?: string | null
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutUserInput = {
     id?: string
     title?: string | null
     description?: string | null
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -12978,6 +18544,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutUserInput = {
@@ -12987,6 +18555,88 @@ export namespace Prisma {
 
   export type GeneralPostCreateManyUserInputEnvelope = {
     data: GeneralPostCreateManyUserInput | GeneralPostCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeneralReplyCreateWithoutUserInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
+    parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUncheckedCreateWithoutUserInput = {
+    id?: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyCreateOrConnectWithoutUserInput = {
+    where: GeneralReplyWhereUniqueInput
+    create: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput>
+  }
+
+  export type GeneralReplyCreateManyUserInputEnvelope = {
+    data: GeneralReplyCreateManyUserInput | GeneralReplyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeneralLikeCreateWithoutUserInput = {
+    id?: string
+    post: GeneralPostCreateNestedOneWithoutGeneralLikeInput
+  }
+
+  export type GeneralLikeUncheckedCreateWithoutUserInput = {
+    id?: string
+    postId: string
+  }
+
+  export type GeneralLikeCreateOrConnectWithoutUserInput = {
+    where: GeneralLikeWhereUniqueInput
+    create: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type GeneralLikeCreateManyUserInputEnvelope = {
+    data: GeneralLikeCreateManyUserInput | GeneralLikeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BlogCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+  }
+
+  export type BlogUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+  }
+
+  export type BlogCreateOrConnectWithoutAuthorInput = {
+    where: BlogWhereUniqueInput
+    create: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type BlogCreateManyAuthorInputEnvelope = {
+    data: BlogCreateManyAuthorInput | BlogCreateManyAuthorInput[]
     skipDuplicates?: boolean
   }
 
@@ -13015,7 +18665,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"QuotePost"> | string | null
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
-    categoryId?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     updatedAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
     totalNetWeight?: FloatNullableFilter<"QuotePost"> | number | null
@@ -13125,6 +18774,7 @@ export namespace Prisma {
     title?: StringNullableFilter<"GeneralPost"> | string | null
     description?: StringNullableFilter<"GeneralPost"> | string | null
     userId?: StringFilter<"GeneralPost"> | string
+    createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
     updatedAt?: DateTimeFilter<"GeneralPost"> | Date | string
     viewCount?: IntNullableFilter<"GeneralPost"> | number | null
@@ -13136,16 +18786,105 @@ export namespace Prisma {
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
   }
 
+  export type GeneralReplyUpsertWithWhereUniqueWithoutUserInput = {
+    where: GeneralReplyWhereUniqueInput
+    update: XOR<GeneralReplyUpdateWithoutUserInput, GeneralReplyUncheckedUpdateWithoutUserInput>
+    create: XOR<GeneralReplyCreateWithoutUserInput, GeneralReplyUncheckedCreateWithoutUserInput>
+  }
+
+  export type GeneralReplyUpdateWithWhereUniqueWithoutUserInput = {
+    where: GeneralReplyWhereUniqueInput
+    data: XOR<GeneralReplyUpdateWithoutUserInput, GeneralReplyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GeneralReplyUpdateManyWithWhereWithoutUserInput = {
+    where: GeneralReplyScalarWhereInput
+    data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GeneralReplyScalarWhereInput = {
+    AND?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+    OR?: GeneralReplyScalarWhereInput[]
+    NOT?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+    id?: StringFilter<"GeneralReply"> | string
+    userId?: StringFilter<"GeneralReply"> | string
+    postId?: StringFilter<"GeneralReply"> | string
+    parentReplyId?: StringNullableFilter<"GeneralReply"> | string | null
+    description?: StringNullableFilter<"GeneralReply"> | string | null
+    createdAt?: DateTimeFilter<"GeneralReply"> | Date | string
+    status?: StringNullableFilter<"GeneralReply"> | string | null
+    rejectionReason?: StringNullableFilter<"GeneralReply"> | string | null
+  }
+
+  export type GeneralLikeUpsertWithWhereUniqueWithoutUserInput = {
+    where: GeneralLikeWhereUniqueInput
+    update: XOR<GeneralLikeUpdateWithoutUserInput, GeneralLikeUncheckedUpdateWithoutUserInput>
+    create: XOR<GeneralLikeCreateWithoutUserInput, GeneralLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type GeneralLikeUpdateWithWhereUniqueWithoutUserInput = {
+    where: GeneralLikeWhereUniqueInput
+    data: XOR<GeneralLikeUpdateWithoutUserInput, GeneralLikeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GeneralLikeUpdateManyWithWhereWithoutUserInput = {
+    where: GeneralLikeScalarWhereInput
+    data: XOR<GeneralLikeUpdateManyMutationInput, GeneralLikeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GeneralLikeScalarWhereInput = {
+    AND?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+    OR?: GeneralLikeScalarWhereInput[]
+    NOT?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
+    id?: StringFilter<"GeneralLike"> | string
+    userId?: StringFilter<"GeneralLike"> | string
+    postId?: StringFilter<"GeneralLike"> | string
+  }
+
+  export type BlogUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: BlogWhereUniqueInput
+    update: XOR<BlogUpdateWithoutAuthorInput, BlogUncheckedUpdateWithoutAuthorInput>
+    create: XOR<BlogCreateWithoutAuthorInput, BlogUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type BlogUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: BlogWhereUniqueInput
+    data: XOR<BlogUpdateWithoutAuthorInput, BlogUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type BlogUpdateManyWithWhereWithoutAuthorInput = {
+    where: BlogScalarWhereInput
+    data: XOR<BlogUpdateManyMutationInput, BlogUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type BlogScalarWhereInput = {
+    AND?: BlogScalarWhereInput | BlogScalarWhereInput[]
+    OR?: BlogScalarWhereInput[]
+    NOT?: BlogScalarWhereInput | BlogScalarWhereInput[]
+    id?: StringFilter<"Blog"> | string
+    title?: StringFilter<"Blog"> | string
+    description?: JsonFilter<"Blog">
+    authorId?: StringFilter<"Blog"> | string
+    status?: StringFilter<"Blog"> | string
+    createdAt?: DateTimeFilter<"Blog"> | Date | string
+    category?: StringFilter<"Blog"> | string
+    image_url?: StringNullableListFilter<"Blog">
+  }
+
   export type ForumSubCategoryCreateWithoutMainCategoryInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    quotePost?: QuotePostCreateNestedManyWithoutSubCategoryInput
+    generalPost?: GeneralPostCreateNestedManyWithoutSubCategoryInput
   }
 
   export type ForumSubCategoryUncheckedCreateWithoutMainCategoryInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutSubCategoryInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutSubCategoryInput
   }
 
   export type ForumSubCategoryCreateOrConnectWithoutMainCategoryInput = {
@@ -13155,6 +18894,136 @@ export namespace Prisma {
 
   export type ForumSubCategoryCreateManyMainCategoryInputEnvelope = {
     data: ForumSubCategoryCreateManyMainCategoryInput | ForumSubCategoryCreateManyMainCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QuotePostCreateWithoutMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    user?: UserCreateNestedOneWithoutQuotePostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutMainCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    create: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type QuotePostCreateManyMainCategoryInputEnvelope = {
+    data: QuotePostCreateManyMainCategoryInput | QuotePostCreateManyMainCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeneralPostCreateWithoutMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostUncheckedCreateWithoutMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostSubCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostCreateOrConnectWithoutMainCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type GeneralPostCreateManyMainCategoryInputEnvelope = {
+    data: GeneralPostCreateManyMainCategoryInput | GeneralPostCreateManyMainCategoryInput[]
     skipDuplicates?: boolean
   }
 
@@ -13184,21 +19053,219 @@ export namespace Prisma {
     mainCategoryId?: StringFilter<"ForumSubCategory"> | string
   }
 
+  export type QuotePostUpsertWithWhereUniqueWithoutMainCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    update: XOR<QuotePostUpdateWithoutMainCategoryInput, QuotePostUncheckedUpdateWithoutMainCategoryInput>
+    create: XOR<QuotePostCreateWithoutMainCategoryInput, QuotePostUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type QuotePostUpdateWithWhereUniqueWithoutMainCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    data: XOR<QuotePostUpdateWithoutMainCategoryInput, QuotePostUncheckedUpdateWithoutMainCategoryInput>
+  }
+
+  export type QuotePostUpdateManyWithWhereWithoutMainCategoryInput = {
+    where: QuotePostScalarWhereInput
+    data: XOR<QuotePostUpdateManyMutationInput, QuotePostUncheckedUpdateManyWithoutMainCategoryInput>
+  }
+
+  export type GeneralPostUpsertWithWhereUniqueWithoutMainCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    update: XOR<GeneralPostUpdateWithoutMainCategoryInput, GeneralPostUncheckedUpdateWithoutMainCategoryInput>
+    create: XOR<GeneralPostCreateWithoutMainCategoryInput, GeneralPostUncheckedCreateWithoutMainCategoryInput>
+  }
+
+  export type GeneralPostUpdateWithWhereUniqueWithoutMainCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    data: XOR<GeneralPostUpdateWithoutMainCategoryInput, GeneralPostUncheckedUpdateWithoutMainCategoryInput>
+  }
+
+  export type GeneralPostUpdateManyWithWhereWithoutMainCategoryInput = {
+    where: GeneralPostScalarWhereInput
+    data: XOR<GeneralPostUpdateManyMutationInput, GeneralPostUncheckedUpdateManyWithoutMainCategoryInput>
+  }
+
+  export type QuotePostCreateWithoutSubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
+    user?: UserCreateNestedOneWithoutQuotePostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutSubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutSubCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    create: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type QuotePostCreateManySubCategoryInputEnvelope = {
+    data: QuotePostCreateManySubCategoryInput | QuotePostCreateManySubCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeneralPostCreateWithoutSubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostUncheckedCreateWithoutSubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostCreateOrConnectWithoutSubCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type GeneralPostCreateManySubCategoryInputEnvelope = {
+    data: GeneralPostCreateManySubCategoryInput | GeneralPostCreateManySubCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ForumMainCategoryCreateWithoutSubCategoryInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    quotePost?: QuotePostCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryUncheckedCreateWithoutSubCategoryInput = {
     id?: string
     name?: string | null
     enabled?: boolean | null
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutMainCategoryInput
   }
 
   export type ForumMainCategoryCreateOrConnectWithoutSubCategoryInput = {
     where: ForumMainCategoryWhereUniqueInput
     create: XOR<ForumMainCategoryCreateWithoutSubCategoryInput, ForumMainCategoryUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type QuotePostUpsertWithWhereUniqueWithoutSubCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    update: XOR<QuotePostUpdateWithoutSubCategoryInput, QuotePostUncheckedUpdateWithoutSubCategoryInput>
+    create: XOR<QuotePostCreateWithoutSubCategoryInput, QuotePostUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type QuotePostUpdateWithWhereUniqueWithoutSubCategoryInput = {
+    where: QuotePostWhereUniqueInput
+    data: XOR<QuotePostUpdateWithoutSubCategoryInput, QuotePostUncheckedUpdateWithoutSubCategoryInput>
+  }
+
+  export type QuotePostUpdateManyWithWhereWithoutSubCategoryInput = {
+    where: QuotePostScalarWhereInput
+    data: XOR<QuotePostUpdateManyMutationInput, QuotePostUncheckedUpdateManyWithoutSubCategoryInput>
+  }
+
+  export type GeneralPostUpsertWithWhereUniqueWithoutSubCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    update: XOR<GeneralPostUpdateWithoutSubCategoryInput, GeneralPostUncheckedUpdateWithoutSubCategoryInput>
+    create: XOR<GeneralPostCreateWithoutSubCategoryInput, GeneralPostUncheckedCreateWithoutSubCategoryInput>
+  }
+
+  export type GeneralPostUpdateWithWhereUniqueWithoutSubCategoryInput = {
+    where: GeneralPostWhereUniqueInput
+    data: XOR<GeneralPostUpdateWithoutSubCategoryInput, GeneralPostUncheckedUpdateWithoutSubCategoryInput>
+  }
+
+  export type GeneralPostUpdateManyWithWhereWithoutSubCategoryInput = {
+    where: GeneralPostScalarWhereInput
+    data: XOR<GeneralPostUpdateManyMutationInput, GeneralPostUncheckedUpdateManyWithoutSubCategoryInput>
   }
 
   export type ForumMainCategoryUpsertWithoutSubCategoryInput = {
@@ -13216,22 +19283,27 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type ForumMainCategoryUncheckedUpdateWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUncheckedUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutMainCategoryNestedInput
   }
 
   export type QuoteReplyCreateWithoutPostInput = {
     id?: string
-    parentReplyId?: string | null
     description?: string | null
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
     user: UserCreateNestedOneWithoutQuoteReplyInput
+    parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutPostInput = {
@@ -13242,6 +19314,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+    childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutPostInput = {
@@ -13274,6 +19347,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ForumSubCategoryCreateWithoutQuotePostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    generalPost?: GeneralPostCreateNestedManyWithoutSubCategoryInput
+    mainCategory: ForumMainCategoryCreateNestedOneWithoutSubCategoryInput
+  }
+
+  export type ForumSubCategoryUncheckedCreateWithoutQuotePostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    mainCategoryId: string
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutSubCategoryInput
+  }
+
+  export type ForumSubCategoryCreateOrConnectWithoutQuotePostInput = {
+    where: ForumSubCategoryWhereUniqueInput
+    create: XOR<ForumSubCategoryCreateWithoutQuotePostInput, ForumSubCategoryUncheckedCreateWithoutQuotePostInput>
+  }
+
+  export type ForumMainCategoryCreateWithoutQuotePostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    subCategory?: ForumSubCategoryCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostCreateNestedManyWithoutMainCategoryInput
+  }
+
+  export type ForumMainCategoryUncheckedCreateWithoutQuotePostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    subCategory?: ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutMainCategoryInput
+  }
+
+  export type ForumMainCategoryCreateOrConnectWithoutQuotePostInput = {
+    where: ForumMainCategoryWhereUniqueInput
+    create: XOR<ForumMainCategoryCreateWithoutQuotePostInput, ForumMainCategoryUncheckedCreateWithoutQuotePostInput>
+  }
+
   export type UserCreateWithoutQuotePostInput = {
     id?: string
     name?: string | null
@@ -13297,6 +19412,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutQuotePostInput = {
@@ -13322,6 +19440,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutQuotePostInput = {
@@ -13361,6 +19482,60 @@ export namespace Prisma {
     data: XOR<QuoteLikeUpdateManyMutationInput, QuoteLikeUncheckedUpdateManyWithoutPostInput>
   }
 
+  export type ForumSubCategoryUpsertWithoutQuotePostInput = {
+    update: XOR<ForumSubCategoryUpdateWithoutQuotePostInput, ForumSubCategoryUncheckedUpdateWithoutQuotePostInput>
+    create: XOR<ForumSubCategoryCreateWithoutQuotePostInput, ForumSubCategoryUncheckedCreateWithoutQuotePostInput>
+    where?: ForumSubCategoryWhereInput
+  }
+
+  export type ForumSubCategoryUpdateToOneWithWhereWithoutQuotePostInput = {
+    where?: ForumSubCategoryWhereInput
+    data: XOR<ForumSubCategoryUpdateWithoutQuotePostInput, ForumSubCategoryUncheckedUpdateWithoutQuotePostInput>
+  }
+
+  export type ForumSubCategoryUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    generalPost?: GeneralPostUpdateManyWithoutSubCategoryNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput
+  }
+
+  export type ForumSubCategoryUncheckedUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mainCategoryId?: StringFieldUpdateOperationsInput | string
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutSubCategoryNestedInput
+  }
+
+  export type ForumMainCategoryUpsertWithoutQuotePostInput = {
+    update: XOR<ForumMainCategoryUpdateWithoutQuotePostInput, ForumMainCategoryUncheckedUpdateWithoutQuotePostInput>
+    create: XOR<ForumMainCategoryCreateWithoutQuotePostInput, ForumMainCategoryUncheckedCreateWithoutQuotePostInput>
+    where?: ForumMainCategoryWhereInput
+  }
+
+  export type ForumMainCategoryUpdateToOneWithWhereWithoutQuotePostInput = {
+    where?: ForumMainCategoryWhereInput
+    data: XOR<ForumMainCategoryUpdateWithoutQuotePostInput, ForumMainCategoryUncheckedUpdateWithoutQuotePostInput>
+  }
+
+  export type ForumMainCategoryUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutMainCategoryNestedInput
+  }
+
+  export type ForumMainCategoryUncheckedUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutMainCategoryNestedInput
+  }
+
   export type UserUpsertWithoutQuotePostInput = {
     update: XOR<UserUpdateWithoutQuotePostInput, UserUncheckedUpdateWithoutQuotePostInput>
     create: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
@@ -13395,6 +19570,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuotePostInput = {
@@ -13420,6 +19598,9 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutQuoteReplyInput = {
@@ -13445,6 +19626,9 @@ export namespace Prisma {
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutQuoteReplyInput = {
@@ -13470,6 +19654,9 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutQuoteReplyInput = {
@@ -13482,7 +19669,6 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -13508,10 +19694,10 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postMainCategory?: string | null
-    postSubCategory?: string | null
     shipmentType?: string | null
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user?: UserCreateNestedOneWithoutQuotePostInput
   }
 
@@ -13521,7 +19707,6 @@ export namespace Prisma {
     description?: string | null
     userId: string
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -13558,6 +19743,65 @@ export namespace Prisma {
     create: XOR<QuotePostCreateWithoutQuoteReplyInput, QuotePostUncheckedCreateWithoutQuoteReplyInput>
   }
 
+  export type QuoteReplyCreateWithoutChildRepliesInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutQuoteReplyInput
+    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutChildRepliesInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutChildRepliesInput = {
+    where: QuoteReplyWhereUniqueInput
+    create: XOR<QuoteReplyCreateWithoutChildRepliesInput, QuoteReplyUncheckedCreateWithoutChildRepliesInput>
+  }
+
+  export type QuoteReplyCreateWithoutParentReplyInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutQuoteReplyInput
+    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutParentReplyInput = {
+    id?: string
+    userId: string
+    postId: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutParentReplyInput = {
+    where: QuoteReplyWhereUniqueInput
+    create: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput>
+  }
+
+  export type QuoteReplyCreateManyParentReplyInputEnvelope = {
+    data: QuoteReplyCreateManyParentReplyInput | QuoteReplyCreateManyParentReplyInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutQuoteReplyInput = {
     update: XOR<UserUpdateWithoutQuoteReplyInput, UserUncheckedUpdateWithoutQuoteReplyInput>
     create: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
@@ -13592,6 +19836,9 @@ export namespace Prisma {
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteReplyInput = {
@@ -13617,6 +19864,9 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type QuotePostUpsertWithoutQuoteReplyInput = {
@@ -13635,7 +19885,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -13661,10 +19910,10 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneWithoutQuotePostNestedInput
   }
 
@@ -13674,7 +19923,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -13706,6 +19954,55 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
+  export type QuoteReplyUpsertWithoutChildRepliesInput = {
+    update: XOR<QuoteReplyUpdateWithoutChildRepliesInput, QuoteReplyUncheckedUpdateWithoutChildRepliesInput>
+    create: XOR<QuoteReplyCreateWithoutChildRepliesInput, QuoteReplyUncheckedCreateWithoutChildRepliesInput>
+    where?: QuoteReplyWhereInput
+  }
+
+  export type QuoteReplyUpdateToOneWithWhereWithoutChildRepliesInput = {
+    where?: QuoteReplyWhereInput
+    data: XOR<QuoteReplyUpdateWithoutChildRepliesInput, QuoteReplyUncheckedUpdateWithoutChildRepliesInput>
+  }
+
+  export type QuoteReplyUpdateWithoutChildRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateWithoutChildRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput = {
+    where: QuoteReplyWhereUniqueInput
+    update: XOR<QuoteReplyUpdateWithoutParentReplyInput, QuoteReplyUncheckedUpdateWithoutParentReplyInput>
+    create: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput>
+  }
+
+  export type QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput = {
+    where: QuoteReplyWhereUniqueInput
+    data: XOR<QuoteReplyUpdateWithoutParentReplyInput, QuoteReplyUncheckedUpdateWithoutParentReplyInput>
+  }
+
+  export type QuoteReplyUpdateManyWithWhereWithoutParentReplyInput = {
+    where: QuoteReplyScalarWhereInput
+    data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutParentReplyInput>
+  }
+
   export type UserCreateWithoutQuoteLikeInput = {
     id?: string
     name?: string | null
@@ -13729,6 +20026,9 @@ export namespace Prisma {
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutQuoteLikeInput = {
@@ -13754,6 +20054,9 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
     generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutQuoteLikeInput = {
@@ -13766,7 +20069,6 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -13792,10 +20094,10 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
-    postMainCategory?: string | null
-    postSubCategory?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user?: UserCreateNestedOneWithoutQuotePostInput
   }
 
@@ -13805,7 +20107,6 @@ export namespace Prisma {
     description?: string | null
     userId: string
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -13876,6 +20177,9 @@ export namespace Prisma {
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteLikeInput = {
@@ -13901,6 +20205,9 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
     generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type QuotePostUpsertWithoutQuoteLikeInput = {
@@ -13919,7 +20226,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -13945,10 +20251,10 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneWithoutQuotePostNestedInput
   }
 
@@ -13958,7 +20264,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14013,6 +20318,9 @@ export namespace Prisma {
     quotePost?: QuotePostCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutGeneralPostInput = {
@@ -14038,11 +20346,108 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutGeneralPostInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type ForumMainCategoryCreateWithoutGeneralPostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    subCategory?: ForumSubCategoryCreateNestedManyWithoutMainCategoryInput
+    quotePost?: QuotePostCreateNestedManyWithoutMainCategoryInput
+  }
+
+  export type ForumMainCategoryUncheckedCreateWithoutGeneralPostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    subCategory?: ForumSubCategoryUncheckedCreateNestedManyWithoutMainCategoryInput
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutMainCategoryInput
+  }
+
+  export type ForumMainCategoryCreateOrConnectWithoutGeneralPostInput = {
+    where: ForumMainCategoryWhereUniqueInput
+    create: XOR<ForumMainCategoryCreateWithoutGeneralPostInput, ForumMainCategoryUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type ForumSubCategoryCreateWithoutGeneralPostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    quotePost?: QuotePostCreateNestedManyWithoutSubCategoryInput
+    mainCategory: ForumMainCategoryCreateNestedOneWithoutSubCategoryInput
+  }
+
+  export type ForumSubCategoryUncheckedCreateWithoutGeneralPostInput = {
+    id?: string
+    name?: string | null
+    enabled?: boolean | null
+    mainCategoryId: string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutSubCategoryInput
+  }
+
+  export type ForumSubCategoryCreateOrConnectWithoutGeneralPostInput = {
+    where: ForumSubCategoryWhereUniqueInput
+    create: XOR<ForumSubCategoryCreateWithoutGeneralPostInput, ForumSubCategoryUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type GeneralReplyCreateWithoutPostInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralReplyInput
+    parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUncheckedCreateWithoutPostInput = {
+    id?: string
+    userId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyCreateOrConnectWithoutPostInput = {
+    where: GeneralReplyWhereUniqueInput
+    create: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput>
+  }
+
+  export type GeneralReplyCreateManyPostInputEnvelope = {
+    data: GeneralReplyCreateManyPostInput | GeneralReplyCreateManyPostInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeneralLikeCreateWithoutPostInput = {
+    id?: string
+    user: UserCreateNestedOneWithoutGeneralLikeInput
+  }
+
+  export type GeneralLikeUncheckedCreateWithoutPostInput = {
+    id?: string
+    userId: string
+  }
+
+  export type GeneralLikeCreateOrConnectWithoutPostInput = {
+    where: GeneralLikeWhereUniqueInput
+    create: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput>
+  }
+
+  export type GeneralLikeCreateManyPostInputEnvelope = {
+    data: GeneralLikeCreateManyPostInput | GeneralLikeCreateManyPostInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutGeneralPostInput = {
@@ -14079,6 +20484,9 @@ export namespace Prisma {
     quotePost?: QuotePostUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGeneralPostInput = {
@@ -14104,6 +20512,763 @@ export namespace Prisma {
     quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type ForumMainCategoryUpsertWithoutGeneralPostInput = {
+    update: XOR<ForumMainCategoryUpdateWithoutGeneralPostInput, ForumMainCategoryUncheckedUpdateWithoutGeneralPostInput>
+    create: XOR<ForumMainCategoryCreateWithoutGeneralPostInput, ForumMainCategoryUncheckedCreateWithoutGeneralPostInput>
+    where?: ForumMainCategoryWhereInput
+  }
+
+  export type ForumMainCategoryUpdateToOneWithWhereWithoutGeneralPostInput = {
+    where?: ForumMainCategoryWhereInput
+    data: XOR<ForumMainCategoryUpdateWithoutGeneralPostInput, ForumMainCategoryUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type ForumMainCategoryUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUpdateManyWithoutMainCategoryNestedInput
+    quotePost?: QuotePostUpdateManyWithoutMainCategoryNestedInput
+  }
+
+  export type ForumMainCategoryUncheckedUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    subCategory?: ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryNestedInput
+    quotePost?: QuotePostUncheckedUpdateManyWithoutMainCategoryNestedInput
+  }
+
+  export type ForumSubCategoryUpsertWithoutGeneralPostInput = {
+    update: XOR<ForumSubCategoryUpdateWithoutGeneralPostInput, ForumSubCategoryUncheckedUpdateWithoutGeneralPostInput>
+    create: XOR<ForumSubCategoryCreateWithoutGeneralPostInput, ForumSubCategoryUncheckedCreateWithoutGeneralPostInput>
+    where?: ForumSubCategoryWhereInput
+  }
+
+  export type ForumSubCategoryUpdateToOneWithWhereWithoutGeneralPostInput = {
+    where?: ForumSubCategoryWhereInput
+    data: XOR<ForumSubCategoryUpdateWithoutGeneralPostInput, ForumSubCategoryUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type ForumSubCategoryUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUpdateManyWithoutSubCategoryNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneRequiredWithoutSubCategoryNestedInput
+  }
+
+  export type ForumSubCategoryUncheckedUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mainCategoryId?: StringFieldUpdateOperationsInput | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutSubCategoryNestedInput
+  }
+
+  export type GeneralReplyUpsertWithWhereUniqueWithoutPostInput = {
+    where: GeneralReplyWhereUniqueInput
+    update: XOR<GeneralReplyUpdateWithoutPostInput, GeneralReplyUncheckedUpdateWithoutPostInput>
+    create: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput>
+  }
+
+  export type GeneralReplyUpdateWithWhereUniqueWithoutPostInput = {
+    where: GeneralReplyWhereUniqueInput
+    data: XOR<GeneralReplyUpdateWithoutPostInput, GeneralReplyUncheckedUpdateWithoutPostInput>
+  }
+
+  export type GeneralReplyUpdateManyWithWhereWithoutPostInput = {
+    where: GeneralReplyScalarWhereInput
+    data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyWithoutPostInput>
+  }
+
+  export type GeneralLikeUpsertWithWhereUniqueWithoutPostInput = {
+    where: GeneralLikeWhereUniqueInput
+    update: XOR<GeneralLikeUpdateWithoutPostInput, GeneralLikeUncheckedUpdateWithoutPostInput>
+    create: XOR<GeneralLikeCreateWithoutPostInput, GeneralLikeUncheckedCreateWithoutPostInput>
+  }
+
+  export type GeneralLikeUpdateWithWhereUniqueWithoutPostInput = {
+    where: GeneralLikeWhereUniqueInput
+    data: XOR<GeneralLikeUpdateWithoutPostInput, GeneralLikeUncheckedUpdateWithoutPostInput>
+  }
+
+  export type GeneralLikeUpdateManyWithWhereWithoutPostInput = {
+    where: GeneralLikeScalarWhereInput
+    data: XOR<GeneralLikeUpdateManyMutationInput, GeneralLikeUncheckedUpdateManyWithoutPostInput>
+  }
+
+  export type UserCreateWithoutGeneralReplyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutGeneralReplyInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutGeneralReplyInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGeneralReplyInput, UserUncheckedCreateWithoutGeneralReplyInput>
+  }
+
+  export type GeneralPostCreateWithoutGeneralReplyInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostUncheckedCreateWithoutGeneralReplyInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostCreateOrConnectWithoutGeneralReplyInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutGeneralReplyInput, GeneralPostUncheckedCreateWithoutGeneralReplyInput>
+  }
+
+  export type GeneralReplyCreateWithoutChildRepliesInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralReplyInput
+    post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
+    parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+  }
+
+  export type GeneralReplyUncheckedCreateWithoutChildRepliesInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type GeneralReplyCreateOrConnectWithoutChildRepliesInput = {
+    where: GeneralReplyWhereUniqueInput
+    create: XOR<GeneralReplyCreateWithoutChildRepliesInput, GeneralReplyUncheckedCreateWithoutChildRepliesInput>
+  }
+
+  export type GeneralReplyCreateWithoutParentReplyInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralReplyInput
+    post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
+    childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUncheckedCreateWithoutParentReplyInput = {
+    id?: string
+    userId: string
+    postId: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyCreateOrConnectWithoutParentReplyInput = {
+    where: GeneralReplyWhereUniqueInput
+    create: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput>
+  }
+
+  export type GeneralReplyCreateManyParentReplyInputEnvelope = {
+    data: GeneralReplyCreateManyParentReplyInput | GeneralReplyCreateManyParentReplyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutGeneralReplyInput = {
+    update: XOR<UserUpdateWithoutGeneralReplyInput, UserUncheckedUpdateWithoutGeneralReplyInput>
+    create: XOR<UserCreateWithoutGeneralReplyInput, UserUncheckedCreateWithoutGeneralReplyInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGeneralReplyInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGeneralReplyInput, UserUncheckedUpdateWithoutGeneralReplyInput>
+  }
+
+  export type UserUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type GeneralPostUpsertWithoutGeneralReplyInput = {
+    update: XOR<GeneralPostUpdateWithoutGeneralReplyInput, GeneralPostUncheckedUpdateWithoutGeneralReplyInput>
+    create: XOR<GeneralPostCreateWithoutGeneralReplyInput, GeneralPostUncheckedCreateWithoutGeneralReplyInput>
+    where?: GeneralPostWhereInput
+  }
+
+  export type GeneralPostUpdateToOneWithWhereWithoutGeneralReplyInput = {
+    where?: GeneralPostWhereInput
+    data: XOR<GeneralPostUpdateWithoutGeneralReplyInput, GeneralPostUncheckedUpdateWithoutGeneralReplyInput>
+  }
+
+  export type GeneralPostUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralReplyUpsertWithoutChildRepliesInput = {
+    update: XOR<GeneralReplyUpdateWithoutChildRepliesInput, GeneralReplyUncheckedUpdateWithoutChildRepliesInput>
+    create: XOR<GeneralReplyCreateWithoutChildRepliesInput, GeneralReplyUncheckedCreateWithoutChildRepliesInput>
+    where?: GeneralReplyWhereInput
+  }
+
+  export type GeneralReplyUpdateToOneWithWhereWithoutChildRepliesInput = {
+    where?: GeneralReplyWhereInput
+    data: XOR<GeneralReplyUpdateWithoutChildRepliesInput, GeneralReplyUncheckedUpdateWithoutChildRepliesInput>
+  }
+
+  export type GeneralReplyUpdateWithoutChildRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
+    parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateWithoutChildRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput = {
+    where: GeneralReplyWhereUniqueInput
+    update: XOR<GeneralReplyUpdateWithoutParentReplyInput, GeneralReplyUncheckedUpdateWithoutParentReplyInput>
+    create: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput>
+  }
+
+  export type GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput = {
+    where: GeneralReplyWhereUniqueInput
+    data: XOR<GeneralReplyUpdateWithoutParentReplyInput, GeneralReplyUncheckedUpdateWithoutParentReplyInput>
+  }
+
+  export type GeneralReplyUpdateManyWithWhereWithoutParentReplyInput = {
+    where: GeneralReplyScalarWhereInput
+    data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyWithoutParentReplyInput>
+  }
+
+  export type UserCreateWithoutGeneralLikeInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutGeneralLikeInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutGeneralLikeInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGeneralLikeInput, UserUncheckedCreateWithoutGeneralLikeInput>
+  }
+
+  export type GeneralPostCreateWithoutGeneralLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostUncheckedCreateWithoutGeneralLikeInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostCreateOrConnectWithoutGeneralLikeInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutGeneralLikeInput, GeneralPostUncheckedCreateWithoutGeneralLikeInput>
+  }
+
+  export type UserUpsertWithoutGeneralLikeInput = {
+    update: XOR<UserUpdateWithoutGeneralLikeInput, UserUncheckedUpdateWithoutGeneralLikeInput>
+    create: XOR<UserCreateWithoutGeneralLikeInput, UserUncheckedCreateWithoutGeneralLikeInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGeneralLikeInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGeneralLikeInput, UserUncheckedUpdateWithoutGeneralLikeInput>
+  }
+
+  export type UserUpdateWithoutGeneralLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGeneralLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type GeneralPostUpsertWithoutGeneralLikeInput = {
+    update: XOR<GeneralPostUpdateWithoutGeneralLikeInput, GeneralPostUncheckedUpdateWithoutGeneralLikeInput>
+    create: XOR<GeneralPostCreateWithoutGeneralLikeInput, GeneralPostUncheckedCreateWithoutGeneralLikeInput>
+    where?: GeneralPostWhereInput
+  }
+
+  export type GeneralPostUpdateToOneWithWhereWithoutGeneralLikeInput = {
+    where?: GeneralPostWhereInput
+    data: XOR<GeneralPostUpdateWithoutGeneralLikeInput, GeneralPostUncheckedUpdateWithoutGeneralLikeInput>
+  }
+
+  export type GeneralPostUpdateWithoutGeneralLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateWithoutGeneralLikeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type UserCreateWithoutBlogInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBlogInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBlogInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBlogInput, UserUncheckedCreateWithoutBlogInput>
+  }
+
+  export type UserUpsertWithoutBlogInput = {
+    update: XOR<UserUpdateWithoutBlogInput, UserUncheckedUpdateWithoutBlogInput>
+    create: XOR<UserCreateWithoutBlogInput, UserUncheckedCreateWithoutBlogInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBlogInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBlogInput, UserUncheckedUpdateWithoutBlogInput>
+  }
+
+  export type UserUpdateWithoutBlogInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBlogInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type QuotePostCreateManyUserInput = {
@@ -14111,7 +21276,6 @@ export namespace Prisma {
     title?: string | null
     description?: string | null
     name?: string | null
-    categoryId?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
     totalNetWeight?: number | null
@@ -14161,6 +21325,7 @@ export namespace Prisma {
     id?: string
     title?: string | null
     description?: string | null
+    createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     viewCount?: number | null
@@ -14172,12 +21337,36 @@ export namespace Prisma {
     generalPostSubCategory?: string | null
   }
 
+  export type GeneralReplyCreateManyUserInput = {
+    id?: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type GeneralLikeCreateManyUserInput = {
+    id?: string
+    postId: string
+  }
+
+  export type BlogCreateManyAuthorInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    category: string
+    image_url?: BlogCreateimage_urlInput | string[]
+  }
+
   export type QuotePostUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14203,11 +21392,11 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
-    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutUserInput = {
@@ -14215,7 +21404,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14253,7 +21441,6 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -14286,12 +21473,13 @@ export namespace Prisma {
 
   export type QuoteReplyUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutUserInput = {
@@ -14302,6 +21490,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateManyWithoutUserInput = {
@@ -14333,6 +21522,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14340,14 +21530,35 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     viewCount?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14359,19 +21570,81 @@ export namespace Prisma {
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type GeneralPostUncheckedUpdateManyWithoutUserInput = {
+  export type GeneralReplyUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
-    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
-    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
-    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
+    parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralLikeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralLikeNestedInput
+  }
+
+  export type GeneralLikeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralLikeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BlogUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+  }
+
+  export type BlogUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+  }
+
+  export type BlogUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    image_url?: BlogUpdateimage_urlInput | string[]
   }
 
   export type ForumSubCategoryCreateManyMainCategoryInput = {
@@ -14380,22 +21653,450 @@ export namespace Prisma {
     enabled?: boolean | null
   }
 
+  export type QuotePostCreateManyMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+  }
+
+  export type GeneralPostCreateManyMainCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostSubCategory?: string | null
+  }
+
   export type ForumSubCategoryUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUpdateManyWithoutSubCategoryNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutSubCategoryNestedInput
   }
 
   export type ForumSubCategoryUncheckedUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    quotePost?: QuotePostUncheckedUpdateManyWithoutSubCategoryNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutSubCategoryNestedInput
   }
 
   export type ForumSubCategoryUncheckedUpdateManyWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type QuotePostUpdateWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneWithoutQuotePostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateManyWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralPostUpdateWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutMainCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuotePostCreateManySubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    shipmentType?: string | null
+  }
+
+  export type GeneralPostCreateManySubCategoryInput = {
+    id?: string
+    title?: string | null
+    description?: string | null
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+  }
+
+  export type QuotePostUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneWithoutQuotePostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateManyWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralPostUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateManyWithoutSubCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteReplyCreateManyPostInput = {
@@ -14415,12 +22116,13 @@ export namespace Prisma {
 
   export type QuoteReplyUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
-    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+    parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutPostInput = {
@@ -14431,6 +22133,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateManyWithoutPostInput = {
@@ -14456,6 +22159,152 @@ export namespace Prisma {
   export type QuoteLikeUncheckedUpdateManyWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QuoteReplyCreateManyParentReplyInput = {
+    id?: string
+    userId: string
+    postId: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type QuoteReplyUpdateWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateManyWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralReplyCreateManyPostInput = {
+    id?: string
+    userId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type GeneralLikeCreateManyPostInput = {
+    id?: string
+    userId: string
+  }
+
+  export type GeneralReplyUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
+    parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GeneralLikeUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutGeneralLikeNestedInput
+  }
+
+  export type GeneralLikeUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralLikeUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GeneralReplyCreateManyParentReplyInput = {
+    id?: string
+    userId: string
+    postId: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+  }
+
+  export type GeneralReplyUpdateWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
+    childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateManyWithoutParentReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 
