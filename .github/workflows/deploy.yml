@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for logiclo_backend_2.0
+name: CI/CD Pipeline for logiglo_backend_2.0
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
         context: .
         file: ./.github/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/logiclo_backend_2.0:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/logiglo_backend_2.0:latest
 
     # Deploy to MilesWeb server
     - name: Deploy to server
@@ -39,11 +39,11 @@ jobs:
           # Log in to Docker Hub
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           # Stop and remove existing container (if any)
-          docker stop logiclo_backend_2.0 || true
-          docker rm logiclo_backend_2.0 || true
+          docker stop logiglo_backend_2.0 || true
+          docker rm logiglo_backend_2.0 || true
           # Pull the latest image
-          docker pull ${{ secrets.DOCKER_USERNAME }}/logiclo_backend_2.0:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/logiglo_backend_2.0:latest
           # Run the new container
-          docker run -d --name logiclo_backend_2.0 -p 7000:7000 ${{ secrets.DOCKER_USERNAME }}/logiclo_backend_2.0:latest
+          docker run -d --name logiglo_backend_2.0 -p 7000:7000 ${{ secrets.DOCKER_USERNAME }}/logiclo_backend_2.0:latest
           # Clean up unused images
           docker image prune -f
