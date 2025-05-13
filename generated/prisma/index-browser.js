@@ -161,7 +161,6 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   description: 'description',
   userId: 'userId',
   name: 'name',
-  categoryId: 'categoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   totalNetWeight: 'totalNetWeight',
@@ -214,6 +213,7 @@ exports.Prisma.GeneralPostScalarFieldEnum = {
   title: 'title',
   description: 'description',
   userId: 'userId',
+  createdBy: 'createdBy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   viewCount: 'viewCount',
@@ -223,6 +223,23 @@ exports.Prisma.GeneralPostScalarFieldEnum = {
   rejectionReason: 'rejectionReason',
   generalPostMainCategory: 'generalPostMainCategory',
   generalPostSubCategory: 'generalPostSubCategory'
+};
+
+exports.Prisma.GeneralReplyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  parentReplyId: 'parentReplyId',
+  description: 'description',
+  createdAt: 'createdAt',
+  status: 'status',
+  rejectionReason: 'rejectionReason'
+};
+
+exports.Prisma.GeneralLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId'
 };
 
 exports.Prisma.SortOrder = {
@@ -248,7 +265,9 @@ exports.Prisma.ModelName = {
   QuotePost: 'QuotePost',
   QuoteReply: 'QuoteReply',
   QuoteLike: 'QuoteLike',
-  GeneralPost: 'GeneralPost'
+  GeneralPost: 'GeneralPost',
+  GeneralReply: 'GeneralReply',
+  GeneralLike: 'GeneralLike'
 };
 
 /**
