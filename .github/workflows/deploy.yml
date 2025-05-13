@@ -46,8 +46,4 @@ jobs:
           # Run the new container
           docker run -d --name logiclo_backend_2.0 -p 7000:7000 ${{ secrets.DOCKER_USERNAME }}/logiclo_backend_2.0:latest
           # Clean up unused images
-<<<<<<< HEAD
           docker image prune -f
-=======
-          docker image prune -f
->>>>>>> 2ff2323f578c524ea3eabf99c8980624d4fbdd2a
