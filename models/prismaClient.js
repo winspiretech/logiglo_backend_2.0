@@ -9,16 +9,22 @@ const prisma = new PrismaClient().$extends({
     user: {
       async create({ args, query }) {
         if (args.data.password) {
-          args.data.password = await bcrypt.hash(args.data.password, SALT_ROUNDS);
+          args.data.password = await bcrypt.hash(
+            args.data.password,
+            SALT_ROUNDS,
+          );
         }
-        return query(args); 
+        return query(args);
       },
 
       async update({ args, query }) {
         if (args.data.password) {
-          args.data.password = await bcrypt.hash(args.data.password, SALT_ROUNDS);
+          args.data.password = await bcrypt.hash(
+            args.data.password,
+            SALT_ROUNDS,
+          );
         }
-        return query(args);  
+        return query(args);
       },
     },
   },
