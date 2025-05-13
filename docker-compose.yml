@@ -1,4 +1,4 @@
-
+version: '3.8'
 
 services:
   postgres:
@@ -13,6 +13,18 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  backend:
+    image: nayanwinspiretech/logiglo_backend_2.0
+    container_name: logiglo_backend_2.0
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
+      TOKEN_SECRET: "Radhey Radhey"
 
 volumes:
   pgdata:
