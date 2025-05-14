@@ -1,28 +1,22 @@
 const express = require('express');
-const app = express();
+const quotePostRoutes = require('./routes/quotePost.routes.js');
+const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
+const userRoutes = require('./routes/user.routes.js');
+const generalPostRoutes = require('./routes/generalPost.routes.js');
+const uploadRoute = require('./routes/uploadImage.routes.js');
+const blogRoute = require('./routes/blog.routes.js');
 const path = require('path');
-// const userRoutes = require('./routes/user.routes.js')
-const educationRoutes = require('./routes/education.routes.js');
+const cookieParser = require('cookie-parser');
+const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // A simple route
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
-
-// Example of a route
-app.get('/api', (req, res) => {
   res.json({
     message: ' Shree Ganeshay Namah || Radhay Radhay',
   });
 });
-
-//api end points
-// app.use('/api/user', userRoutes);
-app.use('/api/education', educationRoutes)
 
 module.exports = app;

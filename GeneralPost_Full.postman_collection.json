@@ -1,0 +1,98 @@
+{
+  "info": {
+    "name": "GeneralPost API Full",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GeneralPost",
+      "item": [
+        {
+          "name": "Create GeneralPost",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<USER_ID>\",\n  \"content\": \"Sample content for GeneralPost\",\n  \"status\": \"draft\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "create"]
+            }
+          }
+        },
+        {
+          "name": "Update GeneralPost",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated content for GeneralPost\",\n  \"status\": \"published\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/update/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "update", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get GeneralPost by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/get/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "get", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get Replies by GeneralPost ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/replies/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "replies", "<POST_ID>"]
+            }
+          }
+        },
+        {
+          "name": "Get Likes by GeneralPost ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/generalPost/likes/<POST_ID>",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "generalPost", "likes", "<POST_ID>"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
