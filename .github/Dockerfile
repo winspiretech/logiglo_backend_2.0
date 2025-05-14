@@ -30,16 +30,13 @@ COPY --from=build /logiglo_backend_2.0/node_modules ./node_modules
 COPY --from=build /logiglo_backend_2.0/package*.json ./
 COPY --from=build /logiglo_backend_2.0/prisma ./prisma
 COPY --from=build /logiglo_backend_2.0/generated ./generated
-COPY --from=build /logiglo_backend_2.0/src ./src
 COPY --from=build /logiglo_backend_2.0/controllers ./controllers
 COPY --from=build /logiglo_backend_2.0/middlewares ./middlewares
 COPY --from=build /logiglo_backend_2.0/models ./models
 COPY --from=build /logiglo_backend_2.0/routes ./routes
-COPY --from=build /logiglo_backend_2.0/services ./services
 COPY --from=build /logiglo_backend_2.0/uploads ./uploads
 COPY --from=build /logiglo_backend_2.0/utils ./utils
 COPY --from=build /logiglo_backend_2.0/validation ./validation
-COPY --from=build /logiglo_backend_2.0/views ./views
 COPY --from=build /logiglo_backend_2.0/app.js ./app.js
 COPY --from=build /logiglo_backend_2.0/server.js ./server.js
 
