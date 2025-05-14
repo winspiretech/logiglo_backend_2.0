@@ -6118,7 +6118,7 @@ export namespace Prisma {
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -6158,7 +6158,7 @@ export namespace Prisma {
     shipmentType?: boolean
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
   export type QuotePostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6197,7 +6197,7 @@ export namespace Prisma {
     shipmentType?: boolean
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
   export type QuotePostSelectScalar = {
@@ -6242,18 +6242,18 @@ export namespace Prisma {
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
-    user?: boolean | QuotePost$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $QuotePostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6263,7 +6263,7 @@ export namespace Prisma {
       quoteLike: Prisma.$QuoteLikePayload<ExtArgs>[]
       subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
       mainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs> | null
-      user: Prisma.$UserPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6697,7 +6697,7 @@ export namespace Prisma {
     quoteLike<T extends QuotePost$quoteLikeArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$quoteLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subCategory<T extends QuotePost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     mainCategory<T extends QuotePost$mainCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$mainCategoryArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    user<T extends QuotePost$userArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7239,25 +7239,6 @@ export namespace Prisma {
      */
     include?: ForumMainCategoryInclude<ExtArgs> | null
     where?: ForumMainCategoryWhereInput
-  }
-
-  /**
-   * QuotePost.user
-   */
-  export type QuotePost$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
   }
 
   /**
@@ -14696,7 +14677,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeListRelationFilter
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type QuotePostOrderByWithRelationInput = {
@@ -14781,7 +14762,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeListRelationFilter
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type QuotePostOrderByWithAggregationInput = {
@@ -15629,7 +15610,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateInput = {
@@ -15705,7 +15686,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateInput = {
@@ -16667,9 +16648,9 @@ export namespace Prisma {
     isNot?: ForumMainCategoryWhereInput | null
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type QuotePostCountOrderByAggregateInput = {
@@ -16818,11 +16799,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type QuotePostScalarRelationFilter = {
@@ -17744,12 +17720,10 @@ export namespace Prisma {
     update?: XOR<XOR<ForumMainCategoryUpdateToOneWithWhereWithoutQuotePostInput, ForumMainCategoryUpdateWithoutQuotePostInput>, ForumMainCategoryUncheckedUpdateWithoutQuotePostInput>
   }
 
-  export type UserUpdateOneWithoutQuotePostNestedInput = {
+  export type UserUpdateOneRequiredWithoutQuotePostNestedInput = {
     create?: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuotePostInput
     upsert?: UserUpsertWithoutQuotePostInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuotePostInput, UserUpdateWithoutQuotePostInput>, UserUncheckedUpdateWithoutQuotePostInput>
   }
@@ -18931,7 +18905,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutMainCategoryInput = {
@@ -19119,7 +19093,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutSubCategoryInput = {
@@ -19698,7 +19672,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutQuoteReplyInput = {
@@ -19914,7 +19888,7 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutQuoteReplyInput = {
@@ -20098,7 +20072,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
-    user?: UserCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
@@ -20255,7 +20229,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
@@ -21760,7 +21734,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutMainCategoryInput = {
@@ -21972,7 +21946,7 @@ export namespace Prisma {
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
-    user?: UserUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutSubCategoryInput = {
