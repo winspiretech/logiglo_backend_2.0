@@ -30,10 +30,11 @@ model User {
   updatedAt    DateTime       @updatedAt
   quotePost    QuotePost[]
   quoteReply   QuoteReply[]
-  quoteLike    QuoteLike[]
-  generalPost  GeneralPost[]
+  quoteLike    QuoteLike[]    @relation("UserToQuoteLike")
+  generalPost  GeneralPost[]  @relation("UserToGeneralPost")
   generalReply GeneralReply[]
-  generalLike  GeneralLike[]
+  generalLike  GeneralLike[]  @relation("UserToGeneralLike")
+  blog         Blog[]
 }
 
 model ForumMainCategory {
@@ -90,10 +91,10 @@ model QuotePost {
   postSubCategory  String?
   shipmentType     String?
   quoteReply       QuoteReply[]
-  quoteLike        QuoteLike[]
+  quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
   subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
   mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user             User?              @relation(fields: [userId], references: [id])
+  user             User               @relation(fields: [userId], references: [id])
 }
 
 model QuoteReply {
@@ -107,16 +108,16 @@ model QuoteReply {
   rejectionReason String?
   user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   post            QuotePost    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentReply     QuoteReply?  @relation("ReplyToReply", fields: [parentReplyId], references: [id])
-  childReplies    QuoteReply[] @relation("ReplyToReply")
+  parentReply     QuoteReply?  @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
+  childReplies    QuoteReply[] @relation("QuoteReplyToReply")
 }
 
 model QuoteLike {
   id     String    @id @default(uuid())
   userId String
   postId String
-  user   User      @relation(fields: [userId], references: [id])
-  post   QuotePost @relation(fields: [postId], references: [id])
+  user   User      @relation("UserToQuoteLike", fields: [userId], references: [id])
+  post   QuotePost @relation("PostToQuoteLike", fields: [postId], references: [id])
 }
 
 model GeneralPost {
@@ -134,11 +135,11 @@ model GeneralPost {
   rejectionReason         String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
-  user                    User               @relation(fields: [userId], references: [id])
+  user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
   MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
   subCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
-  generalLike             GeneralLike[]
+  generalLike             GeneralLike[]      @relation("PostToGeneralLike")
 }
 
 model GeneralReply {
@@ -152,14 +153,26 @@ model GeneralReply {
   rejectionReason String?
   user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   post            GeneralPost    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentReply     GeneralReply?  @relation("ReplyToReply", fields: [parentReplyId], references: [id])
-  childReplies    GeneralReply[] @relation("ReplyToReply")
+  parentReply     GeneralReply?  @relation("GeneralReplyToReply", fields: [parentReplyId], references: [id])
+  childReplies    GeneralReply[] @relation("GeneralReplyToReply")
 }
 
 model GeneralLike {
   id     String      @id @default(uuid())
   userId String
   postId String
-  user   User        @relation(fields: [userId], references: [id])
-  post   GeneralPost @relation(fields: [postId], references: [id])
+  user   User        @relation("UserToGeneralLike", fields: [userId], references: [id])
+  post   GeneralPost @relation("PostToGeneralLike", fields: [postId], references: [id])
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  description Json
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  status      String
+  createdAt   DateTime @default(now())
+  category    String
+  image_url   String[]
 }

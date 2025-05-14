@@ -1,5 +1,5 @@
-const { ApiResponse } = require('../utils/apiResponse');
-const { UserSchema } = require('../validation/userSchema.validation');
+const { ApiResponse } = require('../utils/ApiResponse');
+const UserSchema = require('../validation/userSchema.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
@@ -58,7 +58,7 @@ const loginUser = async (req, res, next) => {
         name: existingUser.name,
         email: existingUser.email,
       },
-      process.env.TOKEN_SECRET || 'radha',
+      process.env.TOKEN_SECRET,
       {
         expiresIn: '7d',
       },

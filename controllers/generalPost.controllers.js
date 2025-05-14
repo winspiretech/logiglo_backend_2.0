@@ -77,9 +77,9 @@ const createGeneralPost = async (req, res) => {
       );
   } catch (error) {
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
+      // res.status(error.statusCode).json(error);
     } else {
-      console.error('Error creating GeneralPost:', error);
+      // console.error('Error creating GeneralPost:', error);
       res.status(500).json(new ApiError(500, 'Internal server error'));
     }
   }

@@ -242,9 +242,24 @@ exports.Prisma.GeneralLikeScalarFieldEnum = {
   postId: 'postId'
 };
 
+exports.Prisma.BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  authorId: 'authorId',
+  status: 'status',
+  createdAt: 'createdAt',
+  category: 'category',
+  image_url: 'image_url'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -257,6 +272,12 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -267,7 +288,8 @@ exports.Prisma.ModelName = {
   QuoteLike: 'QuoteLike',
   GeneralPost: 'GeneralPost',
   GeneralReply: 'GeneralReply',
-  GeneralLike: 'GeneralLike'
+  GeneralLike: 'GeneralLike',
+  Blog: 'Blog'
 };
 
 /**
