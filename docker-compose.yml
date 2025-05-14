@@ -33,10 +33,12 @@ services:
     container_name: logiglo_nginx
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - uploads:/usr/share/nginx/html/Uploads
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

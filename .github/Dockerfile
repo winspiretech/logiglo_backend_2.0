@@ -24,9 +24,11 @@ WORKDIR /logiglo_backend_2.0
 COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
 # Expose port
+
 EXPOSE 3000
 
 ENV NODE_ENV=production
 
 # Run migrations + start server
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
+
