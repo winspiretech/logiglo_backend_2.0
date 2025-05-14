@@ -5,31 +5,37 @@ const userRoutes = require('./routes/user.routes.js');
 const generalPostRoutes = require('./routes/generalPost.routes.js');
 const uploadRoute = require('./routes/uploadImage.routes.js');
 const blogRoute = require('./routes/blog.routes.js');
-const path = require('path');
 const cookieParser = require('cookie-parser');
+
 const app = express();
-// Middleware to parse JSON bodies
+
+// Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-//user Route
+
+// Serve static files from the uploads volume
+app.use('/Uploads', express.static('/logiglo_backend_2.0/Uploads'));
+
+// Routes
 app.use('/api/user', userRoutes);
-
-//QuotePost Route
 app.use('/api/quotePost', quotePostRoutes);
-
-//General Post Route
 app.use('/api/generalPost', generalPostRoutes);
-//ForumCategory Route
 app.use('/api/forumCategory', forumCategoryRoutes);
-// Example of a route
-app.get('/', (req, res) => {
-  res.json({
-    message: ' Shree Ganeshay Namah || Radhay Radhay',
-  });
-});
-// Serve uploads folder
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
+
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Shree Ganeshay Namah || Radhay Radhay',
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err.stack);
+  res.status(500).json({ message: 'Server error', details: err.message });
+});
 
 module.exports = app;
