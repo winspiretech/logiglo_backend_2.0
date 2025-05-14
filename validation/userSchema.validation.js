@@ -1,4 +1,4 @@
-import { z } from 'zod';
+const { z } = require('zod');
 
 const UserSchema = z.object({
   id: z.string().optional(),
@@ -31,4 +31,4 @@ const UserSchema = z.object({
     .default(() => new Date()), // default to current timestamp
 });
 
-export { UserSchema };
+module.exports = UserSchema;
