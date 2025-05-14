@@ -12,7 +12,7 @@ router.post(
       // Send success response without database
       res.status(200).json({
         message: 'File uploaded successfully',
-        fileUrl: `http://103.212.120.2${req.fileUrl}`,
+        fileUrl: `${req.protocol}://${req.get('host')}${req.fileUrl}`,
         metadata: req.fileMetadata,
       });
     } catch (error) {
