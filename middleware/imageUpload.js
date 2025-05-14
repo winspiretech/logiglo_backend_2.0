@@ -5,7 +5,8 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 // Define the base upload path
-const baseUploadPath = path.join(__dirname, '../Uploads');
+const baseUploadPath = path.join('/logiglo_backend_2.0/Uploads');
+
 
 // Valid sections for folder organization
 const validSections = ['education', 'blog', 'user'];
