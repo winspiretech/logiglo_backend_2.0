@@ -274,7 +274,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/logiglo_backend_2.0/generated/prisma",
+      "value": "D:\\logiglo_backend_2.0\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -283,12 +283,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-musl-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/logiglo_backend_2.0/prisma/schema.prisma",
+    "sourceFilePath": "D:\\logiglo_backend_2.0\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -302,17 +302,18 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
+        "value": null
       }
     }
   },
   "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id           String         @id @default(uuid())\n  name         String?\n  email        String?        @unique\n  password     String?\n  verified     Boolean?       @default(false)\n  role         String?        @default(\"user\")\n  mobileNo     String?        @unique\n  country      String?\n  city         String?\n  address      String?\n  postalCode   String?\n  profilePic   String?\n  bio          String?\n  online       Boolean?       @default(false)\n  lastSeen     DateTime?\n  rating       Float?         @default(0)\n  accountType  String?        @default(\"personal\")\n  createdAt    DateTime       @default(now())\n  updatedAt    DateTime       @updatedAt\n  quotePost    QuotePost[]\n  quoteReply   QuoteReply[]\n  quoteLike    QuoteLike[]    @relation(\"UserToQuoteLike\")\n  generalPost  GeneralPost[]  @relation(\"UserToGeneralPost\")\n  generalReply GeneralReply[]\n  generalLike  GeneralLike[]  @relation(\"UserToGeneralLike\")\n  blog         Blog[]\n}\n\nmodel ForumMainCategory {\n  id          String             @id @default(uuid())\n  name        String?\n  enabled     Boolean?           @default(false)\n  subCategory ForumSubCategory[]\n  quotePost   QuotePost[]\n  generalPost GeneralPost[]\n}\n\nmodel ForumSubCategory {\n  id             String            @id @default(uuid())\n  name           String?\n  enabled        Boolean?          @default(false)\n  mainCategoryId String\n  quotePost      QuotePost[]\n  generalPost    GeneralPost[]\n  mainCategory   ForumMainCategory @relation(fields: [mainCategoryId], references: [id])\n}\n\nmodel QuotePost {\n  id               String             @id @default(uuid())\n  title            String?\n  description      String?\n  userId           String\n  name             String?\n  createdAt        DateTime?          @default(now())\n  updatedAt        DateTime?          @updatedAt\n  totalNetWeight   Float?\n  totalGrossWeight Float?\n  volumetricWeight Float?\n  transitInsurance Boolean?\n  width            Float?\n  height           Float?\n  length           Float?\n  viewCount        Int?\n  likesCount       Int?\n  commentsCount    Int?\n  dangerousGoods   Boolean?\n  status           String?            @default(\"pending\")\n  rejectionReason  String?\n  fromPostalCode   String?\n  toPostalCode     String?\n  fromCity         String?\n  toCity           String?\n  fromCountry      String?\n  toCountry        String?\n  fromAddress      String?\n  toAddress        String?\n  fromState        String?\n  toState          String?\n  postMainCategory String?\n  postSubCategory  String?\n  shipmentType     String?\n  quoteReply       QuoteReply[]\n  quoteLike        QuoteLike[]        @relation(\"PostToQuoteLike\")\n  subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])\n  mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])\n  user             User               @relation(fields: [userId], references: [id])\n}\n\nmodel QuoteReply {\n  id              String       @id @default(uuid())\n  userId          String\n  postId          String\n  parentReplyId   String?\n  description     String?\n  createdAt       DateTime     @default(now())\n  status          String?      @default(\"pending\")\n  rejectionReason String?\n  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)\n  post            QuotePost    @relation(fields: [postId], references: [id], onDelete: Cascade)\n  parentReply     QuoteReply?  @relation(\"QuoteReplyToReply\", fields: [parentReplyId], references: [id])\n  childReplies    QuoteReply[] @relation(\"QuoteReplyToReply\")\n}\n\nmodel QuoteLike {\n  id     String    @id @default(uuid())\n  userId String\n  postId String\n  user   User      @relation(\"UserToQuoteLike\", fields: [userId], references: [id])\n  post   QuotePost @relation(\"PostToQuoteLike\", fields: [postId], references: [id])\n}\n\nmodel GeneralPost {\n  id                      String             @id @default(uuid())\n  title                   String?\n  description             String?\n  userId                  String\n  createdBy               String?\n  createdAt               DateTime           @default(now())\n  updatedAt               DateTime           @updatedAt\n  viewCount               Int?\n  likesCount              Int?               @default(0)\n  commentsCount           Int?               @default(0)\n  status                  String?            @default(\"pending\")\n  rejectionReason         String?\n  generalPostMainCategory String?\n  generalPostSubCategory  String?\n  user                    User               @relation(\"UserToGeneralPost\", fields: [userId], references: [id])\n  MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])\n  subCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])\n  generalReply            GeneralReply[]\n  generalLike             GeneralLike[]      @relation(\"PostToGeneralLike\")\n}\n\nmodel GeneralReply {\n  id              String         @id @default(uuid())\n  userId          String\n  postId          String\n  parentReplyId   String?\n  description     String?\n  createdAt       DateTime       @default(now())\n  status          String?        @default(\"pending\")\n  rejectionReason String?\n  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)\n  post            GeneralPost    @relation(fields: [postId], references: [id], onDelete: Cascade)\n  parentReply     GeneralReply?  @relation(\"GeneralReplyToReply\", fields: [parentReplyId], references: [id])\n  childReplies    GeneralReply[] @relation(\"GeneralReplyToReply\")\n}\n\nmodel GeneralLike {\n  id     String      @id @default(uuid())\n  userId String\n  postId String\n  user   User        @relation(\"UserToGeneralLike\", fields: [userId], references: [id])\n  post   GeneralPost @relation(\"PostToGeneralLike\", fields: [postId], references: [id])\n}\n\nmodel Blog {\n  id          String   @id @default(uuid())\n  title       String\n  description Json\n  authorId    String\n  author      User     @relation(fields: [authorId], references: [id])\n  status      String\n  createdAt   DateTime @default(now())\n  category    String\n  image_url   String[]\n}\n",
   "inlineSchemaHash": "12d2d26d14a73893c274ce12ab92cf7dd2cc8656778ced2a81cf0ce84f0cda09",
-  "copyEngine": true
+  "copyEngine": false
 }
 config.dirname = '/'
 

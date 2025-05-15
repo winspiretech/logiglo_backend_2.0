@@ -70,7 +70,9 @@ const processFileUpload = async (req, res, next) => {
 
   let userId = req.body.userId;
   if (!userId) {
-    return res.status(400).json({ message: 'User ID is required in request body' });
+    return res
+      .status(400)
+      .json({ message: 'User ID is required in request body' });
   }
 
   userId = userId.replace(/[^a-zA-Z0-9-_]/g, '_');
