@@ -1,24 +1,27 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Build Docker Compose services
 echo "Building Docker Compose services..."
 docker-compose build || { echo "Docker Compose build failed"; exit 1; }
 
-# Run services
-echo "Running Docker Compose services..."
+echo "Starting Docker Compose services..."
 docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
 
-# Wait for a few seconds to let services start
+# Wait for containers to boot
+echo "Waiting for services to initialize..."
 sleep 5
 
-# Check logs (or health status if defined)
-echo "Checking service logs..."
-docker-compose logs
+# Show backend logs
+echo "Backend service logs:......................................."
+echo ".........................................................................................."
+echo ".........................................................................................."
+echo ".........................................................................................."
+docker-compose logs backend
 
-# Optionally check container status
-docker ps
-
+echo ".........................................................................................."
+echo ".........................................................................................."
+echo ".........................................................................................."
+echo ".........................................................................................."
 # Stop services to avoid running in background
 echo "Stopping Docker Compose services..."
 docker-compose down || { echo "Docker Compose down failed"; exit 1; }
