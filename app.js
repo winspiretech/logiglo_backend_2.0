@@ -26,7 +26,7 @@ app.use('/api/generalPost', generalPostRoutes);
 app.use('/api/forumCategory', forumCategoryRoutes);
 app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
-app.use("/api/event",eventRoute)
+app.use('/api/event', eventRoute);
 
 // Root route
 app.get('/', (req, res) => {

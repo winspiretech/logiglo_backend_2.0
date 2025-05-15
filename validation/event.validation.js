@@ -1,6 +1,7 @@
-const { z } = require("zod");
+const { z } = require('zod');
 
-const EventSchema = z.object({
+const EventSchema = z
+  .object({
     eventTitle: z.string(),
     organizer: z.string(),
     countryCode: z.string(),
@@ -9,10 +10,12 @@ const EventSchema = z.object({
     location: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
-    coverImage: z.string()
-}).refine((data) => data.endDate >= data.startDate, {  // For checking endDate should be greater than startDate
-    message: "End date must be after start date",
+    coverImage: z.string(),
+  })
+  .refine((data) => data.endDate >= data.startDate, {
+    // For checking endDate should be greater than startDate
+    message: 'End date must be after start date',
     path: ['endDate'],
-});
+  });
 
-module.exports = EventSchema
+module.exports = EventSchema;

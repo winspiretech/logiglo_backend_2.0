@@ -48,7 +48,7 @@ const createBlog = async (req, res) => {
         ...rest,
         authorId: id,
         description,
-        categoryId: category?.id
+        categoryId: category?.id,
       },
     });
 
@@ -74,7 +74,6 @@ const createBlog = async (req, res) => {
     }
   }
 };
-
 
 const getAllBlogs = async (req, res) => {
   try {
@@ -108,8 +107,8 @@ const getBlog = async (req, res) => {
     }
     const blog = await prisma.blog.findFirst({
       where: {
-        id
-      }
+        id,
+      },
     });
     if (!blog) {
       throw new ApiError(500, 'Something went wrong while fetching blog');
@@ -182,8 +181,8 @@ const deleteBlog = async (req, res) => {
     }
     const blog = await prisma.blog.delete({
       where: {
-        id
-      }
+        id,
+      },
     });
     if (!blog) {
       throw new ApiError(500, 'Something went wrong while deleting blog');
@@ -206,4 +205,11 @@ const deleteBlog = async (req, res) => {
   }
 };
 
-module.exports = { test, createBlog, getAllBlogs, getBlog, editBlog, deleteBlog };
+module.exports = {
+  test,
+  createBlog,
+  getAllBlogs,
+  getBlog,
+  editBlog,
+  deleteBlog,
+};
