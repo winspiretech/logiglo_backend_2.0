@@ -46,4 +46,4 @@ services:
 
 volumes:
   pgdata:
-  uploads:
+  uploads: 
