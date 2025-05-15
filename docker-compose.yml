@@ -27,19 +27,12 @@ services:
       TOKEN_SECRET: "Radhey Radhey"
     volumes:
       - uploads:/logiglo_backend_2.0/Uploads
-
-  nginx:
-    image: nginx:latest
-    container_name: logiglo_nginx
-    restart: always
-    ports:
-      - "80:80"
-    volumes:
-      - uploads:/usr/share/nginx/html/Uploads
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - backend
+    command: >
+      /bin/sh -c "
+      chmod 755 /logiglo_backend_2.0/Uploads &&
+      npm run start
+      "
 
 volumes:
   pgdata:
-  uploads:
+  uploads: 

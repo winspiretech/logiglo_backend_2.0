@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Serve static files from the uploads volume
-app.use('/Uploads', express.static('/logiglo_backend_2.0/Uploads'));
+app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // Routes
 app.use('/api/user', userRoutes);
