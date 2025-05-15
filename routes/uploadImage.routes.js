@@ -2,21 +2,32 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
-const { upload, processFileUpload, baseUploadPath } = require('../middleware/imageUpload');
+const {
+  upload,
+  processFileUpload,
+  baseUploadPath,
+} = require('../middleware/imageUpload');
 
 // Upload file route
-router.post('/upload-file', upload.single('file'), processFileUpload, (req, res) => {
-  try {
-    res.status(200).json({
-      message: 'File uploaded successfully',
-      fileUrl: `${req.protocol}://${req.get('host')}${req.fileUrl}`,
-      metadata: req.fileMetadata,
-    });
-  } catch (error) {
-    console.error('Error processing request:', error);
-    res.status(500).json({ message: 'Error processing request', details: error.message });
-  }
-});
+router.post(
+  '/upload-file',
+  upload.single('file'),
+  processFileUpload,
+  (req, res) => {
+    try {
+      res.status(200).json({
+        message: 'File uploaded successfully',
+        fileUrl: `${req.protocol}://${req.get('host')}${req.fileUrl}`,
+        metadata: req.fileMetadata,
+      });
+    } catch (error) {
+      console.error('Error processing request:', error);
+      res
+        .status(500)
+        .json({ message: 'Error processing request', details: error.message });
+    }
+  },
+);
 
 // Delete file route (full URL accepted)
 router.delete('/delete-file', async (req, res) => {
@@ -59,10 +70,11 @@ router.delete('/delete-file', async (req, res) => {
       message: 'File deleted successfully',
       deletedPath: pathname,
     });
-
   } catch (error) {
     console.error('Error deleting file:', error);
-    res.status(500).json({ message: 'Error deleting file', details: error.message });
+    res
+      .status(500)
+      .json({ message: 'Error deleting file', details: error.message });
   }
 });
 module.exports = router;
