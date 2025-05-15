@@ -7,25 +7,19 @@ docker-compose build || { echo "Docker Compose build failed"; exit 1; }
 echo "Starting Docker Compose services..."
 docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
 
-# Wait for containers to boot
-echo "Waiting for services to initialize..."
-sleep 5
+# Wait until the backend container's port 3000 is open
+echo "Waiting for backend to start on port 3000..."
+until docker exec logiglo_backend sh -c "nc -z localhost 3000"; do
+  sleep 2
+done
 
-# Show backend logs
-echo "Backend service logs:......................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-docker logs logiglo_backend
+# Now the server is up — show logs
+echo "Backend service logs:"
+docker logs logiglo_backend | tail -n 50
 sleep 3
-
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo "runnig container"
+echo "Running containers:"
 docker ps
 sleep 3
-# Stop services to avoid running in background
+# Stop services
 echo "Stopping Docker Compose services..."
 docker-compose down || { echo "Docker Compose down failed"; exit 1; }
