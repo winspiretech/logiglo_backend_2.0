@@ -1,5 +1,5 @@
-const demo = async(req, res) => {
- res.json({message: "hello world"});
-}
+const demo = async (req, res) => {
+  res.json({ message: 'hello world' });
+};
 
-module.exports = demo
+module.exports = demo;

@@ -12,7 +12,9 @@ const createCourse = async (req, res) => {
       data: validatedData,
     });
 
-    return res.status(201).json({ message: 'Course created successfully', course });
+    return res
+      .status(201)
+      .json({ message: 'Course created successfully', course });
   } catch (error) {
     if (error.name === 'ZodError') {
       return res.status(400).json({
@@ -22,7 +24,9 @@ const createCourse = async (req, res) => {
     }
 
     console.error('Error creating course:', error);
-    return res.status(500).json({ message: 'Server error while creating course' });
+    return res
+      .status(500)
+      .json({ message: 'Server error while creating course' });
   }
 };
 

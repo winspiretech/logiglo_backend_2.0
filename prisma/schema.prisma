@@ -238,3 +238,48 @@ model BlogCategory {
   name  String  @unique
   blogs Blog[]
 }
+
+model Course {
+  id              String           @id @default(uuid())
+  institutionName String
+  logo            String?
+  title           String
+  description     String?
+  instructorName  String
+  thumbnail       String?
+  brochure        String?
+  previewVideoUrl String?
+  educationLevel  EducationLevel
+  difficulty      CourseDifficulty
+  mode            CourseMode
+  currency        Currency
+  duration        String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  createdById     String
+  createdBy       User             @relation(fields: [createdById], references: [id])
+  modules         CourseModule[]
+}
+
+model CourseModule {
+  id           String   @id @default(uuid())
+  courseId     String
+  sectionTitle String
+  videoTitle   String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model CourseEnquiry {
+  id                    String          @id @default(uuid())
+  institutionName       String
+  institutionType       String
+  contactPersonName     String
+  contactPersonPosition String
+  contactNumber         String
+  website               String?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+}

@@ -5,7 +5,9 @@ const createCourseModule = async (req, res) => {
     const { courseId } = req.params;
     const { sectionTitle, videoTitle, description } = req.body;
 
-    const courseExists = await prisma.course.findUnique({ where: { id: courseId } });
+    const courseExists = await prisma.course.findUnique({
+      where: { id: courseId },
+    });
     if (!courseExists) {
       return res.status(404).json({ message: 'Course not found' });
     }
@@ -19,10 +21,14 @@ const createCourseModule = async (req, res) => {
       },
     });
 
-    return res.status(201).json({ message: 'Module created successfully', module });
+    return res
+      .status(201)
+      .json({ message: 'Module created successfully', module });
   } catch (error) {
     console.error('Error creating course module:', error);
-    return res.status(500).json({ message: 'Server error while creating course module' });
+    return res
+      .status(500)
+      .json({ message: 'Server error while creating course module' });
   }
 };
 

@@ -76,7 +76,9 @@ const handleCourseEnquiry = async (req, res) => {
     });
   } catch (error) {
     console.error('Error handling course enquiry:', error);
-    return res.status(500).json({ message: 'Server error while submitting enquiry' });
+    return res
+      .status(500)
+      .json({ message: 'Server error while submitting enquiry' });
   }
 };
 
