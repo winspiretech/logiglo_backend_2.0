@@ -249,8 +249,29 @@ exports.Prisma.BlogScalarFieldEnum = {
   authorId: 'authorId',
   status: 'status',
   createdAt: 'createdAt',
-  category: 'category',
-  image_url: 'image_url'
+  image_url: 'image_url',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  authorId: 'authorId',
+  coverImage: 'coverImage',
+  eventTitle: 'eventTitle',
+  organizer: 'organizer',
+  countryCode: 'countryCode',
+  contactNumber: 'contactNumber',
+  emailAddress: 'emailAddress',
+  description: 'description',
+  location: 'location',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
 };
 
 exports.Prisma.SortOrder = {
@@ -289,7 +310,9 @@ exports.Prisma.ModelName = {
   GeneralPost: 'GeneralPost',
   GeneralReply: 'GeneralReply',
   GeneralLike: 'GeneralLike',
-  Blog: 'Blog'
+  Blog: 'Blog',
+  Event: 'Event',
+  BlogCategory: 'BlogCategory'
 };
 
 /**
