@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user.routes.js');
 const generalPostRoutes = require('./routes/generalPost.routes.js');
 const uploadRoute = require('./routes/uploadImage.routes.js');
 const blogRoute = require('./routes/blog.routes.js');
+const eventRoute = require('./routes/event.routes.js');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -31,5 +32,6 @@ app.get('/', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
+app.use("/api/event",eventRoute)
 
 module.exports = app;
