@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Build and run Docker Compose
+echo "Building Docker Compose services..."
+docker-compose build || { echo "Docker Compose build failed"; exit 1; }
+
+echo "Running Docker Compose services..."
+docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
+
+# Stop services to avoid running in background
+echo "Stopping Docker Compose services..."
+docker-compose down || { echo "Docker Compose down failed"; exit 1; }

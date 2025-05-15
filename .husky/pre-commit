@@ -16,16 +16,5 @@ if [ "$NODE_ENV" != "production" ]; then
   npx prisma migrate dev --name auto_precommit || { echo "Prisma migrate failed"; exit 1; }
 fi
 
-# Build and run Docker Compose
-echo "Building Docker Compose services..."
-docker-compose build || { echo "Docker Compose build failed"; exit 1; }
-
-echo "Running Docker Compose services..."
-docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
-
-# Stop services to avoid running in background
-echo "Stopping Docker Compose services..."
-docker-compose down || { echo "Docker Compose down failed"; exit 1; }
-
 # Placeholder for tests
 echo "No test framework installed. Skipping tests..."
