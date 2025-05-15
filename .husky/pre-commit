@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run Prettier formatting
+echo "Running Prettier formatting..."
+npm run format || { echo "Prettier formatting failed"; exit 1; }
+
+# Run Prisma generation
+echo "Generating Prisma client..."
+npx prisma generate || { echo "Prisma generate failed"; exit 1; }
+
+# Run Prisma migrations (development only)
+echo "Running Prisma migrations..."
+if [ "$NODE_ENV" != "production" ]; then
+  docker-compose up -d postgres || { echo "Failed to start PostgreSQL"; exit 1; }
+  npx prisma migrate dev --name auto_precommit || { echo "Prisma migrate failed"; exit 1; }
+fi
+
+# Build and run Docker Compose
+echo "Building Docker Compose services..."
+docker-compose build || { echo "Docker Compose build failed"; exit 1; }
+
+echo "Running Docker Compose services..."
+docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
+
+# Stop services to avoid running in background
+echo "Stopping Docker Compose services..."
+docker-compose down || { echo "Docker Compose down failed"; exit 1; }
+
+# Placeholder for tests
+echo "No test framework installed. Skipping tests..."
