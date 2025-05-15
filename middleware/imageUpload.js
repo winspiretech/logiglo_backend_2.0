@@ -54,7 +54,7 @@ const processFileUpload = async (req, res, next) => {
   }
 
   // Validate file content
-  ificy that the Prisma client is generated and migrations are applied correctly.
+ 
   if (req.file.mimetype.startsWith('image/')) {
     try {
       await sharp(req.file.buffer).metadata(); // Validate image
