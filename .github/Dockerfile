@@ -1,23 +1,34 @@
-# Use official Node.js LTS image
-FROM node:20-alpine AS base
+# Stage 1: Build dependencies and Prisma client
+FROM node:20-alpine AS build
 
-# Set working directory
 WORKDIR /logiglo_backend_2.0
 
-# Copy package files separately for caching
+# Copy package files
 COPY package*.json ./
 
-# Install dependencies only (without dev dependencies)
-RUN npm install 
+# Install all dependencies (dev included for prisma generate)
+RUN npm ci
 
-# Copy entire project
+# Copy everything else
 COPY . .
 
 # Generate Prisma client
 RUN npx prisma generate
 
-# Expose backend port
+# Stage 2: Production image
+FROM node:20-alpine
+
+WORKDIR /logiglo_backend_2.0
+
+# Copy the entire app from build stage (everything)
+COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
+
+# Expose port
+
 EXPOSE 3000
 
-# Run the server
-CMD ["npm", "server.js"]
+ENV NODE_ENV=production
+
+# Run migrations + start server
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
+
