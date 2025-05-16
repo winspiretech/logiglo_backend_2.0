@@ -63,6 +63,11 @@ export type GeneralLike = $Result.DefaultSelection<Prisma.$GeneralLikePayload>
  * 
  */
 export type Blog = $Result.DefaultSelection<Prisma.$BlogPayload>
+/**
+ * Model CountryWithFlag
+ * 
+ */
+export type CountryWithFlag = $Result.DefaultSelection<Prisma.$CountryWithFlagPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -288,6 +293,16 @@ export class PrismaClient<
     * ```
     */
   get blog(): Prisma.BlogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.countryWithFlag`: Exposes CRUD operations for the **CountryWithFlag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CountryWithFlags
+    * const countryWithFlags = await prisma.countryWithFlag.findMany()
+    * ```
+    */
+  get countryWithFlag(): Prisma.CountryWithFlagDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -737,7 +752,8 @@ export namespace Prisma {
     GeneralPost: 'GeneralPost',
     GeneralReply: 'GeneralReply',
     GeneralLike: 'GeneralLike',
-    Blog: 'Blog'
+    Blog: 'Blog',
+    CountryWithFlag: 'CountryWithFlag'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -756,7 +772,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog"
+      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog" | "countryWithFlag"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1500,6 +1516,80 @@ export namespace Prisma {
           }
         }
       }
+      CountryWithFlag: {
+        payload: Prisma.$CountryWithFlagPayload<ExtArgs>
+        fields: Prisma.CountryWithFlagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CountryWithFlagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CountryWithFlagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          findFirst: {
+            args: Prisma.CountryWithFlagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CountryWithFlagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          findMany: {
+            args: Prisma.CountryWithFlagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>[]
+          }
+          create: {
+            args: Prisma.CountryWithFlagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          createMany: {
+            args: Prisma.CountryWithFlagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CountryWithFlagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>[]
+          }
+          delete: {
+            args: Prisma.CountryWithFlagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          update: {
+            args: Prisma.CountryWithFlagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          deleteMany: {
+            args: Prisma.CountryWithFlagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CountryWithFlagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CountryWithFlagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>[]
+          }
+          upsert: {
+            args: Prisma.CountryWithFlagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CountryWithFlagPayload>
+          }
+          aggregate: {
+            args: Prisma.CountryWithFlagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCountryWithFlag>
+          }
+          groupBy: {
+            args: Prisma.CountryWithFlagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CountryWithFlagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CountryWithFlagCountArgs<ExtArgs>
+            result: $Utils.Optional<CountryWithFlagCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1594,6 +1684,7 @@ export namespace Prisma {
     generalReply?: GeneralReplyOmit
     generalLike?: GeneralLikeOmit
     blog?: BlogOmit
+    countryWithFlag?: CountryWithFlagOmit
   }
 
   /* Types for Logging */
@@ -14083,6 +14174,1061 @@ export namespace Prisma {
 
 
   /**
+   * Model CountryWithFlag
+   */
+
+  export type AggregateCountryWithFlag = {
+    _count: CountryWithFlagCountAggregateOutputType | null
+    _avg: CountryWithFlagAvgAggregateOutputType | null
+    _sum: CountryWithFlagSumAggregateOutputType | null
+    _min: CountryWithFlagMinAggregateOutputType | null
+    _max: CountryWithFlagMaxAggregateOutputType | null
+  }
+
+  export type CountryWithFlagAvgAggregateOutputType = {
+    id_country: number | null
+  }
+
+  export type CountryWithFlagSumAggregateOutputType = {
+    id_country: number | null
+  }
+
+  export type CountryWithFlagMinAggregateOutputType = {
+    id_country: number | null
+    Country_Name: string | null
+    ISO2: string | null
+    ISO3: string | null
+    Top_Level_Domain: string | null
+    Phone_Code: string | null
+    Flag_Path: string | null
+  }
+
+  export type CountryWithFlagMaxAggregateOutputType = {
+    id_country: number | null
+    Country_Name: string | null
+    ISO2: string | null
+    ISO3: string | null
+    Top_Level_Domain: string | null
+    Phone_Code: string | null
+    Flag_Path: string | null
+  }
+
+  export type CountryWithFlagCountAggregateOutputType = {
+    id_country: number
+    Country_Name: number
+    ISO2: number
+    ISO3: number
+    Top_Level_Domain: number
+    Phone_Code: number
+    Flag_Path: number
+    _all: number
+  }
+
+
+  export type CountryWithFlagAvgAggregateInputType = {
+    id_country?: true
+  }
+
+  export type CountryWithFlagSumAggregateInputType = {
+    id_country?: true
+  }
+
+  export type CountryWithFlagMinAggregateInputType = {
+    id_country?: true
+    Country_Name?: true
+    ISO2?: true
+    ISO3?: true
+    Top_Level_Domain?: true
+    Phone_Code?: true
+    Flag_Path?: true
+  }
+
+  export type CountryWithFlagMaxAggregateInputType = {
+    id_country?: true
+    Country_Name?: true
+    ISO2?: true
+    ISO3?: true
+    Top_Level_Domain?: true
+    Phone_Code?: true
+    Flag_Path?: true
+  }
+
+  export type CountryWithFlagCountAggregateInputType = {
+    id_country?: true
+    Country_Name?: true
+    ISO2?: true
+    ISO3?: true
+    Top_Level_Domain?: true
+    Phone_Code?: true
+    Flag_Path?: true
+    _all?: true
+  }
+
+  export type CountryWithFlagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CountryWithFlag to aggregate.
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CountryWithFlags to fetch.
+     */
+    orderBy?: CountryWithFlagOrderByWithRelationInput | CountryWithFlagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CountryWithFlagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CountryWithFlags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CountryWithFlags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CountryWithFlags
+    **/
+    _count?: true | CountryWithFlagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CountryWithFlagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CountryWithFlagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CountryWithFlagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CountryWithFlagMaxAggregateInputType
+  }
+
+  export type GetCountryWithFlagAggregateType<T extends CountryWithFlagAggregateArgs> = {
+        [P in keyof T & keyof AggregateCountryWithFlag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCountryWithFlag[P]>
+      : GetScalarType<T[P], AggregateCountryWithFlag[P]>
+  }
+
+
+
+
+  export type CountryWithFlagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CountryWithFlagWhereInput
+    orderBy?: CountryWithFlagOrderByWithAggregationInput | CountryWithFlagOrderByWithAggregationInput[]
+    by: CountryWithFlagScalarFieldEnum[] | CountryWithFlagScalarFieldEnum
+    having?: CountryWithFlagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CountryWithFlagCountAggregateInputType | true
+    _avg?: CountryWithFlagAvgAggregateInputType
+    _sum?: CountryWithFlagSumAggregateInputType
+    _min?: CountryWithFlagMinAggregateInputType
+    _max?: CountryWithFlagMaxAggregateInputType
+  }
+
+  export type CountryWithFlagGroupByOutputType = {
+    id_country: number
+    Country_Name: string | null
+    ISO2: string | null
+    ISO3: string | null
+    Top_Level_Domain: string | null
+    Phone_Code: string | null
+    Flag_Path: string | null
+    _count: CountryWithFlagCountAggregateOutputType | null
+    _avg: CountryWithFlagAvgAggregateOutputType | null
+    _sum: CountryWithFlagSumAggregateOutputType | null
+    _min: CountryWithFlagMinAggregateOutputType | null
+    _max: CountryWithFlagMaxAggregateOutputType | null
+  }
+
+  type GetCountryWithFlagGroupByPayload<T extends CountryWithFlagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CountryWithFlagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CountryWithFlagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CountryWithFlagGroupByOutputType[P]>
+            : GetScalarType<T[P], CountryWithFlagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CountryWithFlagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_country?: boolean
+    Country_Name?: boolean
+    ISO2?: boolean
+    ISO3?: boolean
+    Top_Level_Domain?: boolean
+    Phone_Code?: boolean
+    Flag_Path?: boolean
+  }, ExtArgs["result"]["countryWithFlag"]>
+
+  export type CountryWithFlagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_country?: boolean
+    Country_Name?: boolean
+    ISO2?: boolean
+    ISO3?: boolean
+    Top_Level_Domain?: boolean
+    Phone_Code?: boolean
+    Flag_Path?: boolean
+  }, ExtArgs["result"]["countryWithFlag"]>
+
+  export type CountryWithFlagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_country?: boolean
+    Country_Name?: boolean
+    ISO2?: boolean
+    ISO3?: boolean
+    Top_Level_Domain?: boolean
+    Phone_Code?: boolean
+    Flag_Path?: boolean
+  }, ExtArgs["result"]["countryWithFlag"]>
+
+  export type CountryWithFlagSelectScalar = {
+    id_country?: boolean
+    Country_Name?: boolean
+    ISO2?: boolean
+    ISO3?: boolean
+    Top_Level_Domain?: boolean
+    Phone_Code?: boolean
+    Flag_Path?: boolean
+  }
+
+  export type CountryWithFlagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_country" | "Country_Name" | "ISO2" | "ISO3" | "Top_Level_Domain" | "Phone_Code" | "Flag_Path", ExtArgs["result"]["countryWithFlag"]>
+
+  export type $CountryWithFlagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CountryWithFlag"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id_country: number
+      Country_Name: string | null
+      ISO2: string | null
+      ISO3: string | null
+      Top_Level_Domain: string | null
+      Phone_Code: string | null
+      Flag_Path: string | null
+    }, ExtArgs["result"]["countryWithFlag"]>
+    composites: {}
+  }
+
+  type CountryWithFlagGetPayload<S extends boolean | null | undefined | CountryWithFlagDefaultArgs> = $Result.GetResult<Prisma.$CountryWithFlagPayload, S>
+
+  type CountryWithFlagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CountryWithFlagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CountryWithFlagCountAggregateInputType | true
+    }
+
+  export interface CountryWithFlagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CountryWithFlag'], meta: { name: 'CountryWithFlag' } }
+    /**
+     * Find zero or one CountryWithFlag that matches the filter.
+     * @param {CountryWithFlagFindUniqueArgs} args - Arguments to find a CountryWithFlag
+     * @example
+     * // Get one CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CountryWithFlagFindUniqueArgs>(args: SelectSubset<T, CountryWithFlagFindUniqueArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CountryWithFlag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CountryWithFlagFindUniqueOrThrowArgs} args - Arguments to find a CountryWithFlag
+     * @example
+     * // Get one CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CountryWithFlagFindUniqueOrThrowArgs>(args: SelectSubset<T, CountryWithFlagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CountryWithFlag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagFindFirstArgs} args - Arguments to find a CountryWithFlag
+     * @example
+     * // Get one CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CountryWithFlagFindFirstArgs>(args?: SelectSubset<T, CountryWithFlagFindFirstArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CountryWithFlag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagFindFirstOrThrowArgs} args - Arguments to find a CountryWithFlag
+     * @example
+     * // Get one CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CountryWithFlagFindFirstOrThrowArgs>(args?: SelectSubset<T, CountryWithFlagFindFirstOrThrowArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CountryWithFlags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CountryWithFlags
+     * const countryWithFlags = await prisma.countryWithFlag.findMany()
+     * 
+     * // Get first 10 CountryWithFlags
+     * const countryWithFlags = await prisma.countryWithFlag.findMany({ take: 10 })
+     * 
+     * // Only select the `id_country`
+     * const countryWithFlagWithId_countryOnly = await prisma.countryWithFlag.findMany({ select: { id_country: true } })
+     * 
+     */
+    findMany<T extends CountryWithFlagFindManyArgs>(args?: SelectSubset<T, CountryWithFlagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CountryWithFlag.
+     * @param {CountryWithFlagCreateArgs} args - Arguments to create a CountryWithFlag.
+     * @example
+     * // Create one CountryWithFlag
+     * const CountryWithFlag = await prisma.countryWithFlag.create({
+     *   data: {
+     *     // ... data to create a CountryWithFlag
+     *   }
+     * })
+     * 
+     */
+    create<T extends CountryWithFlagCreateArgs>(args: SelectSubset<T, CountryWithFlagCreateArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CountryWithFlags.
+     * @param {CountryWithFlagCreateManyArgs} args - Arguments to create many CountryWithFlags.
+     * @example
+     * // Create many CountryWithFlags
+     * const countryWithFlag = await prisma.countryWithFlag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CountryWithFlagCreateManyArgs>(args?: SelectSubset<T, CountryWithFlagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CountryWithFlags and returns the data saved in the database.
+     * @param {CountryWithFlagCreateManyAndReturnArgs} args - Arguments to create many CountryWithFlags.
+     * @example
+     * // Create many CountryWithFlags
+     * const countryWithFlag = await prisma.countryWithFlag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CountryWithFlags and only return the `id_country`
+     * const countryWithFlagWithId_countryOnly = await prisma.countryWithFlag.createManyAndReturn({
+     *   select: { id_country: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CountryWithFlagCreateManyAndReturnArgs>(args?: SelectSubset<T, CountryWithFlagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CountryWithFlag.
+     * @param {CountryWithFlagDeleteArgs} args - Arguments to delete one CountryWithFlag.
+     * @example
+     * // Delete one CountryWithFlag
+     * const CountryWithFlag = await prisma.countryWithFlag.delete({
+     *   where: {
+     *     // ... filter to delete one CountryWithFlag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CountryWithFlagDeleteArgs>(args: SelectSubset<T, CountryWithFlagDeleteArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CountryWithFlag.
+     * @param {CountryWithFlagUpdateArgs} args - Arguments to update one CountryWithFlag.
+     * @example
+     * // Update one CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CountryWithFlagUpdateArgs>(args: SelectSubset<T, CountryWithFlagUpdateArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CountryWithFlags.
+     * @param {CountryWithFlagDeleteManyArgs} args - Arguments to filter CountryWithFlags to delete.
+     * @example
+     * // Delete a few CountryWithFlags
+     * const { count } = await prisma.countryWithFlag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CountryWithFlagDeleteManyArgs>(args?: SelectSubset<T, CountryWithFlagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CountryWithFlags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CountryWithFlags
+     * const countryWithFlag = await prisma.countryWithFlag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CountryWithFlagUpdateManyArgs>(args: SelectSubset<T, CountryWithFlagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CountryWithFlags and returns the data updated in the database.
+     * @param {CountryWithFlagUpdateManyAndReturnArgs} args - Arguments to update many CountryWithFlags.
+     * @example
+     * // Update many CountryWithFlags
+     * const countryWithFlag = await prisma.countryWithFlag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CountryWithFlags and only return the `id_country`
+     * const countryWithFlagWithId_countryOnly = await prisma.countryWithFlag.updateManyAndReturn({
+     *   select: { id_country: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CountryWithFlagUpdateManyAndReturnArgs>(args: SelectSubset<T, CountryWithFlagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CountryWithFlag.
+     * @param {CountryWithFlagUpsertArgs} args - Arguments to update or create a CountryWithFlag.
+     * @example
+     * // Update or create a CountryWithFlag
+     * const countryWithFlag = await prisma.countryWithFlag.upsert({
+     *   create: {
+     *     // ... data to create a CountryWithFlag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CountryWithFlag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CountryWithFlagUpsertArgs>(args: SelectSubset<T, CountryWithFlagUpsertArgs<ExtArgs>>): Prisma__CountryWithFlagClient<$Result.GetResult<Prisma.$CountryWithFlagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CountryWithFlags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagCountArgs} args - Arguments to filter CountryWithFlags to count.
+     * @example
+     * // Count the number of CountryWithFlags
+     * const count = await prisma.countryWithFlag.count({
+     *   where: {
+     *     // ... the filter for the CountryWithFlags we want to count
+     *   }
+     * })
+    **/
+    count<T extends CountryWithFlagCountArgs>(
+      args?: Subset<T, CountryWithFlagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CountryWithFlagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CountryWithFlag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CountryWithFlagAggregateArgs>(args: Subset<T, CountryWithFlagAggregateArgs>): Prisma.PrismaPromise<GetCountryWithFlagAggregateType<T>>
+
+    /**
+     * Group by CountryWithFlag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CountryWithFlagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CountryWithFlagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CountryWithFlagGroupByArgs['orderBy'] }
+        : { orderBy?: CountryWithFlagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CountryWithFlagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCountryWithFlagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CountryWithFlag model
+   */
+  readonly fields: CountryWithFlagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CountryWithFlag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CountryWithFlagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CountryWithFlag model
+   */
+  interface CountryWithFlagFieldRefs {
+    readonly id_country: FieldRef<"CountryWithFlag", 'Int'>
+    readonly Country_Name: FieldRef<"CountryWithFlag", 'String'>
+    readonly ISO2: FieldRef<"CountryWithFlag", 'String'>
+    readonly ISO3: FieldRef<"CountryWithFlag", 'String'>
+    readonly Top_Level_Domain: FieldRef<"CountryWithFlag", 'String'>
+    readonly Phone_Code: FieldRef<"CountryWithFlag", 'String'>
+    readonly Flag_Path: FieldRef<"CountryWithFlag", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CountryWithFlag findUnique
+   */
+  export type CountryWithFlagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter, which CountryWithFlag to fetch.
+     */
+    where: CountryWithFlagWhereUniqueInput
+  }
+
+  /**
+   * CountryWithFlag findUniqueOrThrow
+   */
+  export type CountryWithFlagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter, which CountryWithFlag to fetch.
+     */
+    where: CountryWithFlagWhereUniqueInput
+  }
+
+  /**
+   * CountryWithFlag findFirst
+   */
+  export type CountryWithFlagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter, which CountryWithFlag to fetch.
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CountryWithFlags to fetch.
+     */
+    orderBy?: CountryWithFlagOrderByWithRelationInput | CountryWithFlagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CountryWithFlags.
+     */
+    cursor?: CountryWithFlagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CountryWithFlags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CountryWithFlags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CountryWithFlags.
+     */
+    distinct?: CountryWithFlagScalarFieldEnum | CountryWithFlagScalarFieldEnum[]
+  }
+
+  /**
+   * CountryWithFlag findFirstOrThrow
+   */
+  export type CountryWithFlagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter, which CountryWithFlag to fetch.
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CountryWithFlags to fetch.
+     */
+    orderBy?: CountryWithFlagOrderByWithRelationInput | CountryWithFlagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CountryWithFlags.
+     */
+    cursor?: CountryWithFlagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CountryWithFlags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CountryWithFlags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CountryWithFlags.
+     */
+    distinct?: CountryWithFlagScalarFieldEnum | CountryWithFlagScalarFieldEnum[]
+  }
+
+  /**
+   * CountryWithFlag findMany
+   */
+  export type CountryWithFlagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter, which CountryWithFlags to fetch.
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CountryWithFlags to fetch.
+     */
+    orderBy?: CountryWithFlagOrderByWithRelationInput | CountryWithFlagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CountryWithFlags.
+     */
+    cursor?: CountryWithFlagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CountryWithFlags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CountryWithFlags.
+     */
+    skip?: number
+    distinct?: CountryWithFlagScalarFieldEnum | CountryWithFlagScalarFieldEnum[]
+  }
+
+  /**
+   * CountryWithFlag create
+   */
+  export type CountryWithFlagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CountryWithFlag.
+     */
+    data: XOR<CountryWithFlagCreateInput, CountryWithFlagUncheckedCreateInput>
+  }
+
+  /**
+   * CountryWithFlag createMany
+   */
+  export type CountryWithFlagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CountryWithFlags.
+     */
+    data: CountryWithFlagCreateManyInput | CountryWithFlagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CountryWithFlag createManyAndReturn
+   */
+  export type CountryWithFlagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * The data used to create many CountryWithFlags.
+     */
+    data: CountryWithFlagCreateManyInput | CountryWithFlagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CountryWithFlag update
+   */
+  export type CountryWithFlagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CountryWithFlag.
+     */
+    data: XOR<CountryWithFlagUpdateInput, CountryWithFlagUncheckedUpdateInput>
+    /**
+     * Choose, which CountryWithFlag to update.
+     */
+    where: CountryWithFlagWhereUniqueInput
+  }
+
+  /**
+   * CountryWithFlag updateMany
+   */
+  export type CountryWithFlagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CountryWithFlags.
+     */
+    data: XOR<CountryWithFlagUpdateManyMutationInput, CountryWithFlagUncheckedUpdateManyInput>
+    /**
+     * Filter which CountryWithFlags to update
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * Limit how many CountryWithFlags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CountryWithFlag updateManyAndReturn
+   */
+  export type CountryWithFlagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * The data used to update CountryWithFlags.
+     */
+    data: XOR<CountryWithFlagUpdateManyMutationInput, CountryWithFlagUncheckedUpdateManyInput>
+    /**
+     * Filter which CountryWithFlags to update
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * Limit how many CountryWithFlags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CountryWithFlag upsert
+   */
+  export type CountryWithFlagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CountryWithFlag to update in case it exists.
+     */
+    where: CountryWithFlagWhereUniqueInput
+    /**
+     * In case the CountryWithFlag found by the `where` argument doesn't exist, create a new CountryWithFlag with this data.
+     */
+    create: XOR<CountryWithFlagCreateInput, CountryWithFlagUncheckedCreateInput>
+    /**
+     * In case the CountryWithFlag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CountryWithFlagUpdateInput, CountryWithFlagUncheckedUpdateInput>
+  }
+
+  /**
+   * CountryWithFlag delete
+   */
+  export type CountryWithFlagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+    /**
+     * Filter which CountryWithFlag to delete.
+     */
+    where: CountryWithFlagWhereUniqueInput
+  }
+
+  /**
+   * CountryWithFlag deleteMany
+   */
+  export type CountryWithFlagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CountryWithFlags to delete
+     */
+    where?: CountryWithFlagWhereInput
+    /**
+     * Limit how many CountryWithFlags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CountryWithFlag without action
+   */
+  export type CountryWithFlagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CountryWithFlag
+     */
+    select?: CountryWithFlagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CountryWithFlag
+     */
+    omit?: CountryWithFlagOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14257,6 +15403,19 @@ export namespace Prisma {
   };
 
   export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum]
+
+
+  export const CountryWithFlagScalarFieldEnum: {
+    id_country: 'id_country',
+    Country_Name: 'Country_Name',
+    ISO2: 'ISO2',
+    ISO3: 'ISO3',
+    Top_Level_Domain: 'Top_Level_Domain',
+    Phone_Code: 'Phone_Code',
+    Flag_Path: 'Flag_Path'
+  };
+
+  export type CountryWithFlagScalarFieldEnum = (typeof CountryWithFlagScalarFieldEnum)[keyof typeof CountryWithFlagScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15283,6 +16442,70 @@ export namespace Prisma {
     image_url?: StringNullableListFilter<"Blog">
   }
 
+  export type CountryWithFlagWhereInput = {
+    AND?: CountryWithFlagWhereInput | CountryWithFlagWhereInput[]
+    OR?: CountryWithFlagWhereInput[]
+    NOT?: CountryWithFlagWhereInput | CountryWithFlagWhereInput[]
+    id_country?: IntFilter<"CountryWithFlag"> | number
+    Country_Name?: StringNullableFilter<"CountryWithFlag"> | string | null
+    ISO2?: StringNullableFilter<"CountryWithFlag"> | string | null
+    ISO3?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Top_Level_Domain?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Phone_Code?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Flag_Path?: StringNullableFilter<"CountryWithFlag"> | string | null
+  }
+
+  export type CountryWithFlagOrderByWithRelationInput = {
+    id_country?: SortOrder
+    Country_Name?: SortOrderInput | SortOrder
+    ISO2?: SortOrderInput | SortOrder
+    ISO3?: SortOrderInput | SortOrder
+    Top_Level_Domain?: SortOrderInput | SortOrder
+    Phone_Code?: SortOrderInput | SortOrder
+    Flag_Path?: SortOrderInput | SortOrder
+  }
+
+  export type CountryWithFlagWhereUniqueInput = Prisma.AtLeast<{
+    id_country?: number
+    AND?: CountryWithFlagWhereInput | CountryWithFlagWhereInput[]
+    OR?: CountryWithFlagWhereInput[]
+    NOT?: CountryWithFlagWhereInput | CountryWithFlagWhereInput[]
+    Country_Name?: StringNullableFilter<"CountryWithFlag"> | string | null
+    ISO2?: StringNullableFilter<"CountryWithFlag"> | string | null
+    ISO3?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Top_Level_Domain?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Phone_Code?: StringNullableFilter<"CountryWithFlag"> | string | null
+    Flag_Path?: StringNullableFilter<"CountryWithFlag"> | string | null
+  }, "id_country">
+
+  export type CountryWithFlagOrderByWithAggregationInput = {
+    id_country?: SortOrder
+    Country_Name?: SortOrderInput | SortOrder
+    ISO2?: SortOrderInput | SortOrder
+    ISO3?: SortOrderInput | SortOrder
+    Top_Level_Domain?: SortOrderInput | SortOrder
+    Phone_Code?: SortOrderInput | SortOrder
+    Flag_Path?: SortOrderInput | SortOrder
+    _count?: CountryWithFlagCountOrderByAggregateInput
+    _avg?: CountryWithFlagAvgOrderByAggregateInput
+    _max?: CountryWithFlagMaxOrderByAggregateInput
+    _min?: CountryWithFlagMinOrderByAggregateInput
+    _sum?: CountryWithFlagSumOrderByAggregateInput
+  }
+
+  export type CountryWithFlagScalarWhereWithAggregatesInput = {
+    AND?: CountryWithFlagScalarWhereWithAggregatesInput | CountryWithFlagScalarWhereWithAggregatesInput[]
+    OR?: CountryWithFlagScalarWhereWithAggregatesInput[]
+    NOT?: CountryWithFlagScalarWhereWithAggregatesInput | CountryWithFlagScalarWhereWithAggregatesInput[]
+    id_country?: IntWithAggregatesFilter<"CountryWithFlag"> | number
+    Country_Name?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+    ISO2?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+    ISO3?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+    Top_Level_Domain?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+    Phone_Code?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+    Flag_Path?: StringNullableWithAggregatesFilter<"CountryWithFlag"> | string | null
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -16268,6 +17491,76 @@ export namespace Prisma {
     image_url?: BlogUpdateimage_urlInput | string[]
   }
 
+  export type CountryWithFlagCreateInput = {
+    id_country: number
+    Country_Name?: string | null
+    ISO2?: string | null
+    ISO3?: string | null
+    Top_Level_Domain?: string | null
+    Phone_Code?: string | null
+    Flag_Path?: string | null
+  }
+
+  export type CountryWithFlagUncheckedCreateInput = {
+    id_country: number
+    Country_Name?: string | null
+    ISO2?: string | null
+    ISO3?: string | null
+    Top_Level_Domain?: string | null
+    Phone_Code?: string | null
+    Flag_Path?: string | null
+  }
+
+  export type CountryWithFlagUpdateInput = {
+    id_country?: IntFieldUpdateOperationsInput | number
+    Country_Name?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO2?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO3?: NullableStringFieldUpdateOperationsInput | string | null
+    Top_Level_Domain?: NullableStringFieldUpdateOperationsInput | string | null
+    Phone_Code?: NullableStringFieldUpdateOperationsInput | string | null
+    Flag_Path?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CountryWithFlagUncheckedUpdateInput = {
+    id_country?: IntFieldUpdateOperationsInput | number
+    Country_Name?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO2?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO3?: NullableStringFieldUpdateOperationsInput | string | null
+    Top_Level_Domain?: NullableStringFieldUpdateOperationsInput | string | null
+    Phone_Code?: NullableStringFieldUpdateOperationsInput | string | null
+    Flag_Path?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CountryWithFlagCreateManyInput = {
+    id_country: number
+    Country_Name?: string | null
+    ISO2?: string | null
+    ISO3?: string | null
+    Top_Level_Domain?: string | null
+    Phone_Code?: string | null
+    Flag_Path?: string | null
+  }
+
+  export type CountryWithFlagUpdateManyMutationInput = {
+    id_country?: IntFieldUpdateOperationsInput | number
+    Country_Name?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO2?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO3?: NullableStringFieldUpdateOperationsInput | string | null
+    Top_Level_Domain?: NullableStringFieldUpdateOperationsInput | string | null
+    Phone_Code?: NullableStringFieldUpdateOperationsInput | string | null
+    Flag_Path?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CountryWithFlagUncheckedUpdateManyInput = {
+    id_country?: IntFieldUpdateOperationsInput | number
+    Country_Name?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO2?: NullableStringFieldUpdateOperationsInput | string | null
+    ISO3?: NullableStringFieldUpdateOperationsInput | string | null
+    Top_Level_Domain?: NullableStringFieldUpdateOperationsInput | string | null
+    Phone_Code?: NullableStringFieldUpdateOperationsInput | string | null
+    Flag_Path?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -17070,6 +18363,71 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type CountryWithFlagCountOrderByAggregateInput = {
+    id_country?: SortOrder
+    Country_Name?: SortOrder
+    ISO2?: SortOrder
+    ISO3?: SortOrder
+    Top_Level_Domain?: SortOrder
+    Phone_Code?: SortOrder
+    Flag_Path?: SortOrder
+  }
+
+  export type CountryWithFlagAvgOrderByAggregateInput = {
+    id_country?: SortOrder
+  }
+
+  export type CountryWithFlagMaxOrderByAggregateInput = {
+    id_country?: SortOrder
+    Country_Name?: SortOrder
+    ISO2?: SortOrder
+    ISO3?: SortOrder
+    Top_Level_Domain?: SortOrder
+    Phone_Code?: SortOrder
+    Flag_Path?: SortOrder
+  }
+
+  export type CountryWithFlagMinOrderByAggregateInput = {
+    id_country?: SortOrder
+    Country_Name?: SortOrder
+    ISO2?: SortOrder
+    ISO3?: SortOrder
+    Top_Level_Domain?: SortOrder
+    Phone_Code?: SortOrder
+    Flag_Path?: SortOrder
+  }
+
+  export type CountryWithFlagSumOrderByAggregateInput = {
+    id_country?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type QuotePostCreateNestedManyWithoutUserInput = {
@@ -18137,6 +19495,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBlogInput, UserUpdateWithoutBlogInput>, UserUncheckedUpdateWithoutBlogInput>
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18348,6 +19714,33 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type QuotePostCreateWithoutUserInput = {

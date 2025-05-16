@@ -176,3 +176,13 @@ model Blog {
   category    String
   image_url   String[]
 }
+
+model CountryWithFlag {
+  id_country       Int     @id
+  Country_Name     String? @db.VarChar(32)
+  ISO2             String? @db.VarChar(2)
+  ISO3             String? @db.VarChar(3)
+  Top_Level_Domain String? @db.VarChar(2)
+  Phone_Code       String? @db.VarChar(19)
+  Flag_Path        String? @db.VarChar(255) // <-- store image path here
+}

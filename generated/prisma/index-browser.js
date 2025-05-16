@@ -253,6 +253,16 @@ exports.Prisma.BlogScalarFieldEnum = {
   image_url: 'image_url'
 };
 
+exports.Prisma.CountryWithFlagScalarFieldEnum = {
+  id_country: 'id_country',
+  Country_Name: 'Country_Name',
+  ISO2: 'ISO2',
+  ISO3: 'ISO3',
+  Top_Level_Domain: 'Top_Level_Domain',
+  Phone_Code: 'Phone_Code',
+  Flag_Path: 'Flag_Path'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -289,7 +299,8 @@ exports.Prisma.ModelName = {
   GeneralPost: 'GeneralPost',
   GeneralReply: 'GeneralReply',
   GeneralLike: 'GeneralLike',
-  Blog: 'Blog'
+  Blog: 'Blog',
+  CountryWithFlag: 'CountryWithFlag'
 };
 
 /**
