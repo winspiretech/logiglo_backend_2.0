@@ -1,27 +1,41 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Building Docker Compose services..."
-docker-compose build || { echo "Docker Compose build failed"; exit 1; }
+# Define color codes
+RED='\033[31m'
+GREEN='\033[32m'
+RESET='\033[0m'
 
-echo "Starting Docker Compose services..."
-docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
+# Check if Docker is running
+if ! docker info >/dev/null 2>&1; then
+  echo "${RED}Docker is not running. Please start Docker and try again.${RESET}"
+  exit 1
+fi
 
-# Wait for containers to boot
-echo "Waiting for services to initialize..."
-sleep 5
+# Build Docker Compose services
+echo "🚀 Building Docker Compose services..."
+docker-compose -f docker-compose.yml build || { echo "${RED}Build failed${RESET}"; exit 1; }
 
-# Show backend logs
-echo "Backend service logs:......................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-docker-compose logs backend
+# Start Docker Compose services
+echo "🚀 Starting Docker Compose services..."
+docker-compose -f docker-compose.yml up -d || { echo "${RED}Startup failed${RESET}"; exit 1; }
 
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-echo ".........................................................................................."
-# Stop services to avoid running in background
-echo "Stopping Docker Compose services..."
-docker-compose down || { echo "Docker Compose down failed"; exit 1; }
+# Wait 5 seconds for services to initialize
+echo "⏳ Waiting 10 seconds for containers to settle..."
+sleep 16
+
+# Show backend container logs 
+echo "📜 Backend service logs:"
+docker logs logiglo_backend 
+sleep 2
+# Show running containers
+echo "📦 Running containers:"
+docker ps
+
+# Stop services
+echo "🛑 Stopping Docker Compose services..."
+docker-compose -f docker-compose.yml down || { echo "${RED}Teardown failed${RESET}"; exit 1; }
+
+# Success message
+echo "${GREEN}✅ Pre-push check completed successfully.${RESET}"
+exit 0
