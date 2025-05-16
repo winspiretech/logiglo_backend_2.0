@@ -46,4 +46,31 @@ until docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; 
 done
 
 # Check backend container logs for errors
-echo "Checking backend container logs for errors
+echo "Checking backend container logs for errors..."
+if docker logs logiglo_backend 2>&1 | grep -iE "error|failed|exception|prisma.*failed|crash"; then
+  echo "${RED}Errors detected in backend container logs:${RESET}"
+  docker logs logiglo_backend | tail -n 50
+  echo "${RED}Aborting push due to internal container errors.${RESET}"
+  docker-compose -f docker-compose.yml down
+  exit 1
+fi
+
+# Check if backend container is still running (in case it exited after starting)
+if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "running" ]; then
+  echo "${RED}Backend container stopped unexpectedly.${RESET}"
+  docker logs logiglo_backend | tail -n 50
+  docker-compose -f docker-compose.yml down
+  exit 1
+fi
+
+# Show backend service logs
+echo "Backend service logs:"
+docker logs logiglo_backend | tail -n 50
+
+# Show running containers
+echo "Running containers:"
+docker ps
+
+# Stop services
+echo "Stopping Docker Compose services..."
+docker-compose -f docker-compose.yml down || { echo "${RED}Docker Compose down failed${RESET}"; exit 1; }
