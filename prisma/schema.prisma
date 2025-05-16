@@ -217,17 +217,6 @@ model Blog {
   category    BlogCategory? @relation(fields: [categoryId], references: [id])
 }
 
-<<<<<<< HEAD
-model CountryWithFlag {
-  id_country       Int     @id
-  Country_Name     String? @db.VarChar(32)
-  ISO2             String? @db.VarChar(2)
-  ISO3             String? @db.VarChar(3)
-  Top_Level_Domain String? @db.VarChar(2)
-  Phone_Code       String? @db.VarChar(19)
-  Flag_Path        String? @db.VarChar(255) // <-- store image path here
-}
-=======
 model Event {
   id            String   @id @default(uuid())
   authorId      String
@@ -295,4 +284,3 @@ model CourseEnquiry {
   createdAt             DateTime        @default(now())
   updatedAt             DateTime        @updatedAt
 }
->>>>>>> 2de82982c7cb472b89c2093cf32b99264b8fc63a

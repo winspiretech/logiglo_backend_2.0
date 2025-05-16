@@ -249,18 +249,71 @@ exports.Prisma.BlogScalarFieldEnum = {
   authorId: 'authorId',
   status: 'status',
   createdAt: 'createdAt',
-  category: 'category',
-  image_url: 'image_url'
+  image_url: 'image_url',
+  categoryId: 'categoryId'
 };
 
-exports.Prisma.CountryWithFlagScalarFieldEnum = {
-  id_country: 'id_country',
-  Country_Name: 'Country_Name',
-  ISO2: 'ISO2',
-  ISO3: 'ISO3',
-  Top_Level_Domain: 'Top_Level_Domain',
-  Phone_Code: 'Phone_Code',
-  Flag_Path: 'Flag_Path'
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  authorId: 'authorId',
+  coverImage: 'coverImage',
+  eventTitle: 'eventTitle',
+  organizer: 'organizer',
+  countryCode: 'countryCode',
+  contactNumber: 'contactNumber',
+  emailAddress: 'emailAddress',
+  description: 'description',
+  location: 'location',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  institutionName: 'institutionName',
+  logo: 'logo',
+  title: 'title',
+  description: 'description',
+  instructorName: 'instructorName',
+  thumbnail: 'thumbnail',
+  brochure: 'brochure',
+  previewVideoUrl: 'previewVideoUrl',
+  educationLevel: 'educationLevel',
+  difficulty: 'difficulty',
+  mode: 'mode',
+  currency: 'currency',
+  duration: 'duration',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+};
+
+exports.Prisma.CourseModuleScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  sectionTitle: 'sectionTitle',
+  videoTitle: 'videoTitle',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CourseEnquiryScalarFieldEnum = {
+  id: 'id',
+  institutionName: 'institutionName',
+  institutionType: 'institutionType',
+  contactPersonName: 'contactPersonName',
+  contactPersonPosition: 'contactPersonPosition',
+  contactNumber: 'contactNumber',
+  website: 'website',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -287,7 +340,33 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.EducationLevel = exports.$Enums.EducationLevel = {
+  HIGH_SCHOOL: 'HIGH_SCHOOL',
+  UNDERGRADUATE: 'UNDERGRADUATE',
+  POSTGRADUATE: 'POSTGRADUATE',
+  DOCTORATE: 'DOCTORATE',
+  OTHER: 'OTHER'
+};
 
+exports.CourseDifficulty = exports.$Enums.CourseDifficulty = {
+  BEGINNER: 'BEGINNER',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED'
+};
+
+exports.CourseMode = exports.$Enums.CourseMode = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  HYBRID: 'HYBRID'
+};
+
+exports.Currency = exports.$Enums.Currency = {
+  INR: 'INR',
+  USD: 'USD',
+  EUR: 'EUR',
+  GBP: 'GBP',
+  OTHER: 'OTHER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -300,7 +379,11 @@ exports.Prisma.ModelName = {
   GeneralReply: 'GeneralReply',
   GeneralLike: 'GeneralLike',
   Blog: 'Blog',
-  CountryWithFlag: 'CountryWithFlag'
+  Event: 'Event',
+  BlogCategory: 'BlogCategory',
+  Course: 'Course',
+  CourseModule: 'CourseModule',
+  CourseEnquiry: 'CourseEnquiry'
 };
 
 /**
