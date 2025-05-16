@@ -1,25 +1,49 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Building Docker Compose services..."
-docker-compose build || { echo "Docker Compose build failed"; exit 1; }
+# Define color codes
+RED='\033[31m'
+RESET='\033[0m'
 
+# Check if Docker is running
+if ! docker info >/dev/null 2>&1; then
+  echo "${RED}Docker is not running. Please start Docker and try again.${RESET}"
+  exit 1
+fi
+
+# Build Docker Compose services
+echo "Building Docker Compose services..."
+docker-compose -f docker-compose.yml build || { echo "${RED}Docker Compose build failed${RESET}"; exit 1; }
+
+# Start Docker Compose services
 echo "Starting Docker Compose services..."
-docker-compose up -d || { echo "Docker Compose up failed"; exit 1; }
+docker-compose -f docker-compose.yml up -d || { echo "${RED}Docker Compose up failed${RESET}"; exit 1; }
+
+# Wait for PostgreSQL to be healthy
+echo "Waiting for PostgreSQL to be healthy..."
+until docker inspect --format='{{.State.Health.Status}}' logiglo_backend_postgres | grep -q "healthy"; do
+  sleep 2
+  echo "PostgreSQL is not healthy yet..."
+  if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend_postgres)" != "running" ]; then
+    echo "${RED}PostgreSQL container is not running.${RESET}"
+    docker logs logiglo_backend_postgres
+    docker-compose -f docker-compose.yml down
+    exit 1
+  fi
+done
 
 # Wait until the backend container's port 3000 is open
 echo "Waiting for backend to start on port 3000..."
-until docker exec logiglo_backend sh -c "nc -z localhost 3000"; do
+until docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; do
   sleep 2
+  echo "Backend is not ready yet..."
+  if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "running" ]; then
+    echo "${RED}Backend container is not running.${RESET}"
+    docker logs logiglo_backend
+    docker-compose -f docker-compose.yml down
+    exit 1
+  fi
 done
 
-# Now the server is up — show logs
-echo "Backend service logs:"
-docker logs logiglo_backend | tail -n 50
-sleep 3
-echo "Running containers:"
-docker ps
-sleep 3
-# Stop services
-echo "Stopping Docker Compose services..."
-docker-compose down || { echo "Docker Compose down failed"; exit 1; }
+# Check backend container logs for errors
+echo "Checking backend container logs for errors
