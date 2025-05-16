@@ -21,8 +21,8 @@ echo "🚀 Starting Docker Compose services..."
 docker-compose -f docker-compose.yml up -d || { echo "${RED}Startup failed${RESET}"; exit 1; }
 
 # Wait 5 seconds for services to initialize
-echo "⏳ Waiting 5 seconds for containers to settle..."
-sleep 5
+echo "⏳ Waiting 10 seconds for containers to settle..."
+sleep 15
 
 # Show backend container logs 
 echo "📜 Backend service logs:"
