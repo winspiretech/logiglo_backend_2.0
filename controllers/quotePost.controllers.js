@@ -1,11 +1,13 @@
 const prisma = require('../models/prismaClient');
 const {
-  quotePostSchema,
-  quoteReplySchema,
-  quoteLikeSchema,
-  updateQuotePostSchema,
+  validateCreateQuotePost,
+  validateCreateQuoteReply,
+  validateCreateQuoteLike,
+  validateUpdateQuotePost,
+  validateUserId,
+  validatePostId,
+  validateGetLikesByPostId,
 } = require('../validation/quotePost.validation');
-const { z } = require('zod');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 
@@ -14,17 +16,8 @@ const { ApiError } = require('../utils/ApiError');
 // Create a new QuotePost
 module.exports.createQuotePost = async (req, res) => {
   try {
-    const validationResult = quotePostSchema.safeParse(req.body);
-    if (!validationResult.success) {
-      throw new ApiError(
-        400,
-        'Validation failed',
-        validationResult.error.errors,
-      );
-    }
-
     const { userId, postMainCategory, postSubCategory, ...data } =
-      validationResult.data;
+      validateCreateQuotePost(req.body);
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -65,34 +58,55 @@ module.exports.createQuotePost = async (req, res) => {
       },
     });
 
-    res
+    return res
       .status(201)
       .json(
         new ApiResponse(201, newQuotePost, 'QuotePost created successfully'),
       );
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error creating QuotePost:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle Prisma-specific errors
+    if (error.code === 'P2003') {
+      console.error(
+        `Error in createQuotePost - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (user, main category, or subcategory)',
+            error.message,
+          ),
+        );
     }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in createQuotePost - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Error in createQuotePost - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create QuotePost due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Create a new QuoteReply
 module.exports.createQuoteReply = async (req, res) => {
   try {
-    const validationResult = quoteReplySchema.safeParse(req.body);
-    if (!validationResult.success) {
-      throw new ApiError(
-        400,
-        'Validation failed',
-        validationResult.error.errors,
-      );
-    }
-
-    const { userId, postId, parentReplyId, ...data } = validationResult.data;
+    const { userId, postId, parentReplyId, ...data } = validateCreateQuoteReply(
+      req.body,
+    );
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -103,7 +117,7 @@ module.exports.createQuoteReply = async (req, res) => {
     // Verify post exists
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
     }
 
     // Verify parentReplyId if provided
@@ -120,39 +134,60 @@ module.exports.createQuoteReply = async (req, res) => {
       data: {
         user: { connect: { id: userId } },
         post: { connect: { id: postId } },
-        parentReplyId,
+        parentReply: parentReplyId
+          ? { connect: { id: parentReplyId } }
+          : undefined,
         ...data,
       },
     });
 
-    res
+    return res
       .status(201)
       .json(
         new ApiResponse(201, newQuoteReply, 'QuoteReply created successfully'),
       );
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error creating QuoteReply:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle Prisma-specific errors
+    if (error.code === 'P2003') {
+      console.error(
+        `Error in createQuoteReply - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (user, post, or parent reply)',
+            error.message,
+          ),
+        );
     }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in createQuoteReply - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Error in createQuoteReply - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create QuoteReply due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Create or remove a QuoteLike
 module.exports.createQuoteLike = async (req, res) => {
   try {
-    const validationResult = quoteLikeSchema.safeParse(req.body);
-    if (!validationResult.success) {
-      throw new ApiError(
-        400,
-        'Validation failed',
-        validationResult.error.errors,
-      );
-    }
-
-    const { userId, postId } = validationResult.data;
+    const { userId, postId } = validateCreateQuoteLike(req.body);
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -163,7 +198,7 @@ module.exports.createQuoteLike = async (req, res) => {
     // Verify post exists
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
     }
 
     // Check if user already liked the post
@@ -183,7 +218,7 @@ module.exports.createQuoteLike = async (req, res) => {
         data: { likesCount: { decrement: 1 } },
       });
 
-      res
+      return res
         .status(200)
         .json(new ApiResponse(200, null, 'Like removed successfully'));
     } else {
@@ -201,41 +236,90 @@ module.exports.createQuoteLike = async (req, res) => {
         data: { likesCount: { increment: 1 } },
       });
 
-      res
+      return res
         .status(201)
         .json(new ApiResponse(201, newQuoteLike, 'Like added successfully'));
     }
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error creating/removing QuoteLike:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle Prisma-specific errors
+    if (error.code === 'P2003') {
+      console.error(
+        `Error in createQuoteLike - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (user or post)',
+            error.message,
+          ),
+        );
     }
+    if (error.code === 'P2025') {
+      console.error(
+        `Error in createQuoteLike - Record not found for deletion:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Like not found for removal', error.message));
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in createQuoteLike - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Error in createQuoteLike - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create or remove QuoteLike due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Update an existing QuotePost
 module.exports.updateQuotePost = async (req, res) => {
   try {
-    const postIdSchema = z.object({ postId: z.string().uuid() });
-    const postIdValidation = postIdSchema.safeParse(req.params);
-    if (!postIdValidation.success) {
-      throw new ApiError(400, 'Invalid post ID', postIdValidation.error.errors);
-    }
-
-    const bodyValidation = updateQuotePostSchema.safeParse(req.body);
-    if (!bodyValidation.success) {
-      throw new ApiError(400, 'Validation failed', bodyValidation.error.errors);
-    }
-
-    const { postId } = postIdValidation.data;
-    const data = bodyValidation.data;
+    const { postId, data } = validateUpdateQuotePost(req.params, req.body);
 
     // Verify post exists
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
+    }
+
+    // Verify main category exists if provided
+    if (data.postMainCategory) {
+      const mainCategory = await prisma.forumMainCategory.findUnique({
+        where: { id: data.postMainCategory },
+      });
+      if (!mainCategory) {
+        throw new ApiError(404, 'Main category not found');
+      }
+      data.mainCategory = { connect: { id: data.postMainCategory } };
+      delete data.postMainCategory;
+    }
+
+    // Verify subcategory exists if provided
+    if (data.postSubCategory) {
+      const subCategory = await prisma.forumSubCategory.findUnique({
+        where: { id: data.postSubCategory },
+      });
+      if (!subCategory) {
+        throw new ApiError(404, 'Subcategory not found');
+      }
+      data.subCategory = { connect: { id: data.postSubCategory } };
+      delete data.postSubCategory;
     }
 
     const updatedPost = await prisma.quotePost.update({
@@ -243,19 +327,55 @@ module.exports.updateQuotePost = async (req, res) => {
       data,
     });
 
-    res
+    return res
       .status(200)
       .json(
         new ApiResponse(200, updatedPost, 'QuotePost updated successfully'),
       );
   } catch (error) {
-    if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error updating QuotePost:', error);
-
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle Prisma-specific errors
+    if (error.code === 'P2025') {
+      console.error(
+        `Error in updateQuotePost - Record not found for update:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(new ApiError(404, 'QuotePost not found', error.message));
     }
+    if (error.code === 'P2003') {
+      console.error(
+        `Error in updateQuotePost - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (main category or subcategory)',
+            error.message,
+          ),
+        );
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in updateQuotePost - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Error in updateQuotePost - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update QuotePost due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -264,13 +384,7 @@ module.exports.updateQuotePost = async (req, res) => {
 // Fetch draft QuotePosts for a specific user
 module.exports.getDraftPosts = async (req, res) => {
   try {
-    const userIdSchema = z.object({ userId: z.string().uuid() });
-    const validationResult = userIdSchema.safeParse(req.params);
-    if (!validationResult.success) {
-      throw new ApiError(400, 'Invalid user ID', validationResult.error.errors);
-    }
-
-    const { userId } = validationResult.data;
+    const userId = validateUserId(req.params);
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -285,18 +399,33 @@ module.exports.getDraftPosts = async (req, res) => {
       },
     });
 
-    res
+    return res
       .status(200)
       .json(
-        new ApiResponse(200, draftPosts, 'Draft posts fetched successfully'),
+        new ApiResponse(
+          200,
+          draftPosts,
+          'Draft QuotePosts fetched successfully',
+        ),
       );
   } catch (error) {
+    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error fetching draft posts:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+      console.error(`Error in getDraftPosts - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
     }
+
+    // Handle unexpected errors
+    console.error('Error in getDraftPosts - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch draft QuotePosts due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -306,18 +435,28 @@ module.exports.getPendingPosts = async (req, res) => {
     const pendingPosts = await prisma.quotePost.findMany({
       where: { status: 'pending' },
     });
-    res
+
+    return res
       .status(200)
       .json(
         new ApiResponse(
           200,
           pendingPosts,
-          'Pending posts fetched successfully',
+          'Pending QuotePosts fetched successfully',
         ),
       );
   } catch (error) {
-    console.error('Error fetching pending posts:', error);
-    res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle unexpected errors
+    console.error('Error in getPendingPosts - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch pending QuotePosts due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -327,18 +466,28 @@ module.exports.getSuccessPosts = async (req, res) => {
     const successPosts = await prisma.quotePost.findMany({
       where: { status: 'success' },
     });
-    res
+
+    return res
       .status(200)
       .json(
         new ApiResponse(
           200,
           successPosts,
-          'Success posts fetched successfully',
+          'Successful QuotePosts fetched successfully',
         ),
       );
   } catch (error) {
-    console.error('Error fetching success posts:', error);
-    res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle unexpected errors
+    console.error('Error in getSuccessPosts - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch successful QuotePosts due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -348,18 +497,28 @@ module.exports.getPendingReplies = async (req, res) => {
     const pendingReplies = await prisma.quoteReply.findMany({
       where: { status: 'pending' },
     });
-    res
+
+    return res
       .status(200)
       .json(
         new ApiResponse(
           200,
           pendingReplies,
-          'Pending replies fetched successfully',
+          'Pending QuoteReplies fetched successfully',
         ),
       );
   } catch (error) {
-    console.error('Error fetching pending replies:', error);
-    res.status(500).json(new ApiError(500, 'Internal server error'));
+    // Handle unexpected errors
+    console.error('Error in getPendingReplies - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch pending QuoteReplies due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -368,13 +527,7 @@ module.exports.getPendingReplies = async (req, res) => {
 // Fetch all QuotePosts for a specific user
 module.exports.getPostsByUserId = async (req, res) => {
   try {
-    const userIdSchema = z.object({ userId: z.string().uuid() });
-    const validationResult = userIdSchema.safeParse(req.params);
-    if (!validationResult.success) {
-      throw new ApiError(400, 'Invalid user ID', validationResult.error.errors);
-    }
-
-    const { userId } = validationResult.data;
+    const userId = validateUserId(req.params);
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -386,85 +539,93 @@ module.exports.getPostsByUserId = async (req, res) => {
       where: { userId },
     });
 
-    res
+    return res
       .status(200)
-      .json(new ApiResponse(200, userPosts, 'User posts fetched successfully'));
+      .json(
+        new ApiResponse(200, userPosts, 'User QuotePosts fetched successfully'),
+      );
   } catch (error) {
+    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error fetching posts by user ID:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+      console.error(`Error in getPostsByUserId - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
     }
+
+    // Handle unexpected errors
+    console.error('Error in getPostsByUserId - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch user QuotePosts due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Fetch all QuoteReplies for a specific QuotePost with status "success"
 module.exports.getRepliesByPostId = async (req, res) => {
   try {
-    const postIdSchema = z.object({ postId: z.string().uuid() });
-    const validationResult = postIdSchema.safeParse(req.params);
-    if (!validationResult.success) {
-      throw new ApiError(400, 'Invalid post ID', validationResult.error.errors);
-    }
-
-    const { postId } = validationResult.data;
+    const postId = validatePostId(req.params);
 
     // Verify post exists
     const post = await prisma.quotePost.findUnique({
       where: { id: postId },
     });
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
     }
 
     // Check post status
     if (post.status !== 'success') {
-      throw new ApiError(400, 'Post is not in success status');
+      throw new ApiError(400, 'QuotePost is not in success status');
     }
 
     const replies = await prisma.quoteReply.findMany({
       where: { postId },
     });
 
-    res
+    return res
       .status(200)
-      .json(new ApiResponse(200, replies, 'Replies fetched successfully'));
+      .json(new ApiResponse(200, replies, 'QuoteReplies fetched successfully'));
   } catch (error) {
+    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error fetching replies by post ID:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+      console.error(`Error in getRepliesByPostId - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
     }
+
+    // Handle unexpected errors
+    console.error('Error in getRepliesByPostId - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch QuoteReplies due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Fetch the count of QuoteLikes and whether the user liked a specific QuotePost
 module.exports.getLikesByPostId = async (req, res) => {
   try {
-    const schema = z.object({
-      postId: z.string().uuid(),
-      userId: z.string().uuid().optional(),
-    });
-    const validationResult = schema.safeParse({
-      postId: req.params.postId,
-      userId: req.query.userId,
-    });
-    if (!validationResult.success) {
-      throw new ApiError(
-        400,
-        'Validation failed',
-        validationResult.error.errors,
-      );
-    }
-
-    const { postId, userId } = validationResult.data;
+    const { postId, userId } = validateGetLikesByPostId(req.params, req.query);
 
     // Verify post exists
-    const post = await prisma.quotePost.findUnique({ where: { id: postId } });
+    const post = await prisma.quotePost.findFirst({
+      where: { id: postId },
+      include: {
+        quoteLike: true,
+      },
+    });
+
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
     }
 
     // Verify user exists if userId is provided
@@ -489,53 +650,76 @@ module.exports.getLikesByPostId = async (req, res) => {
       hasLiked = !!userLike;
     }
 
-    res
+    return res
       .status(200)
       .json(
         new ApiResponse(
           200,
           { likesCount, hasLiked },
-          'Likes fetched successfully',
+          'QuoteLikes fetched successfully',
         ),
       );
   } catch (error) {
+    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error fetching likes count and status:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+      console.error(`Error in getLikesByPostId - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
     }
+
+    // Handle unexpected errors
+    console.error('Error in getLikesByPostId - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch QuoteLikes due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Fetch a specific QuotePost by postId
 module.exports.getQuotePostByPostId = async (req, res) => {
   try {
-    const postIdSchema = z.object({ postId: z.string().uuid() });
-    const validationResult = postIdSchema.safeParse(req.params);
-    if (!validationResult.success) {
-      throw new ApiError(400, 'Invalid post ID', validationResult.error.errors);
-    }
-
-    const { postId } = validationResult.data;
+    const postId = validatePostId(req.params);
 
     const post = await prisma.quotePost.findUnique({
       where: { id: postId },
+      include: {
+        user: true,
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+        quoteLike: true,
+      },
     });
 
     if (!post) {
-      throw new ApiError(404, 'Post not found');
+      throw new ApiError(404, 'QuotePost not found');
     }
 
-    res
+    return res
       .status(200)
       .json(new ApiResponse(200, post, 'QuotePost fetched successfully'));
   } catch (error) {
+    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      res.status(error.statusCode).json(error);
-    } else {
-      console.error('Error fetching post by post ID:', error);
-      res.status(500).json(new ApiError(500, 'Internal server error'));
+      console.error(`Error in getQuotePostByPostId - ${error.message}:`, error);
+      return res.status(error.statusCode).json(error);
     }
+
+    // Handle unexpected errors
+    console.error('Error in getQuotePostByPostId - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch QuotePost due to server error',
+          error.message,
+        ),
+      );
   }
 };

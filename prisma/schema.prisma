@@ -4,7 +4,6 @@ generator client {
   output        = "../generated/prisma"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -79,7 +78,7 @@ model User {
 
 model ForumMainCategory {
   id          String             @id @default(uuid())
-  name        String?
+  name        String?            @unique
   enabled     Boolean?           @default(false)
   subCategory ForumSubCategory[]
   quotePost   QuotePost[]
@@ -88,7 +87,7 @@ model ForumMainCategory {
 
 model ForumSubCategory {
   id             String            @id @default(uuid())
-  name           String?
+  name           String?           @unique
   enabled        Boolean?          @default(false)
   mainCategoryId String
   quotePost      QuotePost[]
@@ -206,13 +205,13 @@ model GeneralLike {
 }
 
 model Blog {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description Json
   authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User          @relation(fields: [authorId], references: [id])
   status      String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime      @default(now())
   image_url   String[]
   categoryId  String?
   category    BlogCategory? @relation(fields: [categoryId], references: [id])
@@ -236,8 +235,8 @@ model Event {
 }
 
 model BlogCategory {
-  id    String  @id @default(uuid())
-  name  String  @unique
+  id    String @id @default(uuid())
+  name  String @unique
   blogs Blog[]
 }
 
@@ -275,13 +274,13 @@ model CourseModule {
 }
 
 model CourseEnquiry {
-  id                    String          @id @default(uuid())
+  id                    String   @id @default(uuid())
   institutionName       String
   institutionType       String
   contactPersonName     String
   contactPersonPosition String
   contactNumber         String
   website               String?
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
