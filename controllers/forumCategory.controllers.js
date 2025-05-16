@@ -1,5 +1,7 @@
 const prisma = require('../models/prismaClient');
 const { z } = require('zod');
+const { ApiResponse } = require('../utils/ApiResponse');
+const { ApiError } = require('../utils/ApiError');
 const {
   forumMainCategorySchema,
   forumSubCategorySchema,
@@ -12,13 +14,27 @@ const {
 // Create a new ForumMainCategory
 module.exports.createForumMainCategory = async (req, res) => {
   try {
+    // Validate request body
     const validationResult = forumMainCategorySchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ error: validationResult.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid input data',
+        validationResult.error.errors,
+      );
     }
 
     const { name, enabled } = validationResult.data;
 
+    // Check for duplicate category name
+    const existingCategory = await prisma.forumMainCategory.findUnique({
+      where: { name },
+    });
+    if (existingCategory) {
+      throw new ApiError(409, 'Category name already exists');
+    }
+
+    // Create new category
     const newCategory = await prisma.forumMainCategory.create({
       data: {
         name,
@@ -26,25 +42,67 @@ module.exports.createForumMainCategory = async (req, res) => {
       },
     });
 
-    res.status(201).json(newCategory);
+    return res
+      .status(201)
+      .json(
+        new ApiResponse(201, newCategory, 'Main category created successfully'),
+      );
   } catch (error) {
-    console.error('Error creating ForumMainCategory:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle Prisma-specific errors
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Database constraint violation: Category name already exists',
+            error.message,
+          ),
+        );
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(
+        `Error creating ForumMainCategory: ${error.message}`,
+        error,
+      );
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error creating ForumMainCategory:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create main category due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Update an existing ForumMainCategory
 module.exports.updateForumMainCategory = async (req, res) => {
   try {
+    // Validate ID parameter
     const idSchema = z.object({ id: z.string().uuid() });
     const idValidation = idSchema.safeParse(req.params);
     if (!idValidation.success) {
-      return res.status(400).json({ error: idValidation.error.errors });
+      throw new ApiError(400, 'Invalid category ID', idValidation.error.errors);
     }
 
+    // Validate request body
     const bodyValidation = updateForumMainCategorySchema.safeParse(req.body);
     if (!bodyValidation.success) {
-      return res.status(400).json({ error: bodyValidation.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid update data',
+        bodyValidation.error.errors,
+      );
     }
 
     const { id } = idValidation.data;
@@ -55,34 +113,97 @@ module.exports.updateForumMainCategory = async (req, res) => {
       where: { id },
     });
     if (!category) {
-      return res.status(404).json({ error: 'Main category not found' });
+      throw new ApiError(404, 'Main category not found');
     }
 
+    // Check for duplicate name if name is being updated
+    if (data.name && data.name !== category.name) {
+      const existingCategory = await prisma.forumMainCategory.findUnique({
+        where: { name: data.name },
+      });
+      if (existingCategory) {
+        throw new ApiError(409, 'Category name already exists');
+      }
+    }
+
+    // Update category
     const updatedCategory = await prisma.forumMainCategory.update({
       where: { id },
       data,
     });
 
-    res.status(200).json(updatedCategory);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedCategory,
+          'Main category updated successfully',
+        ),
+      );
   } catch (error) {
-    console.error('Error updating ForumMainCategory:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle Prisma-specific errors
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Database constraint violation: Category name already exists',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2025') {
+      console.error('Record not found for update:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Main category not found', error.message));
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(
+        `Error updating ForumMainCategory: ${error.message}`,
+        error,
+      );
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error updating ForumMainCategory:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update main category due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
-// Get a ForumMainCategory by ID
+// Get a ForumMainCategory by主Category by ID
 module.exports.getForumMainCategoryById = async (req, res) => {
   try {
+    // Validate ID parameter
     const idSchema = z.object({ id: z.string().uuid() });
     const validationResult = idSchema.safeParse(req.params);
     if (!validationResult.success) {
-      return res.status(400).json({ error: validationResult.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid category ID',
+        validationResult.error.errors,
+      );
     }
 
     const { id } = validationResult.data;
     const includeSubCategories = req.query.includeSubCategories === 'true';
     const includePosts = req.query.includePosts === 'true';
 
+    // Fetch category with optional includes
     const category = await prisma.forumMainCategory.findUnique({
       where: { id },
       include: {
@@ -99,13 +220,35 @@ module.exports.getForumMainCategoryById = async (req, res) => {
     });
 
     if (!category) {
-      return res.status(404).json({ error: 'Main category not found' });
+      throw new ApiError(404, 'Main category not found');
     }
 
-    res.status(200).json(category);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, category, 'Main category retrieved successfully'),
+      );
   } catch (error) {
-    console.error('Error fetching ForumMainCategory by ID:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(
+        `Error fetching ForumMainCategory by ID: ${error.message}`,
+        error,
+      );
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error fetching ForumMainCategory by ID:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch main category due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -114,14 +257,32 @@ module.exports.getAllForumMainCategories = async (req, res) => {
   try {
     const includeSubCategories = req.query.includeSubCategories === 'true';
 
+    // Fetch all categories
     const categories = await prisma.forumMainCategory.findMany({
       include: includeSubCategories ? { subCategory: true } : undefined,
     });
 
-    res.status(200).json(categories);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          categories,
+          'Main categories retrieved successfully',
+        ),
+      );
   } catch (error) {
-    console.error('Error fetching all ForumMainCategories:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle unexpected errors
+    console.error('Unexpected error fetching all ForumMainCategories:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch main categories due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -130,9 +291,14 @@ module.exports.getAllForumMainCategories = async (req, res) => {
 // Create a new ForumSubCategory
 module.exports.createForumSubCategory = async (req, res) => {
   try {
+    // Validate request body
     const validationResult = forumSubCategorySchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ error: validationResult.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid input data',
+        validationResult.error.errors,
+      );
     }
 
     const { name, enabled, mainCategoryId } = validationResult.data;
@@ -142,9 +308,21 @@ module.exports.createForumSubCategory = async (req, res) => {
       where: { id: mainCategoryId },
     });
     if (!mainCategory) {
-      return res.status(404).json({ error: 'Main category not found' });
+      throw new ApiError(404, 'Main category not found');
     }
 
+    // Check for duplicate subcategory name within the main category
+    const existingSubCategory = await prisma.forumSubCategory.findFirst({
+      where: { name, mainCategoryId },
+    });
+    if (existingSubCategory) {
+      throw new ApiError(
+        409,
+        'Subcategory name already exists in this main category',
+      );
+    }
+
+    // Create new subcategory
     const newCategory = await prisma.forumSubCategory.create({
       data: {
         name,
@@ -153,36 +331,85 @@ module.exports.createForumSubCategory = async (req, res) => {
       },
     });
 
-    res.status(201).json(newCategory);
+    return res
+      .status(201)
+      .json(
+        new ApiResponse(201, newCategory, 'Subcategory created successfully'),
+      );
   } catch (error) {
-    console.error('Error creating ForumSubCategory:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle Prisma-specific errors
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Database constraint violation: Subcategory name already exists',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2003') {
+      console.error('Foreign key constraint failed:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Main category not found', error.message));
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error creating ForumSubCategory: ${error.message}`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error creating ForumSubCategory:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create subcategory due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Update an existing ForumSubCategory
 module.exports.updateForumSubCategory = async (req, res) => {
   try {
+    // Validate ID parameter
     const idSchema = z.object({ id: z.string().uuid() });
     const idValidation = idSchema.safeParse(req.params);
     if (!idValidation.success) {
-      return res.status(400).json({ error: idValidation.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid subcategory ID',
+        idValidation.error.errors,
+      );
     }
 
+    // Validate request body
     const bodyValidation = updateForumSubCategorySchema.safeParse(req.body);
     if (!bodyValidation.success) {
-      return res.status(400).json({ error: bodyValidation.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid update data',
+        bodyValidation.error.errors,
+      );
     }
 
     const { id } = idValidation.data;
     const { mainCategoryId, ...data } = bodyValidation.data;
 
-    // Verify sub-category exists
+    // Verify subcategory exists
     const category = await prisma.forumSubCategory.findUnique({
       where: { id },
     });
     if (!category) {
-      return res.status(404).json({ error: 'Sub-category not found' });
+      throw new ApiError(404, 'Subcategory not found');
     }
 
     // Verify main category exists if provided
@@ -191,35 +418,107 @@ module.exports.updateForumSubCategory = async (req, res) => {
         where: { id: mainCategoryId },
       });
       if (!mainCategory) {
-        return res.status(404).json({ error: 'Main category not found' });
+        throw new ApiError(404, 'Main category not found');
       }
       data.mainCategoryId = mainCategoryId;
     }
 
+    // Check for duplicate name if name is being updated
+    if (data.name && data.name !== category.name) {
+      const existingSubCategory = await prisma.forumSubCategory.findFirst({
+        where: {
+          name: data.name,
+          mainCategoryId: mainCategoryId || category.mainCategoryId,
+        },
+      });
+      if (existingSubCategory) {
+        throw new ApiError(
+          409,
+          'Subcategory name already exists in this main category',
+        );
+      }
+    }
+
+    // Update subcategory
     const updatedCategory = await prisma.forumSubCategory.update({
       where: { id },
       data,
     });
 
-    res.status(200).json(updatedCategory);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedCategory,
+          'Subcategory updated successfully',
+        ),
+      );
   } catch (error) {
-    console.error('Error updating ForumSubCategory:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle Prisma-specific errors
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Database constraint violation: Subcategory name already exists',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2025') {
+      console.error('Record not found for update:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Subcategory not found', error.message));
+    }
+    if (error.code === 'P2003') {
+      console.error('Foreign key constraint failed:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Main category not found', error.message));
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error updating ForumSubCategory: ${error.message}`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error updating ForumSubCategory:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update subcategory due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Get a ForumSubCategory by ID
 module.exports.getForumSubCategoryById = async (req, res) => {
   try {
+    // Validate ID parameter
     const idSchema = z.object({ id: z.string().uuid() });
     const validationResult = idSchema.safeParse(req.params);
     if (!validationResult.success) {
-      return res.status(400).json({ error: validationResult.error.errors });
+      throw new ApiError(
+        400,
+        'Invalid subcategory ID',
+        validationResult.error.errors,
+      );
     }
 
     const { id } = validationResult.data;
     const includePosts = req.query.includePosts === 'true';
 
+    // Fetch subcategory
     const category = await prisma.forumSubCategory.findUnique({
       where: { id },
       include: {
@@ -230,26 +529,66 @@ module.exports.getForumSubCategoryById = async (req, res) => {
     });
 
     if (!category) {
-      return res.status(404).json({ error: 'Sub-category not found' });
+      throw new ApiError(404, 'Subcategory not found');
     }
 
-    res.status(200).json(category);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, category, 'Subcategory retrieved successfully'),
+      );
   } catch (error) {
-    console.error('Error fetching ForumSubCategory by ID:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(
+        `Error fetching ForumSubCategory by ID: ${error.message}`,
+        error,
+      );
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error fetching ForumSubCategory by ID:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch subcategory due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
 // Get all ForumSubCategories
 module.exports.getAllForumSubCategories = async (req, res) => {
   try {
+    // Fetch all subcategories
     const categories = await prisma.forumSubCategory.findMany({
       include: { mainCategory: true },
     });
 
-    res.status(200).json(categories);
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          categories,
+          'Subcategories retrieved successfully',
+        ),
+      );
   } catch (error) {
-    console.error('Error fetching all ForumSubCategories:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle unexpected errors
+    console.error('Unexpected error fetching all ForumSubCategories:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch subcategories due to server error',
+          error.message,
+        ),
+      );
   }
 };
