@@ -32,11 +32,21 @@ until docker inspect --format='{{.State.Health.Status}}' logiglo_backend_postgre
   fi
 done
 
-# Wait until the backend container's port 3000 is open
+# Wait for backend to start on port 3000 with a timeout
 echo "Waiting for backend to start on port 3000..."
-until docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; do
-  sleep 2
-  echo "Backend is not ready yet..."
+timeout=10  # Maximum wait time in seconds
+elapsed=0
+interval=2  # Sleep interval between checks
+while ! docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; do
+  sleep $interval
+  elapsed=$((elapsed + interval))
+  echo "Backend is not ready yet... (waited ${elapsed}s)"
+  if [ $elapsed -ge $timeout ]; then
+    echo "${RED}Timeout: Backend failed to start within ${timeout} seconds.${RESET}"
+    docker logs logiglo_backend
+    docker-compose -f docker-compose.yml down
+    exit 1
+  fi
   if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "running" ]; then
     echo "${RED}Backend container is not running.${RESET}"
     docker logs logiglo_backend
@@ -44,6 +54,7 @@ until docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; 
     exit 1
   fi
 done
+echo "Backend started successfully after ${elapsed}s."
 
 # Check backend container logs for errors
 echo "Checking backend container logs for errors..."
@@ -62,6 +73,7 @@ if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "runnin
   docker-compose -f docker-compose.yml down
   exit 1
 fi
+
 echo "****************************************************************************"
 echo "****************************************************************************"
 echo "****************************************************************************"
