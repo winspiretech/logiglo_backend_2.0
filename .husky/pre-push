@@ -62,15 +62,21 @@ if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "runnin
   docker-compose -f docker-compose.yml down
   exit 1
 fi
-
+echo "****************************************************************************"
+echo "****************************************************************************"
+echo "****************************************************************************"
 # Show backend service logs
 echo "Backend service logs:"
 docker logs logiglo_backend | tail -n 50
-
+echo "****************************************************************************"
+echo "****************************************************************************"
+echo "****************************************************************************"
 # Show running containers
 echo "Running containers:"
 docker ps
-
+echo "****************************************************************************"
+echo "****************************************************************************"
+echo "****************************************************************************"
 # Stop services
 echo "Stopping Docker Compose services..."
 docker-compose -f docker-compose.yml down || { echo "${RED}Docker Compose down failed${RESET}"; exit 1; }
