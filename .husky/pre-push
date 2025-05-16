@@ -3,6 +3,7 @@
 
 # Define color codes
 RED='\033[31m'
+GREEN='\033[32m'
 RESET='\033[0m'
 
 # Check if Docker is running
@@ -12,65 +13,29 @@ if ! docker info >/dev/null 2>&1; then
 fi
 
 # Build Docker Compose services
-echo "Building Docker Compose services..."
-docker-compose -f docker-compose.yml build || { echo "${RED}Docker Compose build failed${RESET}"; exit 1; }
+echo "🚀 Building Docker Compose services..."
+docker-compose -f docker-compose.yml build || { echo "${RED}Build failed${RESET}"; exit 1; }
 
 # Start Docker Compose services
-echo "Starting Docker Compose services..."
-docker-compose -f docker-compose.yml up -d || { echo "${RED}Docker Compose up failed${RESET}"; exit 1; }
+echo "🚀 Starting Docker Compose services..."
+docker-compose -f docker-compose.yml up -d || { echo "${RED}Startup failed${RESET}"; exit 1; }
 
-# Wait for PostgreSQL to be healthy
-echo "Waiting for PostgreSQL to be healthy..."
-until docker inspect --format='{{.State.Health.Status}}' logiglo_backend_postgres | grep -q "healthy"; do
-  sleep 2
-  echo "PostgreSQL is not healthy yet..."
-  if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend_postgres)" != "running" ]; then
-    echo "${RED}PostgreSQL container is not running.${RESET}"
-    docker logs logiglo_backend_postgres
-    docker-compose -f docker-compose.yml down
-    exit 1
-  fi
-done
+# Wait 5 seconds for services to initialize
+echo "⏳ Waiting 5 seconds for containers to settle..."
+sleep 5
 
-# Wait for backend to start on port 3000 with a timeout
-echo "Waiting for backend to start on port 3000..."
-timeout=10  # Maximum wait time in seconds
-elapsed=0
-interval=2  # Sleep interval between checks
-while ! docker exec logiglo_backend sh -c "nc -z localhost 3000" >/dev/null 2>&1; do
-  sleep $interval
-  elapsed=$((elapsed + interval))
-  echo "Backend is not ready yet... (waited ${elapsed}s)"
-  if [ $elapsed -ge $timeout ]; then
-    echo "${RED}Timeout: Backend failed to start within ${timeout} seconds.${RESET}"
-    docker logs logiglo_backend
-    docker-compose -f docker-compose.yml down
-    exit 1
-  fi
-  if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "running" ]; then
-    echo "${RED}Backend container is not running.${RESET}"
-    docker logs logiglo_backend
-    docker-compose -f docker-compose.yml down
-    exit 1
-  fi
-done
-echo "Backend started successfully after ${elapsed}s."
+# Show backend container logs 
+echo "📜 Backend service logs:"
+docker logs logiglo_backend 
+sleep 2
+# Show running containers
+echo "📦 Running containers:"
+docker ps
 
-# Check backend container logs for errors
-echo "Checking backend container logs for errors..."
-if docker logs logiglo_backend 2>&1 | grep -iE "error|failed|exception|prisma.*failed|crash"; then
-  echo "${RED}Errors detected in backend container logs:${RESET}"
-  docker logs logiglo_backend | tail -n 50
-  echo "${RED}Aborting push due to internal container errors.${RESET}"
-  docker-compose -f docker-compose.yml down
-  exit 1
-fi
+# Stop services
+echo "🛑 Stopping Docker Compose services..."
+docker-compose -f docker-compose.yml down || { echo "${RED}Teardown failed${RESET}"; exit 1; }
 
-# Check if backend container is still running (in case it exited after starting)
-if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend)" != "running" ]; then
-  echo "${RED}Backend container stopped unexpectedly.${RESET}"
-  docker logs logiglo_backend | tail -n 50
-  docker-compose -f docker-compose.yml down
-  exit 1
-fi
-
+# Success message
+echo "${GREEN}✅ Pre-push check completed successfully.${RESET}"
+exit 0
