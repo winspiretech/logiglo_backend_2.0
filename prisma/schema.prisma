@@ -1,3 +1,4 @@
+// schema.prisma
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "windows", "linux-musl"]
@@ -45,35 +46,48 @@ enum InstitutionType {
   OTHER
 }
 
+enum NotificationType {
+  POST_LIKED
+  POST_REPLIED
+  REPLY_REPLIED
+  POST_STATUS_CHANGED
+  BLOG_STATUS_CHANGED
+  EVENT_CREATED
+  COURSE_ENQUIRY_SUBMITTED
+  EVENT_UPCOMING
+}
+
 model User {
-  id           String         @id @default(uuid())
-  name         String?
-  email        String?        @unique
-  password     String?
-  verified     Boolean?       @default(false)
-  role         String?        @default("user")
-  mobileNo     String?        @unique
-  country      String?
-  city         String?
-  address      String?
-  postalCode   String?
-  profilePic   String?
-  bio          String?
-  online       Boolean?       @default(false)
-  lastSeen     DateTime?
-  rating       Float?         @default(0)
-  accountType  String?        @default("personal")
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  quotePost    QuotePost[]
-  quoteReply   QuoteReply[]
-  quoteLike    QuoteLike[]    @relation("UserToQuoteLike")
-  generalPost  GeneralPost[]  @relation("UserToGeneralPost")
-  generalReply GeneralReply[]
-  generalLike  GeneralLike[]  @relation("UserToGeneralLike")
-  blog         Blog[]
-  Course       Course[]
-  Event        Event[]
+  id                      String         @id @default(uuid())
+  name                    String
+  email                   String?        @unique
+  password                String?
+  verified                Boolean?       @default(false)
+  role                    String?        @default("user")
+  mobileNo                String?        @unique
+  country                 String?
+  city                    String?
+  address                 String?
+  postalCode              String?
+  profilePic              String?
+  bio                     String?
+  online                  Boolean?       @default(false)
+  lastSeen                DateTime?
+  rating                  Float?         @default(0)
+  accountType             String?        @default("personal")
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+  quotePost               QuotePost[]
+  quoteReply              QuoteReply[]
+  quoteLike               QuoteLike[]    @relation("UserToQuoteLike")
+  generalPost             GeneralPost[]  @relation("UserToGeneralPost")
+  generalReply            GeneralReply[]
+  generalLike             GeneralLike[]  @relation("UserToGeneralLike")
+  blog                    Blog[]
+  Course                  Course[]
+  Event                   Event[]
+  receivedNotifications   Notification[] @relation("RecipientNotifications")
+  triggeredNotifications  Notification[] @relation("TriggeredNotifications")
 }
 
 model ForumMainCategory {
@@ -97,8 +111,8 @@ model ForumSubCategory {
 
 model QuotePost {
   id               String             @id @default(uuid())
-  title            String?
-  description      String?
+  title            String
+  description      String
   userId           String
   name             String?
   createdAt        DateTime?          @default(now())
@@ -134,21 +148,23 @@ model QuotePost {
   subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
   mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
   user             User               @relation(fields: [userId], references: [id])
+  notifications    Notification[]
 }
 
 model QuoteReply {
-  id              String       @id @default(uuid())
+  id              String        @id @default(uuid())
   userId          String
   postId          String
   parentReplyId   String?
   description     String?
-  createdAt       DateTime     @default(now())
-  status          String?      @default("pending")
+  createdAt       DateTime      @default(now())
+  status          String?       @default("pending")
   rejectionReason String?
-  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post            QuotePost    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentReply     QuoteReply?  @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
-  childReplies    QuoteReply[] @relation("QuoteReplyToReply")
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post            QuotePost     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentReply     QuoteReply?   @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
+  childReplies    QuoteReply[]  @relation("QuoteReplyToReply")
+  notifications   Notification[]
 }
 
 model QuoteLike {
@@ -161,8 +177,8 @@ model QuoteLike {
 
 model GeneralPost {
   id                      String             @id @default(uuid())
-  title                   String?
-  description             String?
+  title                   String
+  description             String
   userId                  String
   createdBy               String?
   createdAt               DateTime           @default(now())
@@ -179,6 +195,7 @@ model GeneralPost {
   subCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
   generalLike             GeneralLike[]      @relation("PostToGeneralLike")
+  notifications           Notification[]
 }
 
 model GeneralReply {
@@ -194,6 +211,7 @@ model GeneralReply {
   post            GeneralPost    @relation(fields: [postId], references: [id], onDelete: Cascade)
   parentReply     GeneralReply?  @relation("GeneralReplyToReply", fields: [parentReplyId], references: [id])
   childReplies    GeneralReply[] @relation("GeneralReplyToReply")
+  notifications   Notification[]
 }
 
 model GeneralLike {
@@ -205,23 +223,24 @@ model GeneralLike {
 }
 
 model Blog {
-  id          String        @id @default(uuid())
-  title       String
-  description Json
-  authorId    String
-  author      User          @relation(fields: [authorId], references: [id])
-  status      String
-  createdAt   DateTime      @default(now())
-  image_url   String[]
-  categoryId  String?
-  category    BlogCategory? @relation(fields: [categoryId], references: [id])
+  id            String        @id @default(uuid())
+  title         String
+  description   Json
+  authorId      String
+  author        User          @relation(fields: [authorId], references: [id])
+  status        String
+  createdAt     DateTime      @default(now())
+  image_url     String[]
+  categoryId    String?
+  category      BlogCategory? @relation(fields: [categoryId], references: [id])
+  notifications Notification[]
 }
 
 model Event {
-  id            String   @id @default(uuid())
+  id            String        @id @default(uuid())
   authorId      String
   coverImage    String
-  author        User     @relation(fields: [authorId], references: [id])
+  author        User          @relation(fields: [authorId], references: [id])
   eventTitle    String
   organizer     String
   countryCode   String
@@ -231,7 +250,8 @@ model Event {
   location      String
   startDate     DateTime
   endDate       DateTime
-  createdAt     DateTime @default(now())
+  createdAt     DateTime      @default(now())
+  notifications Notification[]
 }
 
 model BlogCategory {
@@ -274,13 +294,40 @@ model CourseModule {
 }
 
 model CourseEnquiry {
-  id                    String   @id @default(uuid())
+  id                    String        @id @default(uuid())
   institutionName       String
   institutionType       String
   contactPersonName     String
   contactPersonPosition String
   contactNumber         String
   website               String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  notifications         Notification[]
+}
+
+model Notification {
+  id              String           @id @default(uuid())
+  recipientId     String
+  triggeredById   String?
+  type            NotificationType
+  message         String
+  read            Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  quotePostId     String?
+  generalPostId   String?
+  quoteReplyId    String?
+  generalReplyId  String?
+  blogId          String?
+  eventId         String?
+  courseEnquiryId String?
+  recipient       User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
+  triggeredBy     User?            @relation("TriggeredNotifications", fields: [triggeredById], references: [id])
+  quotePost       QuotePost?       @relation(fields: [quotePostId], references: [id])
+  generalPost     GeneralPost?     @relation(fields: [generalPostId], references: [id])
+  quoteReply      QuoteReply?      @relation(fields: [quoteReplyId], references: [id])
+  generalReply    GeneralReply?    @relation(fields: [generalReplyId], references: [id])
+  blog            Blog?            @relation(fields: [blogId], references: [id])
+  event           Event?           @relation(fields: [eventId], references: [id])
+  courseEnquiry   CourseEnquiry?   @relation(fields: [courseEnquiryId], references: [id])
 }
