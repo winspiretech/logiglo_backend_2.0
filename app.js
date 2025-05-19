@@ -8,7 +8,8 @@ const blogRoute = require('./routes/blog.routes.js');
 const eventRoute = require('./routes/event.routes.js');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-
+const educationRoute = require('./routes/education.routes.js');
+const notificationRoutes = require('./routes/notification.routes.js');
 const app = express();
 
 // Middleware to parse JSON and URL-encoded bodies
@@ -27,7 +28,8 @@ app.use('/api/forumCategory', forumCategoryRoutes);
 app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
 app.use('/api/event', eventRoute);
-
+app.use('/api/education', educationRoute);
+app.use('/api/notifications', notificationRoutes);
 // Root route
 app.get('/', (req, res) => {
   res.json({

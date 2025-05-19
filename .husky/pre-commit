@@ -1,20 +1,48 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Define color codes
+RED='\033[31m'
+RESET='\033[0m'
+
 # Run Prettier formatting
 echo "Running Prettier formatting..."
-npm run format || { echo "Prettier formatting failed"; exit 1; }
+npm run format || { echo "${RED}Prettier formatting failed${RESET}"; exit 1; }
+
+# Check if Docker is running
+if ! docker info >/dev/null 2>&1; then
+  echo "${RED}Docker is not running. Please start Docker and try again.${RESET}"
+  exit 1
+fi
+
+# Start PostgreSQL container using docker-compose.dev.yml
+echo "Starting PostgreSQL container..."
+docker-compose -f docker-compose.dev.yml up -d postgres || { echo "${RED}Failed to start PostgreSQL${RESET}"; exit 1; }
+
+# Wait for PostgreSQL to be healthy
+echo "Waiting for PostgreSQL to be healthy..."
+until docker inspect --format='{{.State.Health.Status}}' logiglo_backend_postgres | grep -q "healthy"; do
+  sleep 2
+  echo "PostgreSQL is not healthy yet..."
+  if [ "$(docker inspect --format='{{.State.Status}}' logiglo_backend_postgres)" != "running" ]; then
+    echo "${RED}PostgreSQL container is not running.${RESET}"
+    docker-compose -f docker-compose.dev.yml down
+    exit 1
+  fi
+done
 
 # Run Prisma generation
 echo "Generating Prisma client..."
-npx prisma generate || { echo "Prisma generate failed"; exit 1; }
+npx prisma generate || { echo "${RED}Prisma generate failed${RESET}"; docker-compose -f docker-compose.dev.yml down; exit 1; }
 
 # Run Prisma migrations (development only)
 echo "Running Prisma migrations..."
 if [ "$NODE_ENV" != "production" ]; then
-  docker-compose up -d postgres || { echo "Failed to start PostgreSQL"; exit 1; }
-  npx prisma migrate dev --name auto_precommit || { echo "Prisma migrate failed"; exit 1; }
+  npx prisma migrate dev --name auto_precommit || { echo "${RED}Prisma migrate failed${RESET}"; docker-compose -f docker-compose.dev.yml down; exit 1; }
 fi
 
 # Placeholder for tests
 echo "No test framework installed. Skipping tests..."
+
+# Keep PostgreSQL running for local development (optional, comment out if you want to stop it)
+# docker-compose -f docker-compose.dev.yml down

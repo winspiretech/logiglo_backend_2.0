@@ -103,6 +103,11 @@ export type StatesData = $Result.DefaultSelection<Prisma.$StatesDataPayload>
  * 
  */
 export type CitiesData = $Result.DefaultSelection<Prisma.$CitiesDataPayload>
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 
 /**
  * Enums
@@ -158,6 +163,20 @@ export const InstitutionType: {
 
 export type InstitutionType = (typeof InstitutionType)[keyof typeof InstitutionType]
 
+
+export const NotificationType: {
+  POST_LIKED: 'POST_LIKED',
+  POST_REPLIED: 'POST_REPLIED',
+  REPLY_REPLIED: 'REPLY_REPLIED',
+  POST_STATUS_CHANGED: 'POST_STATUS_CHANGED',
+  BLOG_STATUS_CHANGED: 'BLOG_STATUS_CHANGED',
+  EVENT_CREATED: 'EVENT_CREATED',
+  COURSE_ENQUIRY_SUBMITTED: 'COURSE_ENQUIRY_SUBMITTED',
+  EVENT_UPCOMING: 'EVENT_UPCOMING'
+};
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
 }
 
 export type EducationLevel = $Enums.EducationLevel
@@ -179,6 +198,10 @@ export const Currency: typeof $Enums.Currency
 export type InstitutionType = $Enums.InstitutionType
 
 export const InstitutionType: typeof $Enums.InstitutionType
+
+export type NotificationType = $Enums.NotificationType
+
+export const NotificationType: typeof $Enums.NotificationType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -484,6 +507,16 @@ export class PrismaClient<
     * ```
     */
   get citiesData(): Prisma.CitiesDataDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notifications
+    * const notifications = await prisma.notification.findMany()
+    * ```
+    */
+  get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -941,7 +974,8 @@ export namespace Prisma {
     CourseEnquiry: 'CourseEnquiry',
     CountriesData: 'CountriesData',
     StatesData: 'StatesData',
-    CitiesData: 'CitiesData'
+    CitiesData: 'CitiesData',
+    Notification: 'Notification'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -960,7 +994,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog" | "event" | "blogCategory" | "course" | "courseModule" | "courseEnquiry" | "countriesData" | "statesData" | "citiesData"
+      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog" | "event" | "blogCategory" | "course" | "courseModule" | "courseEnquiry" | "countriesData" | "statesData" | "citiesData" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2296,6 +2330,80 @@ export namespace Prisma {
           }
         }
       }
+      Notification: {
+        payload: Prisma.$NotificationPayload<ExtArgs>
+        fields: Prisma.NotificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findMany: {
+            args: Prisma.NotificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          create: {
+            args: Prisma.NotificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          createMany: {
+            args: Prisma.NotificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          delete: {
+            args: Prisma.NotificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          update: {
+            args: Prisma.NotificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          upsert: {
+            args: Prisma.NotificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotification>
+          }
+          groupBy: {
+            args: Prisma.NotificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificationCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2398,6 +2506,7 @@ export namespace Prisma {
     countriesData?: CountriesDataOmit
     statesData?: StatesDataOmit
     citiesData?: CitiesDataOmit
+    notification?: NotificationOmit
   }
 
   /* Types for Logging */
@@ -2501,6 +2610,8 @@ export namespace Prisma {
     blog: number
     Course: number
     Event: number
+    receivedNotifications: number
+    triggeredNotifications: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2513,6 +2624,8 @@ export namespace Prisma {
     blog?: boolean | UserCountOutputTypeCountBlogArgs
     Course?: boolean | UserCountOutputTypeCountCourseArgs
     Event?: boolean | UserCountOutputTypeCountEventArgs
+    receivedNotifications?: boolean | UserCountOutputTypeCountReceivedNotificationsArgs
+    triggeredNotifications?: boolean | UserCountOutputTypeCountTriggeredNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2587,6 +2700,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReceivedNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTriggeredNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -2686,11 +2813,13 @@ export namespace Prisma {
   export type QuotePostCountOutputType = {
     quoteReply: number
     quoteLike: number
+    notifications: number
   }
 
   export type QuotePostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     quoteReply?: boolean | QuotePostCountOutputTypeCountQuoteReplyArgs
     quoteLike?: boolean | QuotePostCountOutputTypeCountQuoteLikeArgs
+    notifications?: boolean | QuotePostCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2718,6 +2847,13 @@ export namespace Prisma {
     where?: QuoteLikeWhereInput
   }
 
+  /**
+   * QuotePostCountOutputType without action
+   */
+  export type QuotePostCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
 
   /**
    * Count Type QuoteReplyCountOutputType
@@ -2725,10 +2861,12 @@ export namespace Prisma {
 
   export type QuoteReplyCountOutputType = {
     childReplies: number
+    notifications: number
   }
 
   export type QuoteReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     childReplies?: boolean | QuoteReplyCountOutputTypeCountChildRepliesArgs
+    notifications?: boolean | QuoteReplyCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2749,6 +2887,13 @@ export namespace Prisma {
     where?: QuoteReplyWhereInput
   }
 
+  /**
+   * QuoteReplyCountOutputType without action
+   */
+  export type QuoteReplyCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
 
   /**
    * Count Type GeneralPostCountOutputType
@@ -2757,11 +2902,13 @@ export namespace Prisma {
   export type GeneralPostCountOutputType = {
     generalReply: number
     generalLike: number
+    notifications: number
   }
 
   export type GeneralPostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     generalReply?: boolean | GeneralPostCountOutputTypeCountGeneralReplyArgs
     generalLike?: boolean | GeneralPostCountOutputTypeCountGeneralLikeArgs
+    notifications?: boolean | GeneralPostCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2789,6 +2936,13 @@ export namespace Prisma {
     where?: GeneralLikeWhereInput
   }
 
+  /**
+   * GeneralPostCountOutputType without action
+   */
+  export type GeneralPostCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
 
   /**
    * Count Type GeneralReplyCountOutputType
@@ -2796,10 +2950,12 @@ export namespace Prisma {
 
   export type GeneralReplyCountOutputType = {
     childReplies: number
+    notifications: number
   }
 
   export type GeneralReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     childReplies?: boolean | GeneralReplyCountOutputTypeCountChildRepliesArgs
+    notifications?: boolean | GeneralReplyCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2818,6 +2974,75 @@ export namespace Prisma {
    */
   export type GeneralReplyCountOutputTypeCountChildRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GeneralReplyWhereInput
+  }
+
+  /**
+   * GeneralReplyCountOutputType without action
+   */
+  export type GeneralReplyCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+
+  /**
+   * Count Type BlogCountOutputType
+   */
+
+  export type BlogCountOutputType = {
+    notifications: number
+  }
+
+  export type BlogCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | BlogCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BlogCountOutputType without action
+   */
+  export type BlogCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BlogCountOutputType
+     */
+    select?: BlogCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BlogCountOutputType without action
+   */
+  export type BlogCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+
+  /**
+   * Count Type EventCountOutputType
+   */
+
+  export type EventCountOutputType = {
+    notifications: number
+  }
+
+  export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | EventCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventCountOutputType
+     */
+    select?: EventCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -2880,6 +3105,37 @@ export namespace Prisma {
    */
   export type CourseCountOutputTypeCountModulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CourseModuleWhereInput
+  }
+
+
+  /**
+   * Count Type CourseEnquiryCountOutputType
+   */
+
+  export type CourseEnquiryCountOutputType = {
+    notifications: number
+  }
+
+  export type CourseEnquiryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | CourseEnquiryCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CourseEnquiryCountOutputType without action
+   */
+  export type CourseEnquiryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourseEnquiryCountOutputType
+     */
+    select?: CourseEnquiryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CourseEnquiryCountOutputType without action
+   */
+  export type CourseEnquiryCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -3200,7 +3456,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    name: string | null
+    name: string
     email: string | null
     password: string | null
     verified: boolean | null
@@ -3268,6 +3524,8 @@ export namespace Prisma {
     blog?: boolean | User$blogArgs<ExtArgs>
     Course?: boolean | User$CourseArgs<ExtArgs>
     Event?: boolean | User$EventArgs<ExtArgs>
+    receivedNotifications?: boolean | User$receivedNotificationsArgs<ExtArgs>
+    triggeredNotifications?: boolean | User$triggeredNotificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3348,6 +3606,8 @@ export namespace Prisma {
     blog?: boolean | User$blogArgs<ExtArgs>
     Course?: boolean | User$CourseArgs<ExtArgs>
     Event?: boolean | User$EventArgs<ExtArgs>
+    receivedNotifications?: boolean | User$receivedNotificationsArgs<ExtArgs>
+    triggeredNotifications?: boolean | User$triggeredNotificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3365,10 +3625,12 @@ export namespace Prisma {
       blog: Prisma.$BlogPayload<ExtArgs>[]
       Course: Prisma.$CoursePayload<ExtArgs>[]
       Event: Prisma.$EventPayload<ExtArgs>[]
+      receivedNotifications: Prisma.$NotificationPayload<ExtArgs>[]
+      triggeredNotifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string | null
+      name: string
       email: string | null
       password: string | null
       verified: boolean | null
@@ -3789,6 +4051,8 @@ export namespace Prisma {
     blog<T extends User$blogArgs<ExtArgs> = {}>(args?: Subset<T, User$blogArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Course<T extends User$CourseArgs<ExtArgs> = {}>(args?: Subset<T, User$CourseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Event<T extends User$EventArgs<ExtArgs> = {}>(args?: Subset<T, User$EventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receivedNotifications<T extends User$receivedNotificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    triggeredNotifications<T extends User$triggeredNotificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$triggeredNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4438,6 +4702,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * User.receivedNotifications
+   */
+  export type User$receivedNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * User.triggeredNotifications
+   */
+  export type User$triggeredNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -7029,8 +7341,8 @@ export namespace Prisma {
 
   export type QuotePostGroupByOutputType = {
     id: string
-    title: string | null
-    description: string | null
+    title: string
+    description: string
     userId: string
     name: string | null
     createdAt: Date | null
@@ -7121,6 +7433,7 @@ export namespace Prisma {
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | QuotePost$notificationsArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quotePost"]>
 
@@ -7245,6 +7558,7 @@ export namespace Prisma {
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | QuotePost$notificationsArgs<ExtArgs>
     _count?: boolean | QuotePostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuotePostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7266,11 +7580,12 @@ export namespace Prisma {
       subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
       mainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      title: string | null
-      description: string | null
+      title: string
+      description: string
       userId: string
       name: string | null
       createdAt: Date | null
@@ -7700,6 +8015,7 @@ export namespace Prisma {
     subCategory<T extends QuotePost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     mainCategory<T extends QuotePost$mainCategoryArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$mainCategoryArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends QuotePost$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, QuotePost$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8244,6 +8560,30 @@ export namespace Prisma {
   }
 
   /**
+   * QuotePost.notifications
+   */
+  export type QuotePost$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * QuotePost without action
    */
   export type QuotePostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8454,6 +8794,7 @@ export namespace Prisma {
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
     parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
     childReplies?: boolean | QuoteReply$childRepliesArgs<ExtArgs>
+    notifications?: boolean | QuoteReply$notificationsArgs<ExtArgs>
     _count?: boolean | QuoteReplyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quoteReply"]>
 
@@ -8502,6 +8843,7 @@ export namespace Prisma {
     post?: boolean | QuotePostDefaultArgs<ExtArgs>
     parentReply?: boolean | QuoteReply$parentReplyArgs<ExtArgs>
     childReplies?: boolean | QuoteReply$childRepliesArgs<ExtArgs>
+    notifications?: boolean | QuoteReply$notificationsArgs<ExtArgs>
     _count?: boolean | QuoteReplyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuoteReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8522,6 +8864,7 @@ export namespace Prisma {
       post: Prisma.$QuotePostPayload<ExtArgs>
       parentReply: Prisma.$QuoteReplyPayload<ExtArgs> | null
       childReplies: Prisma.$QuoteReplyPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8930,6 +9273,7 @@ export namespace Prisma {
     post<T extends QuotePostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuotePostDefaultArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     parentReply<T extends QuoteReply$parentReplyArgs<ExtArgs> = {}>(args?: Subset<T, QuoteReply$parentReplyArgs<ExtArgs>>): Prisma__QuoteReplyClient<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     childReplies<T extends QuoteReply$childRepliesArgs<ExtArgs> = {}>(args?: Subset<T, QuoteReply$childRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends QuoteReply$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, QuoteReply$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9403,6 +9747,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QuoteReplyScalarFieldEnum | QuoteReplyScalarFieldEnum[]
+  }
+
+  /**
+   * QuoteReply.notifications
+   */
+  export type QuoteReply$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -10693,8 +11061,8 @@ export namespace Prisma {
 
   export type GeneralPostGroupByOutputType = {
     id: string
-    title: string | null
-    description: string | null
+    title: string
+    description: string
     userId: string
     createdBy: string | null
     createdAt: Date
@@ -10747,6 +11115,7 @@ export namespace Prisma {
     subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
     generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
     generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
+    notifications?: boolean | GeneralPost$notificationsArgs<ExtArgs>
     _count?: boolean | GeneralPostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
@@ -10814,6 +11183,7 @@ export namespace Prisma {
     subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
     generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
     generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
+    notifications?: boolean | GeneralPost$notificationsArgs<ExtArgs>
     _count?: boolean | GeneralPostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GeneralPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10835,11 +11205,12 @@ export namespace Prisma {
       subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
       generalReply: Prisma.$GeneralReplyPayload<ExtArgs>[]
       generalLike: Prisma.$GeneralLikePayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      title: string | null
-      description: string | null
+      title: string
+      description: string
       userId: string
       createdBy: string | null
       createdAt: Date
@@ -11250,6 +11621,7 @@ export namespace Prisma {
     subCategory<T extends GeneralPost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     generalReply<T extends GeneralPost$generalReplyArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     generalLike<T extends GeneralPost$generalLikeArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends GeneralPost$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11775,6 +12147,30 @@ export namespace Prisma {
   }
 
   /**
+   * GeneralPost.notifications
+   */
+  export type GeneralPost$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * GeneralPost without action
    */
   export type GeneralPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11985,6 +12381,7 @@ export namespace Prisma {
     post?: boolean | GeneralPostDefaultArgs<ExtArgs>
     parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
     childReplies?: boolean | GeneralReply$childRepliesArgs<ExtArgs>
+    notifications?: boolean | GeneralReply$notificationsArgs<ExtArgs>
     _count?: boolean | GeneralReplyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["generalReply"]>
 
@@ -12033,6 +12430,7 @@ export namespace Prisma {
     post?: boolean | GeneralPostDefaultArgs<ExtArgs>
     parentReply?: boolean | GeneralReply$parentReplyArgs<ExtArgs>
     childReplies?: boolean | GeneralReply$childRepliesArgs<ExtArgs>
+    notifications?: boolean | GeneralReply$notificationsArgs<ExtArgs>
     _count?: boolean | GeneralReplyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GeneralReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12053,6 +12451,7 @@ export namespace Prisma {
       post: Prisma.$GeneralPostPayload<ExtArgs>
       parentReply: Prisma.$GeneralReplyPayload<ExtArgs> | null
       childReplies: Prisma.$GeneralReplyPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12461,6 +12860,7 @@ export namespace Prisma {
     post<T extends GeneralPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPostDefaultArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     parentReply<T extends GeneralReply$parentReplyArgs<ExtArgs> = {}>(args?: Subset<T, GeneralReply$parentReplyArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     childReplies<T extends GeneralReply$childRepliesArgs<ExtArgs> = {}>(args?: Subset<T, GeneralReply$childRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends GeneralReply$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, GeneralReply$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12934,6 +13334,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GeneralReplyScalarFieldEnum | GeneralReplyScalarFieldEnum[]
+  }
+
+  /**
+   * GeneralReply.notifications
+   */
+  export type GeneralReply$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -14177,6 +14601,8 @@ export namespace Prisma {
     categoryId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Blog$categoryArgs<ExtArgs>
+    notifications?: boolean | Blog$notificationsArgs<ExtArgs>
+    _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blog"]>
 
   export type BlogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14220,6 +14646,8 @@ export namespace Prisma {
   export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Blog$categoryArgs<ExtArgs>
+    notifications?: boolean | Blog$notificationsArgs<ExtArgs>
+    _count?: boolean | BlogCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BlogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -14235,6 +14663,7 @@ export namespace Prisma {
     objects: {
       author: Prisma.$UserPayload<ExtArgs>
       category: Prisma.$BlogCategoryPayload<ExtArgs> | null
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14641,6 +15070,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     category<T extends Blog$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Blog$categoryArgs<ExtArgs>>): Prisma__BlogCategoryClient<$Result.GetResult<Prisma.$BlogCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends Blog$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Blog$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15093,6 +15523,30 @@ export namespace Prisma {
   }
 
   /**
+   * Blog.notifications
+   */
+  export type Blog$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * Blog without action
    */
   export type BlogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15336,6 +15790,8 @@ export namespace Prisma {
     endDate?: boolean
     createdAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | Event$notificationsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15391,6 +15847,8 @@ export namespace Prisma {
   export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "coverImage" | "eventTitle" | "organizer" | "countryCode" | "contactNumber" | "emailAddress" | "description" | "location" | "startDate" | "endDate" | "createdAt", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | Event$notificationsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -15403,6 +15861,7 @@ export namespace Prisma {
     name: "Event"
     objects: {
       author: Prisma.$UserPayload<ExtArgs>
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15813,6 +16272,7 @@ export namespace Prisma {
   export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends Event$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Event$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16248,6 +16708,30 @@ export namespace Prisma {
      * Limit how many Events to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Event.notifications
+   */
+  export type Event$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -19824,6 +20308,8 @@ export namespace Prisma {
     website?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    notifications?: boolean | CourseEnquiry$notificationsArgs<ExtArgs>
+    _count?: boolean | CourseEnquiryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courseEnquiry"]>
 
   export type CourseEnquirySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -19863,10 +20349,18 @@ export namespace Prisma {
   }
 
   export type CourseEnquiryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "institutionName" | "institutionType" | "contactPersonName" | "contactPersonPosition" | "contactNumber" | "website" | "createdAt" | "updatedAt", ExtArgs["result"]["courseEnquiry"]>
+  export type CourseEnquiryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | CourseEnquiry$notificationsArgs<ExtArgs>
+    _count?: boolean | CourseEnquiryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CourseEnquiryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CourseEnquiryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $CourseEnquiryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CourseEnquiry"
-    objects: {}
+    objects: {
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       institutionName: string
@@ -20271,6 +20765,7 @@ export namespace Prisma {
    */
   export interface Prisma__CourseEnquiryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    notifications<T extends CourseEnquiry$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, CourseEnquiry$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20326,6 +20821,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * Filter, which CourseEnquiry to fetch.
      */
     where: CourseEnquiryWhereUniqueInput
@@ -20344,6 +20843,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * Filter, which CourseEnquiry to fetch.
      */
     where: CourseEnquiryWhereUniqueInput
@@ -20361,6 +20864,10 @@ export namespace Prisma {
      * Omit specific fields from the CourseEnquiry
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
     /**
      * Filter, which CourseEnquiry to fetch.
      */
@@ -20410,6 +20917,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * Filter, which CourseEnquiry to fetch.
      */
     where?: CourseEnquiryWhereInput
@@ -20458,6 +20969,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * Filter, which CourseEnquiries to fetch.
      */
     where?: CourseEnquiryWhereInput
@@ -20500,6 +21015,10 @@ export namespace Prisma {
      * Omit specific fields from the CourseEnquiry
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
     /**
      * The data needed to create a CourseEnquiry.
      */
@@ -20548,6 +21067,10 @@ export namespace Prisma {
      * Omit specific fields from the CourseEnquiry
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
     /**
      * The data needed to update a CourseEnquiry.
      */
@@ -20615,6 +21138,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * The filter to search for the CourseEnquiry to update in case it exists.
      */
     where: CourseEnquiryWhereUniqueInput
@@ -20641,6 +21168,10 @@ export namespace Prisma {
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    /**
      * Filter which CourseEnquiry to delete.
      */
     where: CourseEnquiryWhereUniqueInput
@@ -20661,6 +21192,30 @@ export namespace Prisma {
   }
 
   /**
+   * CourseEnquiry.notifications
+   */
+  export type CourseEnquiry$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * CourseEnquiry without action
    */
   export type CourseEnquiryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20672,6 +21227,10 @@ export namespace Prisma {
      * Omit specific fields from the CourseEnquiry
      */
     omit?: CourseEnquiryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
   }
 
 
@@ -23954,6 +24513,1397 @@ export namespace Prisma {
 
 
   /**
+   * Model Notification
+   */
+
+  export type AggregateNotification = {
+    _count: NotificationCountAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  export type NotificationMinAggregateOutputType = {
+    id: string | null
+    recipientId: string | null
+    triggeredById: string | null
+    type: $Enums.NotificationType | null
+    message: string | null
+    read: boolean | null
+    createdAt: Date | null
+    quotePostId: string | null
+    generalPostId: string | null
+    quoteReplyId: string | null
+    generalReplyId: string | null
+    blogId: string | null
+    eventId: string | null
+    courseEnquiryId: string | null
+  }
+
+  export type NotificationMaxAggregateOutputType = {
+    id: string | null
+    recipientId: string | null
+    triggeredById: string | null
+    type: $Enums.NotificationType | null
+    message: string | null
+    read: boolean | null
+    createdAt: Date | null
+    quotePostId: string | null
+    generalPostId: string | null
+    quoteReplyId: string | null
+    generalReplyId: string | null
+    blogId: string | null
+    eventId: string | null
+    courseEnquiryId: string | null
+  }
+
+  export type NotificationCountAggregateOutputType = {
+    id: number
+    recipientId: number
+    triggeredById: number
+    type: number
+    message: number
+    read: number
+    createdAt: number
+    quotePostId: number
+    generalPostId: number
+    quoteReplyId: number
+    generalReplyId: number
+    blogId: number
+    eventId: number
+    courseEnquiryId: number
+    _all: number
+  }
+
+
+  export type NotificationMinAggregateInputType = {
+    id?: true
+    recipientId?: true
+    triggeredById?: true
+    type?: true
+    message?: true
+    read?: true
+    createdAt?: true
+    quotePostId?: true
+    generalPostId?: true
+    quoteReplyId?: true
+    generalReplyId?: true
+    blogId?: true
+    eventId?: true
+    courseEnquiryId?: true
+  }
+
+  export type NotificationMaxAggregateInputType = {
+    id?: true
+    recipientId?: true
+    triggeredById?: true
+    type?: true
+    message?: true
+    read?: true
+    createdAt?: true
+    quotePostId?: true
+    generalPostId?: true
+    quoteReplyId?: true
+    generalReplyId?: true
+    blogId?: true
+    eventId?: true
+    courseEnquiryId?: true
+  }
+
+  export type NotificationCountAggregateInputType = {
+    id?: true
+    recipientId?: true
+    triggeredById?: true
+    type?: true
+    message?: true
+    read?: true
+    createdAt?: true
+    quotePostId?: true
+    generalPostId?: true
+    quoteReplyId?: true
+    generalReplyId?: true
+    blogId?: true
+    eventId?: true
+    courseEnquiryId?: true
+    _all?: true
+  }
+
+  export type NotificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notification to aggregate.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Notifications
+    **/
+    _count?: true | NotificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type GetNotificationAggregateType<T extends NotificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotification[P]>
+      : GetScalarType<T[P], AggregateNotification[P]>
+  }
+
+
+
+
+  export type NotificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithAggregationInput | NotificationOrderByWithAggregationInput[]
+    by: NotificationScalarFieldEnum[] | NotificationScalarFieldEnum
+    having?: NotificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificationCountAggregateInputType | true
+    _min?: NotificationMinAggregateInputType
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type NotificationGroupByOutputType = {
+    id: string
+    recipientId: string
+    triggeredById: string | null
+    type: $Enums.NotificationType
+    message: string
+    read: boolean
+    createdAt: Date
+    quotePostId: string | null
+    generalPostId: string | null
+    quoteReplyId: string | null
+    generalReplyId: string | null
+    blogId: string | null
+    eventId: string | null
+    courseEnquiryId: string | null
+    _count: NotificationCountAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  type GetNotificationGroupByPayload<T extends NotificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    recipientId?: boolean
+    triggeredById?: boolean
+    type?: boolean
+    message?: boolean
+    read?: boolean
+    createdAt?: boolean
+    quotePostId?: boolean
+    generalPostId?: boolean
+    quoteReplyId?: boolean
+    generalReplyId?: boolean
+    blogId?: boolean
+    eventId?: boolean
+    courseEnquiryId?: boolean
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    recipientId?: boolean
+    triggeredById?: boolean
+    type?: boolean
+    message?: boolean
+    read?: boolean
+    createdAt?: boolean
+    quotePostId?: boolean
+    generalPostId?: boolean
+    quoteReplyId?: boolean
+    generalReplyId?: boolean
+    blogId?: boolean
+    eventId?: boolean
+    courseEnquiryId?: boolean
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    recipientId?: boolean
+    triggeredById?: boolean
+    type?: boolean
+    message?: boolean
+    read?: boolean
+    createdAt?: boolean
+    quotePostId?: boolean
+    generalPostId?: boolean
+    quoteReplyId?: boolean
+    generalReplyId?: boolean
+    blogId?: boolean
+    eventId?: boolean
+    courseEnquiryId?: boolean
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectScalar = {
+    id?: boolean
+    recipientId?: boolean
+    triggeredById?: boolean
+    type?: boolean
+    message?: boolean
+    read?: boolean
+    createdAt?: boolean
+    quotePostId?: boolean
+    generalPostId?: boolean
+    quoteReplyId?: boolean
+    generalReplyId?: boolean
+    blogId?: boolean
+    eventId?: boolean
+    courseEnquiryId?: boolean
+  }
+
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "recipientId" | "triggeredById" | "type" | "message" | "read" | "createdAt" | "quotePostId" | "generalPostId" | "quoteReplyId" | "generalReplyId" | "blogId" | "eventId" | "courseEnquiryId", ExtArgs["result"]["notification"]>
+  export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }
+  export type NotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }
+  export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipient?: boolean | UserDefaultArgs<ExtArgs>
+    triggeredBy?: boolean | Notification$triggeredByArgs<ExtArgs>
+    quotePost?: boolean | Notification$quotePostArgs<ExtArgs>
+    generalPost?: boolean | Notification$generalPostArgs<ExtArgs>
+    quoteReply?: boolean | Notification$quoteReplyArgs<ExtArgs>
+    generalReply?: boolean | Notification$generalReplyArgs<ExtArgs>
+    blog?: boolean | Notification$blogArgs<ExtArgs>
+    event?: boolean | Notification$eventArgs<ExtArgs>
+    courseEnquiry?: boolean | Notification$courseEnquiryArgs<ExtArgs>
+  }
+
+  export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Notification"
+    objects: {
+      recipient: Prisma.$UserPayload<ExtArgs>
+      triggeredBy: Prisma.$UserPayload<ExtArgs> | null
+      quotePost: Prisma.$QuotePostPayload<ExtArgs> | null
+      generalPost: Prisma.$GeneralPostPayload<ExtArgs> | null
+      quoteReply: Prisma.$QuoteReplyPayload<ExtArgs> | null
+      generalReply: Prisma.$GeneralReplyPayload<ExtArgs> | null
+      blog: Prisma.$BlogPayload<ExtArgs> | null
+      event: Prisma.$EventPayload<ExtArgs> | null
+      courseEnquiry: Prisma.$CourseEnquiryPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      recipientId: string
+      triggeredById: string | null
+      type: $Enums.NotificationType
+      message: string
+      read: boolean
+      createdAt: Date
+      quotePostId: string | null
+      generalPostId: string | null
+      quoteReplyId: string | null
+      generalReplyId: string | null
+      blogId: string | null
+      eventId: string | null
+      courseEnquiryId: string | null
+    }, ExtArgs["result"]["notification"]>
+    composites: {}
+  }
+
+  type NotificationGetPayload<S extends boolean | null | undefined | NotificationDefaultArgs> = $Result.GetResult<Prisma.$NotificationPayload, S>
+
+  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NotificationCountAggregateInputType | true
+    }
+
+  export interface NotificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Notification'], meta: { name: 'Notification' } }
+    /**
+     * Find zero or one Notification that matches the filter.
+     * @param {NotificationFindUniqueArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificationFindUniqueArgs>(args: SelectSubset<T, NotificationFindUniqueArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Notification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificationFindUniqueOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificationFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificationFindFirstArgs>(args?: SelectSubset<T, NotificationFindFirstArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificationFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Notifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Notifications
+     * const notifications = await prisma.notification.findMany()
+     * 
+     * // Get first 10 Notifications
+     * const notifications = await prisma.notification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const notificationWithIdOnly = await prisma.notification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NotificationFindManyArgs>(args?: SelectSubset<T, NotificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Notification.
+     * @param {NotificationCreateArgs} args - Arguments to create a Notification.
+     * @example
+     * // Create one Notification
+     * const Notification = await prisma.notification.create({
+     *   data: {
+     *     // ... data to create a Notification
+     *   }
+     * })
+     * 
+     */
+    create<T extends NotificationCreateArgs>(args: SelectSubset<T, NotificationCreateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Notifications.
+     * @param {NotificationCreateManyArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NotificationCreateManyArgs>(args?: SelectSubset<T, NotificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Notifications and returns the data saved in the database.
+     * @param {NotificationCreateManyAndReturnArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Notifications and only return the `id`
+     * const notificationWithIdOnly = await prisma.notification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NotificationCreateManyAndReturnArgs>(args?: SelectSubset<T, NotificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Notification.
+     * @param {NotificationDeleteArgs} args - Arguments to delete one Notification.
+     * @example
+     * // Delete one Notification
+     * const Notification = await prisma.notification.delete({
+     *   where: {
+     *     // ... filter to delete one Notification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NotificationDeleteArgs>(args: SelectSubset<T, NotificationDeleteArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Notification.
+     * @param {NotificationUpdateArgs} args - Arguments to update one Notification.
+     * @example
+     * // Update one Notification
+     * const notification = await prisma.notification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NotificationUpdateArgs>(args: SelectSubset<T, NotificationUpdateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Notifications.
+     * @param {NotificationDeleteManyArgs} args - Arguments to filter Notifications to delete.
+     * @example
+     * // Delete a few Notifications
+     * const { count } = await prisma.notification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NotificationDeleteManyArgs>(args?: SelectSubset<T, NotificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NotificationUpdateManyArgs>(args: SelectSubset<T, NotificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications and returns the data updated in the database.
+     * @param {NotificationUpdateManyAndReturnArgs} args - Arguments to update many Notifications.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Notifications and only return the `id`
+     * const notificationWithIdOnly = await prisma.notification.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NotificationUpdateManyAndReturnArgs>(args: SelectSubset<T, NotificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Notification.
+     * @param {NotificationUpsertArgs} args - Arguments to update or create a Notification.
+     * @example
+     * // Update or create a Notification
+     * const notification = await prisma.notification.upsert({
+     *   create: {
+     *     // ... data to create a Notification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Notification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificationUpsertArgs>(args: SelectSubset<T, NotificationUpsertArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationCountArgs} args - Arguments to filter Notifications to count.
+     * @example
+     * // Count the number of Notifications
+     * const count = await prisma.notification.count({
+     *   where: {
+     *     // ... the filter for the Notifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificationCountArgs>(
+      args?: Subset<T, NotificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificationAggregateArgs>(args: Subset<T, NotificationAggregateArgs>): Prisma.PrismaPromise<GetNotificationAggregateType<T>>
+
+    /**
+     * Group by Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NotificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificationGroupByArgs['orderBy'] }
+        : { orderBy?: NotificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Notification model
+   */
+  readonly fields: NotificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Notification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    recipient<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    triggeredBy<T extends Notification$triggeredByArgs<ExtArgs> = {}>(args?: Subset<T, Notification$triggeredByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    quotePost<T extends Notification$quotePostArgs<ExtArgs> = {}>(args?: Subset<T, Notification$quotePostArgs<ExtArgs>>): Prisma__QuotePostClient<$Result.GetResult<Prisma.$QuotePostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    generalPost<T extends Notification$generalPostArgs<ExtArgs> = {}>(args?: Subset<T, Notification$generalPostArgs<ExtArgs>>): Prisma__GeneralPostClient<$Result.GetResult<Prisma.$GeneralPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    quoteReply<T extends Notification$quoteReplyArgs<ExtArgs> = {}>(args?: Subset<T, Notification$quoteReplyArgs<ExtArgs>>): Prisma__QuoteReplyClient<$Result.GetResult<Prisma.$QuoteReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    generalReply<T extends Notification$generalReplyArgs<ExtArgs> = {}>(args?: Subset<T, Notification$generalReplyArgs<ExtArgs>>): Prisma__GeneralReplyClient<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    blog<T extends Notification$blogArgs<ExtArgs> = {}>(args?: Subset<T, Notification$blogArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    event<T extends Notification$eventArgs<ExtArgs> = {}>(args?: Subset<T, Notification$eventArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    courseEnquiry<T extends Notification$courseEnquiryArgs<ExtArgs> = {}>(args?: Subset<T, Notification$courseEnquiryArgs<ExtArgs>>): Prisma__CourseEnquiryClient<$Result.GetResult<Prisma.$CourseEnquiryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Notification model
+   */
+  interface NotificationFieldRefs {
+    readonly id: FieldRef<"Notification", 'String'>
+    readonly recipientId: FieldRef<"Notification", 'String'>
+    readonly triggeredById: FieldRef<"Notification", 'String'>
+    readonly type: FieldRef<"Notification", 'NotificationType'>
+    readonly message: FieldRef<"Notification", 'String'>
+    readonly read: FieldRef<"Notification", 'Boolean'>
+    readonly createdAt: FieldRef<"Notification", 'DateTime'>
+    readonly quotePostId: FieldRef<"Notification", 'String'>
+    readonly generalPostId: FieldRef<"Notification", 'String'>
+    readonly quoteReplyId: FieldRef<"Notification", 'String'>
+    readonly generalReplyId: FieldRef<"Notification", 'String'>
+    readonly blogId: FieldRef<"Notification", 'String'>
+    readonly eventId: FieldRef<"Notification", 'String'>
+    readonly courseEnquiryId: FieldRef<"Notification", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Notification findUnique
+   */
+  export type NotificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findUniqueOrThrow
+   */
+  export type NotificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findFirst
+   */
+  export type NotificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findFirstOrThrow
+   */
+  export type NotificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findMany
+   */
+  export type NotificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notifications to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification create
+   */
+  export type NotificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Notification.
+     */
+    data: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+  }
+
+  /**
+   * Notification createMany
+   */
+  export type NotificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Notification createManyAndReturn
+   */
+  export type NotificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notification update
+   */
+  export type NotificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Notification.
+     */
+    data: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+    /**
+     * Choose, which Notification to update.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification updateMany
+   */
+  export type NotificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification updateManyAndReturn
+   */
+  export type NotificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notification upsert
+   */
+  export type NotificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Notification to update in case it exists.
+     */
+    where: NotificationWhereUniqueInput
+    /**
+     * In case the Notification found by the `where` argument doesn't exist, create a new Notification with this data.
+     */
+    create: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+    /**
+     * In case the Notification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+  }
+
+  /**
+   * Notification delete
+   */
+  export type NotificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter which Notification to delete.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification deleteMany
+   */
+  export type NotificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notifications to delete
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification.triggeredBy
+   */
+  export type Notification$triggeredByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Notification.quotePost
+   */
+  export type Notification$quotePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuotePost
+     */
+    select?: QuotePostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuotePost
+     */
+    omit?: QuotePostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuotePostInclude<ExtArgs> | null
+    where?: QuotePostWhereInput
+  }
+
+  /**
+   * Notification.generalPost
+   */
+  export type Notification$generalPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralPost
+     */
+    select?: GeneralPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralPost
+     */
+    omit?: GeneralPostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralPostInclude<ExtArgs> | null
+    where?: GeneralPostWhereInput
+  }
+
+  /**
+   * Notification.quoteReply
+   */
+  export type Notification$quoteReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuoteReply
+     */
+    select?: QuoteReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuoteReply
+     */
+    omit?: QuoteReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuoteReplyInclude<ExtArgs> | null
+    where?: QuoteReplyWhereInput
+  }
+
+  /**
+   * Notification.generalReply
+   */
+  export type Notification$generalReplyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeneralReply
+     */
+    select?: GeneralReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeneralReply
+     */
+    omit?: GeneralReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeneralReplyInclude<ExtArgs> | null
+    where?: GeneralReplyWhereInput
+  }
+
+  /**
+   * Notification.blog
+   */
+  export type Notification$blogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    where?: BlogWhereInput
+  }
+
+  /**
+   * Notification.event
+   */
+  export type Notification$eventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+  }
+
+  /**
+   * Notification.courseEnquiry
+   */
+  export type Notification$courseEnquiryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourseEnquiry
+     */
+    select?: CourseEnquirySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourseEnquiry
+     */
+    omit?: CourseEnquiryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseEnquiryInclude<ExtArgs> | null
+    where?: CourseEnquiryWhereInput
+  }
+
+  /**
+   * Notification without action
+   */
+  export type NotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -24237,6 +26187,26 @@ export namespace Prisma {
   export type CitiesDataScalarFieldEnum = (typeof CitiesDataScalarFieldEnum)[keyof typeof CitiesDataScalarFieldEnum]
 
 
+  export const NotificationScalarFieldEnum: {
+    id: 'id',
+    recipientId: 'recipientId',
+    triggeredById: 'triggeredById',
+    type: 'type',
+    message: 'message',
+    read: 'read',
+    createdAt: 'createdAt',
+    quotePostId: 'quotePostId',
+    generalPostId: 'generalPostId',
+    quoteReplyId: 'quoteReplyId',
+    generalReplyId: 'generalReplyId',
+    blogId: 'blogId',
+    eventId: 'eventId',
+    courseEnquiryId: 'courseEnquiryId'
+  };
+
+  export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -24413,6 +26383,20 @@ export namespace Prisma {
    */
   export type ListEnumCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Currency[]'>
     
+
+
+  /**
+   * Reference to a field of type 'NotificationType'
+   */
+  export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationType[]'
+   */
+  export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -24423,7 +26407,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     verified?: BoolNullableFilter<"User"> | boolean | null
@@ -24450,11 +26434,13 @@ export namespace Prisma {
     blog?: BlogListRelationFilter
     Course?: CourseListRelationFilter
     Event?: EventListRelationFilter
+    receivedNotifications?: NotificationListRelationFilter
+    triggeredNotifications?: NotificationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     verified?: SortOrderInput | SortOrder
@@ -24481,6 +26467,8 @@ export namespace Prisma {
     blog?: BlogOrderByRelationAggregateInput
     Course?: CourseOrderByRelationAggregateInput
     Event?: EventOrderByRelationAggregateInput
+    receivedNotifications?: NotificationOrderByRelationAggregateInput
+    triggeredNotifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -24490,7 +26478,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
     verified?: BoolNullableFilter<"User"> | boolean | null
     role?: StringNullableFilter<"User"> | string | null
@@ -24515,11 +26503,13 @@ export namespace Prisma {
     blog?: BlogListRelationFilter
     Course?: CourseListRelationFilter
     Event?: EventListRelationFilter
+    receivedNotifications?: NotificationListRelationFilter
+    triggeredNotifications?: NotificationListRelationFilter
   }, "id" | "email" | "mobileNo">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     verified?: SortOrderInput | SortOrder
@@ -24549,7 +26539,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    name?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     verified?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
@@ -24592,15 +26582,15 @@ export namespace Prisma {
 
   export type ForumMainCategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     AND?: ForumMainCategoryWhereInput | ForumMainCategoryWhereInput[]
     OR?: ForumMainCategoryWhereInput[]
     NOT?: ForumMainCategoryWhereInput | ForumMainCategoryWhereInput[]
-    name?: StringNullableFilter<"ForumMainCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumMainCategory"> | boolean | null
     subCategory?: ForumSubCategoryListRelationFilter
     quotePost?: QuotePostListRelationFilter
     generalPost?: GeneralPostListRelationFilter
-  }, "id">
+  }, "id" | "name">
 
   export type ForumMainCategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -24645,16 +26635,16 @@ export namespace Prisma {
 
   export type ForumSubCategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     AND?: ForumSubCategoryWhereInput | ForumSubCategoryWhereInput[]
     OR?: ForumSubCategoryWhereInput[]
     NOT?: ForumSubCategoryWhereInput | ForumSubCategoryWhereInput[]
-    name?: StringNullableFilter<"ForumSubCategory"> | string | null
     enabled?: BoolNullableFilter<"ForumSubCategory"> | boolean | null
     mainCategoryId?: StringFilter<"ForumSubCategory"> | string
     quotePost?: QuotePostListRelationFilter
     generalPost?: GeneralPostListRelationFilter
     mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
-  }, "id">
+  }, "id" | "name">
 
   export type ForumSubCategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -24681,8 +26671,8 @@ export namespace Prisma {
     OR?: QuotePostWhereInput[]
     NOT?: QuotePostWhereInput | QuotePostWhereInput[]
     id?: StringFilter<"QuotePost"> | string
-    title?: StringNullableFilter<"QuotePost"> | string | null
-    description?: StringNullableFilter<"QuotePost"> | string | null
+    title?: StringFilter<"QuotePost"> | string
+    description?: StringFilter<"QuotePost"> | string
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
@@ -24718,12 +26708,13 @@ export namespace Prisma {
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }
 
   export type QuotePostOrderByWithRelationInput = {
     id?: SortOrder
-    title?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
@@ -24759,6 +26750,7 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryOrderByWithRelationInput
     mainCategory?: ForumMainCategoryOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type QuotePostWhereUniqueInput = Prisma.AtLeast<{
@@ -24766,8 +26758,8 @@ export namespace Prisma {
     AND?: QuotePostWhereInput | QuotePostWhereInput[]
     OR?: QuotePostWhereInput[]
     NOT?: QuotePostWhereInput | QuotePostWhereInput[]
-    title?: StringNullableFilter<"QuotePost"> | string | null
-    description?: StringNullableFilter<"QuotePost"> | string | null
+    title?: StringFilter<"QuotePost"> | string
+    description?: StringFilter<"QuotePost"> | string
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
@@ -24803,12 +26795,13 @@ export namespace Prisma {
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     mainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type QuotePostOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrderInput | SortOrder
@@ -24851,8 +26844,8 @@ export namespace Prisma {
     OR?: QuotePostScalarWhereWithAggregatesInput[]
     NOT?: QuotePostScalarWhereWithAggregatesInput | QuotePostScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"QuotePost"> | string
-    title?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    description?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    title?: StringWithAggregatesFilter<"QuotePost"> | string
+    description?: StringWithAggregatesFilter<"QuotePost"> | string
     userId?: StringWithAggregatesFilter<"QuotePost"> | string
     name?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableWithAggregatesFilter<"QuotePost"> | Date | string | null
@@ -24901,6 +26894,7 @@ export namespace Prisma {
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
     parentReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
     childReplies?: QuoteReplyListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type QuoteReplyOrderByWithRelationInput = {
@@ -24916,6 +26910,7 @@ export namespace Prisma {
     post?: QuotePostOrderByWithRelationInput
     parentReply?: QuoteReplyOrderByWithRelationInput
     childReplies?: QuoteReplyOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type QuoteReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -24934,6 +26929,7 @@ export namespace Prisma {
     post?: XOR<QuotePostScalarRelationFilter, QuotePostWhereInput>
     parentReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
     childReplies?: QuoteReplyListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type QuoteReplyOrderByWithAggregationInput = {
@@ -25017,8 +27013,8 @@ export namespace Prisma {
     OR?: GeneralPostWhereInput[]
     NOT?: GeneralPostWhereInput | GeneralPostWhereInput[]
     id?: StringFilter<"GeneralPost"> | string
-    title?: StringNullableFilter<"GeneralPost"> | string | null
-    description?: StringNullableFilter<"GeneralPost"> | string | null
+    title?: StringFilter<"GeneralPost"> | string
+    description?: StringFilter<"GeneralPost"> | string
     userId?: StringFilter<"GeneralPost"> | string
     createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
@@ -25035,12 +27031,13 @@ export namespace Prisma {
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     generalReply?: GeneralReplyListRelationFilter
     generalLike?: GeneralLikeListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type GeneralPostOrderByWithRelationInput = {
     id?: SortOrder
-    title?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -25057,6 +27054,7 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryOrderByWithRelationInput
     generalReply?: GeneralReplyOrderByRelationAggregateInput
     generalLike?: GeneralLikeOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type GeneralPostWhereUniqueInput = Prisma.AtLeast<{
@@ -25064,8 +27062,8 @@ export namespace Prisma {
     AND?: GeneralPostWhereInput | GeneralPostWhereInput[]
     OR?: GeneralPostWhereInput[]
     NOT?: GeneralPostWhereInput | GeneralPostWhereInput[]
-    title?: StringNullableFilter<"GeneralPost"> | string | null
-    description?: StringNullableFilter<"GeneralPost"> | string | null
+    title?: StringFilter<"GeneralPost"> | string
+    description?: StringFilter<"GeneralPost"> | string
     userId?: StringFilter<"GeneralPost"> | string
     createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
@@ -25082,12 +27080,13 @@ export namespace Prisma {
     subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     generalReply?: GeneralReplyListRelationFilter
     generalLike?: GeneralLikeListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type GeneralPostOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -25111,8 +27110,8 @@ export namespace Prisma {
     OR?: GeneralPostScalarWhereWithAggregatesInput[]
     NOT?: GeneralPostScalarWhereWithAggregatesInput | GeneralPostScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"GeneralPost"> | string
-    title?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
-    description?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    title?: StringWithAggregatesFilter<"GeneralPost"> | string
+    description?: StringWithAggregatesFilter<"GeneralPost"> | string
     userId?: StringWithAggregatesFilter<"GeneralPost"> | string
     createdBy?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"GeneralPost"> | Date | string
@@ -25142,6 +27141,7 @@ export namespace Prisma {
     post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
     parentReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
     childReplies?: GeneralReplyListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type GeneralReplyOrderByWithRelationInput = {
@@ -25157,6 +27157,7 @@ export namespace Prisma {
     post?: GeneralPostOrderByWithRelationInput
     parentReply?: GeneralReplyOrderByWithRelationInput
     childReplies?: GeneralReplyOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type GeneralReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -25175,6 +27176,7 @@ export namespace Prisma {
     post?: XOR<GeneralPostScalarRelationFilter, GeneralPostWhereInput>
     parentReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
     childReplies?: GeneralReplyListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type GeneralReplyOrderByWithAggregationInput = {
@@ -25267,6 +27269,7 @@ export namespace Prisma {
     categoryId?: StringNullableFilter<"Blog"> | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<BlogCategoryNullableScalarRelationFilter, BlogCategoryWhereInput> | null
+    notifications?: NotificationListRelationFilter
   }
 
   export type BlogOrderByWithRelationInput = {
@@ -25280,6 +27283,7 @@ export namespace Prisma {
     categoryId?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
     category?: BlogCategoryOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type BlogWhereUniqueInput = Prisma.AtLeast<{
@@ -25296,6 +27300,7 @@ export namespace Prisma {
     categoryId?: StringNullableFilter<"Blog"> | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<BlogCategoryNullableScalarRelationFilter, BlogCategoryWhereInput> | null
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type BlogOrderByWithAggregationInput = {
@@ -25344,6 +27349,7 @@ export namespace Prisma {
     endDate?: DateTimeFilter<"Event"> | Date | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }
 
   export type EventOrderByWithRelationInput = {
@@ -25361,6 +27367,7 @@ export namespace Prisma {
     endDate?: SortOrder
     createdAt?: SortOrder
     author?: UserOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -25381,6 +27388,7 @@ export namespace Prisma {
     endDate?: DateTimeFilter<"Event"> | Date | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type EventOrderByWithAggregationInput = {
@@ -25657,6 +27665,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"CourseEnquiry"> | string | null
     createdAt?: DateTimeFilter<"CourseEnquiry"> | Date | string
     updatedAt?: DateTimeFilter<"CourseEnquiry"> | Date | string
+    notifications?: NotificationListRelationFilter
   }
 
   export type CourseEnquiryOrderByWithRelationInput = {
@@ -25669,6 +27678,7 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type CourseEnquiryWhereUniqueInput = Prisma.AtLeast<{
@@ -25684,6 +27694,7 @@ export namespace Prisma {
     website?: StringNullableFilter<"CourseEnquiry"> | string | null
     createdAt?: DateTimeFilter<"CourseEnquiry"> | Date | string
     updatedAt?: DateTimeFilter<"CourseEnquiry"> | Date | string
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type CourseEnquiryOrderByWithAggregationInput = {
@@ -25870,9 +27881,133 @@ export namespace Prisma {
     state_id?: IntWithAggregatesFilter<"CitiesData"> | number
   }
 
+  export type NotificationWhereInput = {
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    recipientId?: StringFilter<"Notification"> | string
+    triggeredById?: StringNullableFilter<"Notification"> | string | null
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
+    message?: StringFilter<"Notification"> | string
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    quotePostId?: StringNullableFilter<"Notification"> | string | null
+    generalPostId?: StringNullableFilter<"Notification"> | string | null
+    quoteReplyId?: StringNullableFilter<"Notification"> | string | null
+    generalReplyId?: StringNullableFilter<"Notification"> | string | null
+    blogId?: StringNullableFilter<"Notification"> | string | null
+    eventId?: StringNullableFilter<"Notification"> | string | null
+    courseEnquiryId?: StringNullableFilter<"Notification"> | string | null
+    recipient?: XOR<UserScalarRelationFilter, UserWhereInput>
+    triggeredBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    quotePost?: XOR<QuotePostNullableScalarRelationFilter, QuotePostWhereInput> | null
+    generalPost?: XOR<GeneralPostNullableScalarRelationFilter, GeneralPostWhereInput> | null
+    quoteReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
+    generalReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
+    blog?: XOR<BlogNullableScalarRelationFilter, BlogWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+    courseEnquiry?: XOR<CourseEnquiryNullableScalarRelationFilter, CourseEnquiryWhereInput> | null
+  }
+
+  export type NotificationOrderByWithRelationInput = {
+    id?: SortOrder
+    recipientId?: SortOrder
+    triggeredById?: SortOrderInput | SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    quotePostId?: SortOrderInput | SortOrder
+    generalPostId?: SortOrderInput | SortOrder
+    quoteReplyId?: SortOrderInput | SortOrder
+    generalReplyId?: SortOrderInput | SortOrder
+    blogId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    courseEnquiryId?: SortOrderInput | SortOrder
+    recipient?: UserOrderByWithRelationInput
+    triggeredBy?: UserOrderByWithRelationInput
+    quotePost?: QuotePostOrderByWithRelationInput
+    generalPost?: GeneralPostOrderByWithRelationInput
+    quoteReply?: QuoteReplyOrderByWithRelationInput
+    generalReply?: GeneralReplyOrderByWithRelationInput
+    blog?: BlogOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
+    courseEnquiry?: CourseEnquiryOrderByWithRelationInput
+  }
+
+  export type NotificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    recipientId?: StringFilter<"Notification"> | string
+    triggeredById?: StringNullableFilter<"Notification"> | string | null
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
+    message?: StringFilter<"Notification"> | string
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    quotePostId?: StringNullableFilter<"Notification"> | string | null
+    generalPostId?: StringNullableFilter<"Notification"> | string | null
+    quoteReplyId?: StringNullableFilter<"Notification"> | string | null
+    generalReplyId?: StringNullableFilter<"Notification"> | string | null
+    blogId?: StringNullableFilter<"Notification"> | string | null
+    eventId?: StringNullableFilter<"Notification"> | string | null
+    courseEnquiryId?: StringNullableFilter<"Notification"> | string | null
+    recipient?: XOR<UserScalarRelationFilter, UserWhereInput>
+    triggeredBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    quotePost?: XOR<QuotePostNullableScalarRelationFilter, QuotePostWhereInput> | null
+    generalPost?: XOR<GeneralPostNullableScalarRelationFilter, GeneralPostWhereInput> | null
+    quoteReply?: XOR<QuoteReplyNullableScalarRelationFilter, QuoteReplyWhereInput> | null
+    generalReply?: XOR<GeneralReplyNullableScalarRelationFilter, GeneralReplyWhereInput> | null
+    blog?: XOR<BlogNullableScalarRelationFilter, BlogWhereInput> | null
+    event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
+    courseEnquiry?: XOR<CourseEnquiryNullableScalarRelationFilter, CourseEnquiryWhereInput> | null
+  }, "id">
+
+  export type NotificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    recipientId?: SortOrder
+    triggeredById?: SortOrderInput | SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    quotePostId?: SortOrderInput | SortOrder
+    generalPostId?: SortOrderInput | SortOrder
+    quoteReplyId?: SortOrderInput | SortOrder
+    generalReplyId?: SortOrderInput | SortOrder
+    blogId?: SortOrderInput | SortOrder
+    eventId?: SortOrderInput | SortOrder
+    courseEnquiryId?: SortOrderInput | SortOrder
+    _count?: NotificationCountOrderByAggregateInput
+    _max?: NotificationMaxOrderByAggregateInput
+    _min?: NotificationMinOrderByAggregateInput
+  }
+
+  export type NotificationScalarWhereWithAggregatesInput = {
+    AND?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    OR?: NotificationScalarWhereWithAggregatesInput[]
+    NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Notification"> | string
+    recipientId?: StringWithAggregatesFilter<"Notification"> | string
+    triggeredById?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    type?: EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
+    message?: StringWithAggregatesFilter<"Notification"> | string
+    read?: BoolWithAggregatesFilter<"Notification"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
+    quotePostId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    generalPostId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    quoteReplyId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    generalReplyId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    blogId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    eventId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    courseEnquiryId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+  }
+
   export type UserCreateInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -25899,11 +28034,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -25930,11 +28067,13 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -25961,11 +28100,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -25992,11 +28133,13 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -26018,7 +28161,7 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -26040,7 +28183,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -26172,8 +28315,8 @@ export namespace Prisma {
 
   export type QuotePostCreateInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -26206,12 +28349,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user: UserCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -26244,12 +28388,13 @@ export namespace Prisma {
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26282,12 +28427,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26320,12 +28466,13 @@ export namespace Prisma {
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostCreateManyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -26360,8 +28507,8 @@ export namespace Prisma {
 
   export type QuotePostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26393,8 +28540,8 @@ export namespace Prisma {
 
   export type QuotePostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26437,6 +28584,7 @@ export namespace Prisma {
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
     parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateInput = {
@@ -26449,6 +28597,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUpdateInput = {
@@ -26461,6 +28610,7 @@ export namespace Prisma {
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
     parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateInput = {
@@ -26473,6 +28623,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyCreateManyInput = {
@@ -26547,8 +28698,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26562,12 +28713,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -26581,12 +28733,13 @@ export namespace Prisma {
     generalPostSubCategory?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26600,12 +28753,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26619,12 +28773,13 @@ export namespace Prisma {
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostCreateManyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -26640,8 +28795,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26654,8 +28809,8 @@ export namespace Prisma {
 
   export type GeneralPostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26679,6 +28834,7 @@ export namespace Prisma {
     post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
     parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUncheckedCreateInput = {
@@ -26691,6 +28847,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUpdateInput = {
@@ -26703,6 +28860,7 @@ export namespace Prisma {
     post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
     parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateInput = {
@@ -26715,6 +28873,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyCreateManyInput = {
@@ -26796,6 +28955,7 @@ export namespace Prisma {
     image_url?: BlogCreateimage_urlInput | string[]
     author: UserCreateNestedOneWithoutBlogInput
     category?: BlogCategoryCreateNestedOneWithoutBlogsInput
+    notifications?: NotificationCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUncheckedCreateInput = {
@@ -26807,6 +28967,7 @@ export namespace Prisma {
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
     categoryId?: string | null
+    notifications?: NotificationUncheckedCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUpdateInput = {
@@ -26818,6 +28979,7 @@ export namespace Prisma {
     image_url?: BlogUpdateimage_urlInput | string[]
     author?: UserUpdateOneRequiredWithoutBlogNestedInput
     category?: BlogCategoryUpdateOneWithoutBlogsNestedInput
+    notifications?: NotificationUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateInput = {
@@ -26829,6 +28991,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    notifications?: NotificationUncheckedUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogCreateManyInput = {
@@ -26876,6 +29039,7 @@ export namespace Prisma {
     endDate: Date | string
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutEventInput
+    notifications?: NotificationCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateInput = {
@@ -26892,6 +29056,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     createdAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventUpdateInput = {
@@ -26908,6 +29073,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutEventNestedInput
+    notifications?: NotificationUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
@@ -26924,6 +29090,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventCreateManyInput = {
@@ -27234,6 +29401,7 @@ export namespace Prisma {
     website?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    notifications?: NotificationCreateNestedManyWithoutCourseEnquiryInput
   }
 
   export type CourseEnquiryUncheckedCreateInput = {
@@ -27246,6 +29414,7 @@ export namespace Prisma {
     website?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCourseEnquiryInput
   }
 
   export type CourseEnquiryUpdateInput = {
@@ -27258,6 +29427,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUpdateManyWithoutCourseEnquiryNestedInput
   }
 
   export type CourseEnquiryUncheckedUpdateInput = {
@@ -27270,6 +29440,7 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutCourseEnquiryNestedInput
   }
 
   export type CourseEnquiryCreateManyInput = {
@@ -27454,6 +29625,116 @@ export namespace Prisma {
     state_id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type NotificationCreateInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationCreateManyInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -27576,6 +29857,12 @@ export namespace Prisma {
     none?: EventWhereInput
   }
 
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -27614,6 +29901,10 @@ export namespace Prisma {
   }
 
   export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28700,6 +30991,117 @@ export namespace Prisma {
     state_id?: SortOrder
   }
 
+  export type EnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type QuotePostNullableScalarRelationFilter = {
+    is?: QuotePostWhereInput | null
+    isNot?: QuotePostWhereInput | null
+  }
+
+  export type GeneralPostNullableScalarRelationFilter = {
+    is?: GeneralPostWhereInput | null
+    isNot?: GeneralPostWhereInput | null
+  }
+
+  export type BlogNullableScalarRelationFilter = {
+    is?: BlogWhereInput | null
+    isNot?: BlogWhereInput | null
+  }
+
+  export type EventNullableScalarRelationFilter = {
+    is?: EventWhereInput | null
+    isNot?: EventWhereInput | null
+  }
+
+  export type CourseEnquiryNullableScalarRelationFilter = {
+    is?: CourseEnquiryWhereInput | null
+    isNot?: CourseEnquiryWhereInput | null
+  }
+
+  export type NotificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    recipientId?: SortOrder
+    triggeredById?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    quotePostId?: SortOrder
+    generalPostId?: SortOrder
+    quoteReplyId?: SortOrder
+    generalReplyId?: SortOrder
+    blogId?: SortOrder
+    eventId?: SortOrder
+    courseEnquiryId?: SortOrder
+  }
+
+  export type NotificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    recipientId?: SortOrder
+    triggeredById?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    quotePostId?: SortOrder
+    generalPostId?: SortOrder
+    quoteReplyId?: SortOrder
+    generalReplyId?: SortOrder
+    blogId?: SortOrder
+    eventId?: SortOrder
+    courseEnquiryId?: SortOrder
+  }
+
+  export type NotificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    recipientId?: SortOrder
+    triggeredById?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    quotePostId?: SortOrder
+    generalPostId?: SortOrder
+    quoteReplyId?: SortOrder
+    generalReplyId?: SortOrder
+    blogId?: SortOrder
+    eventId?: SortOrder
+    courseEnquiryId?: SortOrder
+  }
+
+  export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type QuotePostCreateNestedManyWithoutUserInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -28763,6 +31165,20 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput> | NotificationCreateWithoutRecipientInput[] | NotificationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutRecipientInput | NotificationCreateOrConnectWithoutRecipientInput[]
+    createMany?: NotificationCreateManyRecipientInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutTriggeredByInput = {
+    create?: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput> | NotificationCreateWithoutTriggeredByInput[] | NotificationUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutTriggeredByInput | NotificationCreateOrConnectWithoutTriggeredByInput[]
+    createMany?: NotificationCreateManyTriggeredByInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type QuotePostUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -28824,6 +31240,20 @@ export namespace Prisma {
     connectOrCreate?: EventCreateOrConnectWithoutAuthorInput | EventCreateOrConnectWithoutAuthorInput[]
     createMany?: EventCreateManyAuthorInputEnvelope
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput> | NotificationCreateWithoutRecipientInput[] | NotificationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutRecipientInput | NotificationCreateOrConnectWithoutRecipientInput[]
+    createMany?: NotificationCreateManyRecipientInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutTriggeredByInput = {
+    create?: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput> | NotificationCreateWithoutTriggeredByInput[] | NotificationUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutTriggeredByInput | NotificationCreateOrConnectWithoutTriggeredByInput[]
+    createMany?: NotificationCreateManyTriggeredByInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -28980,6 +31410,34 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput> | NotificationCreateWithoutRecipientInput[] | NotificationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutRecipientInput | NotificationCreateOrConnectWithoutRecipientInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutRecipientInput | NotificationUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: NotificationCreateManyRecipientInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutRecipientInput | NotificationUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutRecipientInput | NotificationUpdateManyWithWhereWithoutRecipientInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUpdateManyWithoutTriggeredByNestedInput = {
+    create?: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput> | NotificationCreateWithoutTriggeredByInput[] | NotificationUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutTriggeredByInput | NotificationCreateOrConnectWithoutTriggeredByInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutTriggeredByInput | NotificationUpsertWithWhereUniqueWithoutTriggeredByInput[]
+    createMany?: NotificationCreateManyTriggeredByInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutTriggeredByInput | NotificationUpdateWithWhereUniqueWithoutTriggeredByInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutTriggeredByInput | NotificationUpdateManyWithWhereWithoutTriggeredByInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type QuotePostUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuotePostCreateWithoutUserInput, QuotePostUncheckedCreateWithoutUserInput> | QuotePostCreateWithoutUserInput[] | QuotePostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuotePostCreateOrConnectWithoutUserInput | QuotePostCreateOrConnectWithoutUserInput[]
@@ -29104,6 +31562,34 @@ export namespace Prisma {
     update?: EventUpdateWithWhereUniqueWithoutAuthorInput | EventUpdateWithWhereUniqueWithoutAuthorInput[]
     updateMany?: EventUpdateManyWithWhereWithoutAuthorInput | EventUpdateManyWithWhereWithoutAuthorInput[]
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput> | NotificationCreateWithoutRecipientInput[] | NotificationUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutRecipientInput | NotificationCreateOrConnectWithoutRecipientInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutRecipientInput | NotificationUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: NotificationCreateManyRecipientInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutRecipientInput | NotificationUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutRecipientInput | NotificationUpdateManyWithWhereWithoutRecipientInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput = {
+    create?: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput> | NotificationCreateWithoutTriggeredByInput[] | NotificationUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutTriggeredByInput | NotificationCreateOrConnectWithoutTriggeredByInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutTriggeredByInput | NotificationUpsertWithWhereUniqueWithoutTriggeredByInput[]
+    createMany?: NotificationCreateManyTriggeredByInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutTriggeredByInput | NotificationUpdateWithWhereUniqueWithoutTriggeredByInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutTriggeredByInput | NotificationUpdateManyWithWhereWithoutTriggeredByInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type ForumSubCategoryCreateNestedManyWithoutMainCategoryInput = {
@@ -29362,6 +31848,13 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NotificationCreateNestedManyWithoutQuotePostInput = {
+    create?: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput> | NotificationCreateWithoutQuotePostInput[] | NotificationUncheckedCreateWithoutQuotePostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuotePostInput | NotificationCreateOrConnectWithoutQuotePostInput[]
+    createMany?: NotificationCreateManyQuotePostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type QuoteReplyUncheckedCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
@@ -29374,6 +31867,13 @@ export namespace Prisma {
     connectOrCreate?: QuoteLikeCreateOrConnectWithoutPostInput | QuoteLikeCreateOrConnectWithoutPostInput[]
     createMany?: QuoteLikeCreateManyPostInputEnvelope
     connect?: QuoteLikeWhereUniqueInput | QuoteLikeWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutQuotePostInput = {
+    create?: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput> | NotificationCreateWithoutQuotePostInput[] | NotificationUncheckedCreateWithoutQuotePostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuotePostInput | NotificationCreateOrConnectWithoutQuotePostInput[]
+    createMany?: NotificationCreateManyQuotePostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -29440,6 +31940,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuotePostInput, UserUpdateWithoutQuotePostInput>, UserUncheckedUpdateWithoutQuotePostInput>
   }
 
+  export type NotificationUpdateManyWithoutQuotePostNestedInput = {
+    create?: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput> | NotificationCreateWithoutQuotePostInput[] | NotificationUncheckedCreateWithoutQuotePostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuotePostInput | NotificationCreateOrConnectWithoutQuotePostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutQuotePostInput | NotificationUpsertWithWhereUniqueWithoutQuotePostInput[]
+    createMany?: NotificationCreateManyQuotePostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutQuotePostInput | NotificationUpdateWithWhereUniqueWithoutQuotePostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutQuotePostInput | NotificationUpdateManyWithWhereWithoutQuotePostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type QuoteReplyUncheckedUpdateManyWithoutPostNestedInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
@@ -29468,6 +31982,20 @@ export namespace Prisma {
     deleteMany?: QuoteLikeScalarWhereInput | QuoteLikeScalarWhereInput[]
   }
 
+  export type NotificationUncheckedUpdateManyWithoutQuotePostNestedInput = {
+    create?: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput> | NotificationCreateWithoutQuotePostInput[] | NotificationUncheckedCreateWithoutQuotePostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuotePostInput | NotificationCreateOrConnectWithoutQuotePostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutQuotePostInput | NotificationUpsertWithWhereUniqueWithoutQuotePostInput[]
+    createMany?: NotificationCreateManyQuotePostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutQuotePostInput | NotificationUpdateWithWhereUniqueWithoutQuotePostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutQuotePostInput | NotificationUpdateManyWithWhereWithoutQuotePostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutQuoteReplyInput = {
     create?: XOR<UserCreateWithoutQuoteReplyInput, UserUncheckedCreateWithoutQuoteReplyInput>
     connectOrCreate?: UserCreateOrConnectWithoutQuoteReplyInput
@@ -29493,11 +32021,25 @@ export namespace Prisma {
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutQuoteReplyInput = {
+    create?: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput> | NotificationCreateWithoutQuoteReplyInput[] | NotificationUncheckedCreateWithoutQuoteReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuoteReplyInput | NotificationCreateOrConnectWithoutQuoteReplyInput[]
+    createMany?: NotificationCreateManyQuoteReplyInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput = {
     create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
     createMany?: QuoteReplyCreateManyParentReplyInputEnvelope
     connect?: QuoteReplyWhereUniqueInput | QuoteReplyWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput = {
+    create?: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput> | NotificationCreateWithoutQuoteReplyInput[] | NotificationUncheckedCreateWithoutQuoteReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuoteReplyInput | NotificationCreateOrConnectWithoutQuoteReplyInput[]
+    createMany?: NotificationCreateManyQuoteReplyInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutQuoteReplyNestedInput = {
@@ -29540,6 +32082,20 @@ export namespace Prisma {
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutQuoteReplyNestedInput = {
+    create?: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput> | NotificationCreateWithoutQuoteReplyInput[] | NotificationUncheckedCreateWithoutQuoteReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuoteReplyInput | NotificationCreateOrConnectWithoutQuoteReplyInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutQuoteReplyInput | NotificationUpsertWithWhereUniqueWithoutQuoteReplyInput[]
+    createMany?: NotificationCreateManyQuoteReplyInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutQuoteReplyInput | NotificationUpdateWithWhereUniqueWithoutQuoteReplyInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutQuoteReplyInput | NotificationUpdateManyWithWhereWithoutQuoteReplyInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput = {
     create?: XOR<QuoteReplyCreateWithoutParentReplyInput, QuoteReplyUncheckedCreateWithoutParentReplyInput> | QuoteReplyCreateWithoutParentReplyInput[] | QuoteReplyUncheckedCreateWithoutParentReplyInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutParentReplyInput | QuoteReplyCreateOrConnectWithoutParentReplyInput[]
@@ -29552,6 +32108,20 @@ export namespace Prisma {
     update?: QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput | QuoteReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
     updateMany?: QuoteReplyUpdateManyWithWhereWithoutParentReplyInput | QuoteReplyUpdateManyWithWhereWithoutParentReplyInput[]
     deleteMany?: QuoteReplyScalarWhereInput | QuoteReplyScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput = {
+    create?: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput> | NotificationCreateWithoutQuoteReplyInput[] | NotificationUncheckedCreateWithoutQuoteReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutQuoteReplyInput | NotificationCreateOrConnectWithoutQuoteReplyInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutQuoteReplyInput | NotificationUpsertWithWhereUniqueWithoutQuoteReplyInput[]
+    createMany?: NotificationCreateManyQuoteReplyInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutQuoteReplyInput | NotificationUpdateWithWhereUniqueWithoutQuoteReplyInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutQuoteReplyInput | NotificationUpdateManyWithWhereWithoutQuoteReplyInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutQuoteLikeInput = {
@@ -29614,6 +32184,13 @@ export namespace Prisma {
     connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutGeneralPostInput = {
+    create?: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput> | NotificationCreateWithoutGeneralPostInput[] | NotificationUncheckedCreateWithoutGeneralPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralPostInput | NotificationCreateOrConnectWithoutGeneralPostInput[]
+    createMany?: NotificationCreateManyGeneralPostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type GeneralReplyUncheckedCreateNestedManyWithoutPostInput = {
     create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
@@ -29626,6 +32203,13 @@ export namespace Prisma {
     connectOrCreate?: GeneralLikeCreateOrConnectWithoutPostInput | GeneralLikeCreateOrConnectWithoutPostInput[]
     createMany?: GeneralLikeCreateManyPostInputEnvelope
     connect?: GeneralLikeWhereUniqueInput | GeneralLikeWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutGeneralPostInput = {
+    create?: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput> | NotificationCreateWithoutGeneralPostInput[] | NotificationUncheckedCreateWithoutGeneralPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralPostInput | NotificationCreateOrConnectWithoutGeneralPostInput[]
+    createMany?: NotificationCreateManyGeneralPostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutGeneralPostNestedInput = {
@@ -29684,6 +32268,20 @@ export namespace Prisma {
     deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutGeneralPostNestedInput = {
+    create?: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput> | NotificationCreateWithoutGeneralPostInput[] | NotificationUncheckedCreateWithoutGeneralPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralPostInput | NotificationCreateOrConnectWithoutGeneralPostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutGeneralPostInput | NotificationUpsertWithWhereUniqueWithoutGeneralPostInput[]
+    createMany?: NotificationCreateManyGeneralPostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutGeneralPostInput | NotificationUpdateWithWhereUniqueWithoutGeneralPostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutGeneralPostInput | NotificationUpdateManyWithWhereWithoutGeneralPostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type GeneralReplyUncheckedUpdateManyWithoutPostNestedInput = {
     create?: XOR<GeneralReplyCreateWithoutPostInput, GeneralReplyUncheckedCreateWithoutPostInput> | GeneralReplyCreateWithoutPostInput[] | GeneralReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: GeneralReplyCreateOrConnectWithoutPostInput | GeneralReplyCreateOrConnectWithoutPostInput[]
@@ -29712,6 +32310,20 @@ export namespace Prisma {
     deleteMany?: GeneralLikeScalarWhereInput | GeneralLikeScalarWhereInput[]
   }
 
+  export type NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput = {
+    create?: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput> | NotificationCreateWithoutGeneralPostInput[] | NotificationUncheckedCreateWithoutGeneralPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralPostInput | NotificationCreateOrConnectWithoutGeneralPostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutGeneralPostInput | NotificationUpsertWithWhereUniqueWithoutGeneralPostInput[]
+    createMany?: NotificationCreateManyGeneralPostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutGeneralPostInput | NotificationUpdateWithWhereUniqueWithoutGeneralPostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutGeneralPostInput | NotificationUpdateManyWithWhereWithoutGeneralPostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutGeneralReplyInput = {
     create?: XOR<UserCreateWithoutGeneralReplyInput, UserUncheckedCreateWithoutGeneralReplyInput>
     connectOrCreate?: UserCreateOrConnectWithoutGeneralReplyInput
@@ -29737,11 +32349,25 @@ export namespace Prisma {
     connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutGeneralReplyInput = {
+    create?: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput> | NotificationCreateWithoutGeneralReplyInput[] | NotificationUncheckedCreateWithoutGeneralReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralReplyInput | NotificationCreateOrConnectWithoutGeneralReplyInput[]
+    createMany?: NotificationCreateManyGeneralReplyInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput = {
     create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
     connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
     createMany?: GeneralReplyCreateManyParentReplyInputEnvelope
     connect?: GeneralReplyWhereUniqueInput | GeneralReplyWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput = {
+    create?: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput> | NotificationCreateWithoutGeneralReplyInput[] | NotificationUncheckedCreateWithoutGeneralReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralReplyInput | NotificationCreateOrConnectWithoutGeneralReplyInput[]
+    createMany?: NotificationCreateManyGeneralReplyInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutGeneralReplyNestedInput = {
@@ -29784,6 +32410,20 @@ export namespace Prisma {
     deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutGeneralReplyNestedInput = {
+    create?: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput> | NotificationCreateWithoutGeneralReplyInput[] | NotificationUncheckedCreateWithoutGeneralReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralReplyInput | NotificationCreateOrConnectWithoutGeneralReplyInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutGeneralReplyInput | NotificationUpsertWithWhereUniqueWithoutGeneralReplyInput[]
+    createMany?: NotificationCreateManyGeneralReplyInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutGeneralReplyInput | NotificationUpdateWithWhereUniqueWithoutGeneralReplyInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutGeneralReplyInput | NotificationUpdateManyWithWhereWithoutGeneralReplyInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput = {
     create?: XOR<GeneralReplyCreateWithoutParentReplyInput, GeneralReplyUncheckedCreateWithoutParentReplyInput> | GeneralReplyCreateWithoutParentReplyInput[] | GeneralReplyUncheckedCreateWithoutParentReplyInput[]
     connectOrCreate?: GeneralReplyCreateOrConnectWithoutParentReplyInput | GeneralReplyCreateOrConnectWithoutParentReplyInput[]
@@ -29796,6 +32436,20 @@ export namespace Prisma {
     update?: GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput | GeneralReplyUpdateWithWhereUniqueWithoutParentReplyInput[]
     updateMany?: GeneralReplyUpdateManyWithWhereWithoutParentReplyInput | GeneralReplyUpdateManyWithWhereWithoutParentReplyInput[]
     deleteMany?: GeneralReplyScalarWhereInput | GeneralReplyScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput = {
+    create?: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput> | NotificationCreateWithoutGeneralReplyInput[] | NotificationUncheckedCreateWithoutGeneralReplyInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutGeneralReplyInput | NotificationCreateOrConnectWithoutGeneralReplyInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutGeneralReplyInput | NotificationUpsertWithWhereUniqueWithoutGeneralReplyInput[]
+    createMany?: NotificationCreateManyGeneralReplyInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutGeneralReplyInput | NotificationUpdateWithWhereUniqueWithoutGeneralReplyInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutGeneralReplyInput | NotificationUpdateManyWithWhereWithoutGeneralReplyInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutGeneralLikeInput = {
@@ -29842,6 +32496,20 @@ export namespace Prisma {
     connect?: BlogCategoryWhereUniqueInput
   }
 
+  export type NotificationCreateNestedManyWithoutBlogInput = {
+    create?: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput> | NotificationCreateWithoutBlogInput[] | NotificationUncheckedCreateWithoutBlogInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutBlogInput | NotificationCreateOrConnectWithoutBlogInput[]
+    createMany?: NotificationCreateManyBlogInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutBlogInput = {
+    create?: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput> | NotificationCreateWithoutBlogInput[] | NotificationUncheckedCreateWithoutBlogInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutBlogInput | NotificationCreateOrConnectWithoutBlogInput[]
+    createMany?: NotificationCreateManyBlogInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type BlogUpdateimage_urlInput = {
     set?: string[]
     push?: string | string[]
@@ -29865,10 +32533,52 @@ export namespace Prisma {
     update?: XOR<XOR<BlogCategoryUpdateToOneWithWhereWithoutBlogsInput, BlogCategoryUpdateWithoutBlogsInput>, BlogCategoryUncheckedUpdateWithoutBlogsInput>
   }
 
+  export type NotificationUpdateManyWithoutBlogNestedInput = {
+    create?: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput> | NotificationCreateWithoutBlogInput[] | NotificationUncheckedCreateWithoutBlogInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutBlogInput | NotificationCreateOrConnectWithoutBlogInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutBlogInput | NotificationUpsertWithWhereUniqueWithoutBlogInput[]
+    createMany?: NotificationCreateManyBlogInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutBlogInput | NotificationUpdateWithWhereUniqueWithoutBlogInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutBlogInput | NotificationUpdateManyWithWhereWithoutBlogInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutBlogNestedInput = {
+    create?: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput> | NotificationCreateWithoutBlogInput[] | NotificationUncheckedCreateWithoutBlogInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutBlogInput | NotificationCreateOrConnectWithoutBlogInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutBlogInput | NotificationUpsertWithWhereUniqueWithoutBlogInput[]
+    createMany?: NotificationCreateManyBlogInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutBlogInput | NotificationUpdateWithWhereUniqueWithoutBlogInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutBlogInput | NotificationUpdateManyWithWhereWithoutBlogInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutEventInput = {
     create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput>
     connectOrCreate?: UserCreateOrConnectWithoutEventInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type NotificationCreateNestedManyWithoutEventInput = {
+    create?: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput> | NotificationCreateWithoutEventInput[] | NotificationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutEventInput | NotificationCreateOrConnectWithoutEventInput[]
+    createMany?: NotificationCreateManyEventInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput> | NotificationCreateWithoutEventInput[] | NotificationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutEventInput | NotificationCreateOrConnectWithoutEventInput[]
+    createMany?: NotificationCreateManyEventInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutEventNestedInput = {
@@ -29877,6 +32587,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutEventInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEventInput, UserUpdateWithoutEventInput>, UserUncheckedUpdateWithoutEventInput>
+  }
+
+  export type NotificationUpdateManyWithoutEventNestedInput = {
+    create?: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput> | NotificationCreateWithoutEventInput[] | NotificationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutEventInput | NotificationCreateOrConnectWithoutEventInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutEventInput | NotificationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: NotificationCreateManyEventInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutEventInput | NotificationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutEventInput | NotificationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput> | NotificationCreateWithoutEventInput[] | NotificationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutEventInput | NotificationCreateOrConnectWithoutEventInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutEventInput | NotificationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: NotificationCreateManyEventInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutEventInput | NotificationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutEventInput | NotificationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type BlogCreateNestedManyWithoutCategoryInput = {
@@ -30007,6 +32745,48 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutModulesInput, CourseUpdateWithoutModulesInput>, CourseUncheckedUpdateWithoutModulesInput>
   }
 
+  export type NotificationCreateNestedManyWithoutCourseEnquiryInput = {
+    create?: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput> | NotificationCreateWithoutCourseEnquiryInput[] | NotificationUncheckedCreateWithoutCourseEnquiryInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCourseEnquiryInput | NotificationCreateOrConnectWithoutCourseEnquiryInput[]
+    createMany?: NotificationCreateManyCourseEnquiryInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutCourseEnquiryInput = {
+    create?: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput> | NotificationCreateWithoutCourseEnquiryInput[] | NotificationUncheckedCreateWithoutCourseEnquiryInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCourseEnquiryInput | NotificationCreateOrConnectWithoutCourseEnquiryInput[]
+    createMany?: NotificationCreateManyCourseEnquiryInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUpdateManyWithoutCourseEnquiryNestedInput = {
+    create?: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput> | NotificationCreateWithoutCourseEnquiryInput[] | NotificationUncheckedCreateWithoutCourseEnquiryInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCourseEnquiryInput | NotificationCreateOrConnectWithoutCourseEnquiryInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCourseEnquiryInput | NotificationUpsertWithWhereUniqueWithoutCourseEnquiryInput[]
+    createMany?: NotificationCreateManyCourseEnquiryInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCourseEnquiryInput | NotificationUpdateWithWhereUniqueWithoutCourseEnquiryInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCourseEnquiryInput | NotificationUpdateManyWithWhereWithoutCourseEnquiryInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutCourseEnquiryNestedInput = {
+    create?: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput> | NotificationCreateWithoutCourseEnquiryInput[] | NotificationUncheckedCreateWithoutCourseEnquiryInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCourseEnquiryInput | NotificationCreateOrConnectWithoutCourseEnquiryInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCourseEnquiryInput | NotificationUpsertWithWhereUniqueWithoutCourseEnquiryInput[]
+    createMany?: NotificationCreateManyCourseEnquiryInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCourseEnquiryInput | NotificationUpdateWithWhereUniqueWithoutCourseEnquiryInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCourseEnquiryInput | NotificationUpdateManyWithWhereWithoutCourseEnquiryInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type StatesDataCreateNestedManyWithoutCountryInput = {
     create?: XOR<StatesDataCreateWithoutCountryInput, StatesDataUncheckedCreateWithoutCountryInput> | StatesDataCreateWithoutCountryInput[] | StatesDataUncheckedCreateWithoutCountryInput[]
     connectOrCreate?: StatesDataCreateOrConnectWithoutCountryInput | StatesDataCreateOrConnectWithoutCountryInput[]
@@ -30125,6 +32905,156 @@ export namespace Prisma {
     upsert?: StatesDataUpsertWithoutCitiesInput
     connect?: StatesDataWhereUniqueInput
     update?: XOR<XOR<StatesDataUpdateToOneWithWhereWithoutCitiesInput, StatesDataUpdateWithoutCitiesInput>, StatesDataUncheckedUpdateWithoutCitiesInput>
+  }
+
+  export type UserCreateNestedOneWithoutReceivedNotificationsInput = {
+    create?: XOR<UserCreateWithoutReceivedNotificationsInput, UserUncheckedCreateWithoutReceivedNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutTriggeredNotificationsInput = {
+    create?: XOR<UserCreateWithoutTriggeredNotificationsInput, UserUncheckedCreateWithoutTriggeredNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTriggeredNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type QuotePostCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<QuotePostCreateWithoutNotificationsInput, QuotePostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: QuotePostCreateOrConnectWithoutNotificationsInput
+    connect?: QuotePostWhereUniqueInput
+  }
+
+  export type GeneralPostCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<GeneralPostCreateWithoutNotificationsInput, GeneralPostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutNotificationsInput
+    connect?: GeneralPostWhereUniqueInput
+  }
+
+  export type QuoteReplyCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<QuoteReplyCreateWithoutNotificationsInput, QuoteReplyUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutNotificationsInput
+    connect?: QuoteReplyWhereUniqueInput
+  }
+
+  export type GeneralReplyCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<GeneralReplyCreateWithoutNotificationsInput, GeneralReplyUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutNotificationsInput
+    connect?: GeneralReplyWhereUniqueInput
+  }
+
+  export type BlogCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<BlogCreateWithoutNotificationsInput, BlogUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutNotificationsInput
+    connect?: BlogWhereUniqueInput
+  }
+
+  export type EventCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<EventCreateWithoutNotificationsInput, EventUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutNotificationsInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type CourseEnquiryCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<CourseEnquiryCreateWithoutNotificationsInput, CourseEnquiryUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: CourseEnquiryCreateOrConnectWithoutNotificationsInput
+    connect?: CourseEnquiryWhereUniqueInput
+  }
+
+  export type EnumNotificationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationType
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutReceivedNotificationsInput, UserUncheckedCreateWithoutReceivedNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceivedNotificationsInput
+    upsert?: UserUpsertWithoutReceivedNotificationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedNotificationsInput, UserUpdateWithoutReceivedNotificationsInput>, UserUncheckedUpdateWithoutReceivedNotificationsInput>
+  }
+
+  export type UserUpdateOneWithoutTriggeredNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutTriggeredNotificationsInput, UserUncheckedCreateWithoutTriggeredNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTriggeredNotificationsInput
+    upsert?: UserUpsertWithoutTriggeredNotificationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTriggeredNotificationsInput, UserUpdateWithoutTriggeredNotificationsInput>, UserUncheckedUpdateWithoutTriggeredNotificationsInput>
+  }
+
+  export type QuotePostUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<QuotePostCreateWithoutNotificationsInput, QuotePostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: QuotePostCreateOrConnectWithoutNotificationsInput
+    upsert?: QuotePostUpsertWithoutNotificationsInput
+    disconnect?: QuotePostWhereInput | boolean
+    delete?: QuotePostWhereInput | boolean
+    connect?: QuotePostWhereUniqueInput
+    update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutNotificationsInput, QuotePostUpdateWithoutNotificationsInput>, QuotePostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type GeneralPostUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<GeneralPostCreateWithoutNotificationsInput, GeneralPostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: GeneralPostCreateOrConnectWithoutNotificationsInput
+    upsert?: GeneralPostUpsertWithoutNotificationsInput
+    disconnect?: GeneralPostWhereInput | boolean
+    delete?: GeneralPostWhereInput | boolean
+    connect?: GeneralPostWhereUniqueInput
+    update?: XOR<XOR<GeneralPostUpdateToOneWithWhereWithoutNotificationsInput, GeneralPostUpdateWithoutNotificationsInput>, GeneralPostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type QuoteReplyUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<QuoteReplyCreateWithoutNotificationsInput, QuoteReplyUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: QuoteReplyCreateOrConnectWithoutNotificationsInput
+    upsert?: QuoteReplyUpsertWithoutNotificationsInput
+    disconnect?: QuoteReplyWhereInput | boolean
+    delete?: QuoteReplyWhereInput | boolean
+    connect?: QuoteReplyWhereUniqueInput
+    update?: XOR<XOR<QuoteReplyUpdateToOneWithWhereWithoutNotificationsInput, QuoteReplyUpdateWithoutNotificationsInput>, QuoteReplyUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type GeneralReplyUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<GeneralReplyCreateWithoutNotificationsInput, GeneralReplyUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: GeneralReplyCreateOrConnectWithoutNotificationsInput
+    upsert?: GeneralReplyUpsertWithoutNotificationsInput
+    disconnect?: GeneralReplyWhereInput | boolean
+    delete?: GeneralReplyWhereInput | boolean
+    connect?: GeneralReplyWhereUniqueInput
+    update?: XOR<XOR<GeneralReplyUpdateToOneWithWhereWithoutNotificationsInput, GeneralReplyUpdateWithoutNotificationsInput>, GeneralReplyUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type BlogUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<BlogCreateWithoutNotificationsInput, BlogUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutNotificationsInput
+    upsert?: BlogUpsertWithoutNotificationsInput
+    disconnect?: BlogWhereInput | boolean
+    delete?: BlogWhereInput | boolean
+    connect?: BlogWhereUniqueInput
+    update?: XOR<XOR<BlogUpdateToOneWithWhereWithoutNotificationsInput, BlogUpdateWithoutNotificationsInput>, BlogUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type EventUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<EventCreateWithoutNotificationsInput, EventUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutNotificationsInput
+    upsert?: EventUpsertWithoutNotificationsInput
+    disconnect?: EventWhereInput | boolean
+    delete?: EventWhereInput | boolean
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutNotificationsInput, EventUpdateWithoutNotificationsInput>, EventUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type CourseEnquiryUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<CourseEnquiryCreateWithoutNotificationsInput, CourseEnquiryUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: CourseEnquiryCreateOrConnectWithoutNotificationsInput
+    upsert?: CourseEnquiryUpsertWithoutNotificationsInput
+    disconnect?: CourseEnquiryWhereInput | boolean
+    delete?: CourseEnquiryWhereInput | boolean
+    connect?: CourseEnquiryWhereUniqueInput
+    update?: XOR<XOR<CourseEnquiryUpdateToOneWithWhereWithoutNotificationsInput, CourseEnquiryUpdateWithoutNotificationsInput>, CourseEnquiryUncheckedUpdateWithoutNotificationsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -30435,10 +33365,40 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type QuotePostCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -30470,12 +33430,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -30507,6 +33468,7 @@ export namespace Prisma {
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostCreateOrConnectWithoutUserInput = {
@@ -30528,6 +33490,7 @@ export namespace Prisma {
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
     parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutUserInput = {
@@ -30539,6 +33502,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutUserInput = {
@@ -30573,8 +33537,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30587,12 +33551,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30605,6 +33570,7 @@ export namespace Prisma {
     generalPostSubCategory?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutUserInput = {
@@ -30626,6 +33592,7 @@ export namespace Prisma {
     post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
     parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUncheckedCreateWithoutUserInput = {
@@ -30637,6 +33604,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyCreateOrConnectWithoutUserInput = {
@@ -30677,6 +33645,7 @@ export namespace Prisma {
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
     category?: BlogCategoryCreateNestedOneWithoutBlogsInput
+    notifications?: NotificationCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUncheckedCreateWithoutAuthorInput = {
@@ -30687,6 +33656,7 @@ export namespace Prisma {
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
     categoryId?: string | null
+    notifications?: NotificationUncheckedCreateNestedManyWithoutBlogInput
   }
 
   export type BlogCreateOrConnectWithoutAuthorInput = {
@@ -30762,6 +33732,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     createdAt?: Date | string
+    notifications?: NotificationCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutAuthorInput = {
@@ -30777,6 +33748,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     createdAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutAuthorInput = {
@@ -30786,6 +33758,90 @@ export namespace Prisma {
 
   export type EventCreateManyAuthorInputEnvelope = {
     data: EventCreateManyAuthorInput | EventCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutRecipientInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutRecipientInput = {
+    id?: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutRecipientInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type NotificationCreateManyRecipientInputEnvelope = {
+    data: NotificationCreateManyRecipientInput | NotificationCreateManyRecipientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutTriggeredByInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutTriggeredByInput = {
+    id?: string
+    recipientId: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutTriggeredByInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput>
+  }
+
+  export type NotificationCreateManyTriggeredByInputEnvelope = {
+    data: NotificationCreateManyTriggeredByInput | NotificationCreateManyTriggeredByInput[]
     skipDuplicates?: boolean
   }
 
@@ -30810,8 +33866,8 @@ export namespace Prisma {
     OR?: QuotePostScalarWhereInput[]
     NOT?: QuotePostScalarWhereInput | QuotePostScalarWhereInput[]
     id?: StringFilter<"QuotePost"> | string
-    title?: StringNullableFilter<"QuotePost"> | string | null
-    description?: StringNullableFilter<"QuotePost"> | string | null
+    title?: StringFilter<"QuotePost"> | string
+    description?: StringFilter<"QuotePost"> | string
     userId?: StringFilter<"QuotePost"> | string
     name?: StringNullableFilter<"QuotePost"> | string | null
     createdAt?: DateTimeNullableFilter<"QuotePost"> | Date | string | null
@@ -30920,8 +33976,8 @@ export namespace Prisma {
     OR?: GeneralPostScalarWhereInput[]
     NOT?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
     id?: StringFilter<"GeneralPost"> | string
-    title?: StringNullableFilter<"GeneralPost"> | string | null
-    description?: StringNullableFilter<"GeneralPost"> | string | null
+    title?: StringFilter<"GeneralPost"> | string
+    description?: StringFilter<"GeneralPost"> | string
     userId?: StringFilter<"GeneralPost"> | string
     createdBy?: StringNullableFilter<"GeneralPost"> | string | null
     createdAt?: DateTimeFilter<"GeneralPost"> | Date | string
@@ -31094,6 +34150,58 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Event"> | Date | string
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutRecipientInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutRecipientInput, NotificationUncheckedUpdateWithoutRecipientInput>
+    create: XOR<NotificationCreateWithoutRecipientInput, NotificationUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutRecipientInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutRecipientInput, NotificationUncheckedUpdateWithoutRecipientInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutRecipientInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutRecipientInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    recipientId?: StringFilter<"Notification"> | string
+    triggeredById?: StringNullableFilter<"Notification"> | string | null
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
+    message?: StringFilter<"Notification"> | string
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    quotePostId?: StringNullableFilter<"Notification"> | string | null
+    generalPostId?: StringNullableFilter<"Notification"> | string | null
+    quoteReplyId?: StringNullableFilter<"Notification"> | string | null
+    generalReplyId?: StringNullableFilter<"Notification"> | string | null
+    blogId?: StringNullableFilter<"Notification"> | string | null
+    eventId?: StringNullableFilter<"Notification"> | string | null
+    courseEnquiryId?: StringNullableFilter<"Notification"> | string | null
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutTriggeredByInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutTriggeredByInput, NotificationUncheckedUpdateWithoutTriggeredByInput>
+    create: XOR<NotificationCreateWithoutTriggeredByInput, NotificationUncheckedCreateWithoutTriggeredByInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutTriggeredByInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutTriggeredByInput, NotificationUncheckedUpdateWithoutTriggeredByInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutTriggeredByInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutTriggeredByInput>
+  }
+
   export type ForumSubCategoryCreateWithoutMainCategoryInput = {
     id?: string
     name?: string | null
@@ -31122,8 +34230,8 @@ export namespace Prisma {
 
   export type QuotePostCreateWithoutMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -31155,12 +34263,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     user: UserCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -31192,6 +34301,7 @@ export namespace Prisma {
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostCreateOrConnectWithoutMainCategoryInput = {
@@ -31206,8 +34316,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateWithoutMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31220,12 +34330,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -31238,6 +34349,7 @@ export namespace Prisma {
     generalPostSubCategory?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutMainCategoryInput = {
@@ -31310,8 +34422,8 @@ export namespace Prisma {
 
   export type QuotePostCreateWithoutSubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -31343,12 +34455,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user: UserCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutSubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -31380,6 +34493,7 @@ export namespace Prisma {
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostCreateOrConnectWithoutSubCategoryInput = {
@@ -31394,8 +34508,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateWithoutSubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31408,12 +34522,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutSubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -31426,6 +34541,7 @@ export namespace Prisma {
     generalPostMainCategory?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutSubCategoryInput = {
@@ -31527,6 +34643,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutQuoteReplyInput
     parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutPostInput = {
@@ -31538,6 +34655,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutPostInput = {
@@ -31614,7 +34732,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutQuotePostInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -31640,11 +34758,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutQuotePostInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -31670,11 +34790,55 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutQuotePostInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutQuotePostInput, UserUncheckedCreateWithoutQuotePostInput>
+  }
+
+  export type NotificationCreateWithoutQuotePostInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutQuotePostInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutQuotePostInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput>
+  }
+
+  export type NotificationCreateManyQuotePostInputEnvelope = {
+    data: NotificationCreateManyQuotePostInput | NotificationCreateManyQuotePostInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuoteReplyUpsertWithWhereUniqueWithoutPostInput = {
@@ -31776,7 +34940,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutQuotePostInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -31802,11 +34966,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuotePostInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -31832,11 +34998,29 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutQuotePostInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutQuotePostInput, NotificationUncheckedUpdateWithoutQuotePostInput>
+    create: XOR<NotificationCreateWithoutQuotePostInput, NotificationUncheckedCreateWithoutQuotePostInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutQuotePostInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutQuotePostInput, NotificationUncheckedUpdateWithoutQuotePostInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutQuotePostInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutQuotePostInput>
   }
 
   export type UserCreateWithoutQuoteReplyInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -31862,11 +35046,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutQuoteReplyInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -31892,6 +35078,8 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutQuoteReplyInput = {
@@ -31901,8 +35089,8 @@ export namespace Prisma {
 
   export type QuotePostCreateWithoutQuoteReplyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -31934,12 +35122,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user: UserCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutQuoteReplyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -31971,6 +35160,7 @@ export namespace Prisma {
     postSubCategory?: string | null
     shipmentType?: string | null
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostCreateOrConnectWithoutQuoteReplyInput = {
@@ -31987,6 +35177,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutQuoteReplyInput
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
     parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+    notifications?: NotificationCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutChildRepliesInput = {
@@ -31998,6 +35189,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutChildRepliesInput = {
@@ -32014,6 +35206,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutQuoteReplyInput
     post: QuotePostCreateNestedOneWithoutQuoteReplyInput
     childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyUncheckedCreateWithoutParentReplyInput = {
@@ -32025,6 +35218,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuoteReplyInput
   }
 
   export type QuoteReplyCreateOrConnectWithoutParentReplyInput = {
@@ -32034,6 +35228,48 @@ export namespace Prisma {
 
   export type QuoteReplyCreateManyParentReplyInputEnvelope = {
     data: QuoteReplyCreateManyParentReplyInput | QuoteReplyCreateManyParentReplyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutQuoteReplyInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutQuoteReplyInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutQuoteReplyInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput>
+  }
+
+  export type NotificationCreateManyQuoteReplyInputEnvelope = {
+    data: NotificationCreateManyQuoteReplyInput | NotificationCreateManyQuoteReplyInput[]
     skipDuplicates?: boolean
   }
 
@@ -32050,7 +35286,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutQuoteReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32076,11 +35312,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32106,6 +35344,8 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type QuotePostUpsertWithoutQuoteReplyInput = {
@@ -32121,8 +35361,8 @@ export namespace Prisma {
 
   export type QuotePostUpdateWithoutQuoteReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -32154,12 +35394,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutQuoteReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -32191,6 +35432,7 @@ export namespace Prisma {
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuoteReplyUpsertWithoutChildRepliesInput = {
@@ -32213,6 +35455,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
     parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+    notifications?: NotificationUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutChildRepliesInput = {
@@ -32224,6 +35467,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    notifications?: NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUpsertWithWhereUniqueWithoutParentReplyInput = {
@@ -32242,9 +35486,25 @@ export namespace Prisma {
     data: XOR<QuoteReplyUpdateManyMutationInput, QuoteReplyUncheckedUpdateManyWithoutParentReplyInput>
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutQuoteReplyInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutQuoteReplyInput, NotificationUncheckedUpdateWithoutQuoteReplyInput>
+    create: XOR<NotificationCreateWithoutQuoteReplyInput, NotificationUncheckedCreateWithoutQuoteReplyInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutQuoteReplyInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutQuoteReplyInput, NotificationUncheckedUpdateWithoutQuoteReplyInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutQuoteReplyInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutQuoteReplyInput>
+  }
+
   export type UserCreateWithoutQuoteLikeInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32270,11 +35530,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutQuoteLikeInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32300,6 +35562,8 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutQuoteLikeInput = {
@@ -32309,8 +35573,8 @@ export namespace Prisma {
 
   export type QuotePostCreateWithoutQuoteLikeInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -32342,12 +35606,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
     mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
     user: UserCreateNestedOneWithoutQuotePostInput
+    notifications?: NotificationCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostUncheckedCreateWithoutQuoteLikeInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -32379,6 +35644,7 @@ export namespace Prisma {
     postSubCategory?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
   }
 
   export type QuotePostCreateOrConnectWithoutQuoteLikeInput = {
@@ -32399,7 +35665,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutQuoteLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32425,11 +35691,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuoteLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32455,6 +35723,8 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type QuotePostUpsertWithoutQuoteLikeInput = {
@@ -32470,8 +35740,8 @@ export namespace Prisma {
 
   export type QuotePostUpdateWithoutQuoteLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -32503,12 +35773,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutQuoteLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -32540,11 +35811,12 @@ export namespace Prisma {
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type UserCreateWithoutGeneralPostInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32570,11 +35842,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutGeneralPostInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32600,6 +35874,8 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutGeneralPostInput = {
@@ -32658,6 +35934,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutGeneralReplyInput
     parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
     childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUncheckedCreateWithoutPostInput = {
@@ -32669,6 +35946,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyCreateOrConnectWithoutPostInput = {
@@ -32701,6 +35979,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type NotificationCreateWithoutGeneralPostInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutGeneralPostInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutGeneralPostInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type NotificationCreateManyGeneralPostInputEnvelope = {
+    data: NotificationCreateManyGeneralPostInput | NotificationCreateManyGeneralPostInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutGeneralPostInput = {
     update: XOR<UserUpdateWithoutGeneralPostInput, UserUncheckedUpdateWithoutGeneralPostInput>
     create: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
@@ -32714,7 +36034,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutGeneralPostInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32740,11 +36060,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGeneralPostInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -32770,6 +36092,8 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type ForumMainCategoryUpsertWithoutGeneralPostInput = {
@@ -32858,9 +36182,25 @@ export namespace Prisma {
     data: XOR<GeneralLikeUpdateManyMutationInput, GeneralLikeUncheckedUpdateManyWithoutPostInput>
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutGeneralPostInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutGeneralPostInput, NotificationUncheckedUpdateWithoutGeneralPostInput>
+    create: XOR<NotificationCreateWithoutGeneralPostInput, NotificationUncheckedCreateWithoutGeneralPostInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutGeneralPostInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutGeneralPostInput, NotificationUncheckedUpdateWithoutGeneralPostInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutGeneralPostInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutGeneralPostInput>
+  }
+
   export type UserCreateWithoutGeneralReplyInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32886,11 +36226,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutGeneralReplyInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -32916,6 +36258,8 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutGeneralReplyInput = {
@@ -32925,8 +36269,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateWithoutGeneralReplyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -32939,12 +36283,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutGeneralReplyInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -32957,6 +36302,7 @@ export namespace Prisma {
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutGeneralReplyInput = {
@@ -32973,6 +36319,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutGeneralReplyInput
     post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
     parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUncheckedCreateWithoutChildRepliesInput = {
@@ -32984,6 +36331,7 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyCreateOrConnectWithoutChildRepliesInput = {
@@ -33000,6 +36348,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutGeneralReplyInput
     post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
     childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyUncheckedCreateWithoutParentReplyInput = {
@@ -33011,6 +36360,7 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralReplyInput
   }
 
   export type GeneralReplyCreateOrConnectWithoutParentReplyInput = {
@@ -33020,6 +36370,48 @@ export namespace Prisma {
 
   export type GeneralReplyCreateManyParentReplyInputEnvelope = {
     data: GeneralReplyCreateManyParentReplyInput | GeneralReplyCreateManyParentReplyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutGeneralReplyInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutGeneralReplyInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutGeneralReplyInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput>
+  }
+
+  export type NotificationCreateManyGeneralReplyInputEnvelope = {
+    data: NotificationCreateManyGeneralReplyInput | NotificationCreateManyGeneralReplyInput[]
     skipDuplicates?: boolean
   }
 
@@ -33036,7 +36428,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutGeneralReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33062,11 +36454,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGeneralReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33092,6 +36486,8 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type GeneralPostUpsertWithoutGeneralReplyInput = {
@@ -33107,8 +36503,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateWithoutGeneralReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33121,12 +36517,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutGeneralReplyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33139,6 +36536,7 @@ export namespace Prisma {
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralReplyUpsertWithoutChildRepliesInput = {
@@ -33161,6 +36559,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
     post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
     parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateWithoutChildRepliesInput = {
@@ -33172,6 +36571,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUpsertWithWhereUniqueWithoutParentReplyInput = {
@@ -33190,9 +36590,25 @@ export namespace Prisma {
     data: XOR<GeneralReplyUpdateManyMutationInput, GeneralReplyUncheckedUpdateManyWithoutParentReplyInput>
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutGeneralReplyInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutGeneralReplyInput, NotificationUncheckedUpdateWithoutGeneralReplyInput>
+    create: XOR<NotificationCreateWithoutGeneralReplyInput, NotificationUncheckedCreateWithoutGeneralReplyInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutGeneralReplyInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutGeneralReplyInput, NotificationUncheckedUpdateWithoutGeneralReplyInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutGeneralReplyInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutGeneralReplyInput>
+  }
+
   export type UserCreateWithoutGeneralLikeInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33218,11 +36634,13 @@ export namespace Prisma {
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutGeneralLikeInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33248,6 +36666,8 @@ export namespace Prisma {
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutGeneralLikeInput = {
@@ -33257,8 +36677,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateWithoutGeneralLikeInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33271,12 +36691,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostUncheckedCreateWithoutGeneralLikeInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -33289,6 +36710,7 @@ export namespace Prisma {
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
 
   export type GeneralPostCreateOrConnectWithoutGeneralLikeInput = {
@@ -33309,7 +36731,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutGeneralLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33335,11 +36757,13 @@ export namespace Prisma {
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGeneralLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33365,6 +36789,8 @@ export namespace Prisma {
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type GeneralPostUpsertWithoutGeneralLikeInput = {
@@ -33380,8 +36806,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateWithoutGeneralLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33394,12 +36820,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutGeneralLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33412,11 +36839,12 @@ export namespace Prisma {
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type UserCreateWithoutBlogInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33442,11 +36870,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutBlogInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33472,6 +36902,8 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutBlogInput = {
@@ -33494,6 +36926,48 @@ export namespace Prisma {
     create: XOR<BlogCategoryCreateWithoutBlogsInput, BlogCategoryUncheckedCreateWithoutBlogsInput>
   }
 
+  export type NotificationCreateWithoutBlogInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutBlogInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutBlogInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput>
+  }
+
+  export type NotificationCreateManyBlogInputEnvelope = {
+    data: NotificationCreateManyBlogInput | NotificationCreateManyBlogInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutBlogInput = {
     update: XOR<UserUpdateWithoutBlogInput, UserUncheckedUpdateWithoutBlogInput>
     create: XOR<UserCreateWithoutBlogInput, UserUncheckedCreateWithoutBlogInput>
@@ -33507,7 +36981,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutBlogInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33533,11 +37007,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBlogInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33563,6 +37039,8 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type BlogCategoryUpsertWithoutBlogsInput = {
@@ -33586,9 +37064,25 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutBlogInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutBlogInput, NotificationUncheckedUpdateWithoutBlogInput>
+    create: XOR<NotificationCreateWithoutBlogInput, NotificationUncheckedCreateWithoutBlogInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutBlogInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutBlogInput, NotificationUncheckedUpdateWithoutBlogInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutBlogInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutBlogInput>
+  }
+
   export type UserCreateWithoutEventInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33614,11 +37108,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Course?: CourseCreateNestedManyWithoutCreatedByInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutEventInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33644,11 +37140,55 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutEventInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput>
+  }
+
+  export type NotificationCreateWithoutEventInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    courseEnquiry?: CourseEnquiryCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutEventInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutEventInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput>
+  }
+
+  export type NotificationCreateManyEventInputEnvelope = {
+    data: NotificationCreateManyEventInput | NotificationCreateManyEventInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutEventInput = {
@@ -33664,7 +37204,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33690,11 +37230,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Course?: CourseUpdateManyWithoutCreatedByNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33720,6 +37262,24 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutEventInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutEventInput, NotificationUncheckedUpdateWithoutEventInput>
+    create: XOR<NotificationCreateWithoutEventInput, NotificationUncheckedCreateWithoutEventInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutEventInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutEventInput, NotificationUncheckedUpdateWithoutEventInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutEventInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutEventInput>
   }
 
   export type BlogCreateWithoutCategoryInput = {
@@ -33730,6 +37290,7 @@ export namespace Prisma {
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
     author: UserCreateNestedOneWithoutBlogInput
+    notifications?: NotificationCreateNestedManyWithoutBlogInput
   }
 
   export type BlogUncheckedCreateWithoutCategoryInput = {
@@ -33740,6 +37301,7 @@ export namespace Prisma {
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
+    notifications?: NotificationUncheckedCreateNestedManyWithoutBlogInput
   }
 
   export type BlogCreateOrConnectWithoutCategoryInput = {
@@ -33770,7 +37332,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutCourseInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33796,11 +37358,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
     blog?: BlogCreateNestedManyWithoutAuthorInput
     Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutCourseInput = {
     id?: string
-    name?: string | null
+    name: string
     email?: string | null
     password?: string | null
     verified?: boolean | null
@@ -33826,6 +37390,8 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
     blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
     Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutCourseInput = {
@@ -33874,7 +37440,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33900,11 +37466,13 @@ export namespace Prisma {
     generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
     blog?: BlogUpdateManyWithoutAuthorNestedInput
     Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -33930,6 +37498,8 @@ export namespace Prisma {
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
     blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
     Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type CourseModuleUpsertWithWhereUniqueWithoutCourseInput = {
@@ -34055,6 +37625,64 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NotificationCreateWithoutCourseEnquiryInput = {
+    id?: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    recipient: UserCreateNestedOneWithoutReceivedNotificationsInput
+    triggeredBy?: UserCreateNestedOneWithoutTriggeredNotificationsInput
+    quotePost?: QuotePostCreateNestedOneWithoutNotificationsInput
+    generalPost?: GeneralPostCreateNestedOneWithoutNotificationsInput
+    quoteReply?: QuoteReplyCreateNestedOneWithoutNotificationsInput
+    generalReply?: GeneralReplyCreateNestedOneWithoutNotificationsInput
+    blog?: BlogCreateNestedOneWithoutNotificationsInput
+    event?: EventCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutCourseEnquiryInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+  }
+
+  export type NotificationCreateOrConnectWithoutCourseEnquiryInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput>
+  }
+
+  export type NotificationCreateManyCourseEnquiryInputEnvelope = {
+    data: NotificationCreateManyCourseEnquiryInput | NotificationCreateManyCourseEnquiryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutCourseEnquiryInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutCourseEnquiryInput, NotificationUncheckedUpdateWithoutCourseEnquiryInput>
+    create: XOR<NotificationCreateWithoutCourseEnquiryInput, NotificationUncheckedCreateWithoutCourseEnquiryInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutCourseEnquiryInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutCourseEnquiryInput, NotificationUncheckedUpdateWithoutCourseEnquiryInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutCourseEnquiryInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutCourseEnquiryInput>
   }
 
   export type StatesDataCreateWithoutCountryInput = {
@@ -34237,10 +37865,890 @@ export namespace Prisma {
     country_id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserCreateWithoutReceivedNotificationsInput = {
+    id?: string
+    name: string
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
+    Course?: CourseCreateNestedManyWithoutCreatedByInput
+    Event?: EventCreateNestedManyWithoutAuthorInput
+    triggeredNotifications?: NotificationCreateNestedManyWithoutTriggeredByInput
+  }
+
+  export type UserUncheckedCreateWithoutReceivedNotificationsInput = {
+    id?: string
+    name: string
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
+    Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
+    Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    triggeredNotifications?: NotificationUncheckedCreateNestedManyWithoutTriggeredByInput
+  }
+
+  export type UserCreateOrConnectWithoutReceivedNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReceivedNotificationsInput, UserUncheckedCreateWithoutReceivedNotificationsInput>
+  }
+
+  export type UserCreateWithoutTriggeredNotificationsInput = {
+    id?: string
+    name: string
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutUserInput
+    blog?: BlogCreateNestedManyWithoutAuthorInput
+    Course?: CourseCreateNestedManyWithoutCreatedByInput
+    Event?: EventCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutRecipientInput
+  }
+
+  export type UserUncheckedCreateWithoutTriggeredNotificationsInput = {
+    id?: string
+    name: string
+    email?: string | null
+    password?: string | null
+    verified?: boolean | null
+    role?: string | null
+    mobileNo?: string | null
+    country?: string | null
+    city?: string | null
+    address?: string | null
+    postalCode?: string | null
+    profilePic?: string | null
+    bio?: string | null
+    online?: boolean | null
+    lastSeen?: Date | string | null
+    rating?: number | null
+    accountType?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quotePost?: QuotePostUncheckedCreateNestedManyWithoutUserInput
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutUserInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutUserInput
+    generalPost?: GeneralPostUncheckedCreateNestedManyWithoutUserInput
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutUserInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutUserInput
+    blog?: BlogUncheckedCreateNestedManyWithoutAuthorInput
+    Course?: CourseUncheckedCreateNestedManyWithoutCreatedByInput
+    Event?: EventUncheckedCreateNestedManyWithoutAuthorInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  }
+
+  export type UserCreateOrConnectWithoutTriggeredNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTriggeredNotificationsInput, UserUncheckedCreateWithoutTriggeredNotificationsInput>
+  }
+
+  export type QuotePostCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
+    mainCategory?: ForumMainCategoryCreateNestedOneWithoutQuotePostInput
+    user: UserCreateNestedOneWithoutQuotePostInput
+  }
+
+  export type QuotePostUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: string
+    userId: string
+    name?: string | null
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+    totalNetWeight?: number | null
+    totalGrossWeight?: number | null
+    volumetricWeight?: number | null
+    transitInsurance?: boolean | null
+    width?: number | null
+    height?: number | null
+    length?: number | null
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    dangerousGoods?: boolean | null
+    status?: string | null
+    rejectionReason?: string | null
+    fromPostalCode?: string | null
+    toPostalCode?: string | null
+    fromCity?: string | null
+    toCity?: string | null
+    fromCountry?: string | null
+    toCountry?: string | null
+    fromAddress?: string | null
+    toAddress?: string | null
+    fromState?: string | null
+    toState?: string | null
+    postMainCategory?: string | null
+    postSubCategory?: string | null
+    shipmentType?: string | null
+    quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
+    quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type QuotePostCreateOrConnectWithoutNotificationsInput = {
+    where: QuotePostWhereUniqueInput
+    create: XOR<QuotePostCreateWithoutNotificationsInput, QuotePostUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type GeneralPostCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralPostInput
+    MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
+    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: string
+    userId: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    viewCount?: number | null
+    likesCount?: number | null
+    commentsCount?: number | null
+    status?: string | null
+    rejectionReason?: string | null
+    generalPostMainCategory?: string | null
+    generalPostSubCategory?: string | null
+    generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
+    generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type GeneralPostCreateOrConnectWithoutNotificationsInput = {
+    where: GeneralPostWhereUniqueInput
+    create: XOR<GeneralPostCreateWithoutNotificationsInput, GeneralPostUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type QuoteReplyCreateWithoutNotificationsInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutQuoteReplyInput
+    post: QuotePostCreateNestedOneWithoutQuoteReplyInput
+    parentReply?: QuoteReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: QuoteReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type QuoteReplyUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: QuoteReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type QuoteReplyCreateOrConnectWithoutNotificationsInput = {
+    where: QuoteReplyWhereUniqueInput
+    create: XOR<QuoteReplyCreateWithoutNotificationsInput, QuoteReplyUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type GeneralReplyCreateWithoutNotificationsInput = {
+    id?: string
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    user: UserCreateNestedOneWithoutGeneralReplyInput
+    post: GeneralPostCreateNestedOneWithoutGeneralReplyInput
+    parentReply?: GeneralReplyCreateNestedOneWithoutChildRepliesInput
+    childReplies?: GeneralReplyCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    userId: string
+    postId: string
+    parentReplyId?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    status?: string | null
+    rejectionReason?: string | null
+    childReplies?: GeneralReplyUncheckedCreateNestedManyWithoutParentReplyInput
+  }
+
+  export type GeneralReplyCreateOrConnectWithoutNotificationsInput = {
+    where: GeneralReplyWhereUniqueInput
+    create: XOR<GeneralReplyCreateWithoutNotificationsInput, GeneralReplyUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type BlogCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    status: string
+    createdAt?: Date | string
+    image_url?: BlogCreateimage_urlInput | string[]
+    author: UserCreateNestedOneWithoutBlogInput
+    category?: BlogCategoryCreateNestedOneWithoutBlogsInput
+  }
+
+  export type BlogUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    title: string
+    description: JsonNullValueInput | InputJsonValue
+    authorId: string
+    status: string
+    createdAt?: Date | string
+    image_url?: BlogCreateimage_urlInput | string[]
+    categoryId?: string | null
+  }
+
+  export type BlogCreateOrConnectWithoutNotificationsInput = {
+    where: BlogWhereUniqueInput
+    create: XOR<BlogCreateWithoutNotificationsInput, BlogUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type EventCreateWithoutNotificationsInput = {
+    id?: string
+    coverImage: string
+    eventTitle: string
+    organizer: string
+    countryCode: string
+    contactNumber: string
+    emailAddress: string
+    description: JsonNullValueInput | InputJsonValue
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+    author: UserCreateNestedOneWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    authorId: string
+    coverImage: string
+    eventTitle: string
+    organizer: string
+    countryCode: string
+    contactNumber: string
+    emailAddress: string
+    description: JsonNullValueInput | InputJsonValue
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    createdAt?: Date | string
+  }
+
+  export type EventCreateOrConnectWithoutNotificationsInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutNotificationsInput, EventUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type CourseEnquiryCreateWithoutNotificationsInput = {
+    id?: string
+    institutionName: string
+    institutionType: string
+    contactPersonName: string
+    contactPersonPosition: string
+    contactNumber: string
+    website?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseEnquiryUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    institutionName: string
+    institutionType: string
+    contactPersonName: string
+    contactPersonPosition: string
+    contactNumber: string
+    website?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourseEnquiryCreateOrConnectWithoutNotificationsInput = {
+    where: CourseEnquiryWhereUniqueInput
+    create: XOR<CourseEnquiryCreateWithoutNotificationsInput, CourseEnquiryUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserUpsertWithoutReceivedNotificationsInput = {
+    update: XOR<UserUpdateWithoutReceivedNotificationsInput, UserUncheckedUpdateWithoutReceivedNotificationsInput>
+    create: XOR<UserCreateWithoutReceivedNotificationsInput, UserUncheckedCreateWithoutReceivedNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReceivedNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReceivedNotificationsInput, UserUncheckedUpdateWithoutReceivedNotificationsInput>
+  }
+
+  export type UserUpdateWithoutReceivedNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
+    Course?: CourseUpdateManyWithoutCreatedByNestedInput
+    Event?: EventUpdateManyWithoutAuthorNestedInput
+    triggeredNotifications?: NotificationUpdateManyWithoutTriggeredByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReceivedNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
+    Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+    Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    triggeredNotifications?: NotificationUncheckedUpdateManyWithoutTriggeredByNestedInput
+  }
+
+  export type UserUpsertWithoutTriggeredNotificationsInput = {
+    update: XOR<UserUpdateWithoutTriggeredNotificationsInput, UserUncheckedUpdateWithoutTriggeredNotificationsInput>
+    create: XOR<UserCreateWithoutTriggeredNotificationsInput, UserUncheckedCreateWithoutTriggeredNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTriggeredNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTriggeredNotificationsInput, UserUncheckedUpdateWithoutTriggeredNotificationsInput>
+  }
+
+  export type UserUpdateWithoutTriggeredNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutUserNestedInput
+    blog?: BlogUpdateManyWithoutAuthorNestedInput
+    Course?: CourseUpdateManyWithoutCreatedByNestedInput
+    Event?: EventUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTriggeredNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    mobileNo?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    online?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    accountType?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePost?: QuotePostUncheckedUpdateManyWithoutUserNestedInput
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutUserNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutUserNestedInput
+    generalPost?: GeneralPostUncheckedUpdateManyWithoutUserNestedInput
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutUserNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutUserNestedInput
+    blog?: BlogUncheckedUpdateManyWithoutAuthorNestedInput
+    Course?: CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+    Event?: EventUncheckedUpdateManyWithoutAuthorNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  }
+
+  export type QuotePostUpsertWithoutNotificationsInput = {
+    update: XOR<QuotePostUpdateWithoutNotificationsInput, QuotePostUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<QuotePostCreateWithoutNotificationsInput, QuotePostUncheckedCreateWithoutNotificationsInput>
+    where?: QuotePostWhereInput
+  }
+
+  export type QuotePostUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: QuotePostWhereInput
+    data: XOR<QuotePostUpdateWithoutNotificationsInput, QuotePostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type QuotePostUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
+    mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
+    user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+  }
+
+  export type QuotePostUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    totalNetWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalGrossWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    volumetricWeight?: NullableFloatFieldUpdateOperationsInput | number | null
+    transitInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    width?: NullableFloatFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    length?: NullableFloatFieldUpdateOperationsInput | number | null
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCity?: NullableStringFieldUpdateOperationsInput | string | null
+    toCity?: NullableStringFieldUpdateOperationsInput | string | null
+    fromCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    toCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    fromAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    toAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    fromState?: NullableStringFieldUpdateOperationsInput | string | null
+    toState?: NullableStringFieldUpdateOperationsInput | string | null
+    postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
+    quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUpsertWithoutNotificationsInput = {
+    update: XOR<GeneralPostUpdateWithoutNotificationsInput, GeneralPostUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<GeneralPostCreateWithoutNotificationsInput, GeneralPostUncheckedCreateWithoutNotificationsInput>
+    where?: GeneralPostWhereInput
+  }
+
+  export type GeneralPostUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: GeneralPostWhereInput
+    data: XOR<GeneralPostUpdateWithoutNotificationsInput, GeneralPostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type GeneralPostUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
+    MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
+    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type GeneralPostUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    viewCount?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: NullableIntFieldUpdateOperationsInput | number | null
+    commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
+    generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type QuoteReplyUpsertWithoutNotificationsInput = {
+    update: XOR<QuoteReplyUpdateWithoutNotificationsInput, QuoteReplyUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<QuoteReplyCreateWithoutNotificationsInput, QuoteReplyUncheckedCreateWithoutNotificationsInput>
+    where?: QuoteReplyWhereInput
+  }
+
+  export type QuoteReplyUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: QuoteReplyWhereInput
+    data: XOR<QuoteReplyUpdateWithoutNotificationsInput, QuoteReplyUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type QuoteReplyUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
+    post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
+    parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type QuoteReplyUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUpsertWithoutNotificationsInput = {
+    update: XOR<GeneralReplyUpdateWithoutNotificationsInput, GeneralReplyUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<GeneralReplyCreateWithoutNotificationsInput, GeneralReplyUncheckedCreateWithoutNotificationsInput>
+    where?: GeneralReplyWhereInput
+  }
+
+  export type GeneralReplyUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: GeneralReplyWhereInput
+    data: XOR<GeneralReplyUpdateWithoutNotificationsInput, GeneralReplyUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type GeneralReplyUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
+    post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
+    parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
+    childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type GeneralReplyUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    parentReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+  }
+
+  export type BlogUpsertWithoutNotificationsInput = {
+    update: XOR<BlogUpdateWithoutNotificationsInput, BlogUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<BlogCreateWithoutNotificationsInput, BlogUncheckedCreateWithoutNotificationsInput>
+    where?: BlogWhereInput
+  }
+
+  export type BlogUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: BlogWhereInput
+    data: XOR<BlogUpdateWithoutNotificationsInput, BlogUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type BlogUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+    author?: UserUpdateOneRequiredWithoutBlogNestedInput
+    category?: BlogCategoryUpdateOneWithoutBlogsNestedInput
+  }
+
+  export type BlogUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    authorId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: BlogUpdateimage_urlInput | string[]
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EventUpsertWithoutNotificationsInput = {
+    update: XOR<EventUpdateWithoutNotificationsInput, EventUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<EventCreateWithoutNotificationsInput, EventUncheckedCreateWithoutNotificationsInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutNotificationsInput, EventUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type EventUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    eventTitle?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    countryCode?: StringFieldUpdateOperationsInput | string
+    contactNumber?: StringFieldUpdateOperationsInput | string
+    emailAddress?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    eventTitle?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    countryCode?: StringFieldUpdateOperationsInput | string
+    contactNumber?: StringFieldUpdateOperationsInput | string
+    emailAddress?: StringFieldUpdateOperationsInput | string
+    description?: JsonNullValueInput | InputJsonValue
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseEnquiryUpsertWithoutNotificationsInput = {
+    update: XOR<CourseEnquiryUpdateWithoutNotificationsInput, CourseEnquiryUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<CourseEnquiryCreateWithoutNotificationsInput, CourseEnquiryUncheckedCreateWithoutNotificationsInput>
+    where?: CourseEnquiryWhereInput
+  }
+
+  export type CourseEnquiryUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: CourseEnquiryWhereInput
+    data: XOR<CourseEnquiryUpdateWithoutNotificationsInput, CourseEnquiryUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type CourseEnquiryUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institutionName?: StringFieldUpdateOperationsInput | string
+    institutionType?: StringFieldUpdateOperationsInput | string
+    contactPersonName?: StringFieldUpdateOperationsInput | string
+    contactPersonPosition?: StringFieldUpdateOperationsInput | string
+    contactNumber?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseEnquiryUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institutionName?: StringFieldUpdateOperationsInput | string
+    institutionType?: StringFieldUpdateOperationsInput | string
+    contactPersonName?: StringFieldUpdateOperationsInput | string
+    contactPersonPosition?: StringFieldUpdateOperationsInput | string
+    contactNumber?: StringFieldUpdateOperationsInput | string
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type QuotePostCreateManyUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     name?: string | null
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
@@ -34289,8 +38797,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateManyUserInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     createdBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -34362,10 +38870,42 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type NotificationCreateManyRecipientInput = {
+    id?: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationCreateManyTriggeredByInput = {
+    id?: string
+    recipientId: string
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
   export type QuotePostUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34397,12 +38937,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34434,12 +38975,13 @@ export namespace Prisma {
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34480,6 +39022,7 @@ export namespace Prisma {
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
     parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutUserInput = {
@@ -34491,6 +39034,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateManyWithoutUserInput = {
@@ -34520,8 +39064,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34534,12 +39078,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34552,12 +39097,13 @@ export namespace Prisma {
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34579,6 +39125,7 @@ export namespace Prisma {
     post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
     parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateWithoutUserInput = {
@@ -34590,6 +39137,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateManyWithoutUserInput = {
@@ -34625,6 +39173,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
     category?: BlogCategoryUpdateOneWithoutBlogsNestedInput
+    notifications?: NotificationUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateWithoutAuthorInput = {
@@ -34635,6 +39184,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    notifications?: NotificationUncheckedUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateManyWithoutAuthorInput = {
@@ -34719,6 +39269,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutAuthorInput = {
@@ -34734,6 +39285,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateManyWithoutAuthorInput = {
@@ -34751,6 +39303,102 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type NotificationUpdateWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUpdateWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ForumSubCategoryCreateManyMainCategoryInput = {
     id?: string
     name?: string | null
@@ -34759,8 +39407,8 @@ export namespace Prisma {
 
   export type QuotePostCreateManyMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -34794,8 +39442,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateManyMainCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -34832,8 +39480,8 @@ export namespace Prisma {
 
   export type QuotePostUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34865,12 +39513,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34902,12 +39551,13 @@ export namespace Prisma {
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateManyWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -34941,8 +39591,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34955,12 +39605,13 @@ export namespace Prisma {
     subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34973,12 +39624,13 @@ export namespace Prisma {
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateManyWithoutMainCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34993,8 +39645,8 @@ export namespace Prisma {
 
   export type QuotePostCreateManySubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     name?: string | null
     createdAt?: Date | string | null
@@ -35028,8 +39680,8 @@ export namespace Prisma {
 
   export type GeneralPostCreateManySubCategoryInput = {
     id?: string
-    title?: string | null
-    description?: string | null
+    title: string
+    description: string
     userId: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -35044,8 +39696,8 @@ export namespace Prisma {
 
   export type QuotePostUpdateWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -35077,12 +39729,13 @@ export namespace Prisma {
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     mainCategory?: ForumMainCategoryUpdateOneWithoutQuotePostNestedInput
     user?: UserUpdateOneRequiredWithoutQuotePostNestedInput
+    notifications?: NotificationUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -35114,12 +39767,13 @@ export namespace Prisma {
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
   }
 
   export type QuotePostUncheckedUpdateManyWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -35153,8 +39807,8 @@ export namespace Prisma {
 
   export type GeneralPostUpdateWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35167,12 +39821,13 @@ export namespace Prisma {
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35185,12 +39840,13 @@ export namespace Prisma {
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
 
   export type GeneralPostUncheckedUpdateManyWithoutSubCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35218,6 +39874,22 @@ export namespace Prisma {
     userId: string
   }
 
+  export type NotificationCreateManyQuotePostInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
   export type QuoteReplyUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35227,6 +39899,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
     parentReply?: QuoteReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutPostInput = {
@@ -35238,6 +39911,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateManyWithoutPostInput = {
@@ -35265,6 +39939,54 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type NotificationUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutQuotePostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type QuoteReplyCreateManyParentReplyInput = {
     id?: string
     userId: string
@@ -35273,6 +39995,22 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+  }
+
+  export type NotificationCreateManyQuoteReplyInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
   }
 
   export type QuoteReplyUpdateWithoutParentReplyInput = {
@@ -35284,6 +40022,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutQuoteReplyNestedInput
     post?: QuotePostUpdateOneRequiredWithoutQuoteReplyNestedInput
     childReplies?: QuoteReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateWithoutParentReplyInput = {
@@ -35295,6 +40034,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: QuoteReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutQuoteReplyNestedInput
   }
 
   export type QuoteReplyUncheckedUpdateManyWithoutParentReplyInput = {
@@ -35305,6 +40045,54 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutQuoteReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GeneralReplyCreateManyPostInput = {
@@ -35322,6 +40110,22 @@ export namespace Prisma {
     userId: string
   }
 
+  export type NotificationCreateManyGeneralPostInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
   export type GeneralReplyUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35331,6 +40135,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
     parentReply?: GeneralReplyUpdateOneWithoutChildRepliesNestedInput
     childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateWithoutPostInput = {
@@ -35342,6 +40147,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateManyWithoutPostInput = {
@@ -35369,6 +40175,54 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type NotificationUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutGeneralPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type GeneralReplyCreateManyParentReplyInput = {
     id?: string
     userId: string
@@ -35377,6 +40231,22 @@ export namespace Prisma {
     createdAt?: Date | string
     status?: string | null
     rejectionReason?: string | null
+  }
+
+  export type NotificationCreateManyGeneralReplyInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
   }
 
   export type GeneralReplyUpdateWithoutParentReplyInput = {
@@ -35388,6 +40258,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutGeneralReplyNestedInput
     post?: GeneralPostUpdateOneRequiredWithoutGeneralReplyNestedInput
     childReplies?: GeneralReplyUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateWithoutParentReplyInput = {
@@ -35399,6 +40270,7 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     childReplies?: GeneralReplyUncheckedUpdateManyWithoutParentReplyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutGeneralReplyNestedInput
   }
 
   export type GeneralReplyUncheckedUpdateManyWithoutParentReplyInput = {
@@ -35409,6 +40281,182 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutGeneralReplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationCreateManyBlogInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    eventId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationUpdateWithoutBlogInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutBlogInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutBlogInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationCreateManyEventInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    courseEnquiryId?: string | null
+  }
+
+  export type NotificationUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    courseEnquiry?: CourseEnquiryUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BlogCreateManyCategoryInput = {
@@ -35429,6 +40477,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
     author?: UserUpdateOneRequiredWithoutBlogNestedInput
+    notifications?: NotificationUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateWithoutCategoryInput = {
@@ -35439,6 +40488,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
+    notifications?: NotificationUncheckedUpdateManyWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateManyWithoutCategoryInput = {
@@ -35485,6 +40535,70 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationCreateManyCourseEnquiryInput = {
+    id?: string
+    recipientId: string
+    triggeredById?: string | null
+    type: $Enums.NotificationType
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    quotePostId?: string | null
+    generalPostId?: string | null
+    quoteReplyId?: string | null
+    generalReplyId?: string | null
+    blogId?: string | null
+    eventId?: string | null
+  }
+
+  export type NotificationUpdateWithoutCourseEnquiryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipient?: UserUpdateOneRequiredWithoutReceivedNotificationsNestedInput
+    triggeredBy?: UserUpdateOneWithoutTriggeredNotificationsNestedInput
+    quotePost?: QuotePostUpdateOneWithoutNotificationsNestedInput
+    generalPost?: GeneralPostUpdateOneWithoutNotificationsNestedInput
+    quoteReply?: QuoteReplyUpdateOneWithoutNotificationsNestedInput
+    generalReply?: GeneralReplyUpdateOneWithoutNotificationsNestedInput
+    blog?: BlogUpdateOneWithoutNotificationsNestedInput
+    event?: EventUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutCourseEnquiryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutCourseEnquiryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    triggeredById?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quotePostId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    quoteReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    generalReplyId?: NullableStringFieldUpdateOperationsInput | string | null
+    blogId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StatesDataCreateManyCountryInput = {

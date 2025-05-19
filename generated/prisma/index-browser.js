@@ -336,6 +336,23 @@ exports.Prisma.CitiesDataScalarFieldEnum = {
   state_id: 'state_id'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  recipientId: 'recipientId',
+  triggeredById: 'triggeredById',
+  type: 'type',
+  message: 'message',
+  read: 'read',
+  createdAt: 'createdAt',
+  quotePostId: 'quotePostId',
+  generalPostId: 'generalPostId',
+  quoteReplyId: 'quoteReplyId',
+  generalReplyId: 'generalReplyId',
+  blogId: 'blogId',
+  eventId: 'eventId',
+  courseEnquiryId: 'courseEnquiryId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -388,6 +405,17 @@ exports.Currency = exports.$Enums.Currency = {
   OTHER: 'OTHER'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  POST_LIKED: 'POST_LIKED',
+  POST_REPLIED: 'POST_REPLIED',
+  REPLY_REPLIED: 'REPLY_REPLIED',
+  POST_STATUS_CHANGED: 'POST_STATUS_CHANGED',
+  BLOG_STATUS_CHANGED: 'BLOG_STATUS_CHANGED',
+  EVENT_CREATED: 'EVENT_CREATED',
+  COURSE_ENQUIRY_SUBMITTED: 'COURSE_ENQUIRY_SUBMITTED',
+  EVENT_UPCOMING: 'EVENT_UPCOMING'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ForumMainCategory: 'ForumMainCategory',
@@ -406,7 +434,8 @@ exports.Prisma.ModelName = {
   CourseEnquiry: 'CourseEnquiry',
   CountriesData: 'CountriesData',
   StatesData: 'StatesData',
-  CitiesData: 'CitiesData'
+  CitiesData: 'CitiesData',
+  Notification: 'Notification'
 };
 
 /**

@@ -1,4 +1,5 @@
 const { z } = require('zod');
+const { ApiError } = require('../utils/ApiError');
 
 // Zod schema for QuotePost
 const quotePostSchema = z.object({
@@ -33,8 +34,8 @@ const quotePostSchema = z.object({
   toAddress: z.string().nullable().optional(),
   fromState: z.string().nullable().optional(),
   toState: z.string().nullable().optional(),
-  postMainCategory: z.string().nullable().optional(),
-  postSubCategory: z.string().nullable().optional(),
+  postMainCategory: z.string().uuid().nullable().optional(),
+  postSubCategory: z.string().uuid().nullable().optional(),
   shipmentType: z.string().nullable().optional(),
 });
 
@@ -65,9 +66,9 @@ const updateQuotePostSchema = z
     toAddress: z.string().nullable().optional(),
     fromState: z.string().nullable().optional(),
     toState: z.string().nullable().optional(),
-    postCategory: z.string().nullable().optional(),
+    postMainCategory: z.string().uuid().nullable().optional(),
+    postSubCategory: z.string().uuid().nullable().optional(),
     shipmentType: z.string().nullable().optional(),
-    shipmentMode: z.string().nullable().optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
     message: 'At least one field must be provided for update',
@@ -95,9 +96,93 @@ const quoteLikeSchema = z.object({
   postId: z.string().uuid(),
 });
 
+// Validation functions
+const validateCreateQuotePost = (body) => {
+  const result = quotePostSchema.safeParse(body);
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid quote post data', result.error.errors);
+  }
+  return result.data;
+};
+
+const validateCreateQuoteReply = (body) => {
+  const result = quoteReplySchema.safeParse(body);
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid quote reply data', result.error.errors);
+  }
+  return result.data;
+};
+
+const validateCreateQuoteLike = (body) => {
+  const result = quoteLikeSchema.safeParse(body);
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid quote like data', result.error.errors);
+  }
+  return result.data;
+};
+
+const validateUpdateQuotePost = (params, body) => {
+  const postIdSchema = z.object({ postId: z.string().uuid() });
+  const idResult = postIdSchema.safeParse(params);
+  if (!idResult.success) {
+    throw new ApiError(400, 'Invalid post ID', idResult.error.errors);
+  }
+
+  const bodyResult = updateQuotePostSchema.safeParse(body);
+  if (!bodyResult.success) {
+    throw new ApiError(
+      400,
+      'Invalid update quote post data',
+      bodyResult.error.errors,
+    );
+  }
+
+  return { postId: idResult.data.postId, data: bodyResult.data };
+};
+
+const validateUserId = (params) => {
+  const schema = z.object({ userId: z.string().uuid() });
+  const result = schema.safeParse(params);
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid user ID', result.error.errors);
+  }
+  return result.data.userId;
+};
+
+const validatePostId = (params) => {
+  const schema = z.object({ postId: z.string().uuid() });
+  const result = schema.safeParse(params);
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid post ID', result.error.errors);
+  }
+  return result.data.postId;
+};
+
+const validateGetLikesByPostId = (params, query) => {
+  const schema = z.object({
+    postId: z.string().uuid(),
+    userId: z.string().uuid().optional(),
+  });
+  const result = schema.safeParse({
+    postId: params.postId,
+    userId: query.userId,
+  });
+  if (!result.success) {
+    throw new ApiError(400, 'Invalid post ID or user ID', result.error.errors);
+  }
+  return result.data;
+};
+
 module.exports = {
   quotePostSchema,
   updateQuotePostSchema,
   quoteReplySchema,
   quoteLikeSchema,
+  validateCreateQuotePost,
+  validateCreateQuoteReply,
+  validateCreateQuoteLike,
+  validateUpdateQuotePost,
+  validateUserId,
+  validatePostId,
+  validateGetLikesByPostId,
 };
