@@ -1,50 +1,60 @@
-# Stage 1: Install dependencies and build Prisma client
+# Stage 1: Build stage
 FROM node:20-alpine AS build
 
 WORKDIR /logiglo_backend_2.0
 
-# Install build dependencies for Prisma and OpenSSL
+# Install build dependencies for Sharp, Prisma, etc.
 RUN apk add --no-cache \
     python3 \
     make \
     g++ \
-    openssl \
-    && rm -rf /var/cache/apk/*
+    libc6-compat \
+    vips-dev \
+    libpng-dev \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev \
+    openssl
 
-# Copy package files for caching
+# Copy package files and install dependencies (including dev)
 COPY package*.json ./
-
-# Install all dependencies (including dev for Prisma client generation)
 RUN npm ci
 
-# Copy the rest of the application (excluding generated folder)
+# Copy the rest of the application
 COPY . .
 
-# Generate Prisma client in ./generated/prisma
+# Generate Prisma client
 RUN npx prisma generate
 
 # Stage 2: Production image
-FROM node:20-alpine
+FROM node:20-alpine AS production
 
 WORKDIR /logiglo_backend_2.0
 
-# Install runtime dependencies for Prisma
+# Install runtime dependencies (no build tools needed here)
 RUN apk add --no-cache \
+    libc6-compat \
+    vips \
+    libpng \
+    cairo \
+    jpeg \
+    pango \
+    giflib \
     libpq \
-    openssl \
-    && rm -rf /var/cache/apk/*
+    openssl
 
-# Copy built files and dependencies from build stage
+# Copy everything from build stage
 COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
-# Remove devDependencies to reduce image size
+# Prune dev dependencies
 RUN npm prune --production
 
-# Expose application port
+# Expose the port your app runs on
 EXPOSE 3000
 
-# Set production environment
+# Set environment variables
 ENV NODE_ENV=production
 
-# Run Prisma migrations and start the server
+# Run database migration and start server
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]

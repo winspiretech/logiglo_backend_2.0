@@ -301,9 +301,33 @@ model CourseEnquiry {
   contactPersonPosition String
   contactNumber         String
   website               String?
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
-  notifications         Notification[]
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  notifications       Notification[]
+}
+
+model CountriesData {
+  id        Int          @id // Primary key
+  shortname String
+  name      String
+  phonecode Int
+  states    StatesData[]
+  flag      String?
+}
+
+model StatesData {
+  id         Int           @id // Primary key
+  name       String
+  country_id Int
+  country    CountriesData @relation(fields: [country_id], references: [id])
+  cities     CitiesData[]
+}
+
+model CitiesData {
+  id       Int        @id // Primary key
+  name     String
+  state_id Int
+  state    StatesData @relation(fields: [state_id], references: [id])
 }
 
 model Notification {
