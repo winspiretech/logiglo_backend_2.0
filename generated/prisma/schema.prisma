@@ -284,3 +284,27 @@ model CourseEnquiry {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 }
+
+model CountriesData {
+  id        Int          @id // Primary key
+  shortname String
+  name      String
+  phonecode Int
+  states    StatesData[]
+  flag      String?
+}
+
+model StatesData {
+  id         Int           @id // Primary key
+  name       String
+  country_id Int
+  country    CountriesData @relation(fields: [country_id], references: [id])
+  cities     CitiesData[]
+}
+
+model CitiesData {
+  id       Int        @id // Primary key
+  name     String
+  state_id Int
+  state    StatesData @relation(fields: [state_id], references: [id])
+}

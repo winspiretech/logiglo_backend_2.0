@@ -19,24 +19,30 @@ services:
       timeout: 5s
       retries: 5
 
-  # backend:
-  #   image: nayanwinspiretech/logiglo_backend_2.0
-  #   container_name: logiglo_backend_2.0
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - postgres
-  #   environment:
-  #     DATABASE_URL: "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
-  #     TOKEN_SECRET: "Radhey Radhey"
-  #   volumes:
-  #     - uploads:/logiglo_backend_2.0/Uploads
-  #   command: >
-  #     /bin/sh -c "
-  #     chmod 755 /logiglo_backend_2.0/Uploads &&
-  #     npm run start
-  #     "
+  backend:
+    build:
+      context: .
+      dockerfile: ./.github/Dockerfile
+    container_name: logiglo_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
+      TOKEN_SECRET: "Radhey Radhey"
+      NODE_ENV: development
+    volumes:
+      - ./:/logiglo_backend_2.0
+      - uploads:/logiglo_backend_2.0/Uploads
+    command: >
+      /bin/sh -c "
+      chmod 755 /logiglo_backend_2.0/Uploads &&
+      npx prisma migrate dev --name init &&
+      npm run dev
+      "
 
 volumes:
   pgdata:

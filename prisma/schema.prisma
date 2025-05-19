@@ -1,7 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
-  output   = "../generated/prisma"
+  output        = "../generated/prisma"
 }
 
 datasource db {
@@ -205,13 +205,13 @@ model GeneralLike {
 }
 
 model Blog {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description Json
   authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User          @relation(fields: [authorId], references: [id])
   status      String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime      @default(now())
   image_url   String[]
   categoryId  String?
   category    BlogCategory? @relation(fields: [categoryId], references: [id])
@@ -235,8 +235,8 @@ model Event {
 }
 
 model BlogCategory {
-  id    String  @id @default(uuid())
-  name  String  @unique
+  id    String @id @default(uuid())
+  name  String @unique
   blogs Blog[]
 }
 
@@ -274,13 +274,37 @@ model CourseModule {
 }
 
 model CourseEnquiry {
-  id                    String          @id @default(uuid())
+  id                    String   @id @default(uuid())
   institutionName       String
   institutionType       String
   contactPersonName     String
   contactPersonPosition String
   contactNumber         String
   website               String?
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model CountriesData {
+  id        Int          @id // Primary key
+  shortname String
+  name      String
+  phonecode Int
+  states    StatesData[]
+  flag      String?
+}
+
+model StatesData {
+  id         Int           @id // Primary key
+  name       String
+  country_id Int
+  country    CountriesData @relation(fields: [country_id], references: [id])
+  cities     CitiesData[]
+}
+
+model CitiesData {
+  id       Int        @id // Primary key
+  name     String
+  state_id Int
+  state    StatesData @relation(fields: [state_id], references: [id])
 }

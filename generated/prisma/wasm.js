@@ -316,6 +316,26 @@ exports.Prisma.CourseEnquiryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CountriesDataScalarFieldEnum = {
+  id: 'id',
+  shortname: 'shortname',
+  name: 'name',
+  phonecode: 'phonecode',
+  flag: 'flag'
+};
+
+exports.Prisma.StatesDataScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  country_id: 'country_id'
+};
+
+exports.Prisma.CitiesDataScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  state_id: 'state_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -383,7 +403,10 @@ exports.Prisma.ModelName = {
   BlogCategory: 'BlogCategory',
   Course: 'Course',
   CourseModule: 'CourseModule',
-  CourseEnquiry: 'CourseEnquiry'
+  CourseEnquiry: 'CourseEnquiry',
+  CountriesData: 'CountriesData',
+  StatesData: 'StatesData',
+  CitiesData: 'CitiesData'
 };
 
 /**
