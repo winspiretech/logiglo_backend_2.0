@@ -8,7 +8,10 @@ const jwt = require('jsonwebtoken');
 const signupController = async (req, res, next) => {
   try {
     // return res.send(req.body)
-    const validateUser = UserSchema.parse(req.body);
+    const validateUser = UserSchema.safeParse(req.body);
+    if (!validateUser.success) {
+      throw new ApiError(400, 'Validation Error', validateUser.error.errors);
+    }
     if (validateUser) {
       const existingUser = await prisma.user.findFirst({
         where: {
@@ -29,8 +32,16 @@ const signupController = async (req, res, next) => {
       }
     }
   } catch (error) {
-    res.json(error);
-    next(error);
+    console.log(error.message || 'Something went wrong in User signup');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
   }
 };
 
@@ -40,19 +51,25 @@ const loginUser = async (req, res, next) => {
     if (!email || !pass) {
       throw new ApiError(400, 'Missing required field');
     }
+
     const existingUser = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
-    const { password, ...userData } = existingUser;
+
     if (!existingUser) {
-      throw new ApiError('404', 'User not found');
+      throw new ApiError(404, 'User not found');
     }
-    const comparedPassowrd = await bcrypt.compare(pass, existingUser.password);
-    if (!comparedPassowrd) {
+
+    // Move destructuring *after* checking if user exists
+    const { password, ...userData } = existingUser;
+
+    const comparedPassword = await bcrypt.compare(pass, existingUser.password);
+    if (!comparedPassword) {
       throw new ApiError(401, 'Invalid credentials');
     }
+
     const token = jwt.sign(
       {
         name: existingUser.name,
@@ -74,9 +91,37 @@ const loginUser = async (req, res, next) => {
       .status(200)
       .json(new ApiResponse(200, userData, 'User logged in successfully'));
   } catch (error) {
-    res.json(error);
-    next(error);
+    console.log(error.message || 'Something went wrong in User login');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
   }
 };
 
-module.exports = { signupController, loginUser };
+const logoutUser = async (req, res, next) => {
+  try {
+    res
+      .clearCookie('Token')
+      .status(200)
+      .json(new ApiResponse(200, null, 'User logged out successfully'));
+  } catch (error) {
+    console.log(error.message || 'Something went wrong in User login');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+module.exports = { signupController, loginUser, logoutUser };
