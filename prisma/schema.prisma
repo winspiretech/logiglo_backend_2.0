@@ -331,3 +331,9 @@ model Notification {
   event           Event?           @relation(fields: [eventId], references: [id])
   courseEnquiry   CourseEnquiry?   @relation(fields: [courseEnquiryId], references: [id])
 }
+model LandingMenuItems{
+  id          String @id @default(uuid())
+  name  String
+  enabled Boolean @default(false)
+  @@index([name,enabled],name:"LandingMenuItems_name_enabled")
+}

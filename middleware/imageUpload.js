@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const baseUploadPath = path.join('/root/backend/Uploads');
 
 // Valid sections for folder organization
-const validSections = ['education', 'blog', 'user'];
+const validSections = ['education', 'blog', 'user', 'event'];
 
 // Asynchronous directory creation with permissions
 const ensureDirectory = async (dirPath) => {
