@@ -353,6 +353,12 @@ exports.Prisma.NotificationScalarFieldEnum = {
   courseEnquiryId: 'courseEnquiryId'
 };
 
+exports.Prisma.LandingMenuItemsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  enabled: 'enabled'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -435,7 +441,8 @@ exports.Prisma.ModelName = {
   CountriesData: 'CountriesData',
   StatesData: 'StatesData',
   CitiesData: 'CitiesData',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  LandingMenuItems: 'LandingMenuItems'
 };
 
 /**
