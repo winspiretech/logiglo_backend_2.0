@@ -10,12 +10,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const educationRoute = require('./routes/education.routes.js');
 const notificationRoutes = require('./routes/notification.routes.js');
+const landingPageMenuItemsRoutes = require('./routes/landingPageMenuItems.routes.js');
+const cors = require('cors');
 const app = express();
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: '*',
+  }),
+);
 
 // Serve static files from the uploads volume
 app.use('/Uploads', express.static('/root/backend/Uploads'));
@@ -30,6 +39,7 @@ app.use('/api/blog', blogRoute);
 app.use('/api/event', eventRoute);
 app.use('/api/education', educationRoute);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 // Root route
 app.get('/', (req, res) => {
   res.json({

@@ -108,6 +108,11 @@ export type CitiesData = $Result.DefaultSelection<Prisma.$CitiesDataPayload>
  * 
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+/**
+ * Model LandingMenuItems
+ * 
+ */
+export type LandingMenuItems = $Result.DefaultSelection<Prisma.$LandingMenuItemsPayload>
 
 /**
  * Enums
@@ -517,6 +522,16 @@ export class PrismaClient<
     * ```
     */
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.landingMenuItems`: Exposes CRUD operations for the **LandingMenuItems** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LandingMenuItems
+    * const landingMenuItems = await prisma.landingMenuItems.findMany()
+    * ```
+    */
+  get landingMenuItems(): Prisma.LandingMenuItemsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -975,7 +990,8 @@ export namespace Prisma {
     CountriesData: 'CountriesData',
     StatesData: 'StatesData',
     CitiesData: 'CitiesData',
-    Notification: 'Notification'
+    Notification: 'Notification',
+    LandingMenuItems: 'LandingMenuItems'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -994,7 +1010,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog" | "event" | "blogCategory" | "course" | "courseModule" | "courseEnquiry" | "countriesData" | "statesData" | "citiesData" | "notification"
+      modelProps: "user" | "forumMainCategory" | "forumSubCategory" | "quotePost" | "quoteReply" | "quoteLike" | "generalPost" | "generalReply" | "generalLike" | "blog" | "event" | "blogCategory" | "course" | "courseModule" | "courseEnquiry" | "countriesData" | "statesData" | "citiesData" | "notification" | "landingMenuItems"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2404,6 +2420,80 @@ export namespace Prisma {
           }
         }
       }
+      LandingMenuItems: {
+        payload: Prisma.$LandingMenuItemsPayload<ExtArgs>
+        fields: Prisma.LandingMenuItemsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LandingMenuItemsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LandingMenuItemsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          findFirst: {
+            args: Prisma.LandingMenuItemsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LandingMenuItemsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          findMany: {
+            args: Prisma.LandingMenuItemsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>[]
+          }
+          create: {
+            args: Prisma.LandingMenuItemsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          createMany: {
+            args: Prisma.LandingMenuItemsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LandingMenuItemsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>[]
+          }
+          delete: {
+            args: Prisma.LandingMenuItemsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          update: {
+            args: Prisma.LandingMenuItemsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          deleteMany: {
+            args: Prisma.LandingMenuItemsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LandingMenuItemsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LandingMenuItemsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>[]
+          }
+          upsert: {
+            args: Prisma.LandingMenuItemsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LandingMenuItemsPayload>
+          }
+          aggregate: {
+            args: Prisma.LandingMenuItemsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLandingMenuItems>
+          }
+          groupBy: {
+            args: Prisma.LandingMenuItemsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LandingMenuItemsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LandingMenuItemsCountArgs<ExtArgs>
+            result: $Utils.Optional<LandingMenuItemsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2507,6 +2597,7 @@ export namespace Prisma {
     statesData?: StatesDataOmit
     citiesData?: CitiesDataOmit
     notification?: NotificationOmit
+    landingMenuItems?: LandingMenuItemsOmit
   }
 
   /* Types for Logging */
@@ -25904,6 +25995,975 @@ export namespace Prisma {
 
 
   /**
+   * Model LandingMenuItems
+   */
+
+  export type AggregateLandingMenuItems = {
+    _count: LandingMenuItemsCountAggregateOutputType | null
+    _min: LandingMenuItemsMinAggregateOutputType | null
+    _max: LandingMenuItemsMaxAggregateOutputType | null
+  }
+
+  export type LandingMenuItemsMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    enabled: boolean | null
+  }
+
+  export type LandingMenuItemsMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    enabled: boolean | null
+  }
+
+  export type LandingMenuItemsCountAggregateOutputType = {
+    id: number
+    name: number
+    enabled: number
+    _all: number
+  }
+
+
+  export type LandingMenuItemsMinAggregateInputType = {
+    id?: true
+    name?: true
+    enabled?: true
+  }
+
+  export type LandingMenuItemsMaxAggregateInputType = {
+    id?: true
+    name?: true
+    enabled?: true
+  }
+
+  export type LandingMenuItemsCountAggregateInputType = {
+    id?: true
+    name?: true
+    enabled?: true
+    _all?: true
+  }
+
+  export type LandingMenuItemsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandingMenuItems to aggregate.
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandingMenuItems to fetch.
+     */
+    orderBy?: LandingMenuItemsOrderByWithRelationInput | LandingMenuItemsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LandingMenuItemsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandingMenuItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandingMenuItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LandingMenuItems
+    **/
+    _count?: true | LandingMenuItemsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LandingMenuItemsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LandingMenuItemsMaxAggregateInputType
+  }
+
+  export type GetLandingMenuItemsAggregateType<T extends LandingMenuItemsAggregateArgs> = {
+        [P in keyof T & keyof AggregateLandingMenuItems]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLandingMenuItems[P]>
+      : GetScalarType<T[P], AggregateLandingMenuItems[P]>
+  }
+
+
+
+
+  export type LandingMenuItemsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LandingMenuItemsWhereInput
+    orderBy?: LandingMenuItemsOrderByWithAggregationInput | LandingMenuItemsOrderByWithAggregationInput[]
+    by: LandingMenuItemsScalarFieldEnum[] | LandingMenuItemsScalarFieldEnum
+    having?: LandingMenuItemsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LandingMenuItemsCountAggregateInputType | true
+    _min?: LandingMenuItemsMinAggregateInputType
+    _max?: LandingMenuItemsMaxAggregateInputType
+  }
+
+  export type LandingMenuItemsGroupByOutputType = {
+    id: string
+    name: string
+    enabled: boolean
+    _count: LandingMenuItemsCountAggregateOutputType | null
+    _min: LandingMenuItemsMinAggregateOutputType | null
+    _max: LandingMenuItemsMaxAggregateOutputType | null
+  }
+
+  type GetLandingMenuItemsGroupByPayload<T extends LandingMenuItemsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LandingMenuItemsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LandingMenuItemsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LandingMenuItemsGroupByOutputType[P]>
+            : GetScalarType<T[P], LandingMenuItemsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LandingMenuItemsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    enabled?: boolean
+  }, ExtArgs["result"]["landingMenuItems"]>
+
+  export type LandingMenuItemsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    enabled?: boolean
+  }, ExtArgs["result"]["landingMenuItems"]>
+
+  export type LandingMenuItemsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    enabled?: boolean
+  }, ExtArgs["result"]["landingMenuItems"]>
+
+  export type LandingMenuItemsSelectScalar = {
+    id?: boolean
+    name?: boolean
+    enabled?: boolean
+  }
+
+  export type LandingMenuItemsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "enabled", ExtArgs["result"]["landingMenuItems"]>
+
+  export type $LandingMenuItemsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LandingMenuItems"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      enabled: boolean
+    }, ExtArgs["result"]["landingMenuItems"]>
+    composites: {}
+  }
+
+  type LandingMenuItemsGetPayload<S extends boolean | null | undefined | LandingMenuItemsDefaultArgs> = $Result.GetResult<Prisma.$LandingMenuItemsPayload, S>
+
+  type LandingMenuItemsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LandingMenuItemsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LandingMenuItemsCountAggregateInputType | true
+    }
+
+  export interface LandingMenuItemsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LandingMenuItems'], meta: { name: 'LandingMenuItems' } }
+    /**
+     * Find zero or one LandingMenuItems that matches the filter.
+     * @param {LandingMenuItemsFindUniqueArgs} args - Arguments to find a LandingMenuItems
+     * @example
+     * // Get one LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LandingMenuItemsFindUniqueArgs>(args: SelectSubset<T, LandingMenuItemsFindUniqueArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LandingMenuItems that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LandingMenuItemsFindUniqueOrThrowArgs} args - Arguments to find a LandingMenuItems
+     * @example
+     * // Get one LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LandingMenuItemsFindUniqueOrThrowArgs>(args: SelectSubset<T, LandingMenuItemsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LandingMenuItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsFindFirstArgs} args - Arguments to find a LandingMenuItems
+     * @example
+     * // Get one LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LandingMenuItemsFindFirstArgs>(args?: SelectSubset<T, LandingMenuItemsFindFirstArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LandingMenuItems that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsFindFirstOrThrowArgs} args - Arguments to find a LandingMenuItems
+     * @example
+     * // Get one LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LandingMenuItemsFindFirstOrThrowArgs>(args?: SelectSubset<T, LandingMenuItemsFindFirstOrThrowArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LandingMenuItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findMany()
+     * 
+     * // Get first 10 LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const landingMenuItemsWithIdOnly = await prisma.landingMenuItems.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LandingMenuItemsFindManyArgs>(args?: SelectSubset<T, LandingMenuItemsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LandingMenuItems.
+     * @param {LandingMenuItemsCreateArgs} args - Arguments to create a LandingMenuItems.
+     * @example
+     * // Create one LandingMenuItems
+     * const LandingMenuItems = await prisma.landingMenuItems.create({
+     *   data: {
+     *     // ... data to create a LandingMenuItems
+     *   }
+     * })
+     * 
+     */
+    create<T extends LandingMenuItemsCreateArgs>(args: SelectSubset<T, LandingMenuItemsCreateArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LandingMenuItems.
+     * @param {LandingMenuItemsCreateManyArgs} args - Arguments to create many LandingMenuItems.
+     * @example
+     * // Create many LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LandingMenuItemsCreateManyArgs>(args?: SelectSubset<T, LandingMenuItemsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LandingMenuItems and returns the data saved in the database.
+     * @param {LandingMenuItemsCreateManyAndReturnArgs} args - Arguments to create many LandingMenuItems.
+     * @example
+     * // Create many LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LandingMenuItems and only return the `id`
+     * const landingMenuItemsWithIdOnly = await prisma.landingMenuItems.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LandingMenuItemsCreateManyAndReturnArgs>(args?: SelectSubset<T, LandingMenuItemsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LandingMenuItems.
+     * @param {LandingMenuItemsDeleteArgs} args - Arguments to delete one LandingMenuItems.
+     * @example
+     * // Delete one LandingMenuItems
+     * const LandingMenuItems = await prisma.landingMenuItems.delete({
+     *   where: {
+     *     // ... filter to delete one LandingMenuItems
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LandingMenuItemsDeleteArgs>(args: SelectSubset<T, LandingMenuItemsDeleteArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LandingMenuItems.
+     * @param {LandingMenuItemsUpdateArgs} args - Arguments to update one LandingMenuItems.
+     * @example
+     * // Update one LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LandingMenuItemsUpdateArgs>(args: SelectSubset<T, LandingMenuItemsUpdateArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LandingMenuItems.
+     * @param {LandingMenuItemsDeleteManyArgs} args - Arguments to filter LandingMenuItems to delete.
+     * @example
+     * // Delete a few LandingMenuItems
+     * const { count } = await prisma.landingMenuItems.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LandingMenuItemsDeleteManyArgs>(args?: SelectSubset<T, LandingMenuItemsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandingMenuItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LandingMenuItemsUpdateManyArgs>(args: SelectSubset<T, LandingMenuItemsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LandingMenuItems and returns the data updated in the database.
+     * @param {LandingMenuItemsUpdateManyAndReturnArgs} args - Arguments to update many LandingMenuItems.
+     * @example
+     * // Update many LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LandingMenuItems and only return the `id`
+     * const landingMenuItemsWithIdOnly = await prisma.landingMenuItems.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LandingMenuItemsUpdateManyAndReturnArgs>(args: SelectSubset<T, LandingMenuItemsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LandingMenuItems.
+     * @param {LandingMenuItemsUpsertArgs} args - Arguments to update or create a LandingMenuItems.
+     * @example
+     * // Update or create a LandingMenuItems
+     * const landingMenuItems = await prisma.landingMenuItems.upsert({
+     *   create: {
+     *     // ... data to create a LandingMenuItems
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LandingMenuItems we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LandingMenuItemsUpsertArgs>(args: SelectSubset<T, LandingMenuItemsUpsertArgs<ExtArgs>>): Prisma__LandingMenuItemsClient<$Result.GetResult<Prisma.$LandingMenuItemsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LandingMenuItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsCountArgs} args - Arguments to filter LandingMenuItems to count.
+     * @example
+     * // Count the number of LandingMenuItems
+     * const count = await prisma.landingMenuItems.count({
+     *   where: {
+     *     // ... the filter for the LandingMenuItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends LandingMenuItemsCountArgs>(
+      args?: Subset<T, LandingMenuItemsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LandingMenuItemsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LandingMenuItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LandingMenuItemsAggregateArgs>(args: Subset<T, LandingMenuItemsAggregateArgs>): Prisma.PrismaPromise<GetLandingMenuItemsAggregateType<T>>
+
+    /**
+     * Group by LandingMenuItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LandingMenuItemsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LandingMenuItemsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LandingMenuItemsGroupByArgs['orderBy'] }
+        : { orderBy?: LandingMenuItemsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LandingMenuItemsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLandingMenuItemsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LandingMenuItems model
+   */
+  readonly fields: LandingMenuItemsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LandingMenuItems.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LandingMenuItemsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LandingMenuItems model
+   */
+  interface LandingMenuItemsFieldRefs {
+    readonly id: FieldRef<"LandingMenuItems", 'String'>
+    readonly name: FieldRef<"LandingMenuItems", 'String'>
+    readonly enabled: FieldRef<"LandingMenuItems", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LandingMenuItems findUnique
+   */
+  export type LandingMenuItemsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter, which LandingMenuItems to fetch.
+     */
+    where: LandingMenuItemsWhereUniqueInput
+  }
+
+  /**
+   * LandingMenuItems findUniqueOrThrow
+   */
+  export type LandingMenuItemsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter, which LandingMenuItems to fetch.
+     */
+    where: LandingMenuItemsWhereUniqueInput
+  }
+
+  /**
+   * LandingMenuItems findFirst
+   */
+  export type LandingMenuItemsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter, which LandingMenuItems to fetch.
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandingMenuItems to fetch.
+     */
+    orderBy?: LandingMenuItemsOrderByWithRelationInput | LandingMenuItemsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandingMenuItems.
+     */
+    cursor?: LandingMenuItemsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandingMenuItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandingMenuItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandingMenuItems.
+     */
+    distinct?: LandingMenuItemsScalarFieldEnum | LandingMenuItemsScalarFieldEnum[]
+  }
+
+  /**
+   * LandingMenuItems findFirstOrThrow
+   */
+  export type LandingMenuItemsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter, which LandingMenuItems to fetch.
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandingMenuItems to fetch.
+     */
+    orderBy?: LandingMenuItemsOrderByWithRelationInput | LandingMenuItemsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LandingMenuItems.
+     */
+    cursor?: LandingMenuItemsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandingMenuItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandingMenuItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LandingMenuItems.
+     */
+    distinct?: LandingMenuItemsScalarFieldEnum | LandingMenuItemsScalarFieldEnum[]
+  }
+
+  /**
+   * LandingMenuItems findMany
+   */
+  export type LandingMenuItemsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter, which LandingMenuItems to fetch.
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LandingMenuItems to fetch.
+     */
+    orderBy?: LandingMenuItemsOrderByWithRelationInput | LandingMenuItemsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LandingMenuItems.
+     */
+    cursor?: LandingMenuItemsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LandingMenuItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LandingMenuItems.
+     */
+    skip?: number
+    distinct?: LandingMenuItemsScalarFieldEnum | LandingMenuItemsScalarFieldEnum[]
+  }
+
+  /**
+   * LandingMenuItems create
+   */
+  export type LandingMenuItemsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a LandingMenuItems.
+     */
+    data: XOR<LandingMenuItemsCreateInput, LandingMenuItemsUncheckedCreateInput>
+  }
+
+  /**
+   * LandingMenuItems createMany
+   */
+  export type LandingMenuItemsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LandingMenuItems.
+     */
+    data: LandingMenuItemsCreateManyInput | LandingMenuItemsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandingMenuItems createManyAndReturn
+   */
+  export type LandingMenuItemsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * The data used to create many LandingMenuItems.
+     */
+    data: LandingMenuItemsCreateManyInput | LandingMenuItemsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LandingMenuItems update
+   */
+  export type LandingMenuItemsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a LandingMenuItems.
+     */
+    data: XOR<LandingMenuItemsUpdateInput, LandingMenuItemsUncheckedUpdateInput>
+    /**
+     * Choose, which LandingMenuItems to update.
+     */
+    where: LandingMenuItemsWhereUniqueInput
+  }
+
+  /**
+   * LandingMenuItems updateMany
+   */
+  export type LandingMenuItemsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LandingMenuItems.
+     */
+    data: XOR<LandingMenuItemsUpdateManyMutationInput, LandingMenuItemsUncheckedUpdateManyInput>
+    /**
+     * Filter which LandingMenuItems to update
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * Limit how many LandingMenuItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandingMenuItems updateManyAndReturn
+   */
+  export type LandingMenuItemsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * The data used to update LandingMenuItems.
+     */
+    data: XOR<LandingMenuItemsUpdateManyMutationInput, LandingMenuItemsUncheckedUpdateManyInput>
+    /**
+     * Filter which LandingMenuItems to update
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * Limit how many LandingMenuItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandingMenuItems upsert
+   */
+  export type LandingMenuItemsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the LandingMenuItems to update in case it exists.
+     */
+    where: LandingMenuItemsWhereUniqueInput
+    /**
+     * In case the LandingMenuItems found by the `where` argument doesn't exist, create a new LandingMenuItems with this data.
+     */
+    create: XOR<LandingMenuItemsCreateInput, LandingMenuItemsUncheckedCreateInput>
+    /**
+     * In case the LandingMenuItems was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LandingMenuItemsUpdateInput, LandingMenuItemsUncheckedUpdateInput>
+  }
+
+  /**
+   * LandingMenuItems delete
+   */
+  export type LandingMenuItemsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+    /**
+     * Filter which LandingMenuItems to delete.
+     */
+    where: LandingMenuItemsWhereUniqueInput
+  }
+
+  /**
+   * LandingMenuItems deleteMany
+   */
+  export type LandingMenuItemsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LandingMenuItems to delete
+     */
+    where?: LandingMenuItemsWhereInput
+    /**
+     * Limit how many LandingMenuItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LandingMenuItems without action
+   */
+  export type LandingMenuItemsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LandingMenuItems
+     */
+    select?: LandingMenuItemsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LandingMenuItems
+     */
+    omit?: LandingMenuItemsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -26205,6 +27265,15 @@ export namespace Prisma {
   };
 
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+  export const LandingMenuItemsScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    enabled: 'enabled'
+  };
+
+  export type LandingMenuItemsScalarFieldEnum = (typeof LandingMenuItemsScalarFieldEnum)[keyof typeof LandingMenuItemsScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -28005,6 +29074,48 @@ export namespace Prisma {
     courseEnquiryId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
   }
 
+  export type LandingMenuItemsWhereInput = {
+    AND?: LandingMenuItemsWhereInput | LandingMenuItemsWhereInput[]
+    OR?: LandingMenuItemsWhereInput[]
+    NOT?: LandingMenuItemsWhereInput | LandingMenuItemsWhereInput[]
+    id?: StringFilter<"LandingMenuItems"> | string
+    name?: StringFilter<"LandingMenuItems"> | string
+    enabled?: BoolFilter<"LandingMenuItems"> | boolean
+  }
+
+  export type LandingMenuItemsOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    enabled?: SortOrder
+  }
+
+  export type LandingMenuItemsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LandingMenuItemsWhereInput | LandingMenuItemsWhereInput[]
+    OR?: LandingMenuItemsWhereInput[]
+    NOT?: LandingMenuItemsWhereInput | LandingMenuItemsWhereInput[]
+    name?: StringFilter<"LandingMenuItems"> | string
+    enabled?: BoolFilter<"LandingMenuItems"> | boolean
+  }, "id">
+
+  export type LandingMenuItemsOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    enabled?: SortOrder
+    _count?: LandingMenuItemsCountOrderByAggregateInput
+    _max?: LandingMenuItemsMaxOrderByAggregateInput
+    _min?: LandingMenuItemsMinOrderByAggregateInput
+  }
+
+  export type LandingMenuItemsScalarWhereWithAggregatesInput = {
+    AND?: LandingMenuItemsScalarWhereWithAggregatesInput | LandingMenuItemsScalarWhereWithAggregatesInput[]
+    OR?: LandingMenuItemsScalarWhereWithAggregatesInput[]
+    NOT?: LandingMenuItemsScalarWhereWithAggregatesInput | LandingMenuItemsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LandingMenuItems"> | string
+    name?: StringWithAggregatesFilter<"LandingMenuItems"> | string
+    enabled?: BoolWithAggregatesFilter<"LandingMenuItems"> | boolean
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -29735,6 +30846,48 @@ export namespace Prisma {
     courseEnquiryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type LandingMenuItemsCreateInput = {
+    id?: string
+    name: string
+    enabled?: boolean
+  }
+
+  export type LandingMenuItemsUncheckedCreateInput = {
+    id?: string
+    name: string
+    enabled?: boolean
+  }
+
+  export type LandingMenuItemsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type LandingMenuItemsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type LandingMenuItemsCreateManyInput = {
+    id?: string
+    name: string
+    enabled?: boolean
+  }
+
+  export type LandingMenuItemsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type LandingMenuItemsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -31100,6 +32253,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type LandingMenuItemsCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    enabled?: SortOrder
+  }
+
+  export type LandingMenuItemsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    enabled?: SortOrder
+  }
+
+  export type LandingMenuItemsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    enabled?: SortOrder
   }
 
   export type QuotePostCreateNestedManyWithoutUserInput = {
