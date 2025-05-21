@@ -26,9 +26,9 @@ module.exports.createQuotePost = async (req, res) => {
     }
 
     // Verify main category exists if provided
-    let mainCategory= null;
+    let mainCategory = null;
     if (postMainCategory) {
-       mainCategory = await prisma.forumMainCategory.findUnique({
+      mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: postMainCategory },
       });
       if (!mainCategory) {
@@ -39,7 +39,7 @@ module.exports.createQuotePost = async (req, res) => {
     // Verify subcategory exists if provided
     let subCategory = null;
     if (postSubCategory) {
-       subCategory = await prisma.forumSubCategory.findUnique({
+      subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: postSubCategory },
       });
       if (!subCategory) {
@@ -56,9 +56,9 @@ module.exports.createQuotePost = async (req, res) => {
         subCategory: postSubCategory
           ? { connect: { id: postSubCategory } }
           : undefined,
-          name:user.name,
-          MainCategoryName:mainCategory ? mainCategory.name : null,
-          SubCategoryName:subCategory ? subCategory.name : null,
+        name: user.name,
+        MainCategoryName: mainCategory ? mainCategory.name : null,
+        SubCategoryName: subCategory ? subCategory.name : null,
         ...data,
       },
     });

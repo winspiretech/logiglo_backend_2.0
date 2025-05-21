@@ -28,7 +28,7 @@ module.exports.createGeneralPost = async (req, res) => {
     // Verify main category exists if provided
     let mainCategory = null;
     if (generalPostMainCategory) {
-       mainCategory = await prisma.forumMainCategory.findUnique({
+      mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: generalPostMainCategory },
       });
       if (!mainCategory) {
@@ -39,7 +39,7 @@ module.exports.createGeneralPost = async (req, res) => {
     // Verify subcategory exists if provided
     let subCategory = null;
     if (generalPostSubCategory) {
-       subCategory = await prisma.forumSubCategory.findUnique({
+      subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: generalPostSubCategory },
       });
       if (!subCategory) {
@@ -57,8 +57,8 @@ module.exports.createGeneralPost = async (req, res) => {
         SubCategory: generalPostSubCategory
           ? { connect: { id: generalPostSubCategory } }
           : undefined,
-            MainCategoryName:mainCategory ? mainCategory.name : null,
-          SubCategoryName:subCategory ? subCategory.name : null,
+        MainCategoryName: mainCategory ? mainCategory.name : null,
+        SubCategoryName: subCategory ? subCategory.name : null,
         ...data,
       },
     });
