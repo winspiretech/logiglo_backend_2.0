@@ -476,12 +476,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://logiglo:root123@localhost:5432/logiglo_db?schema=public"
       }
     }
   },
