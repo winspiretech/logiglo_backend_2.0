@@ -193,41 +193,41 @@ const getAdmins = async (req, res, next) => {
 
 const changeUserRole = async (req, res, next) => {
   try {
-  const { id, role } = req.body;
+    const { id, role } = req.body;
 
-  if (!id || !role) {
-    throw new ApiError(400, 'Missing required field');
+    if (!id || !role) {
+      throw new ApiError(400, 'Missing required field');
+    }
+
+    if (role !== 'admin' && role !== 'user') {
+      throw new ApiError(400, 'Invalid role');
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!existingUser) {
+      throw new ApiError(404, 'User not found');
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: { role },
+    });
+
+    if (!updatedUser) {
+      throw new ApiError(500, 'Failed to update user role');
+    }
+
+    const { password, ...userData } = updatedUser;
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, userData, 'User role updated successfully'));
+
   }
-
-  if (role !== 'admin' && role !== 'user') {
-    throw new ApiError(400, 'Invalid role');
-  }
-
-  const existingUser = await prisma.user.findUnique({
-    where: { id },
-  });
-
-  if (!existingUser) {
-    throw new ApiError(404, 'User not found');
-  }
-
-  const updatedUser = await prisma.user.update({
-    where: { id },
-    data: { role },
-  });
-
-  if (!updatedUser) {
-    throw new ApiError(500, 'Failed to update user role');
-  }
-
-  const { password, ...userData } = updatedUser;
-
-  res
-    .status(200)
-    .json(new ApiResponse(200, userData, 'User role updated successfully'));
-
-} 
- catch (error) {
+  catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
