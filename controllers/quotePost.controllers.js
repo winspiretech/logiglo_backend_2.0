@@ -439,6 +439,12 @@ module.exports.getPendingPosts = async (req, res) => {
   try {
     const pendingPosts = await prisma.quotePost.findMany({
       where: { status: 'pending' },
+      include:{
+        user: true,
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+      }
     });
 
     return res
@@ -470,6 +476,13 @@ module.exports.getSuccessPosts = async (req, res) => {
   try {
     const successPosts = await prisma.quotePost.findMany({
       where: { status: 'success' },
+      include:{
+        user: true,
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+        quoteLike: true,
+      }
     });
 
     return res
@@ -501,6 +514,16 @@ module.exports.getPendingReplies = async (req, res) => {
   try {
     const pendingReplies = await prisma.quoteReply.findMany({
       where: { status: 'pending' },
+      include: {
+        user: true,
+        quotePost: {
+          include: {
+            user: true,
+            mainCategory: true,
+            subCategory: true,
+          },
+        },
+      },
     });
 
     return res
@@ -542,6 +565,13 @@ module.exports.getPostsByUserId = async (req, res) => {
 
     const userPosts = await prisma.quotePost.findMany({
       where: { userId },
+      include: {
+       
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+        quoteLike: true,
+      },
     });
 
     return res

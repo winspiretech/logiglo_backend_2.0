@@ -587,7 +587,7 @@ module.exports.getPendingPosts = async (req, res) => {
       include: {
         user: true,
         MainCategory: true,
-        subCategory: true, // fixed here
+        SubCategory: true, // fixed here
         generalReply: true,
         generalLike: true,
       },
@@ -627,7 +627,7 @@ module.exports.getSuccessPosts = async (req, res) => {
       include: {
         user: true,
         MainCategory: true,
-        subCategory: true, // fixed here
+        SubCategory: true, // fixed here
         generalReply: true,
         generalLike: true,
       },
@@ -664,9 +664,16 @@ module.exports.getPendingReplies = async (req, res) => {
       where: { status: 'pending' },
       include: {
         user: true,
-        post: true,
         parentReply: true,
+          post:{
+          include: {
+            user: true,
+            MainCategory: true,
+            SubCategory: true,
+            
+         },
       },
+      }
     });
 
     return res
@@ -712,6 +719,8 @@ module.exports.getPostsByUserId = async (req, res) => {
         user: true,
         MainCategory: true,
         SubCategory: true,
+        generalReply: true,
+        generalLike: true,
       },
     });
 
@@ -868,7 +877,7 @@ module.exports.getGeneralPostByPostId = async (req, res) => {
       include: {
         user: true,
         MainCategory: true,
-        subCategory: true, // ✅ fixed
+        SubCategory: true, // ✅ fixed
         generalReply: true,
         generalLike: true,
       },
