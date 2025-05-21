@@ -188,6 +188,8 @@ exports.Prisma.QuotePostScalarFieldEnum = {
   toState: 'toState',
   postMainCategory: 'postMainCategory',
   postSubCategory: 'postSubCategory',
+  MainCategoryName: 'MainCategoryName',
+  SubCategoryName: 'SubCategoryName',
   shipmentType: 'shipmentType'
 };
 
@@ -222,7 +224,9 @@ exports.Prisma.GeneralPostScalarFieldEnum = {
   status: 'status',
   rejectionReason: 'rejectionReason',
   generalPostMainCategory: 'generalPostMainCategory',
-  generalPostSubCategory: 'generalPostSubCategory'
+  generalPostSubCategory: 'generalPostSubCategory',
+  MainCategoryName: 'MainCategoryName',
+  SubCategoryName: 'SubCategoryName'
 };
 
 exports.Prisma.GeneralReplyScalarFieldEnum = {

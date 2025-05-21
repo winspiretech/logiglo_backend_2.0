@@ -142,6 +142,8 @@ model QuotePost {
   toState          String?
   postMainCategory String?
   postSubCategory  String?
+  MainCategoryName String?
+  SubCategoryName  String?
   shipmentType     String?
   quoteReply       QuoteReply[]
   quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
@@ -190,9 +192,11 @@ model GeneralPost {
   rejectionReason         String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
+  MainCategoryName        String?
+  SubCategoryName         String?
   user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
   MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  subCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
   generalLike             GeneralLike[]      @relation("PostToGeneralLike")
   notifications           Notification[]

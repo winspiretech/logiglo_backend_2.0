@@ -58,36 +58,36 @@ enum NotificationType {
 }
 
 model User {
-  id                      String         @id @default(uuid())
-  name                    String
-  email                   String?        @unique
-  password                String?
-  verified                Boolean?       @default(false)
-  role                    String?        @default("user")
-  mobileNo                String?        @unique
-  country                 String?
-  city                    String?
-  address                 String?
-  postalCode              String?
-  profilePic              String?
-  bio                     String?
-  online                  Boolean?       @default(false)
-  lastSeen                DateTime?
-  rating                  Float?         @default(0)
-  accountType             String?        @default("personal")
-  createdAt               DateTime       @default(now())
-  updatedAt               DateTime       @updatedAt
-  quotePost               QuotePost[]
-  quoteReply              QuoteReply[]
-  quoteLike               QuoteLike[]    @relation("UserToQuoteLike")
-  generalPost             GeneralPost[]  @relation("UserToGeneralPost")
-  generalReply            GeneralReply[]
-  generalLike             GeneralLike[]  @relation("UserToGeneralLike")
-  blog                    Blog[]
-  Course                  Course[]
-  Event                   Event[]
-  receivedNotifications   Notification[] @relation("RecipientNotifications")
-  triggeredNotifications  Notification[] @relation("TriggeredNotifications")
+  id                     String         @id @default(uuid())
+  name                   String
+  email                  String?        @unique
+  password               String?
+  verified               Boolean?       @default(false)
+  role                   String?        @default("user")
+  mobileNo               String?        @unique
+  country                String?
+  city                   String?
+  address                String?
+  postalCode             String?
+  profilePic             String?
+  bio                    String?
+  online                 Boolean?       @default(false)
+  lastSeen               DateTime?
+  rating                 Float?         @default(0)
+  accountType            String?        @default("personal")
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  quotePost              QuotePost[]
+  quoteReply             QuoteReply[]
+  quoteLike              QuoteLike[]    @relation("UserToQuoteLike")
+  generalPost            GeneralPost[]  @relation("UserToGeneralPost")
+  generalReply           GeneralReply[]
+  generalLike            GeneralLike[]  @relation("UserToGeneralLike")
+  blog                   Blog[]
+  Course                 Course[]
+  Event                  Event[]
+  receivedNotifications  Notification[] @relation("RecipientNotifications")
+  triggeredNotifications Notification[] @relation("TriggeredNotifications")
 }
 
 model ForumMainCategory {
@@ -142,6 +142,8 @@ model QuotePost {
   toState          String?
   postMainCategory String?
   postSubCategory  String?
+  MainCategoryName String?
+  SubCategoryName  String?
   shipmentType     String?
   quoteReply       QuoteReply[]
   quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
@@ -152,18 +154,18 @@ model QuotePost {
 }
 
 model QuoteReply {
-  id              String        @id @default(uuid())
+  id              String         @id @default(uuid())
   userId          String
   postId          String
   parentReplyId   String?
   description     String?
-  createdAt       DateTime      @default(now())
-  status          String?       @default("pending")
+  createdAt       DateTime       @default(now())
+  status          String?        @default("pending")
   rejectionReason String?
-  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post            QuotePost     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentReply     QuoteReply?   @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
-  childReplies    QuoteReply[]  @relation("QuoteReplyToReply")
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post            QuotePost      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentReply     QuoteReply?    @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
+  childReplies    QuoteReply[]   @relation("QuoteReplyToReply")
   notifications   Notification[]
 }
 
@@ -190,9 +192,11 @@ model GeneralPost {
   rejectionReason         String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
+  MainCategoryName        String?
+  SubCategoryName         String?
   user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
   MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  subCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
   generalLike             GeneralLike[]      @relation("PostToGeneralLike")
   notifications           Notification[]
@@ -223,24 +227,24 @@ model GeneralLike {
 }
 
 model Blog {
-  id            String        @id @default(uuid())
+  id            String         @id @default(uuid())
   title         String
   description   Json
   authorId      String
-  author        User          @relation(fields: [authorId], references: [id])
+  author        User           @relation(fields: [authorId], references: [id])
   status        String
-  createdAt     DateTime      @default(now())
+  createdAt     DateTime       @default(now())
   image_url     String[]
   categoryId    String?
-  category      BlogCategory? @relation(fields: [categoryId], references: [id])
+  category      BlogCategory?  @relation(fields: [categoryId], references: [id])
   notifications Notification[]
 }
 
 model Event {
-  id            String        @id @default(uuid())
+  id            String         @id @default(uuid())
   authorId      String
   coverImage    String
-  author        User          @relation(fields: [authorId], references: [id])
+  author        User           @relation(fields: [authorId], references: [id])
   eventTitle    String
   organizer     String
   countryCode   String
@@ -250,7 +254,7 @@ model Event {
   location      String
   startDate     DateTime
   endDate       DateTime
-  createdAt     DateTime      @default(now())
+  createdAt     DateTime       @default(now())
   notifications Notification[]
 }
 
@@ -294,16 +298,16 @@ model CourseModule {
 }
 
 model CourseEnquiry {
-  id                    String        @id @default(uuid())
+  id                    String         @id @default(uuid())
   institutionName       String
   institutionType       String
   contactPersonName     String
   contactPersonPosition String
   contactNumber         String
   website               String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  notifications       Notification[]
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  notifications         Notification[]
 }
 
 model CountriesData {
@@ -355,9 +359,11 @@ model Notification {
   event           Event?           @relation(fields: [eventId], references: [id])
   courseEnquiry   CourseEnquiry?   @relation(fields: [courseEnquiryId], references: [id])
 }
-model LandingMenuItems{
-  id          String @id @default(uuid())
-  name  String
+
+model LandingMenuItems {
+  id      String  @id @default(uuid())
+  name    String
   enabled Boolean @default(false)
-  @@index([name,enabled],name:"LandingMenuItems_name_enabled")
+
+  @@index([name, enabled], name: "LandingMenuItems_name_enabled")
 }

@@ -7134,6 +7134,8 @@ export namespace Prisma {
     toState: string | null
     postMainCategory: string | null
     postSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
     shipmentType: string | null
   }
 
@@ -7170,6 +7172,8 @@ export namespace Prisma {
     toState: string | null
     postMainCategory: string | null
     postSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
     shipmentType: string | null
   }
 
@@ -7206,6 +7210,8 @@ export namespace Prisma {
     toState: number
     postMainCategory: number
     postSubCategory: number
+    MainCategoryName: number
+    SubCategoryName: number
     shipmentType: number
     _all: number
   }
@@ -7268,6 +7274,8 @@ export namespace Prisma {
     toState?: true
     postMainCategory?: true
     postSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
     shipmentType?: true
   }
 
@@ -7304,6 +7312,8 @@ export namespace Prisma {
     toState?: true
     postMainCategory?: true
     postSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
     shipmentType?: true
   }
 
@@ -7340,6 +7350,8 @@ export namespace Prisma {
     toState?: true
     postMainCategory?: true
     postSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
     shipmentType?: true
     _all?: true
   }
@@ -7463,6 +7475,8 @@ export namespace Prisma {
     toState: string | null
     postMainCategory: string | null
     postSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
     shipmentType: string | null
     _count: QuotePostCountAggregateOutputType | null
     _avg: QuotePostAvgAggregateOutputType | null
@@ -7518,6 +7532,8 @@ export namespace Prisma {
     toState?: boolean
     postMainCategory?: boolean
     postSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     shipmentType?: boolean
     quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
@@ -7561,6 +7577,8 @@ export namespace Prisma {
     toState?: boolean
     postMainCategory?: boolean
     postSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     shipmentType?: boolean
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
@@ -7600,6 +7618,8 @@ export namespace Prisma {
     toState?: boolean
     postMainCategory?: boolean
     postSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     shipmentType?: boolean
     subCategory?: boolean | QuotePost$subCategoryArgs<ExtArgs>
     mainCategory?: boolean | QuotePost$mainCategoryArgs<ExtArgs>
@@ -7639,10 +7659,12 @@ export namespace Prisma {
     toState?: boolean
     postMainCategory?: boolean
     postSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     shipmentType?: boolean
   }
 
-  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "shipmentType", ExtArgs["result"]["quotePost"]>
+  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "MainCategoryName" | "SubCategoryName" | "shipmentType", ExtArgs["result"]["quotePost"]>
   export type QuotePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
@@ -7706,6 +7728,8 @@ export namespace Prisma {
       toState: string | null
       postMainCategory: string | null
       postSubCategory: string | null
+      MainCategoryName: string | null
+      SubCategoryName: string | null
       shipmentType: string | null
     }, ExtArgs["result"]["quotePost"]>
     composites: {}
@@ -8168,6 +8192,8 @@ export namespace Prisma {
     readonly toState: FieldRef<"QuotePost", 'String'>
     readonly postMainCategory: FieldRef<"QuotePost", 'String'>
     readonly postSubCategory: FieldRef<"QuotePost", 'String'>
+    readonly MainCategoryName: FieldRef<"QuotePost", 'String'>
+    readonly SubCategoryName: FieldRef<"QuotePost", 'String'>
     readonly shipmentType: FieldRef<"QuotePost", 'String'>
   }
     
@@ -10962,6 +10988,8 @@ export namespace Prisma {
     rejectionReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
   }
 
   export type GeneralPostMaxAggregateOutputType = {
@@ -10979,6 +11007,8 @@ export namespace Prisma {
     rejectionReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
   }
 
   export type GeneralPostCountAggregateOutputType = {
@@ -10996,6 +11026,8 @@ export namespace Prisma {
     rejectionReason: number
     generalPostMainCategory: number
     generalPostSubCategory: number
+    MainCategoryName: number
+    SubCategoryName: number
     _all: number
   }
 
@@ -11027,6 +11059,8 @@ export namespace Prisma {
     rejectionReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
   }
 
   export type GeneralPostMaxAggregateInputType = {
@@ -11044,6 +11078,8 @@ export namespace Prisma {
     rejectionReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
   }
 
   export type GeneralPostCountAggregateInputType = {
@@ -11061,6 +11097,8 @@ export namespace Prisma {
     rejectionReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
+    MainCategoryName?: true
+    SubCategoryName?: true
     _all?: true
   }
 
@@ -11165,6 +11203,8 @@ export namespace Prisma {
     rejectionReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
+    MainCategoryName: string | null
+    SubCategoryName: string | null
     _count: GeneralPostCountAggregateOutputType | null
     _avg: GeneralPostAvgAggregateOutputType | null
     _sum: GeneralPostSumAggregateOutputType | null
@@ -11201,9 +11241,11 @@ export namespace Prisma {
     rejectionReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
     generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
     generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
     notifications?: boolean | GeneralPost$notificationsArgs<ExtArgs>
@@ -11225,9 +11267,11 @@ export namespace Prisma {
     rejectionReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
   export type GeneralPostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11245,9 +11289,11 @@ export namespace Prisma {
     rejectionReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
   }, ExtArgs["result"]["generalPost"]>
 
   export type GeneralPostSelectScalar = {
@@ -11265,13 +11311,15 @@ export namespace Prisma {
     rejectionReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
+    MainCategoryName?: boolean
+    SubCategoryName?: boolean
   }
 
-  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdBy" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory", ExtArgs["result"]["generalPost"]>
+  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdBy" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory" | "MainCategoryName" | "SubCategoryName", ExtArgs["result"]["generalPost"]>
   export type GeneralPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
     generalReply?: boolean | GeneralPost$generalReplyArgs<ExtArgs>
     generalLike?: boolean | GeneralPost$generalLikeArgs<ExtArgs>
     notifications?: boolean | GeneralPost$notificationsArgs<ExtArgs>
@@ -11280,12 +11328,12 @@ export namespace Prisma {
   export type GeneralPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
   }
   export type GeneralPostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
-    subCategory?: boolean | GeneralPost$subCategoryArgs<ExtArgs>
+    SubCategory?: boolean | GeneralPost$SubCategoryArgs<ExtArgs>
   }
 
   export type $GeneralPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11293,7 +11341,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       MainCategory: Prisma.$ForumMainCategoryPayload<ExtArgs> | null
-      subCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
+      SubCategory: Prisma.$ForumSubCategoryPayload<ExtArgs> | null
       generalReply: Prisma.$GeneralReplyPayload<ExtArgs>[]
       generalLike: Prisma.$GeneralLikePayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
@@ -11313,6 +11361,8 @@ export namespace Prisma {
       rejectionReason: string | null
       generalPostMainCategory: string | null
       generalPostSubCategory: string | null
+      MainCategoryName: string | null
+      SubCategoryName: string | null
     }, ExtArgs["result"]["generalPost"]>
     composites: {}
   }
@@ -11709,7 +11759,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     MainCategory<T extends GeneralPost$MainCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$MainCategoryArgs<ExtArgs>>): Prisma__ForumMainCategoryClient<$Result.GetResult<Prisma.$ForumMainCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subCategory<T extends GeneralPost$subCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$subCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    SubCategory<T extends GeneralPost$SubCategoryArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$SubCategoryArgs<ExtArgs>>): Prisma__ForumSubCategoryClient<$Result.GetResult<Prisma.$ForumSubCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     generalReply<T extends GeneralPost$generalReplyArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalReplyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     generalLike<T extends GeneralPost$generalLikeArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$generalLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeneralLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends GeneralPost$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, GeneralPost$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -11756,6 +11806,8 @@ export namespace Prisma {
     readonly rejectionReason: FieldRef<"GeneralPost", 'String'>
     readonly generalPostMainCategory: FieldRef<"GeneralPost", 'String'>
     readonly generalPostSubCategory: FieldRef<"GeneralPost", 'String'>
+    readonly MainCategoryName: FieldRef<"GeneralPost", 'String'>
+    readonly SubCategoryName: FieldRef<"GeneralPost", 'String'>
   }
     
 
@@ -12171,9 +12223,9 @@ export namespace Prisma {
   }
 
   /**
-   * GeneralPost.subCategory
+   * GeneralPost.SubCategory
    */
-  export type GeneralPost$subCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GeneralPost$SubCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ForumSubCategory
      */
@@ -27054,6 +27106,8 @@ export namespace Prisma {
     toState: 'toState',
     postMainCategory: 'postMainCategory',
     postSubCategory: 'postSubCategory',
+    MainCategoryName: 'MainCategoryName',
+    SubCategoryName: 'SubCategoryName',
     shipmentType: 'shipmentType'
   };
 
@@ -27097,7 +27151,9 @@ export namespace Prisma {
     status: 'status',
     rejectionReason: 'rejectionReason',
     generalPostMainCategory: 'generalPostMainCategory',
-    generalPostSubCategory: 'generalPostSubCategory'
+    generalPostSubCategory: 'generalPostSubCategory',
+    MainCategoryName: 'MainCategoryName',
+    SubCategoryName: 'SubCategoryName'
   };
 
   export type GeneralPostScalarFieldEnum = (typeof GeneralPostScalarFieldEnum)[keyof typeof GeneralPostScalarFieldEnum]
@@ -27771,6 +27827,8 @@ export namespace Prisma {
     toState?: StringNullableFilter<"QuotePost"> | string | null
     postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
     postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
+    MainCategoryName?: StringNullableFilter<"QuotePost"> | string | null
+    SubCategoryName?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
@@ -27813,6 +27871,8 @@ export namespace Prisma {
     toState?: SortOrderInput | SortOrder
     postMainCategory?: SortOrderInput | SortOrder
     postSubCategory?: SortOrderInput | SortOrder
+    MainCategoryName?: SortOrderInput | SortOrder
+    SubCategoryName?: SortOrderInput | SortOrder
     shipmentType?: SortOrderInput | SortOrder
     quoteReply?: QuoteReplyOrderByRelationAggregateInput
     quoteLike?: QuoteLikeOrderByRelationAggregateInput
@@ -27858,6 +27918,8 @@ export namespace Prisma {
     toState?: StringNullableFilter<"QuotePost"> | string | null
     postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
     postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
+    MainCategoryName?: StringNullableFilter<"QuotePost"> | string | null
+    SubCategoryName?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
     quoteReply?: QuoteReplyListRelationFilter
     quoteLike?: QuoteLikeListRelationFilter
@@ -27900,6 +27962,8 @@ export namespace Prisma {
     toState?: SortOrderInput | SortOrder
     postMainCategory?: SortOrderInput | SortOrder
     postSubCategory?: SortOrderInput | SortOrder
+    MainCategoryName?: SortOrderInput | SortOrder
+    SubCategoryName?: SortOrderInput | SortOrder
     shipmentType?: SortOrderInput | SortOrder
     _count?: QuotePostCountOrderByAggregateInput
     _avg?: QuotePostAvgOrderByAggregateInput
@@ -27944,6 +28008,8 @@ export namespace Prisma {
     toState?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     postMainCategory?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     postSubCategory?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    MainCategoryName?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    SubCategoryName?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
   }
 
@@ -28095,9 +28161,11 @@ export namespace Prisma {
     rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
+    SubCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     MainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
-    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    SubCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     generalReply?: GeneralReplyListRelationFilter
     generalLike?: GeneralLikeListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -28118,9 +28186,11 @@ export namespace Prisma {
     rejectionReason?: SortOrderInput | SortOrder
     generalPostMainCategory?: SortOrderInput | SortOrder
     generalPostSubCategory?: SortOrderInput | SortOrder
+    MainCategoryName?: SortOrderInput | SortOrder
+    SubCategoryName?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     MainCategory?: ForumMainCategoryOrderByWithRelationInput
-    subCategory?: ForumSubCategoryOrderByWithRelationInput
+    SubCategory?: ForumSubCategoryOrderByWithRelationInput
     generalReply?: GeneralReplyOrderByRelationAggregateInput
     generalLike?: GeneralLikeOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
@@ -28144,9 +28214,11 @@ export namespace Prisma {
     rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
+    SubCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     MainCategory?: XOR<ForumMainCategoryNullableScalarRelationFilter, ForumMainCategoryWhereInput> | null
-    subCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
+    SubCategory?: XOR<ForumSubCategoryNullableScalarRelationFilter, ForumSubCategoryWhereInput> | null
     generalReply?: GeneralReplyListRelationFilter
     generalLike?: GeneralLikeListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -28167,6 +28239,8 @@ export namespace Prisma {
     rejectionReason?: SortOrderInput | SortOrder
     generalPostMainCategory?: SortOrderInput | SortOrder
     generalPostSubCategory?: SortOrderInput | SortOrder
+    MainCategoryName?: SortOrderInput | SortOrder
+    SubCategoryName?: SortOrderInput | SortOrder
     _count?: GeneralPostCountOrderByAggregateInput
     _avg?: GeneralPostAvgOrderByAggregateInput
     _max?: GeneralPostMaxOrderByAggregateInput
@@ -28192,6 +28266,8 @@ export namespace Prisma {
     rejectionReason?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    MainCategoryName?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    SubCategoryName?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
   }
 
   export type GeneralReplyWhereInput = {
@@ -29454,6 +29530,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
@@ -29496,6 +29574,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
@@ -29532,6 +29612,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
@@ -29574,6 +29656,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
@@ -29613,6 +29697,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
   }
 
@@ -29646,6 +29732,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -29682,6 +29770,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -29819,9 +29909,11 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
@@ -29842,6 +29934,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
@@ -29859,9 +29953,11 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
@@ -29882,6 +29978,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
@@ -29902,6 +30000,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
   }
 
   export type GeneralPostUpdateManyMutationInput = {
@@ -29916,6 +30016,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GeneralPostUncheckedUpdateManyInput = {
@@ -29933,6 +30035,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GeneralReplyCreateInput = {
@@ -31336,6 +31440,8 @@ export namespace Prisma {
     toState?: SortOrder
     postMainCategory?: SortOrder
     postSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
     shipmentType?: SortOrder
   }
 
@@ -31384,6 +31490,8 @@ export namespace Prisma {
     toState?: SortOrder
     postMainCategory?: SortOrder
     postSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
     shipmentType?: SortOrder
   }
 
@@ -31420,6 +31528,8 @@ export namespace Prisma {
     toState?: SortOrder
     postMainCategory?: SortOrder
     postSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
     shipmentType?: SortOrder
   }
 
@@ -31527,6 +31637,8 @@ export namespace Prisma {
     rejectionReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
   }
 
   export type GeneralPostAvgOrderByAggregateInput = {
@@ -31550,6 +31662,8 @@ export namespace Prisma {
     rejectionReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
   }
 
   export type GeneralPostMinOrderByAggregateInput = {
@@ -31567,6 +31681,8 @@ export namespace Prisma {
     rejectionReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
+    MainCategoryName?: SortOrder
+    SubCategoryName?: SortOrder
   }
 
   export type GeneralPostSumOrderByAggregateInput = {
@@ -34596,6 +34712,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
@@ -34636,6 +34754,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
@@ -34718,8 +34838,10 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
@@ -34739,6 +34861,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
@@ -35068,6 +35192,8 @@ export namespace Prisma {
     toState?: StringNullableFilter<"QuotePost"> | string | null
     postMainCategory?: StringNullableFilter<"QuotePost"> | string | null
     postSubCategory?: StringNullableFilter<"QuotePost"> | string | null
+    MainCategoryName?: StringNullableFilter<"QuotePost"> | string | null
+    SubCategoryName?: StringNullableFilter<"QuotePost"> | string | null
     shipmentType?: StringNullableFilter<"QuotePost"> | string | null
   }
 
@@ -35160,6 +35286,8 @@ export namespace Prisma {
     rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
+    MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
+    SubCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
   }
 
   export type GeneralReplyUpsertWithWhereUniqueWithoutUserInput = {
@@ -35429,6 +35557,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
@@ -35469,6 +35599,8 @@ export namespace Prisma {
     fromState?: string | null
     toState?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
@@ -35497,8 +35629,10 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
@@ -35518,6 +35652,8 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
@@ -35621,6 +35757,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
@@ -35661,6 +35799,8 @@ export namespace Prisma {
     fromState?: string | null
     toState?: string | null
     postMainCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
@@ -35689,6 +35829,8 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
@@ -35710,6 +35852,8 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
@@ -36288,6 +36432,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
@@ -36329,6 +36475,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
@@ -36560,6 +36708,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
@@ -36601,6 +36751,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
@@ -36772,6 +36924,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     subCategory?: ForumSubCategoryCreateNestedOneWithoutQuotePostInput
@@ -36813,6 +36967,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutQuotePostInput
@@ -36939,6 +37095,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     subCategory?: ForumSubCategoryUpdateOneWithoutQuotePostNestedInput
@@ -36980,6 +37138,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutQuotePostNestedInput
@@ -37450,9 +37610,11 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
@@ -37472,6 +37634,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
@@ -37684,9 +37848,11 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
@@ -37706,6 +37872,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
@@ -37858,9 +38026,11 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutGeneralPostInput
   }
@@ -37880,6 +38050,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutGeneralPostInput
   }
@@ -37987,9 +38159,11 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
   }
@@ -38009,6 +38183,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
   }
@@ -39204,6 +39380,8 @@ export namespace Prisma {
     toAddress?: string | null
     fromState?: string | null
     toState?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeCreateNestedManyWithoutPostInput
@@ -39245,6 +39423,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
     quoteReply?: QuoteReplyUncheckedCreateNestedManyWithoutPostInput
     quoteLike?: QuoteLikeUncheckedCreateNestedManyWithoutPostInput
@@ -39267,9 +39447,11 @@ export namespace Prisma {
     commentsCount?: number | null
     status?: string | null
     rejectionReason?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
-    subCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
+    SubCategory?: ForumSubCategoryCreateNestedOneWithoutGeneralPostInput
     generalReply?: GeneralReplyCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeCreateNestedManyWithoutPostInput
   }
@@ -39289,6 +39471,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     generalReply?: GeneralReplyUncheckedCreateNestedManyWithoutPostInput
     generalLike?: GeneralLikeUncheckedCreateNestedManyWithoutPostInput
   }
@@ -39640,6 +39824,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
@@ -39681,6 +39867,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
@@ -39709,9 +39897,11 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
   }
@@ -39731,6 +39921,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -39948,6 +40140,8 @@ export namespace Prisma {
     toState?: string | null
     postMainCategory?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
   }
 
@@ -39980,6 +40174,8 @@ export namespace Prisma {
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
   }
 
   export type GeneralReplyCreateManyUserInput = {
@@ -40103,6 +40299,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
@@ -40143,6 +40341,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
@@ -40181,6 +40381,8 @@ export namespace Prisma {
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -40245,8 +40447,10 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
@@ -40266,6 +40470,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
@@ -40285,6 +40491,8 @@ export namespace Prisma {
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GeneralReplyUpdateWithoutUserInput = {
@@ -40608,6 +40816,8 @@ export namespace Prisma {
     fromState?: string | null
     toState?: string | null
     postSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
   }
 
@@ -40625,6 +40835,8 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     generalPostSubCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
   }
 
   export type ForumSubCategoryUpdateWithoutMainCategoryInput = {
@@ -40679,6 +40891,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
@@ -40719,6 +40933,8 @@ export namespace Prisma {
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
@@ -40757,6 +40973,8 @@ export namespace Prisma {
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -40772,8 +40990,10 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
-    subCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
+    SubCategory?: ForumSubCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutGeneralPostNestedInput
@@ -40793,6 +41013,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
@@ -40812,6 +41034,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuotePostCreateManySubCategoryInput = {
@@ -40846,6 +41070,8 @@ export namespace Prisma {
     fromState?: string | null
     toState?: string | null
     postMainCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
     shipmentType?: string | null
   }
 
@@ -40863,6 +41089,8 @@ export namespace Prisma {
     status?: string | null
     rejectionReason?: string | null
     generalPostMainCategory?: string | null
+    MainCategoryName?: string | null
+    SubCategoryName?: string | null
   }
 
   export type QuotePostUpdateWithoutSubCategoryInput = {
@@ -40895,6 +41123,8 @@ export namespace Prisma {
     toAddress?: NullableStringFieldUpdateOperationsInput | string | null
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUpdateManyWithoutPostNestedInput
@@ -40935,6 +41165,8 @@ export namespace Prisma {
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
     quoteReply?: QuoteReplyUncheckedUpdateManyWithoutPostNestedInput
     quoteLike?: QuoteLikeUncheckedUpdateManyWithoutPostNestedInput
@@ -40973,6 +41205,8 @@ export namespace Prisma {
     fromState?: NullableStringFieldUpdateOperationsInput | string | null
     toState?: NullableStringFieldUpdateOperationsInput | string | null
     postMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     shipmentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -40988,6 +41222,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
     generalReply?: GeneralReplyUpdateManyWithoutPostNestedInput
@@ -41009,6 +41245,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     generalReply?: GeneralReplyUncheckedUpdateManyWithoutPostNestedInput
     generalLike?: GeneralLikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutGeneralPostNestedInput
@@ -41028,6 +41266,8 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuoteReplyCreateManyPostInput = {
