@@ -163,6 +163,15 @@ const getAdmins = async (req, res, next) => {
       where: {
         role: 'admin',
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        mobileNo: true,
+        role: true,
+        city: true,
+        verified: true,
+      },
     });
     if (admins) {
       res
