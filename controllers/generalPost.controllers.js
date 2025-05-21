@@ -665,15 +665,14 @@ module.exports.getPendingReplies = async (req, res) => {
       include: {
         user: true,
         parentReply: true,
-          post:{
+        post: {
           include: {
             user: true,
             MainCategory: true,
             SubCategory: true,
-            
-         },
+          },
+        },
       },
-      }
     });
 
     return res

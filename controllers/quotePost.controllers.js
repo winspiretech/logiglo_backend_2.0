@@ -439,12 +439,12 @@ module.exports.getPendingPosts = async (req, res) => {
   try {
     const pendingPosts = await prisma.quotePost.findMany({
       where: { status: 'pending' },
-      include:{
+      include: {
         user: true,
         mainCategory: true,
         subCategory: true,
         quoteReply: true,
-      }
+      },
     });
 
     return res
@@ -476,13 +476,13 @@ module.exports.getSuccessPosts = async (req, res) => {
   try {
     const successPosts = await prisma.quotePost.findMany({
       where: { status: 'success' },
-      include:{
+      include: {
         user: true,
         mainCategory: true,
         subCategory: true,
         quoteReply: true,
         quoteLike: true,
-      }
+      },
     });
 
     return res
@@ -566,7 +566,6 @@ module.exports.getPostsByUserId = async (req, res) => {
     const userPosts = await prisma.quotePost.findMany({
       where: { userId },
       include: {
-       
         mainCategory: true,
         subCategory: true,
         quoteReply: true,
