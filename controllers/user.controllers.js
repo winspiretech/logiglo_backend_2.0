@@ -87,7 +87,16 @@ const loginUser = async (req, res, next) => {
       // httpOnly: true,
       // secure: isProduction,       // false in dev, true in production
       // sameSite: 'Lax',            // Lax is good balance between safety and usability
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      // maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: true, 
+                                   //    secure: true,// -- for https
+                                    //   sameSite: 'None',// -- for https
+                                     sameSite:'Lax', // -- localhost on both sides
+                                 //  sameSite:'Strict',
+                                      //partitioned:true,
+                                      // secure:false,
+                                            path: '/', 
+                                            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     };
 
     res
