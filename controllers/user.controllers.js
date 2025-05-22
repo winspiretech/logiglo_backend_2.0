@@ -225,9 +225,7 @@ const changeUserRole = async (req, res, next) => {
     res
       .status(200)
       .json(new ApiResponse(200, userData, 'User role updated successfully'));
-
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
