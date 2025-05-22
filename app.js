@@ -18,14 +18,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: '*',
-  }),
-);
+const corsOptions = {
+  origin: '*', // or better — restrict to specific domains in prod
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // if you’re using cookies or auth headers
+};
 
+app.use(cors(corsOptions));
 // Serve static files from the uploads volume
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
