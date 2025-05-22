@@ -84,9 +84,9 @@ const loginUser = async (req, res, next) => {
     const isProduction = process.env.NODE_ENV === 'production';
 
     let options = {
-      httpOnly: true,
-      secure: isProduction,       // false in dev, true in production
-      sameSite: 'Lax',            // Lax is good balance between safety and usability
+      // httpOnly: true,
+      // secure: isProduction,       // false in dev, true in production
+      // sameSite: 'Lax',            // Lax is good balance between safety and usability
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     };
 
