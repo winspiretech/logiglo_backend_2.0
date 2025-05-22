@@ -18,13 +18,24 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+const allowedOrigins = [
+  'http://localhost:3004',
+  'http://tester.logiglo.com',
+  
+];
+
 const corsOptions = {
-  origin: '*', // or better — restrict to specific domains in prod
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // if you’re using cookies or auth headers
 };
-
 app.use(cors(corsOptions));
 // Serve static files from the uploads volume
 app.use('/Uploads', express.static('/root/backend/Uploads'));
