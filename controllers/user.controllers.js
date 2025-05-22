@@ -84,25 +84,27 @@ const loginUser = async (req, res, next) => {
     const isProduction = process.env.NODE_ENV === 'production';
 
     let options = {
-      // httpOnly: true,
-      // secure: isProduction,       // false in dev, true in production
-      // sameSite: 'Lax',            // Lax is good balance between safety and usability
-      // maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      //httpOnly: true,
+      //secure: isProduction,       // false in dev, true in production
+      //sameSite: 'Lax',            // Lax is good balance between safety and usability
+      //maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true, 
-                                   //    secure: true,// -- for https
-                                    //   sameSite: 'None',// -- for https
-                                     sameSite:'Lax', // -- localhost on both sides
-                                 //  sameSite:'Strict',
-                                      //partitioned:true,
-                                      // secure:false,
-                                            path: '/', 
-                                            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+      //secure: true,// -- for https
+      //sameSite: 'None',// -- for https
+      sameSite:'Lax', // -- localhost on both sides
+      //sameSite:'Strict',
+      //partitioned:true,
+      // secure:false,
+      path: '/', 
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     };
+
+    const data = {...userData, token };
 
     res
       .cookie('Token', token, options)
       .status(200)
-      .json(new ApiResponse(200, userData, 'User logged in successfully'));
+      .json(new ApiResponse(200, data, 'User logged in successfully'));
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
