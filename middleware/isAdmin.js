@@ -5,11 +5,21 @@ const { ApiError } = require('../utils/ApiError');
 const isAdmin = async (req, res, next) => {
   try {
     const token = req.cookies['Token'];
-    if (!token) {
+    const authHeader = req.headers['authorization'];
+    if (!token && (!authHeader || !authHeader.startsWith("Bearer "))) {
       throw new ApiError(401, 'Unauthorized. No token found.');
     }
 
-    const decodedData = jwt.verify(token, process.env.TOKEN_SECRET);
+    let decodedData ;
+    
+    if(token){
+      decodedData = jwt.verify(token, process.env.TOKEN_SECRET);
+    } else if (authHeader){
+      decodedData = jwt.verify(authHeader.split(" ")[1],process.env.TOKEN_SECRET);
+    } else{
+      console.log("Error")
+      throw new ApiError(401, 'Unauthorized. No token found.');
+    }
 
     if (!decodedData) {
       throw new ApiError(401, 'Unauthorized. No token found.');
