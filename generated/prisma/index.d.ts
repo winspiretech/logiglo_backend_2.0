@@ -14575,6 +14575,7 @@ export namespace Prisma {
   export type BlogMinAggregateOutputType = {
     id: string | null
     title: string | null
+    description: string | null
     authorId: string | null
     status: string | null
     createdAt: Date | null
@@ -14584,6 +14585,7 @@ export namespace Prisma {
   export type BlogMaxAggregateOutputType = {
     id: string | null
     title: string | null
+    description: string | null
     authorId: string | null
     status: string | null
     createdAt: Date | null
@@ -14606,6 +14608,7 @@ export namespace Prisma {
   export type BlogMinAggregateInputType = {
     id?: true
     title?: true
+    description?: true
     authorId?: true
     status?: true
     createdAt?: true
@@ -14615,6 +14618,7 @@ export namespace Prisma {
   export type BlogMaxAggregateInputType = {
     id?: true
     title?: true
+    description?: true
     authorId?: true
     status?: true
     createdAt?: true
@@ -14708,7 +14712,7 @@ export namespace Prisma {
   export type BlogGroupByOutputType = {
     id: string
     title: string
-    description: JsonValue
+    description: string
     authorId: string
     status: string
     createdAt: Date
@@ -14811,7 +14815,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      description: Prisma.JsonValue
+      description: string
       authorId: string
       status: string
       createdAt: Date
@@ -15245,7 +15249,7 @@ export namespace Prisma {
   interface BlogFieldRefs {
     readonly id: FieldRef<"Blog", 'String'>
     readonly title: FieldRef<"Blog", 'String'>
-    readonly description: FieldRef<"Blog", 'Json'>
+    readonly description: FieldRef<"Blog", 'String'>
     readonly authorId: FieldRef<"Blog", 'String'>
     readonly status: FieldRef<"Blog", 'String'>
     readonly createdAt: FieldRef<"Blog", 'DateTime'>
@@ -28406,7 +28410,7 @@ export namespace Prisma {
     NOT?: BlogWhereInput | BlogWhereInput[]
     id?: StringFilter<"Blog"> | string
     title?: StringFilter<"Blog"> | string
-    description?: JsonFilter<"Blog">
+    description?: StringFilter<"Blog"> | string
     authorId?: StringFilter<"Blog"> | string
     status?: StringFilter<"Blog"> | string
     createdAt?: DateTimeFilter<"Blog"> | Date | string
@@ -28437,7 +28441,7 @@ export namespace Prisma {
     OR?: BlogWhereInput[]
     NOT?: BlogWhereInput | BlogWhereInput[]
     title?: StringFilter<"Blog"> | string
-    description?: JsonFilter<"Blog">
+    description?: StringFilter<"Blog"> | string
     authorId?: StringFilter<"Blog"> | string
     status?: StringFilter<"Blog"> | string
     createdAt?: DateTimeFilter<"Blog"> | Date | string
@@ -28468,7 +28472,7 @@ export namespace Prisma {
     NOT?: BlogScalarWhereWithAggregatesInput | BlogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Blog"> | string
     title?: StringWithAggregatesFilter<"Blog"> | string
-    description?: JsonWithAggregatesFilter<"Blog">
+    description?: StringWithAggregatesFilter<"Blog"> | string
     authorId?: StringWithAggregatesFilter<"Blog"> | string
     status?: StringWithAggregatesFilter<"Blog"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Blog"> | Date | string
@@ -30164,7 +30168,7 @@ export namespace Prisma {
   export type BlogCreateInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -30176,7 +30180,7 @@ export namespace Prisma {
   export type BlogUncheckedCreateInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     authorId: string
     status: string
     createdAt?: Date | string
@@ -30188,7 +30192,7 @@ export namespace Prisma {
   export type BlogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -30200,7 +30204,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30212,7 +30216,7 @@ export namespace Prisma {
   export type BlogCreateManyInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     authorId: string
     status: string
     createdAt?: Date | string
@@ -30223,7 +30227,7 @@ export namespace Prisma {
   export type BlogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -30232,7 +30236,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31751,29 +31755,6 @@ export namespace Prisma {
     userId?: SortOrder
     postId?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -31802,6 +31783,7 @@ export namespace Prisma {
   export type BlogMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     authorId?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -31811,19 +31793,20 @@ export namespace Prisma {
   export type BlogMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     authorId?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
   }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+  export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
       >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+  export type JsonFilterBase<$PrismaModel = never> = {
     equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     path?: string[]
     mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
@@ -31838,9 +31821,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type EventCountOrderByAggregateInput = {
@@ -31887,6 +31867,32 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     createdAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type BlogCategoryCountOrderByAggregateInput = {
@@ -34935,7 +34941,7 @@ export namespace Prisma {
   export type BlogCreateWithoutAuthorInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -34946,7 +34952,7 @@ export namespace Prisma {
   export type BlogUncheckedCreateWithoutAuthorInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -35367,7 +35373,7 @@ export namespace Prisma {
     NOT?: BlogScalarWhereInput | BlogScalarWhereInput[]
     id?: StringFilter<"Blog"> | string
     title?: StringFilter<"Blog"> | string
-    description?: JsonFilter<"Blog">
+    description?: StringFilter<"Blog"> | string
     authorId?: StringFilter<"Blog"> | string
     status?: StringFilter<"Blog"> | string
     createdAt?: DateTimeFilter<"Blog"> | Date | string
@@ -38632,7 +38638,7 @@ export namespace Prisma {
   export type BlogCreateWithoutCategoryInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -38643,7 +38649,7 @@ export namespace Prisma {
   export type BlogUncheckedCreateWithoutCategoryInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     authorId: string
     status: string
     createdAt?: Date | string
@@ -39543,7 +39549,7 @@ export namespace Prisma {
   export type BlogCreateWithoutNotificationsInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -39554,7 +39560,7 @@ export namespace Prisma {
   export type BlogUncheckedCreateWithoutNotificationsInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     authorId: string
     status: string
     createdAt?: Date | string
@@ -40011,7 +40017,7 @@ export namespace Prisma {
   export type BlogUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -40022,7 +40028,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40196,7 +40202,7 @@ export namespace Prisma {
   export type BlogCreateManyAuthorInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     status: string
     createdAt?: Date | string
     image_url?: BlogCreateimage_urlInput | string[]
@@ -40547,7 +40553,7 @@ export namespace Prisma {
   export type BlogUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -40558,7 +40564,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -40569,7 +40575,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateManyWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -41873,7 +41879,7 @@ export namespace Prisma {
   export type BlogCreateManyCategoryInput = {
     id?: string
     title: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     authorId: string
     status: string
     createdAt?: Date | string
@@ -41883,7 +41889,7 @@ export namespace Prisma {
   export type BlogUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     image_url?: BlogUpdateimage_urlInput | string[]
@@ -41894,7 +41900,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41905,7 +41911,7 @@ export namespace Prisma {
   export type BlogUncheckedUpdateManyWithoutCategoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
