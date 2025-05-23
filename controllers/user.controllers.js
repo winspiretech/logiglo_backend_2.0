@@ -81,15 +81,30 @@ const loginUser = async (req, res, next) => {
       },
     );
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     let options = {
+      //httpOnly: true,
+      //secure: isProduction,       // false in dev, true in production
+      //sameSite: 'Lax',            // Lax is good balance between safety and usability
+      //maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true,
-      secure: true,
+      //secure: true,// -- for https
+      //sameSite: 'None',// -- for https
+      sameSite: 'Lax', // -- localhost on both sides
+      //sameSite:'Strict',
+      //partitioned:true,
+      // secure:false,
+      path: '/',
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     };
+
+    const data = { ...userData, token };
 
     res
       .cookie('Token', token, options)
       .status(200)
-      .json(new ApiResponse(200, userData, 'User logged in successfully'));
+      .json(new ApiResponse(200, data, 'User logged in successfully'));
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
@@ -124,4 +139,126 @@ const logoutUser = async (req, res, next) => {
   }
 };
 
-module.exports = { signupController, loginUser, logoutUser };
+const getUsers = async (req, res, next) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        mobileNo: true,
+        role: true,
+        city: true,
+        verified: true,
+      },
+    });
+    if (users) {
+      res
+        .status(200)
+        .json(new ApiResponse(200, users, 'Users fetched successfully'));
+    }
+  } catch (error) {
+    console.log(error.message || 'Something went wrong in User login');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const getAdmins = async (req, res, next) => {
+  try {
+    const admins = await prisma.user.findMany({
+      where: {
+        role: 'admin',
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        mobileNo: true,
+        role: true,
+        city: true,
+        verified: true,
+      },
+    });
+    if (admins) {
+      res
+        .status(200)
+        .json(new ApiResponse(200, admins, 'Admins fetched successfully'));
+    }
+  } catch (error) {
+    console.log(error.message || 'Something went wrong in User login');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const changeUserRole = async (req, res, next) => {
+  try {
+    const { id, role } = req.body;
+
+    if (!id || !role) {
+      throw new ApiError(400, 'Missing required field');
+    }
+
+    if (role !== 'admin' && role !== 'user') {
+      throw new ApiError(400, 'Invalid role');
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!existingUser) {
+      throw new ApiError(404, 'User not found');
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: { role },
+    });
+
+    if (!updatedUser) {
+      throw new ApiError(500, 'Failed to update user role');
+    }
+
+    const { password, ...userData } = updatedUser;
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, userData, 'User role updated successfully'));
+  } catch (error) {
+    console.log(error.message || 'Something went wrong in User login');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+module.exports = {
+  signupController,
+  loginUser,
+  logoutUser,
+  getUsers,
+  getAdmins,
+  changeUserRole,
+};

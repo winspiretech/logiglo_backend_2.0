@@ -7,9 +7,11 @@ const {
   validateUserId,
   validatePostId,
   validateGetLikesByPostId,
+  quoteReplySchemaUpdate,
 } = require('../validation/quotePost.validation');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
+const { z } = require('zod');
 
 // --- Creation Functions ---
 
@@ -383,6 +385,147 @@ module.exports.updateQuotePost = async (req, res) => {
       );
   }
 };
+// Zod schema for updateQuoteReply
+const updateQuoteReplySchema = z.object({
+  params: z.object({
+    replyId: z.string().uuid('Invalid reply ID format'),
+  }),
+  body: z.object({
+    postId: z.string().uuid('Invalid post ID format').optional(),
+    parentReplyId: z
+      .string()
+      .uuid('Invalid parent reply ID format')
+      .optional()
+      .nullable(),
+    description: z.string().optional(),
+    status: z.string().optional(),
+    rejectionReason: z.string().optional(),
+  }),
+});
+
+// Update QuoteReply
+module.exports.updateQuoteReply = async (req, res) => {
+  try {
+    // Validate input data
+    const parseResult = updateQuoteReplySchema.safeParse({
+      params: req.params,
+      body: req.body,
+    });
+    if (!parseResult.success) {
+      throw new ApiError(400, 'Invalid input data', parseResult.error.errors);
+    }
+
+    const { replyId } = parseResult.data.params;
+    const { postId, parentReplyId, ...data } = parseResult.data.body;
+
+    // Verify reply exists
+    const reply = await prisma.quoteReply.findUnique({
+      where: { id: replyId },
+    });
+    if (!reply) {
+      throw new ApiError(404, 'QuoteReply not found');
+    }
+
+    // Prepare update data
+    const updateData = { ...data };
+
+    // Verify post exists if postId is provided
+    if (postId) {
+      const post = await prisma.quotePost.findUnique({ where: { id: postId } });
+      if (!post) {
+        throw new ApiError(404, 'QuotePost not found');
+      }
+      updateData.post = { connect: { id: postId } };
+    }
+
+    // Verify parent reply exists if parentReplyId is provided
+    if (parentReplyId) {
+      const parentReply = await prisma.quoteReply.findUnique({
+        where: { id: parentReplyId },
+      });
+      if (!parentReply) {
+        throw new ApiError(404, 'Parent QuoteReply not found');
+      }
+      updateData.parentReply = { connect: { id: parentReplyId } };
+    } else if (parentReplyId === null) {
+      updateData.parentReply = { disconnect: true };
+    }
+
+    // Update the reply
+    const updatedReply = await prisma.quoteReply.update({
+      where: { id: replyId },
+      data: updateData,
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, updatedReply, 'QuoteReply updated successfully'),
+      );
+  } catch (error) {
+    // Handle Prisma-specific errors
+    if (error.code === 'P2025') {
+      console.error('Record not found for update:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'QuoteReply not found', error.message));
+    }
+    if (error.code === 'P2003') {
+      console.error('Foreign key constraint failed:', error);
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (post or parent reply)',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2002') {
+      console.error('Unique constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on QuoteReply',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2011') {
+      console.error('Null constraint violation:', error);
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in QuoteReply update',
+            error.message,
+          ),
+        );
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in updateQuoteReply: ${error.message}`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error in updateQuoteReply:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update QuoteReply due to server error',
+          error.message,
+        ),
+      );
+  }
+};
 
 // --- General Fetching Functions ---
 
@@ -439,6 +582,12 @@ module.exports.getPendingPosts = async (req, res) => {
   try {
     const pendingPosts = await prisma.quotePost.findMany({
       where: { status: 'pending' },
+      include: {
+        user: true,
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+      },
     });
 
     return res
@@ -470,6 +619,13 @@ module.exports.getSuccessPosts = async (req, res) => {
   try {
     const successPosts = await prisma.quotePost.findMany({
       where: { status: 'success' },
+      include: {
+        user: true,
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+        quoteLike: true,
+      },
     });
 
     return res
@@ -501,6 +657,28 @@ module.exports.getPendingReplies = async (req, res) => {
   try {
     const pendingReplies = await prisma.quoteReply.findMany({
       where: { status: 'pending' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        post: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+            mainCategory: true,
+            subCategory: true,
+          },
+        },
+      },
     });
 
     return res
@@ -542,6 +720,12 @@ module.exports.getPostsByUserId = async (req, res) => {
 
     const userPosts = await prisma.quotePost.findMany({
       where: { userId },
+      include: {
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+        quoteLike: true,
+      },
     });
 
     return res

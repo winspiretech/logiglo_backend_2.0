@@ -38,7 +38,44 @@ const quotePostSchema = z.object({
   postSubCategory: z.string().uuid().nullable().optional(),
   shipmentType: z.string().nullable().optional(),
 });
-
+// Zod schema for QuoteReply creation
+const quoteReplySchemaUpdate = z.object({
+  params: z.object({
+    replyId: z
+      .string()
+      .uuid({ message: 'replyId must be a valid UUID' })
+      .nonempty({ message: 'replyId is required' }),
+  }),
+  body: z
+    .object({
+      postId: z
+        .string()
+        .uuid({ message: 'postId must be a valid UUID' })
+        .optional(),
+      parentReplyId: z
+        .string()
+        .uuid({ message: 'parentReplyId must be a valid UUID' })
+        .optional()
+        .nullable(),
+      description: z
+        .string({ message: 'description must be a string' })
+        .optional()
+        .nullable(),
+      status: z
+        .enum(['pending', 'approved', 'rejected', 'success'], {
+          message: 'status must be one of pending, approved, rejected',
+        })
+        .optional(),
+      rejectionReason: z
+        .string({ message: 'rejectionReason must be a string' })
+        .optional()
+        .nullable(),
+    })
+    .refine((data) => Object.keys(data).length > 0, {
+      message: 'At least one field must be provided in the request body',
+      path: [],
+    }),
+});
 // Zod schema for updating QuotePost
 const updateQuotePostSchema = z
   .object({
@@ -185,4 +222,5 @@ module.exports = {
   validateUserId,
   validatePostId,
   validateGetLikesByPostId,
+  quoteReplySchemaUpdate,
 };

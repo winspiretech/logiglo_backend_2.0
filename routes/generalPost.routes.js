@@ -20,6 +20,10 @@ router.patch(
   '/updategeneralpost/:postId',
   generalPostController.updateGeneralPost,
 );
+router.patch(
+  '/updategeneralreply/:replyId',
+  generalPostController.updateGeneralReply,
+);
 
 // --- General Fetching Routes ---
 

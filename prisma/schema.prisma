@@ -229,7 +229,7 @@ model GeneralLike {
 model Blog {
   id            String         @id @default(uuid())
   title         String
-  description   Json
+  description   String
   authorId      String
   author        User           @relation(fields: [authorId], references: [id])
   status        String
