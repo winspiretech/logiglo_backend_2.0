@@ -439,7 +439,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\Logiglo\\logiglo_backend_2.0\\generated\\prisma",
+      "value": "D:\\logiglo_backend_2.0\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -461,7 +461,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\Logiglo\\logiglo_backend_2.0\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\logiglo_backend_2.0\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
