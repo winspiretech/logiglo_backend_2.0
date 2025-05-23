@@ -4,7 +4,6 @@ const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { get } = require('../routes/user.routes.js');
 
 const signupController = async (req, res, next) => {
   try {

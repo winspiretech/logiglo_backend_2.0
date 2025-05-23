@@ -16,7 +16,11 @@ router.post('/createquotelike', quotePostController.createQuoteLike);
 
 // Update an existing QuotePost
 router.patch('/updatequotepost/:postId', quotePostController.updateQuotePost);
-
+//update an existing QuoteReply
+router.patch(
+  '/updatequotereply/:replyId',
+  quotePostController.updateQuoteReply,
+);
 // --- General Fetching Routes ---
 
 // Fetch draft QuotePosts for a specific user

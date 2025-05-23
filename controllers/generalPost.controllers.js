@@ -7,9 +7,11 @@ const {
   validateUserId,
   validatePostId,
   validateGetLikesByPostId,
+  updategeneralReply,
 } = require('../validation/generalPost.validation');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
+const { z } = require('zod');
 
 // --- Creation Functions ---
 
@@ -521,7 +523,149 @@ module.exports.updateGeneralPost = async (req, res) => {
       );
   }
 };
+// Zod schema for updateGeneralReply
+const updateGeneralReplySchema = z.object({
+  params: z.object({
+    replyId: z.string().uuid('Invalid reply ID format'),
+  }),
+  body: z.object({
+    postId: z.string().uuid('Invalid post ID format').optional(),
+    parentReplyId: z
+      .string()
+      .uuid('Invalid parent reply ID format')
+      .optional()
+      .nullable(),
+    description: z.string().optional(),
+    status: z.string().optional(),
+    rejectionReason: z.string().optional(),
+  }),
+});
+// Update an existing GeneralReply
 
+module.exports.updateGeneralReply = async (req, res) => {
+  try {
+    // Validate input data
+    const parseResult = updateGeneralReplySchema.safeParse({
+      params: req.params,
+      body: req.body,
+    });
+    if (!parseResult.success) {
+      throw new ApiError(400, 'Invalid input data', parseResult.error.errors);
+    }
+
+    const { replyId } = parseResult.data.params;
+    const { postId, parentReplyId, ...data } = parseResult.data.body;
+
+    // Verify reply exists
+    const reply = await prisma.generalReply.findUnique({
+      where: { id: replyId },
+    });
+    if (!reply) {
+      throw new ApiError(404, 'GeneralReply not found');
+    }
+
+    // Prepare update data
+    const updateData = { ...data };
+
+    // Verify post exists if postId is provided
+    if (postId) {
+      const post = await prisma.generalPost.findUnique({
+        where: { id: postId },
+      });
+      if (!post) {
+        throw new ApiError(404, 'GeneralPost not found');
+      }
+      updateData.post = { connect: { id: postId } };
+    }
+
+    // Verify parent reply exists if parentReplyId is provided
+    if (parentReplyId) {
+      const parentReply = await prisma.generalReply.findUnique({
+        where: { id: parentReplyId },
+      });
+      if (!parentReply) {
+        throw new ApiError(404, 'Parent GeneralReply not found');
+      }
+      updateData.parentReply = { connect: { id: parentReplyId } };
+    } else if (parentReplyId === null) {
+      updateData.parentReply = { disconnect: true };
+    }
+
+    // Update the reply
+    const updatedReply = await prisma.generalReply.update({
+      where: { id: replyId },
+      data: updateData,
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, updatedReply, 'GeneralReply updated successfully'),
+      );
+  } catch (error) {
+    // Handle Prisma-specific errors
+    if (error.code === 'P2025') {
+      console.error('Record not found for update:', error);
+      return res
+        .status(404)
+        .json(new ApiError(404, 'GeneralReply not found', error.message));
+    }
+    if (error.code === 'P2003') {
+      console.error('Foreign key constraint failed:', error);
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (post or parent reply)',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2002') {
+      console.error('Unique constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on GeneralReply',
+            error.message,
+          ),
+        );
+    }
+    if (error.code === 'P2011') {
+      console.error('Null constraint violation:', error);
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in GeneralReply update',
+            error.message,
+          ),
+        );
+    }
+
+    // Handle known ApiError instances
+    if (error instanceof ApiError) {
+      console.error(`Error in updateGeneralReply: ${error.message}`, error);
+      return res.status(error.statusCode).json(error);
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error in updateGeneralReply:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update GeneralReply due to server error',
+          error.message,
+        ),
+      );
+  }
+};
 // --- General Fetching Functions ---
 
 // Fetch draft GeneralPosts for a specific user
@@ -663,11 +807,23 @@ module.exports.getPendingReplies = async (req, res) => {
     const pendingReplies = await prisma.generalReply.findMany({
       where: { status: 'pending' },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         parentReply: true,
         post: {
           include: {
-            user: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
             MainCategory: true,
             SubCategory: true,
           },
@@ -715,7 +871,13 @@ module.exports.getPostsByUserId = async (req, res) => {
     const userPosts = await prisma.generalPost.findMany({
       where: { userId },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         MainCategory: true,
         SubCategory: true,
         generalReply: true,
@@ -767,7 +929,13 @@ module.exports.getRepliesByPostId = async (req, res) => {
     const replies = await prisma.generalReply.findMany({
       where: { postId },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         parentReply: true,
       },
     });
@@ -874,7 +1042,13 @@ module.exports.getGeneralPostByPostId = async (req, res) => {
     const post = await prisma.generalPost.findFirst({
       where: { id: postId },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         MainCategory: true,
         SubCategory: true, // ✅ fixed
         generalReply: true,
