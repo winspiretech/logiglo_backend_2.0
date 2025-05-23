@@ -6,18 +6,21 @@ const isAdmin = async (req, res, next) => {
   try {
     const token = req.cookies['Token'];
     const authHeader = req.headers['authorization'];
-    if (!token && (!authHeader || !authHeader.startsWith("Bearer "))) {
+    if (!token && (!authHeader || !authHeader.startsWith('Bearer '))) {
       throw new ApiError(401, 'Unauthorized. No token found.');
     }
 
-    let decodedData ;
-    
-    if(token){
+    let decodedData;
+
+    if (token) {
       decodedData = jwt.verify(token, process.env.TOKEN_SECRET);
-    } else if (authHeader){
-      decodedData = jwt.verify(authHeader.split(" ")[1],process.env.TOKEN_SECRET);
-    } else{
-      console.log("Error")
+    } else if (authHeader) {
+      decodedData = jwt.verify(
+        authHeader.split(' ')[1],
+        process.env.TOKEN_SECRET,
+      );
+    } else {
+      console.log('Error');
       throw new ApiError(401, 'Unauthorized. No token found.');
     }
 
