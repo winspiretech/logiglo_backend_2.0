@@ -59,8 +59,7 @@ const createBlog = async (req, res) => {
       );
     }
 
-    res
-      .status(200)
+    res.status(200)
       .json(new ApiResponse(200, newBlog, 'Blog created successfully'));
   } catch (error) {
     if (error instanceof ApiError) {
