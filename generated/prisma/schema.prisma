@@ -243,14 +243,14 @@ model Blog {
 model Event {
   id            String         @id @default(uuid())
   authorId      String
-  coverImage    String
+  coverImages   String[]
   author        User           @relation(fields: [authorId], references: [id])
   eventTitle    String
   organizer     String
   countryCode   String
   contactNumber String
   emailAddress  String
-  description   Json
+  description   String
   location      String
   startDate     DateTime
   endDate       DateTime

@@ -15725,12 +15725,12 @@ export namespace Prisma {
   export type EventMinAggregateOutputType = {
     id: string | null
     authorId: string | null
-    coverImage: string | null
     eventTitle: string | null
     organizer: string | null
     countryCode: string | null
     contactNumber: string | null
     emailAddress: string | null
+    description: string | null
     location: string | null
     startDate: Date | null
     endDate: Date | null
@@ -15740,12 +15740,12 @@ export namespace Prisma {
   export type EventMaxAggregateOutputType = {
     id: string | null
     authorId: string | null
-    coverImage: string | null
     eventTitle: string | null
     organizer: string | null
     countryCode: string | null
     contactNumber: string | null
     emailAddress: string | null
+    description: string | null
     location: string | null
     startDate: Date | null
     endDate: Date | null
@@ -15755,7 +15755,7 @@ export namespace Prisma {
   export type EventCountAggregateOutputType = {
     id: number
     authorId: number
-    coverImage: number
+    coverImages: number
     eventTitle: number
     organizer: number
     countryCode: number
@@ -15773,12 +15773,12 @@ export namespace Prisma {
   export type EventMinAggregateInputType = {
     id?: true
     authorId?: true
-    coverImage?: true
     eventTitle?: true
     organizer?: true
     countryCode?: true
     contactNumber?: true
     emailAddress?: true
+    description?: true
     location?: true
     startDate?: true
     endDate?: true
@@ -15788,12 +15788,12 @@ export namespace Prisma {
   export type EventMaxAggregateInputType = {
     id?: true
     authorId?: true
-    coverImage?: true
     eventTitle?: true
     organizer?: true
     countryCode?: true
     contactNumber?: true
     emailAddress?: true
+    description?: true
     location?: true
     startDate?: true
     endDate?: true
@@ -15803,7 +15803,7 @@ export namespace Prisma {
   export type EventCountAggregateInputType = {
     id?: true
     authorId?: true
-    coverImage?: true
+    coverImages?: true
     eventTitle?: true
     organizer?: true
     countryCode?: true
@@ -15892,13 +15892,13 @@ export namespace Prisma {
   export type EventGroupByOutputType = {
     id: string
     authorId: string
-    coverImage: string
+    coverImages: string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonValue
+    description: string
     location: string
     startDate: Date
     endDate: Date
@@ -15925,7 +15925,7 @@ export namespace Prisma {
   export type EventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     authorId?: boolean
-    coverImage?: boolean
+    coverImages?: boolean
     eventTitle?: boolean
     organizer?: boolean
     countryCode?: boolean
@@ -15944,7 +15944,7 @@ export namespace Prisma {
   export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     authorId?: boolean
-    coverImage?: boolean
+    coverImages?: boolean
     eventTitle?: boolean
     organizer?: boolean
     countryCode?: boolean
@@ -15961,7 +15961,7 @@ export namespace Prisma {
   export type EventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     authorId?: boolean
-    coverImage?: boolean
+    coverImages?: boolean
     eventTitle?: boolean
     organizer?: boolean
     countryCode?: boolean
@@ -15978,7 +15978,7 @@ export namespace Prisma {
   export type EventSelectScalar = {
     id?: boolean
     authorId?: boolean
-    coverImage?: boolean
+    coverImages?: boolean
     eventTitle?: boolean
     organizer?: boolean
     countryCode?: boolean
@@ -15991,7 +15991,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "coverImage" | "eventTitle" | "organizer" | "countryCode" | "contactNumber" | "emailAddress" | "description" | "location" | "startDate" | "endDate" | "createdAt", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "coverImages" | "eventTitle" | "organizer" | "countryCode" | "contactNumber" | "emailAddress" | "description" | "location" | "startDate" | "endDate" | "createdAt", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     notifications?: boolean | Event$notificationsArgs<ExtArgs>
@@ -16013,13 +16013,13 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       authorId: string
-      coverImage: string
+      coverImages: string[]
       eventTitle: string
       organizer: string
       countryCode: string
       contactNumber: string
       emailAddress: string
-      description: Prisma.JsonValue
+      description: string
       location: string
       startDate: Date
       endDate: Date
@@ -16451,13 +16451,13 @@ export namespace Prisma {
   interface EventFieldRefs {
     readonly id: FieldRef<"Event", 'String'>
     readonly authorId: FieldRef<"Event", 'String'>
-    readonly coverImage: FieldRef<"Event", 'String'>
+    readonly coverImages: FieldRef<"Event", 'String[]'>
     readonly eventTitle: FieldRef<"Event", 'String'>
     readonly organizer: FieldRef<"Event", 'String'>
     readonly countryCode: FieldRef<"Event", 'String'>
     readonly contactNumber: FieldRef<"Event", 'String'>
     readonly emailAddress: FieldRef<"Event", 'String'>
-    readonly description: FieldRef<"Event", 'Json'>
+    readonly description: FieldRef<"Event", 'String'>
     readonly location: FieldRef<"Event", 'String'>
     readonly startDate: FieldRef<"Event", 'DateTime'>
     readonly endDate: FieldRef<"Event", 'DateTime'>
@@ -27203,7 +27203,7 @@ export namespace Prisma {
   export const EventScalarFieldEnum: {
     id: 'id',
     authorId: 'authorId',
-    coverImage: 'coverImage',
+    coverImages: 'coverImages',
     eventTitle: 'eventTitle',
     organizer: 'organizer',
     countryCode: 'countryCode',
@@ -27344,13 +27344,6 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -27365,15 +27358,6 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-  export const JsonNullValueFilter: {
-    DbNull: typeof DbNull,
-    JsonNull: typeof JsonNull,
-    AnyNull: typeof AnyNull
-  };
-
-  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -27441,20 +27425,6 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -28486,13 +28456,13 @@ export namespace Prisma {
     NOT?: EventWhereInput | EventWhereInput[]
     id?: StringFilter<"Event"> | string
     authorId?: StringFilter<"Event"> | string
-    coverImage?: StringFilter<"Event"> | string
+    coverImages?: StringNullableListFilter<"Event">
     eventTitle?: StringFilter<"Event"> | string
     organizer?: StringFilter<"Event"> | string
     countryCode?: StringFilter<"Event"> | string
     contactNumber?: StringFilter<"Event"> | string
     emailAddress?: StringFilter<"Event"> | string
-    description?: JsonFilter<"Event">
+    description?: StringFilter<"Event"> | string
     location?: StringFilter<"Event"> | string
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
@@ -28504,7 +28474,7 @@ export namespace Prisma {
   export type EventOrderByWithRelationInput = {
     id?: SortOrder
     authorId?: SortOrder
-    coverImage?: SortOrder
+    coverImages?: SortOrder
     eventTitle?: SortOrder
     organizer?: SortOrder
     countryCode?: SortOrder
@@ -28525,13 +28495,13 @@ export namespace Prisma {
     OR?: EventWhereInput[]
     NOT?: EventWhereInput | EventWhereInput[]
     authorId?: StringFilter<"Event"> | string
-    coverImage?: StringFilter<"Event"> | string
+    coverImages?: StringNullableListFilter<"Event">
     eventTitle?: StringFilter<"Event"> | string
     organizer?: StringFilter<"Event"> | string
     countryCode?: StringFilter<"Event"> | string
     contactNumber?: StringFilter<"Event"> | string
     emailAddress?: StringFilter<"Event"> | string
-    description?: JsonFilter<"Event">
+    description?: StringFilter<"Event"> | string
     location?: StringFilter<"Event"> | string
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
@@ -28543,7 +28513,7 @@ export namespace Prisma {
   export type EventOrderByWithAggregationInput = {
     id?: SortOrder
     authorId?: SortOrder
-    coverImage?: SortOrder
+    coverImages?: SortOrder
     eventTitle?: SortOrder
     organizer?: SortOrder
     countryCode?: SortOrder
@@ -28565,13 +28535,13 @@ export namespace Prisma {
     NOT?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Event"> | string
     authorId?: StringWithAggregatesFilter<"Event"> | string
-    coverImage?: StringWithAggregatesFilter<"Event"> | string
+    coverImages?: StringNullableListFilter<"Event">
     eventTitle?: StringWithAggregatesFilter<"Event"> | string
     organizer?: StringWithAggregatesFilter<"Event"> | string
     countryCode?: StringWithAggregatesFilter<"Event"> | string
     contactNumber?: StringWithAggregatesFilter<"Event"> | string
     emailAddress?: StringWithAggregatesFilter<"Event"> | string
-    description?: JsonWithAggregatesFilter<"Event">
+    description?: StringWithAggregatesFilter<"Event"> | string
     location?: StringWithAggregatesFilter<"Event"> | string
     startDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -30246,13 +30216,13 @@ export namespace Prisma {
 
   export type EventCreateInput = {
     id?: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -30264,13 +30234,13 @@ export namespace Prisma {
   export type EventUncheckedCreateInput = {
     id?: string
     authorId: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -30280,13 +30250,13 @@ export namespace Prisma {
 
   export type EventUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30298,13 +30268,13 @@ export namespace Prisma {
   export type EventUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30315,13 +30285,13 @@ export namespace Prisma {
   export type EventCreateManyInput = {
     id?: string
     authorId: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -30330,13 +30300,13 @@ export namespace Prisma {
 
   export type EventUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30346,13 +30316,13 @@ export namespace Prisma {
   export type EventUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31799,34 +31769,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     categoryId?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type EventCountOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
-    coverImage?: SortOrder
+    coverImages?: SortOrder
     eventTitle?: SortOrder
     organizer?: SortOrder
     countryCode?: SortOrder
@@ -31842,12 +31789,12 @@ export namespace Prisma {
   export type EventMaxOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
-    coverImage?: SortOrder
     eventTitle?: SortOrder
     organizer?: SortOrder
     countryCode?: SortOrder
     contactNumber?: SortOrder
     emailAddress?: SortOrder
+    description?: SortOrder
     location?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
@@ -31857,42 +31804,16 @@ export namespace Prisma {
   export type EventMinOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
-    coverImage?: SortOrder
     eventTitle?: SortOrder
     organizer?: SortOrder
     countryCode?: SortOrder
     contactNumber?: SortOrder
     emailAddress?: SortOrder
+    description?: SortOrder
     location?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     createdAt?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type BlogCategoryCountOrderByAggregateInput = {
@@ -33854,6 +33775,10 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type EventCreatecoverImagesInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutEventInput = {
     create?: XOR<UserCreateWithoutEventInput, UserUncheckedCreateWithoutEventInput>
     connectOrCreate?: UserCreateOrConnectWithoutEventInput
@@ -33872,6 +33797,11 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutEventInput | NotificationCreateOrConnectWithoutEventInput[]
     createMany?: NotificationCreateManyEventInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type EventUpdatecoverImagesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutEventNestedInput = {
@@ -34539,29 +34469,6 @@ export namespace Prisma {
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type NestedEnumEducationLevelFilter<$PrismaModel = never> = {
     equals?: $Enums.EducationLevel | EnumEducationLevelFieldRefInput<$PrismaModel>
@@ -35022,13 +34929,13 @@ export namespace Prisma {
 
   export type EventCreateWithoutAuthorInput = {
     id?: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -35038,13 +34945,13 @@ export namespace Prisma {
 
   export type EventUncheckedCreateWithoutAuthorInput = {
     id?: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -35442,13 +35349,13 @@ export namespace Prisma {
     NOT?: EventScalarWhereInput | EventScalarWhereInput[]
     id?: StringFilter<"Event"> | string
     authorId?: StringFilter<"Event"> | string
-    coverImage?: StringFilter<"Event"> | string
+    coverImages?: StringNullableListFilter<"Event">
     eventTitle?: StringFilter<"Event"> | string
     organizer?: StringFilter<"Event"> | string
     countryCode?: StringFilter<"Event"> | string
     contactNumber?: StringFilter<"Event"> | string
     emailAddress?: StringFilter<"Event"> | string
-    description?: JsonFilter<"Event">
+    description?: StringFilter<"Event"> | string
     location?: StringFilter<"Event"> | string
     startDate?: DateTimeFilter<"Event"> | Date | string
     endDate?: DateTimeFilter<"Event"> | Date | string
@@ -39575,13 +39482,13 @@ export namespace Prisma {
 
   export type EventCreateWithoutNotificationsInput = {
     id?: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -39592,13 +39499,13 @@ export namespace Prisma {
   export type EventUncheckedCreateWithoutNotificationsInput = {
     id?: string
     authorId: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -40049,13 +39956,13 @@ export namespace Prisma {
 
   export type EventUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40066,13 +39973,13 @@ export namespace Prisma {
   export type EventUncheckedUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40230,13 +40137,13 @@ export namespace Prisma {
 
   export type EventCreateManyAuthorInput = {
     id?: string
-    coverImage: string
+    coverImages?: EventCreatecoverImagesInput | string[]
     eventTitle: string
     organizer: string
     countryCode: string
     contactNumber: string
     emailAddress: string
-    description: JsonNullValueInput | InputJsonValue
+    description: string
     location: string
     startDate: Date | string
     endDate: Date | string
@@ -40643,13 +40550,13 @@ export namespace Prisma {
 
   export type EventUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40659,13 +40566,13 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40675,13 +40582,13 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateManyWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    coverImage?: StringFieldUpdateOperationsInput | string
+    coverImages?: EventUpdatecoverImagesInput | string[]
     eventTitle?: StringFieldUpdateOperationsInput | string
     organizer?: StringFieldUpdateOperationsInput | string
     countryCode?: StringFieldUpdateOperationsInput | string
     contactNumber?: StringFieldUpdateOperationsInput | string
     emailAddress?: StringFieldUpdateOperationsInput | string
-    description?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
