@@ -1,12 +1,11 @@
 // controllers/courseController.js
 const { CourseSchema } = require('../validation/education.validation');
 const prisma = require('../models/prismaClient');
-const {z} = require('zod');
+const { z } = require('zod');
 
 const courseIdParamsSchema = z.object({
   id: z.string().uuid(),
-})
-
+});
 
 const createCourse = async (req, res) => {
   try {
@@ -91,27 +90,26 @@ const editCourse = async (req, res) => {
 
 const deleteCourse = async (req, res) => {
   try {
-    const {id} = courseIdParamsSchema.parse(req.params);
+    const { id } = courseIdParamsSchema.parse(req.params);
 
-    const existingCourse = await prisma.course.findUnique({where: {id}})
+    const existingCourse = await prisma.course.findUnique({ where: { id } });
 
-    if(!existingCourse){
-      res.status(404).json({message:'course not found!'})
+    if (!existingCourse) {
+      res.status(404).json({ message: 'course not found!' });
     }
 
     //delete the course
-    await prisma.course.delete({where: {id}})
+    await prisma.course.delete({ where: { id } });
 
-    return res.status(200).json({message:'course deleted successfully!'})
-    
+    return res.status(200).json({ message: 'course deleted successfully!' });
   } catch (error) {
-    if(error instanceof z.ZodError){
-      return res.status(400).json({message: "Invalid Course Id"})
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ message: 'Invalid Course Id' });
     }
 
-    console.log('Delete Course Error', error)
-    res.status(500).json({message: "Something went wrong!"})
+    console.log('Delete Course Error', error);
+    res.status(500).json({ message: 'Something went wrong!' });
   }
-}
+};
 
 module.exports = { createCourse, getAllCourses, editCourse, deleteCourse };
