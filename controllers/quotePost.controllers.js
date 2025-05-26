@@ -583,7 +583,13 @@ module.exports.getPendingPosts = async (req, res) => {
     const pendingPosts = await prisma.quotePost.findMany({
       where: { status: 'pending' },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         mainCategory: true,
         subCategory: true,
         quoteReply: true,
@@ -613,14 +619,61 @@ module.exports.getPendingPosts = async (req, res) => {
       );
   }
 };
+// Fetch all QuotePosts with status "rejected"
+module.exports.getRejectedPosts = async (req, res) => {
+  try {
+    const pendingPosts = await prisma.quotePost.findMany({
+      where: { status: 'rejected' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        mainCategory: true,
+        subCategory: true,
+        quoteReply: true,
+      },
+    });
 
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          pendingPosts,
+          'Rejected QuotePosts fetched successfully',
+        ),
+      );
+  } catch (error) {
+    // Handle unexpected errors
+    console.error('Error in getRejectedPosts - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch rejected QuotePosts due to server error',
+          error.message,
+        ),
+      );
+  }
+};
 // Fetch all QuotePosts with status "success"
 module.exports.getSuccessPosts = async (req, res) => {
   try {
     const successPosts = await prisma.quotePost.findMany({
       where: { status: 'success' },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         mainCategory: true,
         subCategory: true,
         quoteReply: true,

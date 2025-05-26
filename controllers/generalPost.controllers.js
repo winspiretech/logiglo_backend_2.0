@@ -729,7 +729,13 @@ module.exports.getPendingPosts = async (req, res) => {
         status: 'pending',
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         MainCategory: true,
         SubCategory: true, // fixed here
         generalReply: true,
@@ -761,6 +767,51 @@ module.exports.getPendingPosts = async (req, res) => {
   }
 };
 
+//fetch all rejected GeneralPosts
+module.exports.getRejectedPosts = async (req, res) => {
+  try {
+    const pendingPosts = await prisma.generalPost.findMany({
+      where: {
+        status: 'rejected',
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        MainCategory: true,
+        SubCategory: true, // fixed here
+        generalReply: true,
+        generalLike: true,
+      },
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          pendingPosts,
+          'Rejected GeneralPosts fetched successfully',
+        ),
+      );
+  } catch (error) {
+    // Handle unexpected errors
+    console.error('Error in getRejectedPosts - Unexpected error:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch rejected GeneralPosts due to server error',
+          error.message,
+        ),
+      );
+  }
+};
 // Fetch all GeneralPosts with status "success"
 module.exports.getSuccessPosts = async (req, res) => {
   try {
@@ -769,7 +820,13 @@ module.exports.getSuccessPosts = async (req, res) => {
         status: 'success',
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         MainCategory: true,
         SubCategory: true, // fixed here
         generalReply: true,
