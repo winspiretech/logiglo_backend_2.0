@@ -83,7 +83,7 @@ const getAdminsBlogs = async (req, res) => {
     }
     const adminsBlogs = await prisma.blog.findMany({
       where: {
-        id: id,
+        authorId: id,
       },
     });
     if (!adminsBlogs) {
