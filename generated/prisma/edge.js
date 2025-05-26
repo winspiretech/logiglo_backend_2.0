@@ -429,7 +429,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Logiglo\\logiglo_backend_2.0\\generated\\prisma",
+      "value": "/logiglo_backend_2.0/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -438,7 +438,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "linux-musl-openssl-3.0.x",
         "native": true
       },
       {
@@ -451,7 +451,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Logiglo\\logiglo_backend_2.0\\prisma\\schema.prisma",
+    "sourceFilePath": "/logiglo_backend_2.0/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -465,12 +465,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
       }
     }
   },
