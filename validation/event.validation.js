@@ -1,4 +1,4 @@
-const { z } = require('zod');
+const { z, string } = require('zod');
 
 const EventSchema = z
   .object({
@@ -10,7 +10,7 @@ const EventSchema = z
     location: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
-    coverImage: z.string(),
+    coverImages: z.array(z.string()).optional(),
   })
   .refine((data) => data.endDate >= data.startDate, {
     // For checking endDate should be greater than startDate
