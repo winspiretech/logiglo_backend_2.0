@@ -59,7 +59,8 @@ const createBlog = async (req, res) => {
       );
     }
 
-    res.status(200)
+    res
+      .status(200)
       .json(new ApiResponse(200, newBlog, 'Blog created successfully'));
   } catch (error) {
     if (error instanceof ApiError) {
@@ -92,7 +93,8 @@ const getAdminsBlogs = async (req, res) => {
         'Something went wrong while fetching data, Please try again',
       );
     }
-    res.status(200)
+    res
+      .status(200)
       .json(new ApiResponse(200, adminsBlogs, 'Blogs fetched successfully'));
   } catch (error) {
     if (error instanceof ApiError) {
