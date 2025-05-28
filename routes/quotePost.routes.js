@@ -31,6 +31,8 @@ router.get(
 
 // Fetch all pending QuotePosts
 router.get('/getpendingquoteposts', quotePostController.getPendingPosts);
+// Fetch all pending QuotePosts
+router.get('/getrejectedquoteposts', quotePostController.getRejectedPosts);
 
 // Fetch all successful QuotePosts
 router.get('/getsuccessquoteposts', quotePostController.getSuccessPosts);

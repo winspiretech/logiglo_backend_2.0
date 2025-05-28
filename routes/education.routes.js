@@ -3,6 +3,7 @@ const {
   createCourse,
   getAllCourses,
   editCourse,
+  deleteCourse,
 } = require('../controllers/courseController');
 const createCourseModule = require('../controllers/courseModuleController');
 const router = express.Router();
@@ -19,6 +20,8 @@ router.put('/courses/:id', editCourse);
 router.post('/createcourse', isAdmin, createCourse);
 
 router.post('/courses/:courseId/modules', isAdmin, createCourseModule);
+
+router.post('/courses/:id', deleteCourse);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);

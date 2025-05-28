@@ -35,6 +35,8 @@ router.get(
 
 // Fetch all pending GeneralPosts
 router.get('/getpendinggeneralposts', generalPostController.getPendingPosts);
+// Fetch all Rejected GeneralPosts
+router.get('/getrejectedgeneralposts', generalPostController.getRejectedPosts);
 
 // Fetch all successful GeneralPosts
 router.get('/getsuccessgeneralposts', generalPostController.getSuccessPosts);
