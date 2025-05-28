@@ -440,7 +440,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/logiglo_backend_2.0/generated/prisma",
+      "value": "D:\\logiglo_backend_2.0\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -449,7 +449,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-musl-openssl-3.0.x",
+        "value": "windows",
         "native": true
       },
       {
@@ -462,7 +462,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/logiglo_backend_2.0/prisma/schema.prisma",
+    "sourceFilePath": "D:\\logiglo_backend_2.0\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -480,7 +480,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://logiglo:root123@postgres:5432/logiglo_db?schema=public"
+        "value": "postgresql://logiglo:root123@localhost:5432/logiglo_db?schema=public"
       }
     }
   },
@@ -522,10 +522,6 @@ warnEnvConflicts({
 const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
-
-// file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-linux-musl-openssl-3.0.x.so.node");
-path.join(process.cwd(), "generated/prisma/libquery_engine-linux-musl-openssl-3.0.x.so.node")
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
