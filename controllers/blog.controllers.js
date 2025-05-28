@@ -86,6 +86,9 @@ const getAdminsBlogs = async (req, res) => {
       where: {
         authorId: id,
       },
+      include: {
+        category: true,
+      },
     });
     if (!adminsBlogs) {
       throw new ApiError(
@@ -113,7 +116,11 @@ const getAdminsBlogs = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
   try {
-    const allBlogs = await prisma.blog.findMany();
+    const allBlogs = await prisma.blog.findMany({
+      include: {
+        category: true,
+      }
+    });
     if (!allBlogs) {
       throw new ApiError(500, 'Something went wrong while fetching blogs');
     }
@@ -144,6 +151,9 @@ const getBlog = async (req, res) => {
     const blog = await prisma.blog.findFirst({
       where: {
         id,
+      },
+      include: {
+        category: true,
       },
     });
     if (!blog) {
