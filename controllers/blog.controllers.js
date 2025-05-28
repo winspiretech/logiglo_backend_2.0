@@ -119,7 +119,7 @@ const getAllBlogs = async (req, res) => {
     const allBlogs = await prisma.blog.findMany({
       include: {
         category: true,
-      }
+      },
     });
     if (!allBlogs) {
       throw new ApiError(500, 'Something went wrong while fetching blogs');
@@ -188,12 +188,16 @@ const editBlog = async (req, res) => {
 
     const blog = await prisma.blog.findFirst({
       where: {
-        id
-      }
+        id,
+      },
     });
 
-    if(blog?.authorId !== req?.user.id){
-      throw new ApiError(400, 'Validation Error', 'You are not the owner of the blog');
+    if (blog?.authorId !== req?.user.id) {
+      throw new ApiError(
+        400,
+        'Validation Error',
+        'You are not the owner of the blog',
+      );
     }
 
     if (!description) {
