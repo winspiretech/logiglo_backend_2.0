@@ -75,6 +75,42 @@ const createBlog = async (req, res) => {
   }
 };
 
+const getAdminsBlogs = async (req, res) => {
+  try {
+    const { id } = req.user;
+    console.log(id);
+    if (!id) {
+      throw new ApiError(401, 'User ID is required');
+    }
+    const adminsBlogs = await prisma.blog.findMany({
+      where: {
+        authorId: id,
+      },
+    });
+    if (!adminsBlogs) {
+      throw new ApiError(
+        500,
+        'Something went wrong while fetching data, Please try again',
+      );
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, adminsBlogs, 'Blogs fetched successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      // Custom ApiError, send it back to the client
+      return res.status(error.statusCode).json(error);
+    } else {
+      // Handle other types of errors
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 const getAllBlogs = async (req, res) => {
   try {
     const allBlogs = await prisma.blog.findMany();
@@ -212,4 +248,5 @@ module.exports = {
   getBlog,
   editBlog,
   deleteBlog,
+  getAdminsBlogs,
 };
