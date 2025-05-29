@@ -127,7 +127,6 @@ const editCourse = async (req, res) => {
   }
 };
 
-
 /* Delete Course */
 const deleteCourse = async (req, res) => {
   try {
