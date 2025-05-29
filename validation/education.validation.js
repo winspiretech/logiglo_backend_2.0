@@ -3,13 +3,13 @@ const { z } = require('zod');
 
 const CourseSchema = z.object({
   institutionName: z.string(),
-  logo: z.string().url(),
+  logo: z.string().url().optional(),
   title: z.string(),
-  brochure: z.string().url(),
-  description: z.string(),
+  brochure: z.string().url().optional(),
+  description: z.string().optional(),
   instructorName: z.string(),
-  thumbnail: z.string().url(),
-  previewVideoUrl: z.string().url(),
+  thumbnail: z.string().url().optional(),
+  previewVideoUrl: z.string().url().optional(),
   educationLevel: z.enum([
     'HIGH_SCHOOL',
     'UNDERGRADUATE',
@@ -20,8 +20,11 @@ const CourseSchema = z.object({
   difficulty: z.enum(['BEGINNER', 'INTERMEDIATE', 'ADVANCED']),
   mode: z.enum(['ONLINE', 'OFFLINE', 'HYBRID']),
   currency: z.enum(['INR', 'USD', 'EUR']),
+  price: z.number().nonnegative().default(0),
   duration: z.string(),
-  createdById: z.string().uuid(), // assumes Prisma uses UUID for user ID
+  validUntil: z.string().datetime().optional(),
+  isActive: z.boolean().optional(),
+  createdById: z.string().uuid(),
 });
 
 module.exports = { CourseSchema };
