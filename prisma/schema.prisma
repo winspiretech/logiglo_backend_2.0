@@ -374,7 +374,7 @@ model LandingMenuItems {
   @@index([name, enabled], name: "LandingMenuItems_name_enabled")
 }
 
-model CountrysDataWithFlag {
+model CountriesDataWithFlag {
   id_country           Int     @id @default(autoincrement())
   Country_Name         String
   ISO2                 String  @db.Char(2)
