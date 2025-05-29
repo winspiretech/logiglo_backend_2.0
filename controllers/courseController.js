@@ -30,9 +30,9 @@ const evaluateIsActive = (validUntil) => {
 
 const courseIdParamsSchema = z.object({
   id: z.string().uuid(),
-});
+})
 
-/* Create Course */
+
 const createCourse = async (req, res) => {
   try {
     // Validate request
@@ -134,20 +134,22 @@ const deleteCourse = async (req, res) => {
 
     const existingCourse = await prisma.course.findUnique({ where: { id } });
 
-    if (!existingCourse) {
-      return res.status(404).json({ message: 'Course not found!' });
+    if(!existingCourse){
+      res.status(404).json({message:'course not found!'})
     }
 
-    await prisma.course.delete({ where: { id } });
+    //delete the course
+    await prisma.course.delete({where: {id}})
 
-    return res.status(200).json({ message: 'Course deleted successfully!' });
+    return res.status(200).json({message:'course deleted successfully!'})
+    
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ message: 'Invalid Course Id' });
     }
 
-    console.error('Delete Course Error', error);
-    res.status(500).json({ message: 'Something went wrong!' });
+    console.log('Delete Course Error', error)
+    res.status(500).json({message: "Something went wrong!"})
   }
 };
 

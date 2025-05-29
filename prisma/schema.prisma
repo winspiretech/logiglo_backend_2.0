@@ -129,7 +129,8 @@ model QuotePost {
   commentsCount    Int?
   dangerousGoods   Boolean?
   status           String?            @default("pending")
-  rejectionReason  String?
+  rejectionReason  String[]
+  acceptReason     String?
   fromPostalCode   String?
   toPostalCode     String?
   fromCity         String?
@@ -189,7 +190,8 @@ model GeneralPost {
   likesCount              Int?               @default(0)
   commentsCount           Int?               @default(0)
   status                  String?            @default("pending")
-  rejectionReason         String?
+  rejectionReason         String[]
+  acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
   MainCategoryName        String?
