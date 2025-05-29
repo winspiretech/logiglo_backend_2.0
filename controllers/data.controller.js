@@ -43,7 +43,7 @@ const statesDataByCountryId = async (req, res) => {
       },
     });
     // console.log(`✅ Fetched ${statesData.length} states`);
-    if (!statesData || statesData.length === 0) {
+    if (!statesData) {
       throw new ApiError(404, 'No states data found');
     }
     return res
@@ -76,7 +76,7 @@ const citiesDataByStateId = async (req, res) => {
       },
     });
     // console.log(`✅ Fetched ${citiesData.length} cities`);
-    if (!citiesData || citiesData.length === 0) {
+    if (!citiesData) {
       throw new ApiError(404, 'No cities data found');
     }
     return res
