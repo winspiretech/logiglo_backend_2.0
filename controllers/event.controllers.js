@@ -218,7 +218,9 @@ const getAdminEvents = async (req, res) => {
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, adminEvents, 'Admin Events fetched successfully'));
+      .json(
+        new ApiResponse(200, adminEvents, 'Admin Events fetched successfully'),
+      );
   } catch (error) {
     if (error instanceof ApiError) {
       // Custom ApiError, send it back to the client
@@ -232,7 +234,7 @@ const getAdminEvents = async (req, res) => {
         );
     }
   }
-}
+};
 
 module.exports = {
   test,

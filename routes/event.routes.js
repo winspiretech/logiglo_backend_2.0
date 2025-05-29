@@ -7,7 +7,7 @@ const {
   getEvent,
   updateEvent,
   deleteEvent,
-  getAdminEvents
+  getAdminEvents,
 } = require('../controllers/event.controllers');
 const isAdmin = require('../middleware/isAdmin');
 
