@@ -91,7 +91,7 @@ async function main() {
   for (const country of countries) {
     const flagPath = `/flags/${country.ISO2.toLowerCase()}.png`;
 
-    await prisma.countrysDataWithFlag.upsert({
+    await prisma.countriesDataWithFlag.upsert({
       where: { id_country: country.id_country },
       update: {
         Country_Name: country.Country_Name,

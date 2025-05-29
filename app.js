@@ -10,6 +10,7 @@ const eventRoute = require('./routes/event.routes.js');
 const educationRoute = require('./routes/education.routes.js');
 const notificationRoutes = require('./routes/notification.routes.js');
 const landingPageMenuItemsRoutes = require('./routes/landingPageMenuItems.routes.js');
+const dataRoute = require('./routes/data.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -57,6 +58,7 @@ app.use('/api/event', eventRoute);
 app.use('/api/education', educationRoute);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
+app.use('/api/data', dataRoute);
 
 // Root route
 app.get('/', (req, res) => {
