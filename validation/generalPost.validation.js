@@ -70,9 +70,10 @@ const updateGeneralPostSchema = z
     likesCount: z.number().int().nullable().optional(),
     commentsCount: z.number().int().nullable().optional(),
     status: z.enum(validStatuses).optional(),
-    rejectionReason: z.string().nullable().optional(),
+    rejectionReason: z.array(z.string()).optional(),
     generalPostMainCategory: z.string().uuid().nullable().optional(),
     generalPostSubCategory: z.string().uuid().nullable().optional(),
+    acceptReason: z.string().nullable().optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
     message: 'At least one field must be provided for update',

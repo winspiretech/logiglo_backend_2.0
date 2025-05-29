@@ -7121,7 +7121,7 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
-    rejectionReason: string | null
+    acceptReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -7159,7 +7159,7 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
-    rejectionReason: string | null
+    acceptReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -7198,6 +7198,7 @@ export namespace Prisma {
     dangerousGoods: number
     status: number
     rejectionReason: number
+    acceptReason: number
     fromPostalCode: number
     toPostalCode: number
     fromCity: number
@@ -7261,7 +7262,7 @@ export namespace Prisma {
     commentsCount?: true
     dangerousGoods?: true
     status?: true
-    rejectionReason?: true
+    acceptReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -7299,7 +7300,7 @@ export namespace Prisma {
     commentsCount?: true
     dangerousGoods?: true
     status?: true
-    rejectionReason?: true
+    acceptReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -7338,6 +7339,7 @@ export namespace Prisma {
     dangerousGoods?: true
     status?: true
     rejectionReason?: true
+    acceptReason?: true
     fromPostalCode?: true
     toPostalCode?: true
     fromCity?: true
@@ -7462,7 +7464,8 @@ export namespace Prisma {
     commentsCount: number | null
     dangerousGoods: boolean | null
     status: string | null
-    rejectionReason: string | null
+    rejectionReason: string[]
+    acceptReason: string | null
     fromPostalCode: string | null
     toPostalCode: string | null
     fromCity: string | null
@@ -7520,6 +7523,7 @@ export namespace Prisma {
     dangerousGoods?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -7565,6 +7569,7 @@ export namespace Prisma {
     dangerousGoods?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -7606,6 +7611,7 @@ export namespace Prisma {
     dangerousGoods?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -7647,6 +7653,7 @@ export namespace Prisma {
     dangerousGoods?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     fromPostalCode?: boolean
     toPostalCode?: boolean
     fromCity?: boolean
@@ -7664,7 +7671,7 @@ export namespace Prisma {
     shipmentType?: boolean
   }
 
-  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "MainCategoryName" | "SubCategoryName" | "shipmentType", ExtArgs["result"]["quotePost"]>
+  export type QuotePostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "name" | "createdAt" | "updatedAt" | "totalNetWeight" | "totalGrossWeight" | "volumetricWeight" | "transitInsurance" | "width" | "height" | "length" | "viewCount" | "likesCount" | "commentsCount" | "dangerousGoods" | "status" | "rejectionReason" | "acceptReason" | "fromPostalCode" | "toPostalCode" | "fromCity" | "toCity" | "fromCountry" | "toCountry" | "fromAddress" | "toAddress" | "fromState" | "toState" | "postMainCategory" | "postSubCategory" | "MainCategoryName" | "SubCategoryName" | "shipmentType", ExtArgs["result"]["quotePost"]>
   export type QuotePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     quoteReply?: boolean | QuotePost$quoteReplyArgs<ExtArgs>
     quoteLike?: boolean | QuotePost$quoteLikeArgs<ExtArgs>
@@ -7715,7 +7722,8 @@ export namespace Prisma {
       commentsCount: number | null
       dangerousGoods: boolean | null
       status: string | null
-      rejectionReason: string | null
+      rejectionReason: string[]
+      acceptReason: string | null
       fromPostalCode: string | null
       toPostalCode: string | null
       fromCity: string | null
@@ -8179,7 +8187,8 @@ export namespace Prisma {
     readonly commentsCount: FieldRef<"QuotePost", 'Int'>
     readonly dangerousGoods: FieldRef<"QuotePost", 'Boolean'>
     readonly status: FieldRef<"QuotePost", 'String'>
-    readonly rejectionReason: FieldRef<"QuotePost", 'String'>
+    readonly rejectionReason: FieldRef<"QuotePost", 'String[]'>
+    readonly acceptReason: FieldRef<"QuotePost", 'String'>
     readonly fromPostalCode: FieldRef<"QuotePost", 'String'>
     readonly toPostalCode: FieldRef<"QuotePost", 'String'>
     readonly fromCity: FieldRef<"QuotePost", 'String'>
@@ -10985,7 +10994,7 @@ export namespace Prisma {
     likesCount: number | null
     commentsCount: number | null
     status: string | null
-    rejectionReason: string | null
+    acceptReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
     MainCategoryName: string | null
@@ -11004,7 +11013,7 @@ export namespace Prisma {
     likesCount: number | null
     commentsCount: number | null
     status: string | null
-    rejectionReason: string | null
+    acceptReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
     MainCategoryName: string | null
@@ -11024,6 +11033,7 @@ export namespace Prisma {
     commentsCount: number
     status: number
     rejectionReason: number
+    acceptReason: number
     generalPostMainCategory: number
     generalPostSubCategory: number
     MainCategoryName: number
@@ -11056,7 +11066,7 @@ export namespace Prisma {
     likesCount?: true
     commentsCount?: true
     status?: true
-    rejectionReason?: true
+    acceptReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
     MainCategoryName?: true
@@ -11075,7 +11085,7 @@ export namespace Prisma {
     likesCount?: true
     commentsCount?: true
     status?: true
-    rejectionReason?: true
+    acceptReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
     MainCategoryName?: true
@@ -11095,6 +11105,7 @@ export namespace Prisma {
     commentsCount?: true
     status?: true
     rejectionReason?: true
+    acceptReason?: true
     generalPostMainCategory?: true
     generalPostSubCategory?: true
     MainCategoryName?: true
@@ -11200,7 +11211,8 @@ export namespace Prisma {
     likesCount: number | null
     commentsCount: number | null
     status: string | null
-    rejectionReason: string | null
+    rejectionReason: string[]
+    acceptReason: string | null
     generalPostMainCategory: string | null
     generalPostSubCategory: string | null
     MainCategoryName: string | null
@@ -11239,6 +11251,7 @@ export namespace Prisma {
     commentsCount?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     MainCategoryName?: boolean
@@ -11265,6 +11278,7 @@ export namespace Prisma {
     commentsCount?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     MainCategoryName?: boolean
@@ -11287,6 +11301,7 @@ export namespace Prisma {
     commentsCount?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     MainCategoryName?: boolean
@@ -11309,13 +11324,14 @@ export namespace Prisma {
     commentsCount?: boolean
     status?: boolean
     rejectionReason?: boolean
+    acceptReason?: boolean
     generalPostMainCategory?: boolean
     generalPostSubCategory?: boolean
     MainCategoryName?: boolean
     SubCategoryName?: boolean
   }
 
-  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdBy" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "generalPostMainCategory" | "generalPostSubCategory" | "MainCategoryName" | "SubCategoryName", ExtArgs["result"]["generalPost"]>
+  export type GeneralPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdBy" | "createdAt" | "updatedAt" | "viewCount" | "likesCount" | "commentsCount" | "status" | "rejectionReason" | "acceptReason" | "generalPostMainCategory" | "generalPostSubCategory" | "MainCategoryName" | "SubCategoryName", ExtArgs["result"]["generalPost"]>
   export type GeneralPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     MainCategory?: boolean | GeneralPost$MainCategoryArgs<ExtArgs>
@@ -11358,7 +11374,8 @@ export namespace Prisma {
       likesCount: number | null
       commentsCount: number | null
       status: string | null
-      rejectionReason: string | null
+      rejectionReason: string[]
+      acceptReason: string | null
       generalPostMainCategory: string | null
       generalPostSubCategory: string | null
       MainCategoryName: string | null
@@ -11803,7 +11820,8 @@ export namespace Prisma {
     readonly likesCount: FieldRef<"GeneralPost", 'Int'>
     readonly commentsCount: FieldRef<"GeneralPost", 'Int'>
     readonly status: FieldRef<"GeneralPost", 'String'>
-    readonly rejectionReason: FieldRef<"GeneralPost", 'String'>
+    readonly rejectionReason: FieldRef<"GeneralPost", 'String[]'>
+    readonly acceptReason: FieldRef<"GeneralPost", 'String'>
     readonly generalPostMainCategory: FieldRef<"GeneralPost", 'String'>
     readonly generalPostSubCategory: FieldRef<"GeneralPost", 'String'>
     readonly MainCategoryName: FieldRef<"GeneralPost", 'String'>
@@ -27098,6 +27116,7 @@ export namespace Prisma {
     dangerousGoods: 'dangerousGoods',
     status: 'status',
     rejectionReason: 'rejectionReason',
+    acceptReason: 'acceptReason',
     fromPostalCode: 'fromPostalCode',
     toPostalCode: 'toPostalCode',
     fromCity: 'fromCity',
@@ -27154,6 +27173,7 @@ export namespace Prisma {
     commentsCount: 'commentsCount',
     status: 'status',
     rejectionReason: 'rejectionReason',
+    acceptReason: 'acceptReason',
     generalPostMainCategory: 'generalPostMainCategory',
     generalPostSubCategory: 'generalPostSubCategory',
     MainCategoryName: 'MainCategoryName',
@@ -27788,7 +27808,8 @@ export namespace Prisma {
     commentsCount?: IntNullableFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
     status?: StringNullableFilter<"QuotePost"> | string | null
-    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableListFilter<"QuotePost">
+    acceptReason?: StringNullableFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     fromCity?: StringNullableFilter<"QuotePost"> | string | null
@@ -27832,7 +27853,8 @@ export namespace Prisma {
     commentsCount?: SortOrderInput | SortOrder
     dangerousGoods?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrder
+    acceptReason?: SortOrderInput | SortOrder
     fromPostalCode?: SortOrderInput | SortOrder
     toPostalCode?: SortOrderInput | SortOrder
     fromCity?: SortOrderInput | SortOrder
@@ -27879,7 +27901,8 @@ export namespace Prisma {
     commentsCount?: IntNullableFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
     status?: StringNullableFilter<"QuotePost"> | string | null
-    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableListFilter<"QuotePost">
+    acceptReason?: StringNullableFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     fromCity?: StringNullableFilter<"QuotePost"> | string | null
@@ -27923,7 +27946,8 @@ export namespace Prisma {
     commentsCount?: SortOrderInput | SortOrder
     dangerousGoods?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrder
+    acceptReason?: SortOrderInput | SortOrder
     fromPostalCode?: SortOrderInput | SortOrder
     toPostalCode?: SortOrderInput | SortOrder
     fromCity?: SortOrderInput | SortOrder
@@ -27969,7 +27993,8 @@ export namespace Prisma {
     commentsCount?: IntNullableWithAggregatesFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableWithAggregatesFilter<"QuotePost"> | boolean | null
     status?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
-    rejectionReason?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableListFilter<"QuotePost">
+    acceptReason?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
     fromCity?: StringNullableWithAggregatesFilter<"QuotePost"> | string | null
@@ -28132,7 +28157,8 @@ export namespace Prisma {
     likesCount?: IntNullableFilter<"GeneralPost"> | number | null
     commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
     status?: StringNullableFilter<"GeneralPost"> | string | null
-    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableListFilter<"GeneralPost">
+    acceptReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
     MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
@@ -28157,7 +28183,8 @@ export namespace Prisma {
     likesCount?: SortOrderInput | SortOrder
     commentsCount?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrder
+    acceptReason?: SortOrderInput | SortOrder
     generalPostMainCategory?: SortOrderInput | SortOrder
     generalPostSubCategory?: SortOrderInput | SortOrder
     MainCategoryName?: SortOrderInput | SortOrder
@@ -28185,7 +28212,8 @@ export namespace Prisma {
     likesCount?: IntNullableFilter<"GeneralPost"> | number | null
     commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
     status?: StringNullableFilter<"GeneralPost"> | string | null
-    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableListFilter<"GeneralPost">
+    acceptReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
     MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
@@ -28210,7 +28238,8 @@ export namespace Prisma {
     likesCount?: SortOrderInput | SortOrder
     commentsCount?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrder
+    acceptReason?: SortOrderInput | SortOrder
     generalPostMainCategory?: SortOrderInput | SortOrder
     generalPostSubCategory?: SortOrderInput | SortOrder
     MainCategoryName?: SortOrderInput | SortOrder
@@ -28237,7 +28266,8 @@ export namespace Prisma {
     likesCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
     commentsCount?: IntNullableWithAggregatesFilter<"GeneralPost"> | number | null
     status?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
-    rejectionReason?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableListFilter<"GeneralPost">
+    acceptReason?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
     MainCategoryName?: StringNullableWithAggregatesFilter<"GeneralPost"> | string | null
@@ -29493,7 +29523,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -29535,7 +29566,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -29575,7 +29607,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29617,7 +29650,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29658,7 +29692,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -29695,7 +29730,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29731,7 +29767,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29882,7 +29919,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -29905,7 +29943,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -29926,7 +29965,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -29949,7 +29989,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -29971,7 +30012,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -29989,7 +30031,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -30006,7 +30049,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31366,6 +31410,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type ForumSubCategoryNullableScalarRelationFilter = {
     is?: ForumSubCategoryWhereInput | null
     isNot?: ForumSubCategoryWhereInput | null
@@ -31402,6 +31454,7 @@ export namespace Prisma {
     dangerousGoods?: SortOrder
     status?: SortOrder
     rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -31451,7 +31504,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     dangerousGoods?: SortOrder
     status?: SortOrder
-    rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -31489,7 +31542,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     dangerousGoods?: SortOrder
     status?: SortOrder
-    rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     fromPostalCode?: SortOrder
     toPostalCode?: SortOrder
     fromCity?: SortOrder
@@ -31609,6 +31662,7 @@ export namespace Prisma {
     commentsCount?: SortOrder
     status?: SortOrder
     rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
     MainCategoryName?: SortOrder
@@ -31633,7 +31687,7 @@ export namespace Prisma {
     likesCount?: SortOrder
     commentsCount?: SortOrder
     status?: SortOrder
-    rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
     MainCategoryName?: SortOrder
@@ -31652,7 +31706,7 @@ export namespace Prisma {
     likesCount?: SortOrder
     commentsCount?: SortOrder
     status?: SortOrder
-    rejectionReason?: SortOrder
+    acceptReason?: SortOrder
     generalPostMainCategory?: SortOrder
     generalPostSubCategory?: SortOrder
     MainCategoryName?: SortOrder
@@ -31724,14 +31778,6 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type BlogCategoryNullableScalarRelationFilter = {
@@ -33030,6 +33076,10 @@ export namespace Prisma {
     deleteMany?: GeneralPostScalarWhereInput | GeneralPostScalarWhereInput[]
   }
 
+  export type QuotePostCreaterejectionReasonInput = {
+    set: string[]
+  }
+
   export type QuoteReplyCreateNestedManyWithoutPostInput = {
     create?: XOR<QuoteReplyCreateWithoutPostInput, QuoteReplyUncheckedCreateWithoutPostInput> | QuoteReplyCreateWithoutPostInput[] | QuoteReplyUncheckedCreateWithoutPostInput[]
     connectOrCreate?: QuoteReplyCreateOrConnectWithoutPostInput | QuoteReplyCreateOrConnectWithoutPostInput[]
@@ -33096,6 +33146,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type QuotePostUpdaterejectionReasonInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type QuoteReplyUpdateManyWithoutPostNestedInput = {
@@ -33366,6 +33421,10 @@ export namespace Prisma {
     update?: XOR<XOR<QuotePostUpdateToOneWithWhereWithoutQuoteLikeInput, QuotePostUpdateWithoutQuoteLikeInput>, QuotePostUncheckedUpdateWithoutQuoteLikeInput>
   }
 
+  export type GeneralPostCreaterejectionReasonInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutGeneralPostInput = {
     create?: XOR<UserCreateWithoutGeneralPostInput, UserUncheckedCreateWithoutGeneralPostInput>
     connectOrCreate?: UserCreateOrConnectWithoutGeneralPostInput
@@ -33424,6 +33483,11 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutGeneralPostInput | NotificationCreateOrConnectWithoutGeneralPostInput[]
     createMany?: NotificationCreateManyGeneralPostInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type GeneralPostUpdaterejectionReasonInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutGeneralPostNestedInput = {
@@ -34614,7 +34678,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -34654,7 +34719,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -34750,7 +34816,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     MainCategory?: ForumMainCategoryCreateNestedOneWithoutGeneralPostInput
@@ -34771,7 +34838,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -35092,7 +35160,8 @@ export namespace Prisma {
     commentsCount?: IntNullableFilter<"QuotePost"> | number | null
     dangerousGoods?: BoolNullableFilter<"QuotePost"> | boolean | null
     status?: StringNullableFilter<"QuotePost"> | string | null
-    rejectionReason?: StringNullableFilter<"QuotePost"> | string | null
+    rejectionReason?: StringNullableListFilter<"QuotePost">
+    acceptReason?: StringNullableFilter<"QuotePost"> | string | null
     fromPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     toPostalCode?: StringNullableFilter<"QuotePost"> | string | null
     fromCity?: StringNullableFilter<"QuotePost"> | string | null
@@ -35196,7 +35265,8 @@ export namespace Prisma {
     likesCount?: IntNullableFilter<"GeneralPost"> | number | null
     commentsCount?: IntNullableFilter<"GeneralPost"> | number | null
     status?: StringNullableFilter<"GeneralPost"> | string | null
-    rejectionReason?: StringNullableFilter<"GeneralPost"> | string | null
+    rejectionReason?: StringNullableListFilter<"GeneralPost">
+    acceptReason?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostMainCategory?: StringNullableFilter<"GeneralPost"> | string | null
     generalPostSubCategory?: StringNullableFilter<"GeneralPost"> | string | null
     MainCategoryName?: StringNullableFilter<"GeneralPost"> | string | null
@@ -35459,7 +35529,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -35500,7 +35571,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -35541,7 +35613,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -35563,7 +35636,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
@@ -35659,7 +35733,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -35700,7 +35775,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -35741,7 +35817,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -35763,7 +35840,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
@@ -36334,7 +36412,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -36375,7 +36454,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -36610,7 +36690,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36651,7 +36732,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36826,7 +36908,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -36867,7 +36950,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -36997,7 +37081,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37038,7 +37123,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37522,7 +37608,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -37544,7 +37631,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -37760,7 +37848,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -37782,7 +37871,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37938,7 +38028,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -37960,7 +38051,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -38071,7 +38163,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -38093,7 +38186,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39282,7 +39376,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -39323,7 +39418,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -39359,7 +39455,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
     user: UserCreateNestedOneWithoutGeneralPostInput
@@ -39381,7 +39478,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -39726,7 +39824,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39767,7 +39866,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39809,7 +39909,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -39831,7 +39932,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40040,7 +40142,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -40084,7 +40187,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
@@ -40201,7 +40305,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40241,7 +40346,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40281,7 +40387,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40359,7 +40466,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategory?: ForumMainCategoryUpdateOneWithoutGeneralPostNestedInput
@@ -40380,7 +40488,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40401,7 +40510,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40717,7 +40827,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -40746,7 +40857,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostSubCategory?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
@@ -40793,7 +40905,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40834,7 +40947,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40874,7 +40988,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40902,7 +41017,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -40924,7 +41040,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40945,7 +41062,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostSubCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40971,7 +41089,8 @@ export namespace Prisma {
     commentsCount?: number | null
     dangerousGoods?: boolean | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: QuotePostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     fromPostalCode?: string | null
     toPostalCode?: string | null
     fromCity?: string | null
@@ -41000,7 +41119,8 @@ export namespace Prisma {
     likesCount?: number | null
     commentsCount?: number | null
     status?: string | null
-    rejectionReason?: string | null
+    rejectionReason?: GeneralPostCreaterejectionReasonInput | string[]
+    acceptReason?: string | null
     generalPostMainCategory?: string | null
     MainCategoryName?: string | null
     SubCategoryName?: string | null
@@ -41025,7 +41145,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41066,7 +41187,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41106,7 +41228,8 @@ export namespace Prisma {
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     dangerousGoods?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: QuotePostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     fromPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     toPostalCode?: NullableStringFieldUpdateOperationsInput | string | null
     fromCity?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41134,7 +41257,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutGeneralPostNestedInput
@@ -41156,7 +41280,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41177,7 +41302,8 @@ export namespace Prisma {
     likesCount?: NullableIntFieldUpdateOperationsInput | number | null
     commentsCount?: NullableIntFieldUpdateOperationsInput | number | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectionReason?: GeneralPostUpdaterejectionReasonInput | string[]
+    acceptReason?: NullableStringFieldUpdateOperationsInput | string | null
     generalPostMainCategory?: NullableStringFieldUpdateOperationsInput | string | null
     MainCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
     SubCategoryName?: NullableStringFieldUpdateOperationsInput | string | null
