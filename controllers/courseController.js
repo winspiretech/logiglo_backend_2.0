@@ -3,16 +3,43 @@ const { CourseSchema } = require('../validation/education.validation');
 const prisma = require('../models/prismaClient');
 const { z } = require('zod');
 
+// Utility: Deactivate expired courses
+const autoDeactivateExpiredCourses = async () => {
+  try {
+    const now = new Date();
+
+    await prisma.course.updateMany({
+      where: {
+        validUntil: { lt: now },
+        isActive: true,
+      },
+      data: { isActive: false },
+    });
+
+    console.log('Expired courses auto-deactivated.');
+  } catch (err) {
+    console.error('Error auto-deactivating courses:', err);
+  }
+};
+
+// Helper: Evaluate course active status
+const evaluateIsActive = (validUntil) => {
+  if (!validUntil) return true;
+  return new Date(validUntil) > new Date();
+};
+
 const courseIdParamsSchema = z.object({
   id: z.string().uuid(),
 });
 
 const createCourse = async (req, res) => {
   try {
-    // Validate request using Zod
+    // Validate request
     const validatedData = CourseSchema.parse(req.body);
 
-    // Create Course
+    // Determine isActive based on validUntil
+    validatedData.isActive = evaluateIsActive(validatedData.validUntil);
+
     const course = await prisma.course.create({
       data: validatedData,
     });
@@ -35,9 +62,17 @@ const createCourse = async (req, res) => {
   }
 };
 
+/* Get All Active Courses */
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await prisma.course.findMany();
+    await autoDeactivateExpiredCourses();
+
+    const courses = await prisma.course.findMany({
+      where: {
+        isActive: true,
+      },
+    });
+
     return res.status(200).json(courses);
   } catch (error) {
     console.error('Error fetching courses:', error);
@@ -47,16 +82,22 @@ const getAllCourses = async (req, res) => {
   }
 };
 
-/* edit course */
-
+/* Edit Course */
 const editCourse = async (req, res) => {
   const courseId = req.params.id;
 
   try {
-    // Validate incoming data
-    const validatedData = CourseSchema.parse(req.body);
+    const validatedData = CourseSchema.partial()
+      .refine((data) => !!data.createdById, {
+        message: 'createdById is required',
+        path: ['createdById'],
+      })
+      .parse(req.body);
 
-    // Update course
+    if (validatedData.validUntil) {
+      validatedData.isActive = evaluateIsActive(validatedData.validUntil);
+    }
+
     const updatedCourse = await prisma.course.update({
       where: { id: courseId },
       data: validatedData,
@@ -75,7 +116,6 @@ const editCourse = async (req, res) => {
     }
 
     if (error.code === 'P2025') {
-      // Prisma not found error
       return res.status(404).json({ message: 'Course not found' });
     }
 
@@ -86,8 +126,7 @@ const editCourse = async (req, res) => {
   }
 };
 
-/* delete course */
-
+/* Delete Course */
 const deleteCourse = async (req, res) => {
   try {
     const { id } = courseIdParamsSchema.parse(req.params);
@@ -112,4 +151,9 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, getAllCourses, editCourse, deleteCourse };
+module.exports = {
+  createCourse,
+  getAllCourses,
+  editCourse,
+  deleteCourse,
+};
