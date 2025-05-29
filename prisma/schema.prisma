@@ -129,7 +129,8 @@ model QuotePost {
   commentsCount    Int?
   dangerousGoods   Boolean?
   status           String?            @default("pending")
-  rejectionReason  String?
+  rejectionReason  String[]
+  acceptReason     String?
   fromPostalCode   String?
   toPostalCode     String?
   fromCity         String?
@@ -189,7 +190,8 @@ model GeneralPost {
   likesCount              Int?               @default(0)
   commentsCount           Int?               @default(0)
   status                  String?            @default("pending")
-  rejectionReason         String?
+  rejectionReason         String[]
+  acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
   MainCategoryName        String?
@@ -277,14 +279,18 @@ model Course {
   educationLevel  EducationLevel
   difficulty      CourseDifficulty
   mode            CourseMode
-  currency        Currency
+  currency        Currency         // e.g., INR, USD, EUR
+  price           Float            @default(0.0) // Free courses allowed
   duration        String
+  validUntil      DateTime?        // Null means no expiration
+  isActive        Boolean          @default(true) // Controls visibility
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   createdById     String
   createdBy       User             @relation(fields: [createdById], references: [id])
   modules         CourseModule[]
 }
+
 
 model CourseModule {
   id           String   @id @default(uuid())

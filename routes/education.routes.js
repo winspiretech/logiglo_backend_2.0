@@ -15,7 +15,7 @@ const {
 
 router.get('/getAllCourses', getAllCourses);
 
-router.put('/courses/:id', editCourse);
+router.put('/editCourse/:id', editCourse);
 
 router.post('/createcourse', isAdmin, createCourse);
 
