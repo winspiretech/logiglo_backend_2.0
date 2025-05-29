@@ -1,8 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+const prisma = require('../models/prismaClient');
+
 async function main() {
-  // Read and parse JSON files
-  const countriesRaw = fs.readFileSync('countries.json', 'utf-8');
-  const statesRaw = fs.readFileSync('states.json', 'utf-8');
-  const citiesRaw = fs.readFileSync('cities.json', 'utf-8');
+  // Read and parse JSON files with __dirname for correct path resolution
+  const countriesRaw = fs.readFileSync(path.join(__dirname, 'countries.json'), 'utf-8');
+  const statesRaw = fs.readFileSync(path.join(__dirname, 'states.json'), 'utf-8');
+  const citiesRaw = fs.readFileSync(path.join(__dirname, 'cities.json'), 'utf-8');
 
   const countriesData = JSON.parse(countriesRaw);
   const statesData = JSON.parse(statesRaw);
