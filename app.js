@@ -16,14 +16,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 const app = express();
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 const allowedOrigins = [
   'http://localhost:3004',
