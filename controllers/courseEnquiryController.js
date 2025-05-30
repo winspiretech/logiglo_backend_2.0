@@ -89,32 +89,30 @@ const handleCourseEnquiry = async (req, res) => {
   }
 };
 
-
 /* get all Enquries: */
 const getAllEnquiries = async (req, res) => {
   try {
     const enquiries = await prisma.courseEnquiry.findMany({
       orderBy: {
         createdAt: 'desc',
-      }
+      },
     });
 
     res.status(200).json({
       success: true,
-      message: "All enquiries retrieved successfully!",
+      message: 'All enquiries retrieved successfully!',
       enquiries,
     });
-
   } catch (error) {
-    console.error("Error fetching all enquiries:", error);
+    console.error('Error fetching all enquiries:', error);
     res.status(500).json({
       success: false,
-      message: "Server error. Please try again later.",
+      message: 'Server error. Please try again later.',
     });
   }
 };
 
 module.exports = {
   handleCourseEnquiry,
-  getAllEnquiries
+  getAllEnquiries,
 };

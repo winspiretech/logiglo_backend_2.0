@@ -26,6 +26,6 @@ router.post('/courses/:id', deleteCourse);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
-router.get("/getAllEnquiries", getAllEnquiries)
+router.get('/getAllEnquiries', getAllEnquiries);
 
 module.exports = router;
