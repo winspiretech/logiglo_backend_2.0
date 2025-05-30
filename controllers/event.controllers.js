@@ -1,6 +1,7 @@
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
+const { deleteFileByUrl } = require('../utils/deleteFileByUrl');
 const EventSchema = require('../validation/event.validation');
 
 const test = async (req, res) => {
@@ -167,6 +168,33 @@ const deleteEvent = async (req, res) => {
     if (!id) {
       throw new ApiError(404, 'Event ID is required');
     }
+    const deltableEvent = await prisma.event.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!deltableEvent) {
+      throw new ApiError(
+        404,
+        'Event not found',
+        'Event with this ID does not exist',
+      );
+    }
+    let deletableImages = deltableEvent.coverImages;
+    if (deletableImages && deletableImages.length > 0) {
+      const images = Array.isArray(deletableImages)
+        ? deletableImages
+        : [...deletableImages];
+
+      for (const url of images) {
+        if (!url) continue;
+        const result = await deleteFileByUrl(url);
+        if (!result.success) {
+          console.warn(`Failed to delete image ${url}:`, result.error);
+        }
+      }
+    }
+
     const delEvent = await prisma.event.delete({
       where: {
         id: id,

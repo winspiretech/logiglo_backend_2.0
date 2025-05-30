@@ -274,8 +274,6 @@ const deleteBlog = async (req, res) => {
       throw new ApiError(404, 'Blog not found');
     }
 
-    console.log('Deleting blog images:', blogTobeDeleted.image_url);
-
     const images = Array.isArray(blogTobeDeleted.image_url)
       ? blogTobeDeleted.image_url
       : [blogTobeDeleted.image_url];
