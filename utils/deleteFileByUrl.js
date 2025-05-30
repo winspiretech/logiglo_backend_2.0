@@ -19,7 +19,7 @@ async function deleteFileByUrl(fileUrl) {
     }
 
     await fs.access(absolutePath);
-    await fs.unlink(absolutePath); 
+    await fs.unlink(absolutePath);
 
     return { success: true, deletedPath: pathname };
   } catch (err) {
