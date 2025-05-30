@@ -375,3 +375,28 @@ model LandingMenuItems {
 
   @@index([name, enabled], name: "LandingMenuItems_name_enabled")
 }
+
+model CountriesDataWithFlag {
+  id_country           Int     @id @default(autoincrement())
+  Country_Name         String
+  ISO2                 String  @db.Char(2)
+  ISO3                 String  @db.Char(3)
+  Top_Level_Domain     String
+  FIPS                 String
+  ISO_Numeric          Int
+  GeoNameID            String
+  E164                 Int
+  Phone_Code           String
+  Continent            String
+  Capital              String
+  Time_Zone_in_Capital String
+  Currency             String
+  Language_Codes       String
+  Languages            String
+  Area_KM2             Int
+  Internet_Hosts       String
+  Internet_Users       String
+  Phones_Mobile        String
+  Phones_Landline      String
+  GDP                  String
+}

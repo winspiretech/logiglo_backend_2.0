@@ -196,6 +196,46 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const getAdminEvents = async (req, res) => {
+  try {
+    const { id } = req.user;
+    if (!id) {
+      throw new ApiError(401, 'User ID is required');
+    }
+    const adminEvents = await prisma.event.findMany({
+      where: {
+        authorId: id,
+      },
+      orderBy: {
+        startDate: 'asc',
+      },
+    });
+    if (!adminEvents) {
+      throw new ApiError(
+        500,
+        'Something went wrong while fetching data, Please try again',
+      );
+    }
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, adminEvents, 'Admin Events fetched successfully'),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      // Custom ApiError, send it back to the client
+      return res.status(error.statusCode).json(error);
+    } else {
+      // Handle other types of errors
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   addEvents,
@@ -203,4 +243,5 @@ module.exports = {
   getEvent,
   updateEvent,
   deleteEvent,
+  getAdminEvents,
 };
