@@ -23,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use("/public", express.static(path.join(__dirname, 'public')));
+
 const allowedOrigins = [
   'http://localhost:3004',
   'http://tester.logiglo.com',

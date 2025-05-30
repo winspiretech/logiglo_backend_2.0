@@ -2,6 +2,7 @@ const BlogSchema = require('../validation/blog.validation');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
+const { deleteFileByUrl } = require('../utils/deleteFileByUrl');
 
 const test = (req, res) => {
   res.send(req.user);
@@ -192,6 +193,8 @@ const editBlog = async (req, res) => {
       },
     });
 
+    console.log(req.body);
+
     if (blog?.authorId !== req?.user.id) {
       throw new ApiError(
         400,
@@ -262,23 +265,44 @@ const deleteBlog = async (req, res) => {
     if (!id) {
       throw new ApiError(400, 'Blog Id is required', 'Blog Id is required');
     }
-    const blog = await prisma.blog.delete({
-      where: {
-        id,
-      },
+
+    const blogTobeDeleted = await prisma.blog.findFirst({
+      where: { id },
     });
+
+    if (!blogTobeDeleted) {
+      throw new ApiError(404, 'Blog not found');
+    }
+
+    console.log('Deleting blog images:', blogTobeDeleted.image_url);
+
+    const images = Array.isArray(blogTobeDeleted.image_url)
+      ? blogTobeDeleted.image_url
+      : [blogTobeDeleted.image_url];
+
+    for (const url of images) {
+      if (!url) continue;
+      const result = await deleteFileByUrl(url);
+      if (!result.success) {
+        console.warn(`Failed to delete image ${url}:`, result.error);
+      }
+    }
+
+    const blog = await prisma.blog.delete({
+      where: { id },
+    });
+
     if (!blog) {
       throw new ApiError(500, 'Something went wrong while deleting blog');
     }
+
     res
       .status(200)
-      .json(new ApiResponse(200, blog, 'Blog deleted successfully'));
+      .json(new ApiResponse(200, blog, 'Blog and images deleted successfully'));
   } catch (error) {
     if (error instanceof ApiError) {
-      // Custom ApiError, send it back to the client
       return res.status(error.statusCode).json(error);
     } else {
-      // Handle other types of errors
       return res
         .status(500)
         .json(
@@ -287,6 +311,7 @@ const deleteBlog = async (req, res) => {
     }
   }
 };
+
 
 module.exports = {
   test,
