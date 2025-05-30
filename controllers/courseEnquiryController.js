@@ -10,7 +10,8 @@ const handleCourseEnquiry = async (req, res) => {
       contactPersonPosition,
       contactNumber,
       website,
-      email, // Optional, if provided send confirmation
+      email,
+      message, // Optional, if provided send confirmation
     } = req.body;
 
     // Validate required fields
@@ -19,7 +20,10 @@ const handleCourseEnquiry = async (req, res) => {
       !institutionType ||
       !contactPersonName ||
       !contactPersonPosition ||
-      !contactNumber
+      !contactNumber ||
+      !website ||
+      !email ||
+      !message
     ) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -33,6 +37,8 @@ const handleCourseEnquiry = async (req, res) => {
         contactPersonPosition,
         contactNumber,
         website,
+        email,
+        message,
       },
     });
 
@@ -45,6 +51,7 @@ const handleCourseEnquiry = async (req, res) => {
       <p><strong>Contact Number:</strong> ${contactNumber}</p>
       <p><strong>Website:</strong> ${website || 'N/A'}</p>
       <p><strong>Email:</strong> ${email || 'N/A'}</p>
+      <p><strong>Message:</strong> ${message}</p>
     `;
 
     // HTML content to user (if email provided)
@@ -82,6 +89,32 @@ const handleCourseEnquiry = async (req, res) => {
   }
 };
 
+
+/* get all Enquries: */
+const getAllEnquiries = async (req, res) => {
+  try {
+    const enquiries = await prisma.courseEnquiry.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "All enquiries retrieved successfully!",
+      enquiries,
+    });
+
+  } catch (error) {
+    console.error("Error fetching all enquiries:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later.",
+    });
+  }
+};
+
 module.exports = {
   handleCourseEnquiry,
+  getAllEnquiries
 };

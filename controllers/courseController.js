@@ -148,7 +148,7 @@ const deleteCourse = async (req, res) => {
 
     console.log('Delete Course Error', error);
     res.status(500).json({ message: 'Something went wrong!' });
-  }
+   }
 };
 
 module.exports = {
