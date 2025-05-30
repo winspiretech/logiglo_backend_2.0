@@ -16,6 +16,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 const app = express();
 
 // Middleware to parse JSON and URL-encoded bodies
