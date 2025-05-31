@@ -11,11 +11,12 @@ const { authenticateAdmin } = require('../middleware/authMiddleware.js');
 const isAdmin = require('../middleware/isAdmin.js');
 const {
   handleCourseEnquiry,
+  getAllEnquiries,
 } = require('../controllers/courseEnquiryController');
 
 router.get('/getAllCourses', getAllCourses);
 
-router.put('/courses/:id', editCourse);
+router.put('/editCourse/:id', editCourse);
 
 router.post('/createcourse', isAdmin, createCourse);
 
@@ -25,5 +26,6 @@ router.post('/courses/:id', deleteCourse);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
+router.get('/getAllEnquiries', getAllEnquiries);
 
 module.exports = router;

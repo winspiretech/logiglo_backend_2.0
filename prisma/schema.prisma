@@ -281,14 +281,18 @@ model Course {
   educationLevel  EducationLevel
   difficulty      CourseDifficulty
   mode            CourseMode
-  currency        Currency
+  currency        Currency         // e.g., INR, USD, EUR
+  price           Float            @default(0.0) // Free courses allowed
   duration        String
+  validUntil      DateTime?        // Null means no expiration
+  isActive        Boolean          @default(true) // Controls visibility
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   createdById     String
   createdBy       User             @relation(fields: [createdById], references: [id])
   modules         CourseModule[]
 }
+
 
 model CourseModule {
   id           String   @id @default(uuid())
@@ -308,7 +312,9 @@ model CourseEnquiry {
   contactPersonName     String
   contactPersonPosition String
   contactNumber         String
-  website               String?
+  email                 String
+  website               String
+  message               String
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
   notifications         Notification[]
@@ -370,4 +376,29 @@ model LandingMenuItems {
   enabled Boolean @default(false)
 
   @@index([name, enabled], name: "LandingMenuItems_name_enabled")
+}
+
+model CountriesDataWithFlag {
+  id_country           Int     @id @default(autoincrement())
+  Country_Name         String
+  ISO2                 String  @db.Char(2)
+  ISO3                 String  @db.Char(3)
+  Top_Level_Domain     String
+  FIPS                 String
+  ISO_Numeric          Int
+  GeoNameID            String
+  E164                 Int
+  Phone_Code           String
+  Continent            String
+  Capital              String
+  Time_Zone_in_Capital String
+  Currency             String
+  Language_Codes       String
+  Languages            String
+  Area_KM2             Int
+  Internet_Hosts       String
+  Internet_Users       String
+  Phones_Mobile        String
+  Phones_Landline      String
+  GDP                  String
 }
