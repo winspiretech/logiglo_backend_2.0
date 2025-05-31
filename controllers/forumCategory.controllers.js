@@ -26,18 +26,21 @@ module.exports.createForumMainCategory = async (req, res) => {
 
     const { name, enabled } = validationResult.data;
 
-    // Check for duplicate category name
-    const existingCategory = await prisma.forumMainCategory.findUnique({
-      where: { name },
+    // Normalize name (trim and lowercase for comparison)
+    const normalizedName = name.trim().toLowerCase();
+
+    // Check for duplicate category name (case-insensitive)
+    const existingCategory = await prisma.forumMainCategory.findFirst({
+      where: { name: { equals: name, mode: 'insensitive' } },
     });
     if (existingCategory) {
-      throw new ApiError(409, 'Category name already exists');
+      throw new ApiError(409, 'Main category name already exists');
     }
 
     // Create new category
     const newCategory = await prisma.forumMainCategory.create({
       data: {
-        name,
+        name: name.trim(),
         enabled,
       },
     });
@@ -54,11 +57,7 @@ module.exports.createForumMainCategory = async (req, res) => {
       return res
         .status(409)
         .json(
-          new ApiError(
-            409,
-            'Database constraint violation: Category name already exists',
-            error.message,
-          ),
+          new ApiError(409, 'Main category name already exists', error.message),
         );
     }
 
@@ -118,12 +117,13 @@ module.exports.updateForumMainCategory = async (req, res) => {
 
     // Check for duplicate name if name is being updated
     if (data.name && data.name !== category.name) {
-      const existingCategory = await prisma.forumMainCategory.findUnique({
-        where: { name: data.name },
+      const existingCategory = await prisma.forumMainCategory.findFirst({
+        where: { name: { equals: data.name, mode: 'insensitive' } },
       });
       if (existingCategory) {
-        throw new ApiError(409, 'Category name already exists');
+        throw new ApiError(409, 'Main category name already exists');
       }
+      data.name = data.name.trim();
     }
 
     // Update category
@@ -148,11 +148,7 @@ module.exports.updateForumMainCategory = async (req, res) => {
       return res
         .status(409)
         .json(
-          new ApiError(
-            409,
-            'Database constraint violation: Category name already exists',
-            error.message,
-          ),
+          new ApiError(409, 'Main category name already exists', error.message),
         );
     }
     if (error.code === 'P2025') {
@@ -185,7 +181,7 @@ module.exports.updateForumMainCategory = async (req, res) => {
   }
 };
 
-// Get a ForumMainCategory by主Category by ID
+// Get a ForumMainCategory by ID
 module.exports.getForumMainCategoryById = async (req, res) => {
   try {
     // Validate ID parameter
@@ -311,21 +307,10 @@ module.exports.createForumSubCategory = async (req, res) => {
       throw new ApiError(404, 'Main category not found');
     }
 
-    // Check for duplicate subcategory name within the main category
-    const existingSubCategory = await prisma.forumSubCategory.findFirst({
-      where: { name, mainCategoryId },
-    });
-    if (existingSubCategory) {
-      throw new ApiError(
-        409,
-        'Subcategory name already exists in this main category',
-      );
-    }
-
     // Create new subcategory
     const newCategory = await prisma.forumSubCategory.create({
       data: {
-        name,
+        name: name.trim(),
         enabled,
         mainCategoryId,
       },
@@ -338,23 +323,20 @@ module.exports.createForumSubCategory = async (req, res) => {
       );
   } catch (error) {
     // Handle Prisma-specific errors
-    if (error.code === 'P2002') {
-      console.error('Database constraint violation:', error);
-      return res
-        .status(409)
-        .json(
-          new ApiError(
-            409,
-            'Database constraint violation: Subcategory name already exists',
-            error.message,
-          ),
-        );
-    }
     if (error.code === 'P2003') {
       console.error('Foreign key constraint failed:', error);
       return res
         .status(404)
         .json(new ApiError(404, 'Main category not found', error.message));
+    }
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      const errorMessage = req.body.name
+        ? `Subcategory name '${req.body.name}' already exists`
+        : 'A unique constraint violation occurred';
+      return res
+        .status(409)
+        .json(new ApiError(409, errorMessage, error.message));
     }
 
     // Handle known ApiError instances
@@ -423,20 +405,9 @@ module.exports.updateForumSubCategory = async (req, res) => {
       data.mainCategoryId = mainCategoryId;
     }
 
-    // Check for duplicate name if name is being updated
-    if (data.name && data.name !== category.name) {
-      const existingSubCategory = await prisma.forumSubCategory.findFirst({
-        where: {
-          name: data.name,
-          mainCategoryId: mainCategoryId || category.mainCategoryId,
-        },
-      });
-      if (existingSubCategory) {
-        throw new ApiError(
-          409,
-          'Subcategory name already exists in this main category',
-        );
-      }
+    // Trim name if provided
+    if (data.name) {
+      data.name = data.name.trim();
     }
 
     // Update subcategory
@@ -456,18 +427,6 @@ module.exports.updateForumSubCategory = async (req, res) => {
       );
   } catch (error) {
     // Handle Prisma-specific errors
-    if (error.code === 'P2002') {
-      console.error('Database constraint violation:', error);
-      return res
-        .status(409)
-        .json(
-          new ApiError(
-            409,
-            'Database constraint violation: Subcategory name already exists',
-            error.message,
-          ),
-        );
-    }
     if (error.code === 'P2025') {
       console.error('Record not found for update:', error);
       return res

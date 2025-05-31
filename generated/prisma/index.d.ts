@@ -27755,6 +27755,7 @@ export namespace Prisma {
   export type ForumSubCategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     name?: string
+    name_mainCategoryId?: ForumSubCategoryNameMainCategoryIdCompoundUniqueInput
     AND?: ForumSubCategoryWhereInput | ForumSubCategoryWhereInput[]
     OR?: ForumSubCategoryWhereInput[]
     NOT?: ForumSubCategoryWhereInput | ForumSubCategoryWhereInput[]
@@ -27763,7 +27764,7 @@ export namespace Prisma {
     quotePost?: QuotePostListRelationFilter
     generalPost?: GeneralPostListRelationFilter
     mainCategory?: XOR<ForumMainCategoryScalarRelationFilter, ForumMainCategoryWhereInput>
-  }, "id" | "name">
+  }, "id" | "name" | "name_mainCategoryId">
 
   export type ForumSubCategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -31376,6 +31377,11 @@ export namespace Prisma {
   export type ForumMainCategoryScalarRelationFilter = {
     is?: ForumMainCategoryWhereInput
     isNot?: ForumMainCategoryWhereInput
+  }
+
+  export type ForumSubCategoryNameMainCategoryIdCompoundUniqueInput = {
+    name: string
+    mainCategoryId: string
   }
 
   export type ForumSubCategoryCountOrderByAggregateInput = {

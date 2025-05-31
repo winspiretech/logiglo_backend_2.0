@@ -97,6 +97,7 @@ model ForumMainCategory {
   subCategory ForumSubCategory[]
   quotePost   QuotePost[]
   generalPost GeneralPost[]
+ 
 }
 
 model ForumSubCategory {
@@ -106,6 +107,7 @@ model ForumSubCategory {
   mainCategoryId String
   quotePost      QuotePost[]
   generalPost    GeneralPost[]
+  @@unique([name, mainCategoryId])
   mainCategory   ForumMainCategory @relation(fields: [mainCategoryId], references: [id])
 }
 
