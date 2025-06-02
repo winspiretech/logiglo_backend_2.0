@@ -118,6 +118,9 @@ const getAdminsBlogs = async (req, res) => {
 const getAllBlogs = async (req, res) => {
   try {
     const allBlogs = await prisma.blog.findMany({
+      where: {
+        isArchived: false,
+      },
       include: {
         category: true,
       },
@@ -310,6 +313,81 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+const toggleArchiveBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      throw new ApiError(400, 'Blog Id is required', 'Blog Id is required');
+    }
+    const blogTobeArchived = await prisma.blog.findFirst({
+      where: { id },
+      select: {
+        isArchived: true,
+      },
+    });
+    if (!blogTobeArchived) {
+      throw new ApiError(404, 'Blog not found');
+    }
+    const archibvedBlog = await prisma.blog.update({
+      where: { id: id },
+      data: {
+        isArchived: !blogTobeArchived.isArchived,
+      },
+    });
+    if (!archibvedBlog) {
+      throw new ApiError(500, 'Something went wrong while archiving blog');
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, archibvedBlog, 'Blog archived successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const getArchivedBlogs = async (req, res) => {
+  try {
+    const archivedBlogs = await prisma.blog.findMany({
+      where: {
+        isArchived: true,
+      },
+    });
+    if (!archivedBlogs) {
+      throw new ApiError(
+        500,
+        'Something went wrong while fetching archived blogs',
+      );
+    }
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          archivedBlogs,
+          'Archived blogs fetched successfully',
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   createBlog,
@@ -318,4 +396,6 @@ module.exports = {
   editBlog,
   deleteBlog,
   getAdminsBlogs,
+  toggleArchiveBlog,
+  getArchivedBlogs,
 };
