@@ -22,7 +22,7 @@ router.post('/createcourse', isAdmin, createCourse);
 
 router.post('/courses/:courseId/modules', isAdmin, createCourseModule);
 
-router.post('/courses/:id', deleteCourse);
+router.delete('/deleteCourse/:id', deleteCourse);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
