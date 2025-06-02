@@ -51,7 +51,14 @@ const addEvents = async (req, res) => {
 
 const getAllEvents = async (req, res) => {
   try {
-    const allEvents = await prisma.event.findMany();
+    const allEvents = await prisma.event.findMany({
+      where: {
+        isArchived: false,
+      },
+      orderBy: {
+        startDate: 'asc',
+      },
+    });
     if (!allEvents) {
       throw new ApiError(
         500,
@@ -264,6 +271,99 @@ const getAdminEvents = async (req, res) => {
   }
 };
 
+const archiveEvent = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    if (!eventId) {
+      throw new ApiError(404, 'Event ID is required');
+    }
+    const eventToBeArchived = await prisma.event.findFirst({
+      where: {
+        id: eventId,
+      },
+      select: {
+        isArchived: true,
+      },
+    });
+    if (!eventToBeArchived) {
+      throw new ApiError(
+        404,
+        'Event not found',
+        'Event with this ID does not exist',
+      );
+    }
+    const archivedEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        isArchived: !eventToBeArchived.isArchived,
+      },
+    });
+    if (!archivedEvent) {
+      throw new ApiError(
+        500,
+        'Something went wrong while archiving the event, Please try again',
+      );
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, archivedEvent, 'Event archived successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      // Custom ApiError, send it back to the client
+      return res.status(error.statusCode).json(error);
+    } else {
+      // Handle other types of errors
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const getArchivedEvents = async (req, res) => {
+  try {
+    const archivedEvents = await prisma.event.findMany({
+      where: {
+        isArchived: true,
+      },
+      orderBy: {
+        startDate: 'asc',
+      },
+    });
+    if (!archivedEvents) {
+      throw new ApiError(
+        500,
+        'Something went wrong while fetching data, Please try again',
+      );
+    }
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          archivedEvents,
+          'Archived Events fetched successfully',
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      // Custom ApiError, send it back to the client
+      return res.status(error.statusCode).json(error);
+    } else {
+      // Handle other types of errors
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   addEvents,
@@ -272,4 +372,6 @@ module.exports = {
   updateEvent,
   deleteEvent,
   getAdminEvents,
+  archiveEvent,
+  getArchivedEvents,
 };
