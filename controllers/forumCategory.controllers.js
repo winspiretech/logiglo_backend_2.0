@@ -307,6 +307,21 @@ module.exports.createForumSubCategory = async (req, res) => {
       throw new ApiError(404, 'Main category not found');
     }
 
+    // Check for duplicate subcategory name within the same main category
+    const existingSubCategory = await prisma.forumSubCategory.findFirst({
+      where: {
+        name: { equals: name.trim(), mode: 'insensitive' },
+        mainCategoryId: mainCategoryId,
+      },
+    });
+
+    if (existingSubCategory) {
+      throw new ApiError(
+        409,
+        `Subcategory name '${name.trim()}' already exists in this main category`,
+      );
+    }
+
     // Create new subcategory
     const newCategory = await prisma.forumSubCategory.create({
       data: {
@@ -331,12 +346,15 @@ module.exports.createForumSubCategory = async (req, res) => {
     }
     if (error.code === 'P2002') {
       console.error('Database constraint violation:', error);
-      const errorMessage = req.body.name
-        ? `Subcategory name '${req.body.name}' already exists`
-        : 'A unique constraint violation occurred';
       return res
         .status(409)
-        .json(new ApiError(409, errorMessage, error.message));
+        .json(
+          new ApiError(
+            409,
+            `Subcategory name '${req.body.name}' already exists in this main category`,
+            error.message,
+          ),
+        );
     }
 
     // Handle known ApiError instances
@@ -405,6 +423,26 @@ module.exports.updateForumSubCategory = async (req, res) => {
       data.mainCategoryId = mainCategoryId;
     }
 
+    // Check for duplicate name if name is being updated
+    if (data.name && data.name.trim() !== category.name) {
+      const targetMainCategoryId = mainCategoryId || category.mainCategoryId;
+
+      const existingSubCategory = await prisma.forumSubCategory.findFirst({
+        where: {
+          name: { equals: data.name.trim(), mode: 'insensitive' },
+          mainCategoryId: targetMainCategoryId,
+          id: { not: id }, // Exclude current subcategory from check
+        },
+      });
+
+      if (existingSubCategory) {
+        throw new ApiError(
+          409,
+          `Subcategory name '${data.name.trim()}' already exists in this main category`,
+        );
+      }
+    }
+
     // Trim name if provided
     if (data.name) {
       data.name = data.name.trim();
@@ -438,6 +476,18 @@ module.exports.updateForumSubCategory = async (req, res) => {
       return res
         .status(404)
         .json(new ApiError(404, 'Main category not found', error.message));
+    }
+    if (error.code === 'P2002') {
+      console.error('Database constraint violation:', error);
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            `Subcategory name already exists in this main category`,
+            error.message,
+          ),
+        );
     }
 
     // Handle known ApiError instances

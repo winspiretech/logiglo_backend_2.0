@@ -102,7 +102,7 @@ model ForumMainCategory {
 
 model ForumSubCategory {
   id             String            @id @default(uuid())
-  name           String?           @unique
+  name           String?          
   enabled        Boolean?          @default(false)
   mainCategoryId String
   quotePost      QuotePost[]
