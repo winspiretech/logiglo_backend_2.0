@@ -240,6 +240,7 @@ const getAdminEvents = async (req, res) => {
     const adminEvents = await prisma.event.findMany({
       where: {
         authorId: id,
+        isArchived: false,
       },
       orderBy: {
         startDate: 'asc',
