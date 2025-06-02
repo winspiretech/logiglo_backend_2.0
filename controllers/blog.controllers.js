@@ -86,6 +86,7 @@ const getAdminsBlogs = async (req, res) => {
     const adminsBlogs = await prisma.blog.findMany({
       where: {
         authorId: id,
+        isArchived: false,
       },
       include: {
         category: true,
