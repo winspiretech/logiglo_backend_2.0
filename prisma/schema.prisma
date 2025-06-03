@@ -409,3 +409,9 @@ model CountriesDataWithFlag {
   Phones_Landline      String
   GDP                  String
 }
+
+
+model Dummy {
+  id String @id
+  name String
+}
