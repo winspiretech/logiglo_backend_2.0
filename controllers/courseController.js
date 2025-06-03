@@ -151,9 +151,36 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const getCourseById = async (req, res) => {
+  try {
+    const { id } = courseIdParamsSchema.parse(req.params);
+
+    const course = await prisma.course.findUnique({
+      where: { id },
+    });
+
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    return res.status(200).json(course);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors: error.errors,
+      });
+    }
+
+    console.error('Error fetching course:', error);
+    return res.status(500).json({ message: 'Server error while fetching course' });
+  }
+};
+
 module.exports = {
   createCourse,
   getAllCourses,
   editCourse,
   deleteCourse,
+  getCourseById,
 };
