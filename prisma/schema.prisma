@@ -414,7 +414,3 @@ model CountriesDataWithFlag {
 }
 
 
-model Dummy {
-  id String @id
-  name String
-}
