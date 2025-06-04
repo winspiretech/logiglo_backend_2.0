@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "Course" ADD COLUMN     "isActive" BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN     "price" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-ADD COLUMN     "validUntil" TIMESTAMP(3);
