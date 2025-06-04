@@ -7,7 +7,7 @@ const createCourseModule = async (req, res) => {
 
     const courseExists = await prisma.course.findUnique({
       where: { id: courseId },
-    });
+    }); 
     if (!courseExists) {
       return res.status(404).json({ message: 'Course not found' });
     }
