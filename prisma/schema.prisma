@@ -101,7 +101,7 @@ model ForumMainCategory {
 
 model ForumSubCategory {
   id             String            @id @default(uuid())
-  name           String?           @unique
+  name           String?          
   enabled        Boolean?          @default(false)
   mainCategoryId String
   quotePost      QuotePost[]
@@ -411,4 +411,10 @@ model CountriesDataWithFlag {
   Phones_Mobile        String
   Phones_Landline      String
   GDP                  String
+}
+
+
+model Dummy {
+  id String @id
+  name String
 }
