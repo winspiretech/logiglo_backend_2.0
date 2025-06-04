@@ -79,7 +79,6 @@ const createBlog = async (req, res) => {
 const getAdminsBlogs = async (req, res) => {
   try {
     const { id } = req.user;
-    console.log(id);
     if (!id) {
       throw new ApiError(401, 'User ID is required');
     }
@@ -196,9 +195,6 @@ const editBlog = async (req, res) => {
         id,
       },
     });
-
-    console.log(req.body);
-
     if (blog?.authorId !== req?.user.id) {
       throw new ApiError(
         400,
@@ -389,6 +385,56 @@ const getArchivedBlogs = async (req, res) => {
   }
 };
 
+const addUnarchiveBlogReason = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    if (!id) {
+      throw new ApiError(400, 'Blog Id is required', 'Blog Id is required');
+    }
+    if (!reason) {
+      throw new ApiError(400, 'Reason is required', 'Reason is required');
+    }
+    const blogToBeUnarchived = await prisma.blog.findFirst({
+      where: { id: id },
+    });
+    if (!blogToBeUnarchived) {
+      throw new ApiError(404, 'Blog not found');
+    }
+    if (!blogToBeUnarchived.isArchived) {
+      throw new ApiError(400, blogToBeUnarchived, 'Blog is not archived');
+    }
+    if (blogToBeUnarchived.unArchiveReasons.includes(reason)) {
+      throw new ApiError(400, 'Reason already exists', 'Reason already exists');
+    }
+    const updatedReasons = [...blogToBeUnarchived.unArchiveReasons, reason];
+    const updateReason = await prisma.blog.update({
+      where: { id: id },
+      data: {
+        unArchiveReasons: {
+          set: [...updatedReasons],
+        },
+      },
+    });
+    if (!updateReason) {
+      throw new ApiError(500, 'Something went wrong while updating reasons');
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, updateReason, 'Reason added successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   createBlog,
@@ -399,4 +445,5 @@ module.exports = {
   getAdminsBlogs,
   toggleArchiveBlog,
   getArchivedBlogs,
+  addUnarchiveBlogReason,
 };

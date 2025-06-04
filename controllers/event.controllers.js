@@ -364,6 +364,79 @@ const getArchivedEvents = async (req, res) => {
   }
 };
 
+const addUnarchiveEventReason = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { reason } = req.body;
+    if (!eventId) {
+      throw new ApiError(404, 'Event ID is required');
+    }
+    if (!reason.trim()) {
+      throw new ApiError(400, 'Reason is required');
+    }
+    const eventToBeArchived = await prisma.event.findFirst({
+      where: {
+        id: eventId,
+      },
+    });
+    if (!eventToBeArchived) {
+      throw new ApiError(
+        404,
+        'Event not found',
+        'Event with this ID does not exist',
+      );
+    }
+    if (!eventToBeArchived.isArchived) {
+      throw new ApiError(
+        400,
+        'Event is not archived',
+        'Event is not archived, cannot add unarchive reason',
+      );
+    }
+    if (eventToBeArchived.unArchiveReasons?.includes(reason)) {
+      throw new ApiError(400, 'Reason already exists');
+    }
+    const updatedReasons = [...eventToBeArchived.unArchiveReasons, reason];
+    const updateEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        unArchiveReasons: {
+          set: [...updatedReasons],
+        },
+      },
+    });
+    if (!updateEvent) {
+      throw new ApiError(
+        500,
+        'Something went wrong while updating the event, Please try again',
+      );
+    }
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updateEvent,
+          'Unarchive reason added successfully',
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      // Custom ApiError, send it back to the client
+      return res.status(error.statusCode).json(error);
+    } else {
+      // Handle other types of errors
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   addEvents,
@@ -374,4 +447,5 @@ module.exports = {
   getAdminEvents,
   archiveEvent,
   getArchivedEvents,
+  addUnarchiveEventReason,
 };

@@ -10,6 +10,7 @@ const {
   getAdminsBlogs,
   getArchivedBlogs,
   toggleArchiveBlog,
+  addUnarchiveBlogReason,
 } = require('../controllers/blog.controllers.js');
 const isAdmin = require('../middleware/isAdmin.js');
 
@@ -21,5 +22,6 @@ router.get('/', getAllBlogs);
 router.get('/:id', getBlog);
 router.patch('/:id', isAdmin, editBlog);
 router.patch('/archive/:id', isAdmin, toggleArchiveBlog);
+router.post('/unarchive-reason/:id', isAdmin, addUnarchiveBlogReason);
 
 module.exports = router;
