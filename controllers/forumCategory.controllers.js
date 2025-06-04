@@ -527,52 +527,24 @@ module.exports.getForumSubCategoryById = async (req, res) => {
     const includePosts = req.query.includePosts === 'true';
 
     const category = await prisma.forumSubCategory.findUnique({
-      where: { id },
-      include: {
-        mainCategory: true,
-        ...(includePosts && {
-          quotePost: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              quoteLike: {
-                select: {
-                  id: true,
-                },
-              },
-              quoteReply: {
-                select: {
-                  id: true,
-                },
-              },
-            },
-          },
-          generalPost: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              generalLike: {
-                select: {
-                  id: true,
-                },
-              },
-              generalReply: {
-                select: {
-                  id: true,
-                },
-              },
-            },
-          },
-        }),
-      },
+      where: { id },include: {
+  mainCategory: true,
+  quotePost: includePosts && {
+    include: {
+      quoteLike: true,
+      quoteReply: true,
+      user: { select: { id: true, name: true } },
+    },
+  },
+  generalPost: includePosts && {
+    include: {
+      generalLike: true,
+      generalReply: true,
+      user: { select: { id: true, name: true } },
+    },
+  },
+}
+
     });
 
     if (!category) {
