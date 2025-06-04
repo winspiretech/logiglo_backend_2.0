@@ -25,7 +25,7 @@ router.post('/courses/:courseId/modules', isAdmin, createCourseModule);
 
 router.delete('/deleteCourse/:id', deleteCourse);
 
-router.get("/getCourseById/:id", getCourseById);
+router.get('/getCourseById/:id', getCourseById);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
