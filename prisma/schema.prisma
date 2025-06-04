@@ -97,7 +97,6 @@ model ForumMainCategory {
   subCategory ForumSubCategory[]
   quotePost   QuotePost[]
   generalPost GeneralPost[]
- 
 }
 
 model ForumSubCategory {
@@ -107,8 +106,9 @@ model ForumSubCategory {
   mainCategoryId String
   quotePost      QuotePost[]
   generalPost    GeneralPost[]
-  @@unique([name, mainCategoryId])
   mainCategory   ForumMainCategory @relation(fields: [mainCategoryId], references: [id])
+
+  @@unique([name, mainCategoryId])
 }
 
 model QuotePost {
@@ -231,35 +231,46 @@ model GeneralLike {
 }
 
 model Blog {
-  id            String         @id @default(uuid())
-  title         String
-  description   String
-  authorId      String
-  author        User           @relation(fields: [authorId], references: [id])
-  status        String
-  createdAt     DateTime       @default(now())
-  image_url     String[]
-  categoryId    String?
-  category      BlogCategory?  @relation(fields: [categoryId], references: [id])
-  notifications Notification[]
+  id               String         @id @default(uuid())
+  title            String
+  description      String
+  authorId         String
+  author           User           @relation(fields: [authorId], references: [id])
+  status           String
+  createdAt        DateTime       @default(now())
+  image_url        String[]
+  categoryId       String?
+  category         BlogCategory?  @relation(fields: [categoryId], references: [id])
+  notifications    Notification[]
+  isArchived       Boolean        @default(false)
+  unArchiveReasons String[]       @default([])
+}
+
+enum EventMode {
+  offline
+  online
+  hybrid
 }
 
 model Event {
-  id            String         @id @default(uuid())
-  authorId      String
-  coverImages   String[]
-  author        User           @relation(fields: [authorId], references: [id])
-  eventTitle    String
-  organizer     String
-  countryCode   String
-  contactNumber String
-  emailAddress  String
-  description   String
-  location      String
-  startDate     DateTime
-  endDate       DateTime
-  createdAt     DateTime       @default(now())
-  notifications Notification[]
+  id               String         @id @default(uuid())
+  authorId         String
+  coverImages      String[]
+  author           User           @relation(fields: [authorId], references: [id])
+  eventTitle       String
+  organizer        String
+  countryCode      String?
+  contactNumber    String?
+  emailAddress     String?
+  description      String
+  mode             EventMode
+  location         String?
+  startDate        DateTime
+  endDate          DateTime
+  createdAt        DateTime       @default(now())
+  notifications    Notification[]
+  isArchived       Boolean        @default(false)
+  unArchiveReasons String[]       @default([])
 }
 
 model BlogCategory {
@@ -281,10 +292,10 @@ model Course {
   educationLevel  EducationLevel
   difficulty      CourseDifficulty
   mode            CourseMode
-  currency        Currency         // e.g., INR, USD, EUR
+  currency        Currency // e.g., INR, USD, EUR
   price           Float            @default(0.0) // Free courses allowed
   duration        String
-  validUntil      DateTime?        // Null means no expiration
+  validUntil      DateTime? // Null means no expiration
   isActive        Boolean          @default(true) // Controls visibility
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -292,7 +303,6 @@ model Course {
   createdBy       User             @relation(fields: [createdById], references: [id])
   modules         CourseModule[]
 }
-
 
 model CourseModule {
   id           String   @id @default(uuid())
@@ -379,10 +389,10 @@ model LandingMenuItems {
 }
 
 model CountriesDataWithFlag {
-  id_country           Int     @id @default(autoincrement())
+  id_country           Int    @id @default(autoincrement())
   Country_Name         String
-  ISO2                 String  @db.Char(2)
-  ISO3                 String  @db.Char(3)
+  ISO2                 String @db.Char(2)
+  ISO3                 String @db.Char(3)
   Top_Level_Domain     String
   FIPS                 String
   ISO_Numeric          Int
@@ -401,4 +411,10 @@ model CountriesDataWithFlag {
   Phones_Mobile        String
   Phones_Landline      String
   GDP                  String
+}
+
+
+model Dummy {
+  id String @id
+  name String
 }

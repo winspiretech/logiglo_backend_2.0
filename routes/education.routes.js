@@ -4,6 +4,7 @@ const {
   getAllCourses,
   editCourse,
   deleteCourse,
+  getCourseById,
 } = require('../controllers/courseController');
 const createCourseModule = require('../controllers/courseModuleController');
 const router = express.Router();
@@ -22,7 +23,9 @@ router.post('/createcourse', isAdmin, createCourse);
 
 router.post('/courses/:courseId/modules', isAdmin, createCourseModule);
 
-router.post('/courses/:id', deleteCourse);
+router.delete('/deleteCourse/:id', deleteCourse);
+
+router.get('/getCourseById/:id', getCourseById);
 
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);

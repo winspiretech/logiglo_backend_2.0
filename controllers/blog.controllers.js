@@ -79,13 +79,13 @@ const createBlog = async (req, res) => {
 const getAdminsBlogs = async (req, res) => {
   try {
     const { id } = req.user;
-    console.log(id);
     if (!id) {
       throw new ApiError(401, 'User ID is required');
     }
     const adminsBlogs = await prisma.blog.findMany({
       where: {
         authorId: id,
+        isArchived: false,
       },
       include: {
         category: true,
@@ -118,6 +118,9 @@ const getAdminsBlogs = async (req, res) => {
 const getAllBlogs = async (req, res) => {
   try {
     const allBlogs = await prisma.blog.findMany({
+      where: {
+        isArchived: false,
+      },
       include: {
         category: true,
       },
@@ -192,9 +195,6 @@ const editBlog = async (req, res) => {
         id,
       },
     });
-
-    console.log(req.body);
-
     if (blog?.authorId !== req?.user.id) {
       throw new ApiError(
         400,
@@ -310,6 +310,131 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+const toggleArchiveBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      throw new ApiError(400, 'Blog Id is required', 'Blog Id is required');
+    }
+    const blogTobeArchived = await prisma.blog.findFirst({
+      where: { id },
+      select: {
+        isArchived: true,
+      },
+    });
+    if (!blogTobeArchived) {
+      throw new ApiError(404, 'Blog not found');
+    }
+    const archibvedBlog = await prisma.blog.update({
+      where: { id: id },
+      data: {
+        isArchived: !blogTobeArchived.isArchived,
+      },
+    });
+    if (!archibvedBlog) {
+      throw new ApiError(500, 'Something went wrong while archiving blog');
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, archibvedBlog, 'Blog archived successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const getArchivedBlogs = async (req, res) => {
+  try {
+    const archivedBlogs = await prisma.blog.findMany({
+      where: {
+        isArchived: true,
+      },
+    });
+    if (!archivedBlogs) {
+      throw new ApiError(
+        500,
+        'Something went wrong while fetching archived blogs',
+      );
+    }
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          archivedBlogs,
+          'Archived blogs fetched successfully',
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+const addUnarchiveBlogReason = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    if (!id) {
+      throw new ApiError(400, 'Blog Id is required', 'Blog Id is required');
+    }
+    if (!reason) {
+      throw new ApiError(400, 'Reason is required', 'Reason is required');
+    }
+    const blogToBeUnarchived = await prisma.blog.findFirst({
+      where: { id: id },
+    });
+    if (!blogToBeUnarchived) {
+      throw new ApiError(404, 'Blog not found');
+    }
+    if (!blogToBeUnarchived.isArchived) {
+      throw new ApiError(400, 'Blog is not archived', 'Blog is not archived');
+    }
+    if (blogToBeUnarchived.unArchiveReasons.includes(reason)) {
+      throw new ApiError(400, 'Reason already exists', 'Reason already exists');
+    }
+    const updatedReasons = [...blogToBeUnarchived.unArchiveReasons, reason];
+    const updateReason = await prisma.blog.update({
+      where: { id: id },
+      data: {
+        unArchiveReasons: {
+          set: [...updatedReasons],
+        },
+      },
+    });
+    if (!updateReason) {
+      throw new ApiError(500, 'Something went wrong while updating reasons');
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, updateReason, 'Reason added successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   test,
   createBlog,
@@ -318,4 +443,7 @@ module.exports = {
   editBlog,
   deleteBlog,
   getAdminsBlogs,
+  toggleArchiveBlog,
+  getArchivedBlogs,
+  addUnarchiveBlogReason,
 };
