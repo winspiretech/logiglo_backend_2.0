@@ -173,7 +173,9 @@ const getCourseById = async (req, res) => {
     }
 
     console.error('Error fetching course:', error);
-    return res.status(500).json({ message: 'Server error while fetching course' });
+    return res
+      .status(500)
+      .json({ message: 'Server error while fetching course' });
   }
 };
 

@@ -231,18 +231,19 @@ model GeneralLike {
 }
 
 model Blog {
-  id            String         @id @default(uuid())
-  title         String
-  description   String
-  authorId      String
-  author        User           @relation(fields: [authorId], references: [id])
-  status        String
-  createdAt     DateTime       @default(now())
-  image_url     String[]
-  categoryId    String?
-  category      BlogCategory?  @relation(fields: [categoryId], references: [id])
-  notifications Notification[]
-  isArchived    Boolean        @default(false)
+  id               String         @id @default(uuid())
+  title            String
+  description      String
+  authorId         String
+  author           User           @relation(fields: [authorId], references: [id])
+  status           String
+  createdAt        DateTime       @default(now())
+  image_url        String[]
+  categoryId       String?
+  category         BlogCategory?  @relation(fields: [categoryId], references: [id])
+  notifications    Notification[]
+  isArchived       Boolean        @default(false)
+  unArchiveReasons String[]       @default([])
 }
 
 enum EventMode {
@@ -250,24 +251,26 @@ enum EventMode {
   online
   hybrid
 }
+
 model Event {
-  id            String         @id @default(uuid())
-  authorId      String
-  coverImages   String[]
-  author        User           @relation(fields: [authorId], references: [id])
-  eventTitle    String
-  organizer     String
-  countryCode   String?
-  contactNumber String?
-  emailAddress  String?
-  description   String
-  mode          EventMode
-  location      String?
-  startDate     DateTime
-  endDate       DateTime
-  createdAt     DateTime       @default(now())
-  notifications Notification[]
-  isArchived    Boolean        @default(false)
+  id               String         @id @default(uuid())
+  authorId         String
+  coverImages      String[]
+  author           User           @relation(fields: [authorId], references: [id])
+  eventTitle       String
+  organizer        String
+  countryCode      String?
+  contactNumber    String?
+  emailAddress     String?
+  description      String
+  mode             EventMode
+  location         String?
+  startDate        DateTime
+  endDate          DateTime
+  createdAt        DateTime       @default(now())
+  notifications    Notification[]
+  isArchived       Boolean        @default(false)
+  unArchiveReasons String[]       @default([])
 }
 
 model BlogCategory {

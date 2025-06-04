@@ -10,6 +10,7 @@ const {
   getAdminEvents,
   archiveEvent,
   getArchivedEvents,
+  addUnarchiveEventReason,
 } = require('../controllers/event.controllers');
 const isAdmin = require('../middleware/isAdmin');
 
@@ -22,5 +23,6 @@ router.get('/:id', getEvent);
 router.patch('/:id', isAdmin, updateEvent);
 router.delete('/:id', isAdmin, deleteEvent);
 router.patch('/archive/:eventId', isAdmin, archiveEvent);
+router.post('/unarchive-reason/:eventId', isAdmin, addUnarchiveEventReason);
 
 module.exports = router;
