@@ -403,7 +403,7 @@ const addUnarchiveBlogReason = async (req, res) => {
       throw new ApiError(404, 'Blog not found');
     }
     if (!blogToBeUnarchived.isArchived) {
-      throw new ApiError(400, blogToBeUnarchived, 'Blog is not archived');
+      throw new ApiError(400, 'Blog is not archived', 'Blog is not archived');
     }
     if (blogToBeUnarchived.unArchiveReasons.includes(reason)) {
       throw new ApiError(400, 'Reason already exists', 'Reason already exists');

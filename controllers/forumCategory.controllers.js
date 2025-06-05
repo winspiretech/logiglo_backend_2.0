@@ -513,7 +513,6 @@ module.exports.updateForumSubCategory = async (req, res) => {
 // Get a ForumSubCategory by ID
 module.exports.getForumSubCategoryById = async (req, res) => {
   try {
-    // Validate ID parameter
     const idSchema = z.object({ id: z.string().uuid() });
     const validationResult = idSchema.safeParse(req.params);
     if (!validationResult.success) {
@@ -527,13 +526,24 @@ module.exports.getForumSubCategoryById = async (req, res) => {
     const { id } = validationResult.data;
     const includePosts = req.query.includePosts === 'true';
 
-    // Fetch subcategory
     const category = await prisma.forumSubCategory.findUnique({
       where: { id },
       include: {
         mainCategory: true,
-        quotePost: includePosts,
-        generalPost: includePosts,
+        quotePost: includePosts && {
+          include: {
+            quoteLike: true,
+            quoteReply: true,
+            user: { select: { id: true, name: true } },
+          },
+        },
+        generalPost: includePosts && {
+          include: {
+            generalLike: true,
+            generalReply: true,
+            user: { select: { id: true, name: true } },
+          },
+        },
       },
     });
 
@@ -547,7 +557,6 @@ module.exports.getForumSubCategoryById = async (req, res) => {
         new ApiResponse(200, category, 'Subcategory retrieved successfully'),
       );
   } catch (error) {
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
       console.error(
         `Error fetching ForumSubCategory by ID: ${error.message}`,
@@ -556,7 +565,6 @@ module.exports.getForumSubCategoryById = async (req, res) => {
       return res.status(error.statusCode).json(error);
     }
 
-    // Handle unexpected errors
     console.error('Unexpected error fetching ForumSubCategory by ID:', error);
     return res
       .status(500)
