@@ -120,6 +120,7 @@ const getAllBlogs = async (req, res) => {
     const allBlogs = await prisma.blog.findMany({
       where: {
         isArchived: false,
+        status: 'published',
       },
       include: {
         category: true,
