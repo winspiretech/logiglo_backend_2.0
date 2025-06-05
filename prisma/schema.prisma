@@ -88,6 +88,7 @@ model User {
   Event                  Event[]
   receivedNotifications  Notification[] @relation("RecipientNotifications")
   triggeredNotifications Notification[] @relation("TriggeredNotifications")
+  Rating                 Rating[]
 }
 
 model ForumMainCategory {
@@ -101,7 +102,7 @@ model ForumMainCategory {
 
 model ForumSubCategory {
   id             String            @id @default(uuid())
-  name           String?          
+  name           String?
   enabled        Boolean?          @default(false)
   mainCategoryId String
   quotePost      QuotePost[]
@@ -302,6 +303,7 @@ model Course {
   createdById     String
   createdBy       User             @relation(fields: [createdById], references: [id])
   modules         CourseModule[]
+  Rating          Rating[]
 }
 
 model CourseModule {
@@ -413,4 +415,15 @@ model CountriesDataWithFlag {
   GDP                  String
 }
 
+model Rating {
+  id       String  @id @default(uuid())
+  userId   String
+  courseId String
+  rating   Decimal @db.Decimal(2, 1)
+  user     User    @relation(fields: [userId], references: [id])
+  course   Course  @relation(fields: [courseId], references: [id])
 
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+}
