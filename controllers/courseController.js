@@ -179,10 +179,42 @@ const getCourseById = async (req, res) => {
   }
 };
 
+
+
+const validateCourseById = async (req, res) => {
+  const { id } = req.params;
+  const { validUntil } = req.body;
+
+  try {
+    if (!validUntil) {
+      return res.status(400).json({ message: "validUntil date is required" });
+    }
+
+    const course = await prisma.course.update({
+      where: { id },
+      data: {
+        validUntil: new Date(validUntil),
+        isActive: true,
+      },
+    });
+
+    return res.status(200).json({
+      message: 'Course validated successfully',
+      course,
+    });
+  } catch (error) {
+    console.error('Error validating course:', error);
+    return res
+      .status(500)
+      .json({ message: 'Failed to validate course', error });
+  }
+};
+
 module.exports = {
   createCourse,
   getAllCourses,
   editCourse,
   deleteCourse,
   getCourseById,
+  validateCourseById
 };
