@@ -179,15 +179,13 @@ const getCourseById = async (req, res) => {
   }
 };
 
-
-
 const validateCourseById = async (req, res) => {
   const { id } = req.params;
   const { validUntil } = req.body;
 
   try {
     if (!validUntil) {
-      return res.status(400).json({ message: "validUntil date is required" });
+      return res.status(400).json({ message: 'validUntil date is required' });
     }
 
     const course = await prisma.course.update({
@@ -216,5 +214,5 @@ module.exports = {
   editCourse,
   deleteCourse,
   getCourseById,
-  validateCourseById
+  validateCourseById,
 };
