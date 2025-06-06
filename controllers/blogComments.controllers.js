@@ -324,7 +324,11 @@ const getCommentById = async (req, res) => {
     });
 
     if (!commentData) {
-      throw new ApiError(404, 'Comment not found', 'No pending comment with this ID');
+      throw new ApiError(
+        404,
+        'Comment not found',
+        'No pending comment with this ID',
+      );
     }
 
     return res
@@ -334,13 +338,14 @@ const getCommentById = async (req, res) => {
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
-      return res.status(500).json(
-        new ApiError(500, 'Internal server error', error.message || null)
-      );
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
-
 
 module.exports = {
   createComment,
