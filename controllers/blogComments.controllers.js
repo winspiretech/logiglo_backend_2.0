@@ -300,7 +300,14 @@ const getCommentById = async (req, res) => {
         status: 'pending',
       },
       include : {
-        parentComment : true
+        parentComment : {
+          include : {
+            user : {
+              select : {
+                name: true,
+                profilePic: true,
+                online: true,
+          }
       }
     });
     if (!commentData) {
