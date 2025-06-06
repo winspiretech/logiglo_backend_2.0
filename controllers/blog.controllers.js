@@ -159,6 +159,7 @@ const getBlog = async (req, res) => {
       },
       include: {
         category: true,
+        BlogComment:true,
       },
     });
     if (!blog) {
