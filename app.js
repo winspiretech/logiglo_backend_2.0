@@ -12,6 +12,7 @@ const notificationRoutes = require('./routes/notification.routes.js');
 const landingPageMenuItemsRoutes = require('./routes/landingPageMenuItems.routes.js');
 const dataRoute = require('./routes/data.routes.js');
 const ratingRoute = require('./routes/rating.routes.js');
+const commentRoute = require('./routes/blogComments.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -63,6 +64,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 app.use('/api/data', dataRoute);
 app.use('/api/rating', ratingRoute);
+app.use('/api/blog/comment', commentRoute);
 
 // Root route
 app.get('/', (req, res) => {

@@ -34,7 +34,6 @@ router.get('/getAllCourses', getAllCourses);
 router.get('/getCourseById/:id', getCourseById);
 router.patch('/validateCourse/:id', validateCourseById);
 
-
 // routes for course modules
 router.post('/courses/:courseId/modules', createCourseModule);
 router.put('/modules/:moduleId', editCourseModule);

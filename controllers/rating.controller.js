@@ -72,4 +72,43 @@ const getAllRatingsByCourseId = async (req, res) => {
   }
 };
 
-module.exports = { createRating, getAllRatingsByCourseId };
+const getIndividualRatingById = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { id: userId } = req.loggedInUser;
+    const userRating = await prisma.rating.findFirst({
+      where: {
+        userId: userId,
+        courseId: courseId,
+      },
+    });
+    if (!userRating) {
+      throw new ApiError(
+        500,
+        'Internal server error',
+        'Something went wrong while fetching user rating',
+      );
+    }
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, userRating, 'User rating fetched successfully'),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+module.exports = {
+  createRating,
+  getAllRatingsByCourseId,
+  getIndividualRatingById,
+};
