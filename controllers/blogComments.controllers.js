@@ -291,33 +291,47 @@ const getAllPendingComments = async (req, res) => {
 const getCommentById = async (req, res) => {
   try {
     const { commentId } = req.params;
+
     if (!commentId) {
-      throw new ApiError(404, 'Comment Id required', 'Comment Id missing');
+      throw new ApiError(400, 'Comment Id required', 'Comment Id missing');
     }
+
     const commentData = await prisma.blogComment.findFirst({
       where: {
         id: commentId,
         status: 'pending',
       },
-      include : {
-        parentComment : {
-          include : {
-            user : {
-              select : {
+      include: {
+        parentComment: {
+          include: {
+            user: {
+              select: {
                 name: true,
                 profilePic: true,
                 online: true,
-          }
-      }
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            name: true,
+            profilePic: true,
+            online: true,
+          },
+        },
+      },
     });
+
     if (!commentData) {
       throw new ApiError(
-        500,
-        'Internal server error',
-        'Something went wrong while fetching comment',
+        404,
+        'Comment not found',
+        'No pending comment with this ID',
       );
     }
-    res
+
+    return res
       .status(200)
       .json(new ApiResponse(200, commentData, 'Comment fetched successfully'));
   } catch (error) {
