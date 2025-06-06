@@ -159,6 +159,17 @@ const getBlog = async (req, res) => {
       },
       include: {
         category: true,
+        BlogComment: {
+          include : {
+            user : {
+              select : {
+                name: true,
+                profilePic: true,
+                online: true,
+              }
+            }
+          }
+        }
       },
     });
     if (!blog) {
