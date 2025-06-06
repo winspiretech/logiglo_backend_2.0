@@ -89,6 +89,7 @@ model User {
   receivedNotifications  Notification[]     @relation("RecipientNotifications")
   triggeredNotifications Notification[]     @relation("TriggeredNotifications")
   Rating                 Rating[]
+  BlogComment            BlogComment[]
   RequestToConnect       RequestToConnect[]
 }
 
@@ -246,6 +247,7 @@ model Blog {
   notifications    Notification[]
   isArchived       Boolean        @default(false)
   unArchiveReasons String[]       @default([])
+  BlogComment      BlogComment[]
 }
 
 enum EventMode {
@@ -424,11 +426,28 @@ model Rating {
   rating   Decimal @db.Decimal(2, 1)
   user     User    @relation(fields: [userId], references: [id])
   course   Course  @relation(fields: [courseId], references: [id])
-
-  @@unique([userId, courseId])
-  @@index([userId])
-  @@index([courseId])
 }
+
+enum BlogStatus {
+  pending
+  rejected
+  accepted
+}
+
+model BlogComment {
+  id            String        @id @default(uuid())
+  blogId        String
+  userId        String
+  status        BlogStatus    @default(pending)
+  comment       String
+  createdAt     DateTime      @default(now())
+  parentId      String?
+  user          User          @relation(fields: [userId], references: [id])
+  blog          Blog          @relation(fields: [blogId], references: [id])
+  parentComment BlogComment?  @relation("BlogParentComment", fields: [parentId], references: [id], onDelete: Cascade)
+  replies       BlogComment[] @relation("BlogParentComment")
+}
+
 model RequestToConnect {
   id       String @id @default(uuid())
   name     String
