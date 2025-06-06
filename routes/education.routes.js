@@ -16,6 +16,13 @@ const {
   deleteCourseModule,
   getCourseModules,
 } = require('../controllers/courseModuleController');
+
+// request imports
+const {
+  createRequest,
+  getAllRequests,
+  updateRequestStatus,
+} = require('../controllers/RequestToConnect.js');
 const router = express.Router();
 const { authenticateAdmin } = require('../middleware/authMiddleware.js');
 const isAdmin = require('../middleware/isAdmin.js');
@@ -43,5 +50,10 @@ router.get('/courses/:courseId/modules', getCourseModules);
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
 router.get('/getAllEnquiries', getAllEnquiries);
+
+// routes of request to connect
+router.post('/requests', createRequest);
+router.get('/requests', getAllRequests);
+router.patch('/requests/:id/status', updateRequestStatus);
 
 module.exports = router;
