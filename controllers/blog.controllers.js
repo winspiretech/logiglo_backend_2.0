@@ -160,6 +160,10 @@ const getBlog = async (req, res) => {
       include: {
         category: true,
         BlogComment: {
+          where: {
+            status: 'accepted',
+            parentId: null,
+          },
           include: {
             user: {
               select: {
