@@ -303,7 +303,7 @@ const getCommentById = async (req, res) => {
         parentComment : true
       }
     });
-    if (!commentId) {
+    if (!commentData) {
       throw new ApiError(
         500,
         'Internal server error',
