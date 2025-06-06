@@ -299,6 +299,9 @@ const getCommentById = async (req, res) => {
         id: commentId,
         status: 'pending',
       },
+      include : {
+        parentComment : true
+      }
     });
     if (!commentId) {
       throw new ApiError(
