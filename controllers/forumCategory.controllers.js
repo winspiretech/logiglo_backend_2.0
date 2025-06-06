@@ -531,6 +531,7 @@ module.exports.getForumSubCategoryById = async (req, res) => {
       include: {
         mainCategory: true,
         quotePost: includePosts && {
+          where: { status: 'success' }, // Filter for successful quote posts
           include: {
             quoteLike: true,
             quoteReply: true,
@@ -538,6 +539,7 @@ module.exports.getForumSubCategoryById = async (req, res) => {
           },
         },
         generalPost: includePosts && {
+          where: { status: 'success' }, // Filter for successful general posts
           include: {
             generalLike: true,
             generalReply: true,
