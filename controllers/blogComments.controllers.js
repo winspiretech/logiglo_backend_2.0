@@ -288,10 +288,46 @@ const getAllPendingComments = async (req, res) => {
   }
 };
 
+const getCommentById = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    if (!commentId) {
+      throw new ApiError(404, 'Comment Id required', 'Comment Id missing');
+    }
+    const commentData = await prisma.blogComment.findFirst({
+      where: {
+        id: commentId,
+        status: 'pending',
+      },
+    });
+    if (!commentId) {
+      throw new ApiError(
+        500,
+        'Internal server error',
+        'Something went wrong while fetching comment',
+      );
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, commentData, 'Comment fetched successfully'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   createComment,
   getCommentsByPostId,
   approveOrRejectComment,
   deleteCommentById,
   getAllPendingComments,
+  getCommentById,
 };
