@@ -58,38 +58,39 @@ enum NotificationType {
 }
 
 model User {
-  id                     String         @id @default(uuid())
+  id                     String             @id @default(uuid())
   name                   String
-  email                  String?        @unique
+  email                  String?            @unique
   password               String?
-  verified               Boolean?       @default(false)
-  role                   String?        @default("user")
-  mobileNo               String?        @unique
+  verified               Boolean?           @default(false)
+  role                   String?            @default("user")
+  mobileNo               String?            @unique
   country                String?
   city                   String?
   address                String?
   postalCode             String?
   profilePic             String?
   bio                    String?
-  online                 Boolean?       @default(false)
+  online                 Boolean?           @default(false)
   lastSeen               DateTime?
-  rating                 Float?         @default(0)
-  accountType            String?        @default("personal")
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
+  rating                 Float?             @default(0)
+  accountType            String?            @default("personal")
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
   quotePost              QuotePost[]
   quoteReply             QuoteReply[]
-  quoteLike              QuoteLike[]    @relation("UserToQuoteLike")
-  generalPost            GeneralPost[]  @relation("UserToGeneralPost")
+  quoteLike              QuoteLike[]        @relation("UserToQuoteLike")
+  generalPost            GeneralPost[]      @relation("UserToGeneralPost")
   generalReply           GeneralReply[]
-  generalLike            GeneralLike[]  @relation("UserToGeneralLike")
+  generalLike            GeneralLike[]      @relation("UserToGeneralLike")
   blog                   Blog[]
   Course                 Course[]
   Event                  Event[]
-  receivedNotifications  Notification[] @relation("RecipientNotifications")
-  triggeredNotifications Notification[] @relation("TriggeredNotifications")
+  receivedNotifications  Notification[]     @relation("RecipientNotifications")
+  triggeredNotifications Notification[]     @relation("TriggeredNotifications")
   Rating                 Rating[]
   BlogComment            BlogComment[]
+  RequestToConnect       RequestToConnect[]
 }
 
 model ForumMainCategory {
@@ -283,29 +284,30 @@ model BlogCategory {
 }
 
 model Course {
-  id              String           @id @default(uuid())
-  institutionName String
-  logo            String?
-  title           String
-  description     String?
-  instructorName  String
-  thumbnail       String?
-  brochure        String?
-  previewVideoUrl String?
-  educationLevel  EducationLevel
-  difficulty      CourseDifficulty
-  mode            CourseMode
-  currency        Currency // e.g., INR, USD, EUR
-  price           Float            @default(0.0) // Free courses allowed
-  duration        String
-  validUntil      DateTime? // Null means no expiration
-  isActive        Boolean          @default(true) // Controls visibility
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  createdById     String
-  createdBy       User             @relation(fields: [createdById], references: [id])
-  modules         CourseModule[]
-  Rating          Rating[]
+  id               String             @id @default(uuid())
+  institutionName  String
+  logo             String?
+  title            String
+  description      String?
+  instructorName   String
+  thumbnail        String?
+  brochure         String?
+  previewVideoUrl  String?
+  educationLevel   EducationLevel
+  difficulty       CourseDifficulty
+  mode             CourseMode
+  currency         Currency // e.g., INR, USD, EUR
+  price            Float              @default(0.0) // Free courses allowed
+  duration         String
+  validUntil       DateTime? // Null means no expiration
+  isActive         Boolean            @default(true) // Controls visibility
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  createdById      String
+  createdBy        User               @relation(fields: [createdById], references: [id])
+  modules          CourseModule[]
+  Rating           Rating[]
+  RequestToConnect RequestToConnect[]
 }
 
 model CourseModule {
@@ -444,4 +446,27 @@ model BlogComment {
   blog          Blog          @relation(fields: [blogId], references: [id])
   parentComment BlogComment?  @relation("BlogParentComment", fields: [parentId], references: [id], onDelete: Cascade)
   replies       BlogComment[] @relation("BlogParentComment")
+}
+
+model RequestToConnect {
+  id       String @id @default(uuid())
+  name     String
+  email    String
+  mobileNo String
+
+  message String? 
+  status  RequestStatus @default(PENDING) 
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RequestStatus {
+  PENDING
+  RESOLVED
 }
