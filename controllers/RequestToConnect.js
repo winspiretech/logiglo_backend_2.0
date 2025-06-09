@@ -102,8 +102,44 @@ const updateRequestStatus = async (req, res) => {
   }
 };
 
+const getRequestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const request = await prisma.requestToConnect.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        course: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+
+    if (!request) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+
+    res.status(200).json(request);
+  } catch (error) {
+    console.error('Error fetching request by ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
   createRequest,
   getAllRequests,
   updateRequestStatus,
+  getRequestById
 };

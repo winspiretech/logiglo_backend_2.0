@@ -119,7 +119,9 @@ const updateEnquiryStatus = async (req, res) => {
 
     // Validate input
     if (!id || !status) {
-      return res.status(400).json({ message: 'Enquiry ID and status are required.' });
+      return res
+        .status(400)
+        .json({ message: 'Enquiry ID and status are required.' });
     }
 
     // Check if status is valid
@@ -141,7 +143,9 @@ const updateEnquiryStatus = async (req, res) => {
     });
   } catch (error) {
     console.error('Error updating enquiry status:', error);
-    return res.status(500).json({ message: 'Server error while updating status.' });
+    return res
+      .status(500)
+      .json({ message: 'Server error while updating status.' });
   }
 };
 
@@ -179,12 +183,9 @@ const getEnquiryById = async (req, res) => {
   }
 };
 
-
-
-
 module.exports = {
   handleCourseEnquiry,
   getAllEnquiries,
   updateEnquiryStatus,
-  getEnquiryById
+  getEnquiryById,
 };
