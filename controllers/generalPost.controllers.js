@@ -1108,7 +1108,21 @@ module.exports.getGeneralPostByPostId = async (req, res) => {
         },
         MainCategory: true,
         SubCategory: true, // ✅ fixed
-        generalReply: true,
+        generalReply: {
+          where: { status: 'success' }, // Fetch only successful replies
+          select: {
+            id: true,
+            description: true,
+            status: true,
+            parentReplyId: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
         generalLike: true,
       },
     });
