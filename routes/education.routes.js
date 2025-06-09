@@ -31,6 +31,8 @@ const isAdmin = require('../middleware/isAdmin.js');
 const {
   handleCourseEnquiry,
   getAllEnquiries,
+  getEnquiryById,
+  updateEnquiryStatus,
 } = require('../controllers/courseEnquiryController');
 
 // routes for course management
@@ -50,6 +52,10 @@ router.get('/courses/:courseId/modules', getCourseModules);
 // POST route for submitting a course enquiry
 router.post('/enquire', handleCourseEnquiry);
 router.get('/getAllEnquiries', getAllEnquiries);
+router.get('/course-enquiry/:id', getEnquiryById);
+router.patch('/course-enquiry/:id/status', updateEnquiryStatus);
+
+
 
 // routes of request to connect
 router.post('/requests', createRequest);
