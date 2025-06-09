@@ -29,6 +29,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const allowedOrigins = [
   'http://localhost:3004',
+  'http://localhost:3002',
   'http://tester.logiglo.com',
   'https://tester.logiglo.com',
 ];
