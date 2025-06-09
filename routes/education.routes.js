@@ -22,6 +22,7 @@ const {
   createRequest,
   getAllRequests,
   updateRequestStatus,
+  getRequestById
 } = require('../controllers/RequestToConnect.js');
 const router = express.Router();
 const { authenticateAdmin } = require('../middleware/authMiddleware.js');
@@ -55,11 +56,10 @@ router.get('/getAllEnquiries', getAllEnquiries);
 router.get('/course-enquiry/:id', getEnquiryById);
 router.patch('/course-enquiry/:id/status', updateEnquiryStatus);
 
-
-
 // routes of request to connect
 router.post('/requests', createRequest);
 router.get('/requests', getAllRequests);
 router.patch('/requests/:id/status', updateRequestStatus);
+router.get('/request/:id', getRequestById);
 
 module.exports = router;
