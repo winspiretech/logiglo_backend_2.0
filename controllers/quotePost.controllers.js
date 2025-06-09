@@ -12,6 +12,7 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
+const { id, de } = require('zod/v4/locales');
 
 // --- Creation Functions ---
 
@@ -930,10 +931,30 @@ module.exports.getQuotePostByPostId = async (req, res) => {
     const post = await prisma.quotePost.findUnique({
       where: { id: postId },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         mainCategory: true,
         subCategory: true,
-        quoteReply: true,
+        quoteReply: {
+          where: { status: 'success' },
+          select: {
+            id: true,
+            description: true,
+            status: true,
+            parentReplyId: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
         quoteLike: true,
       },
     });
