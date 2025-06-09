@@ -1115,6 +1115,7 @@ module.exports.getGeneralPostByPostId = async (req, res) => {
             description: true,
             status: true,
             parentReplyId: true,
+            createdAt: true,
             user: {
               select: {
                 id: true,
