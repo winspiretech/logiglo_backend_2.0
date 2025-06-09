@@ -321,6 +321,12 @@ model CourseModule {
   course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
+enum EnquiryStatus {
+  pending
+  resolved
+  rejected
+}
+
 model CourseEnquiry {
   id                    String         @id @default(uuid())
   institutionName       String
@@ -334,7 +340,9 @@ model CourseEnquiry {
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
   notifications         Notification[]
+  status                EnquiryStatus  @default(pending)
 }
+
 
 model CountriesData {
   id        Int          @id // Primary key
