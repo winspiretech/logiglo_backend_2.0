@@ -347,6 +347,60 @@ const getCommentById = async (req, res) => {
   }
 };
 
+const getChildCommentsByParentId = async (req, res) => {
+  try {
+    const { parentCommentId } = req.params;
+    if (!parentCommentId) {
+      throw new ApiError(
+        404,
+        'Parent Comment Id required',
+        'Missing Parent Comment Id',
+      );
+    }
+    const childComments = await prisma.blogComment.findMany({
+      where: {
+        status: 'accepted',
+        parentId: parentCommentId,
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            profilePic: true,
+            online: true,
+          },
+        },
+      },
+    });
+    if (!childComments) {
+      throw new ApiError(
+        500,
+        'Interal server error',
+        'Something went wrong while fetching the comments, Please try again',
+      );
+    }
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          childComments,
+          'Child comments fetched successfully',
+        ),
+      );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   createComment,
   getCommentsByPostId,
@@ -354,4 +408,5 @@ module.exports = {
   deleteCommentById,
   getAllPendingComments,
   getCommentById,
+  getChildCommentsByParentId,
 };
