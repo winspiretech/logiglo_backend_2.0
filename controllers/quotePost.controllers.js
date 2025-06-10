@@ -12,15 +12,32 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
-const { id, de } = require('zod/v4/locales');
+const incotermDescriptions = {
+  EXW: 'Seller delivers when goods are placed at the disposal of the buyer, not cleared for export and not loaded on any collecting vehicle.',
+  FCA: 'Seller delivers the goods, cleared for export, to the carrier nominated by the buyer at the named place.',
+  FAS: 'Seller delivers when the goods are placed alongside the vessel at the named port of shipment.',
+  FOB: "Seller delivers when the goods pass the ship's rail at the named port of shipment.",
+  CFR: "Seller delivers when the goods pass the ship's rail at the port of shipment and must pay the costs and freight to bring the goods to the named port of destination.",
+  CIF: "Seller delivers when the goods pass the ship's rail at the port of shipment, pays the costs, freight, and insurance to bring the goods to the named port of destination.",
+  CPT: 'Seller delivers the goods to the carrier at an agreed place and pays the costs of carriage to the named destination.',
+  CIP: 'Seller delivers the goods to the carrier at an agreed place, pays the costs of carriage, and insurance to the named destination.',
+  DPU: 'Seller delivers the goods at the disposal of the buyer at the named place of destination, unloaded but not cleared for import.',
+  DAP: 'Seller delivers the goods at the disposal of the buyer at the named place of destination, not unloaded, cleared for export but not for import.',
+  DDP: 'Seller delivers the goods to the buyer, cleared for import, at the named place of destination, bearing all costs and risks.',
+};
 
 // --- Creation Functions ---
 
 // Create a new QuotePost
 module.exports.createQuotePost = async (req, res) => {
   try {
+    const validatedData = validateCreateQuotePost(req.body);
+
+    // Log the validated data to debug
+    console.log('Validated data for createQuotePost:', validatedData);
+
     const { userId, postMainCategory, postSubCategory, ...data } =
-      validateCreateQuotePost(req.body);
+      validatedData;
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -50,6 +67,18 @@ module.exports.createQuotePost = async (req, res) => {
       }
     }
 
+    // Bind Incoterm description if Incoterm is provided
+    if (data.incoterm) {
+      const incotermInfo = incotermDescriptions[data.incoterm];
+      if (!incotermInfo) {
+        throw new ApiError(400, 'Invalid Incoterm provided');
+      }
+      data.incotermInfo = incotermInfo;
+    }
+
+    // Log the data before creating the post
+    console.log('Data to create QuotePost:', data);
+
     const newQuotePost = await prisma.quotePost.create({
       data: {
         user: { connect: { id: userId } },
@@ -60,8 +89,6 @@ module.exports.createQuotePost = async (req, res) => {
           ? { connect: { id: postSubCategory } }
           : undefined,
         name: user.name,
-        MainCategoryName: mainCategory ? mainCategory.name : null,
-        SubCategoryName: subCategory ? subCategory.name : null,
         ...data,
       },
     });
@@ -108,7 +135,6 @@ module.exports.createQuotePost = async (req, res) => {
       );
   }
 };
-
 // Create a new QuoteReply
 module.exports.createQuoteReply = async (req, res) => {
   try {
@@ -300,39 +326,102 @@ module.exports.updateQuotePost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateQuotePost(req.params, req.body);
 
+    // Log the validated data to debug
+    console.log('Validated data:', data);
+
     // Verify post exists
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
       throw new ApiError(404, 'QuotePost not found');
     }
 
+    // Prepare update data
+    const updateData = { ...data };
+
+    // Log the updateData to confirm all fields are present
+    console.log('updateData before processing:', updateData);
+
     // Verify main category exists if provided
-    if (data.postMainCategory) {
+    if (updateData.postMainCategory) {
       const mainCategory = await prisma.forumMainCategory.findUnique({
-        where: { id: data.postMainCategory },
+        where: { id: updateData.postMainCategory },
       });
       if (!mainCategory) {
         throw new ApiError(404, 'Main category not found');
       }
-      data.mainCategory = { connect: { id: data.postMainCategory } };
-      delete data.postMainCategory;
+      updateData.mainCategory = {
+        connect: { id: updateData.postMainCategory },
+      };
+      delete updateData.postMainCategory;
     }
 
     // Verify subcategory exists if provided
-    if (data.postSubCategory) {
+    if (updateData.postSubCategory) {
       const subCategory = await prisma.forumSubCategory.findUnique({
-        where: { id: data.postSubCategory },
+        where: { id: updateData.postSubCategory },
       });
       if (!subCategory) {
         throw new ApiError(404, 'Subcategory not found');
       }
-      data.subCategory = { connect: { id: data.postSubCategory } };
-      delete data.postSubCategory;
+      updateData.subCategory = { connect: { id: updateData.postSubCategory } };
+      delete updateData.postSubCategory;
     }
+
+    // Bind Incoterm description if Incoterm is updated
+    if (updateData.incoterm) {
+      const incotermInfo = incotermDescriptions[updateData.incoterm];
+      if (!incotermInfo) {
+        throw new ApiError(400, 'Invalid Incoterm provided');
+      }
+      updateData.incotermInfo = incotermInfo;
+    }
+
+    // Log updateData after processing
+    console.log('updateData after processing:', updateData);
+
+    // Filter out undefined values to prevent Prisma from setting fields to null
+    const filteredUpdateData = Object.fromEntries(
+      Object.entries({
+        updatedAt: new Date(), // Update the timestamp
+        title: updateData.title ?? post.title,
+        description: updateData.description ?? post.description,
+        totalNetWeight: updateData.totalNetWeight ?? post.totalNetWeight,
+        totalGrossWeight: updateData.totalGrossWeight ?? post.totalGrossWeight,
+        volumetricWeight: updateData.volumetricWeight ?? post.volumetricWeight,
+        transitInsurance: updateData.transitInsurance ?? post.transitInsurance,
+        dangerousGoods: updateData.dangerousGoods ?? post.dangerousGoods,
+        width: updateData.width ?? post.width,
+        height: updateData.height ?? post.height,
+        length: updateData.length ?? post.length,
+        fromPostalCode: updateData.fromPostalCode ?? post.fromPostalCode,
+        toPostalCode: updateData.toPostalCode ?? post.toPostalCode,
+        fromCity: updateData.fromCity ?? post.fromCity,
+        toCity: updateData.toCity ?? post.toCity,
+        fromCountry: updateData.fromCountry ?? post.fromCountry,
+        toCountry: updateData.toCountry ?? post.toCountry,
+        fromAddress: updateData.fromAddress ?? post.fromAddress,
+        toAddress: updateData.toAddress ?? post.toAddress,
+        fromState: updateData.fromState ?? post.fromState,
+        toState: updateData.toState ?? post.toState,
+        postType: updateData.postType ?? post.postType,
+        shipmentType: updateData.shipmentType ?? post.shipmentType,
+        serviceType: updateData.serviceType ?? post.serviceType,
+        incoterm: updateData.incoterm ?? post.incoterm,
+        incotermInfo: updateData.incotermInfo ?? post.incotermInfo,
+        mainCategory: updateData.mainCategory,
+        subCategory: updateData.subCategory,
+        status: updateData.status ?? post.status,
+        rejectionReason: updateData.rejectionReason ?? post.rejectionReason,
+        acceptReason: updateData.acceptReason ?? post.acceptReason,
+      }).filter(([_, value]) => value !== undefined),
+    );
+
+    // Log the filtered update data
+    console.log('filteredUpdateData:', filteredUpdateData);
 
     const updatedPost = await prisma.quotePost.update({
       where: { id: postId },
-      data,
+      data: filteredUpdateData,
     });
 
     return res

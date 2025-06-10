@@ -112,7 +112,80 @@ const getAllEnquiries = async (req, res) => {
   }
 };
 
+const updateEnquiryStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Validate input
+    if (!id || !status) {
+      return res
+        .status(400)
+        .json({ message: 'Enquiry ID and status are required.' });
+    }
+
+    // Check if status is valid
+    const allowedStatuses = ['pending', 'resolved', 'rejected'];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value.' });
+    }
+
+    // Update in DB
+    const updatedEnquiry = await prisma.courseEnquiry.update({
+      where: { id },
+      data: { status },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Enquiry status updated to "${status}".`,
+      enquiry: updatedEnquiry,
+    });
+  } catch (error) {
+    console.error('Error updating enquiry status:', error);
+    return res
+      .status(500)
+      .json({ message: 'Server error while updating status.' });
+  }
+};
+
+const getEnquiryById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validate ID
+    if (!id) {
+      return res.status(400).json({ message: 'Enquiry ID is required.' });
+    }
+
+    // Find the enquiry by ID
+    const enquiry = await prisma.courseEnquiry.findUnique({
+      where: { id },
+    });
+
+    // If not found
+    if (!enquiry) {
+      return res.status(404).json({ message: 'Enquiry not found.' });
+    }
+
+    // Success
+    return res.status(200).json({
+      success: true,
+      message: 'Enquiry retrieved successfully.',
+      enquiry,
+    });
+  } catch (error) {
+    console.error('Error fetching enquiry by ID:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while retrieving enquiry.',
+    });
+  }
+};
+
 module.exports = {
   handleCourseEnquiry,
   getAllEnquiries,
+  updateEnquiryStatus,
+  getEnquiryById,
 };

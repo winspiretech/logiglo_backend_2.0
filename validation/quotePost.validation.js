@@ -36,8 +36,28 @@ const quotePostSchema = z.object({
   toState: z.string().nullable().optional(),
   postMainCategory: z.string().uuid().nullable().optional(),
   postSubCategory: z.string().uuid().nullable().optional(),
-  shipmentType: z.string().nullable().optional(),
+  shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
+  postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
+  serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
+  incoterm: z
+    .enum([
+      'EXW',
+      'FCA',
+      'FAS',
+      'FOB',
+      'CFR',
+      'CIF',
+      'CPT',
+      'CIP',
+      'DPU',
+      'DAP',
+      'DDP',
+    ])
+    .nullable()
+    .optional(),
+  incotermInfo: z.string().nullable().optional(),
 });
+
 // Zod schema for QuoteReply creation
 const quoteReplySchemaUpdate = z.object({
   params: z.object({
@@ -63,7 +83,7 @@ const quoteReplySchemaUpdate = z.object({
         .nullable(),
       status: z
         .enum(['pending', 'approved', 'rejected', 'success'], {
-          message: 'status must be one of pending, approved, rejected',
+          message: 'status must be one of pending, approved, rejected, success',
         })
         .optional(),
       rejectionReason: z
@@ -76,6 +96,7 @@ const quoteReplySchemaUpdate = z.object({
       path: [],
     }),
 });
+
 // Zod schema for updating QuotePost
 const updateQuotePostSchema = z
   .object({
@@ -93,6 +114,7 @@ const updateQuotePostSchema = z
     dangerousGoods: z.boolean().nullable().optional(),
     status: z.string().optional(),
     rejectionReason: z.array(z.string()).optional(),
+    acceptReason: z.string().nullable().optional(),
     fromPostalCode: z.string().nullable().optional(),
     toPostalCode: z.string().nullable().optional(),
     fromCity: z.string().nullable().optional(),
@@ -105,8 +127,26 @@ const updateQuotePostSchema = z
     toState: z.string().nullable().optional(),
     postMainCategory: z.string().uuid().nullable().optional(),
     postSubCategory: z.string().uuid().nullable().optional(),
-    shipmentType: z.string().nullable().optional(),
-    acceptReason: z.string().nullable().optional(),
+    shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
+    postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
+    serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
+    incoterm: z
+      .enum([
+        'EXW',
+        'FCA',
+        'FAS',
+        'FOB',
+        'CFR',
+        'CIF',
+        'CPT',
+        'CIP',
+        'DPU',
+        'DAP',
+        'DDP',
+      ])
+      .nullable()
+      .optional(),
+    incotermInfo: z.string().nullable().optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
     message: 'At least one field must be provided for update',

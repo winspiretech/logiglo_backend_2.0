@@ -92,6 +92,37 @@ model User {
   BlogComment            BlogComment[]
   RequestToConnect       RequestToConnect[]
 }
+// schema.prisma
+
+// Enums for the new fields
+enum PostType {
+  DOCS
+  NON_DOCS
+}
+
+enum ShipmentType {
+  SAMPLE
+  COMMERCIAL
+}
+
+enum ServiceType {
+  DTD    // Door to Door
+  SELF   // Self Drop & Self Pickup
+}
+
+enum IncotermType {
+  EXW
+  FCA
+  FAS
+  FOB
+  CFR
+  CIF
+  CPT
+  CIP
+  DPU
+  DAP
+  DDP
+}
 
 model ForumMainCategory {
   id          String             @id @default(uuid())
@@ -148,9 +179,15 @@ model QuotePost {
   toState          String?
   postMainCategory String?
   postSubCategory  String?
-  MainCategoryName String?
-  SubCategoryName  String?
-  shipmentType     String?
+
+  // New fields from the form
+  postType         PostType?          // Docs or Non-Docs
+  shipmentType     ShipmentType?      // Sample or Commercial
+  serviceType      ServiceType?       // Door to Door or Self Drop & Self Pickup
+  incoterm         IncotermType?      // Selected Incoterm (EXW, FOB, etc.)
+  incotermInfo     String?            // Description or info bound to the selected Incoterm
+
+  // Relations
   quoteReply       QuoteReply[]
   quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
   subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
@@ -182,7 +219,6 @@ model QuoteLike {
   user   User      @relation("UserToQuoteLike", fields: [userId], references: [id])
   post   QuotePost @relation("PostToQuoteLike", fields: [postId], references: [id])
 }
-
 model GeneralPost {
   id                      String             @id @default(uuid())
   title                   String
@@ -199,8 +235,7 @@ model GeneralPost {
   acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
-  MainCategoryName        String?
-  SubCategoryName         String?
+
   user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
   MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
   SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
