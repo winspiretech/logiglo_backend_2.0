@@ -66,7 +66,7 @@ app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 app.use('/api/data', dataRoute);
 app.use('/api/rating', ratingRoute);
 app.use('/api/blog/comment', commentRoute);
-app.use('/api/blog/category',blogCategory)
+app.use('/api/blog/category', blogCategory);
 
 // Root route
 app.get('/', (req, res) => {
