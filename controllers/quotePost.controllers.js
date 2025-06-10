@@ -60,8 +60,7 @@ module.exports.createQuotePost = async (req, res) => {
           ? { connect: { id: postSubCategory } }
           : undefined,
         name: user.name,
-        MainCategoryName: mainCategory ? mainCategory.name : null,
-        SubCategoryName: subCategory ? subCategory.name : null,
+
         ...data,
       },
     });

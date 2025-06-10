@@ -18,8 +18,13 @@ const { z } = require('zod');
 // Create a new GeneralPost
 module.exports.createGeneralPost = async (req, res) => {
   try {
-    const { userId, generalPostMainCategory, generalPostSubCategory, ...data } =
-      validateCreateGeneralPost(req.body);
+    const {
+      userId,
+      generalPostMainCategory,
+      generalPostSubCategory,
+      createdBy,
+      ...data
+    } = validateCreateGeneralPost(req.body);
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -52,15 +57,13 @@ module.exports.createGeneralPost = async (req, res) => {
     const newGeneralPost = await prisma.generalPost.create({
       data: {
         user: { connect: { id: userId } },
-        createdBy: user.name || null,
+        createdBy: createdBy || user.name || null,
         MainCategory: generalPostMainCategory
           ? { connect: { id: generalPostMainCategory } }
           : undefined,
         SubCategory: generalPostSubCategory
           ? { connect: { id: generalPostSubCategory } }
           : undefined,
-        MainCategoryName: mainCategory ? mainCategory.name : null,
-        SubCategoryName: subCategory ? subCategory.name : null,
         ...data,
       },
     });
@@ -75,6 +78,20 @@ module.exports.createGeneralPost = async (req, res) => {
         ),
       );
   } catch (error) {
+    // Handle Zod validation errors
+    if (error instanceof z.ZodError) {
+      console.error('Validation error in createGeneralPost:', error.errors);
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Invalid input data',
+            error.errors.map((err) => err.message).join(', '),
+          ),
+        );
+    }
+
     // Handle Prisma-specific errors
     if (error.code === 'P2003') {
       console.error(
@@ -141,7 +158,6 @@ module.exports.createGeneralPost = async (req, res) => {
       );
   }
 };
-
 // Create a new GeneralReply
 module.exports.createGeneralReply = async (req, res) => {
   try {

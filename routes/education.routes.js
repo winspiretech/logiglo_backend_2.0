@@ -22,7 +22,7 @@ const {
   createRequest,
   getAllRequests,
   updateRequestStatus,
-  getRequestById
+  getRequestById,
 } = require('../controllers/RequestToConnect.js');
 const router = express.Router();
 const { authenticateAdmin } = require('../middleware/authMiddleware.js');

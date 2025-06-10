@@ -136,10 +136,9 @@ const getRequestById = async (req, res) => {
   }
 };
 
-
 module.exports = {
   createRequest,
   getAllRequests,
   updateRequestStatus,
-  getRequestById
+  getRequestById,
 };
