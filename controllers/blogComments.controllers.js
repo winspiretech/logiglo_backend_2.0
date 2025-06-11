@@ -2,6 +2,7 @@ const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
 const BlogCommentSchema = require('../validation/blogComment.validation');
+const { sendEmail } = require('../utils/sendEmail');
 
 const createComment = async (req, res) => {
   try {
@@ -117,18 +118,29 @@ const approveOrRejectComment = async (req, res) => {
     if (!commentId) {
       throw new ApiError(404, 'Comment Id is required', 'Comment Id missing');
     }
+
     const { status } = req.body;
     if (!['accepted', 'rejected'].includes(status)) {
       throw new ApiError(401, 'Invalid status', 'Please send correct status');
     }
+
     const updatedComment = await prisma.blogComment.update({
-      where: {
-        id: commentId,
-      },
-      data: {
-        status: status,
+      where: { id: commentId },
+      data: { status },
+      include: {
+        parentComment: {
+          include: {
+            user: {
+              select: { name: true, email: true },
+            },
+          },
+        },
+        user: {
+          select: { name: true, email: true },
+        },
       },
     });
+
     if (!updatedComment) {
       throw new ApiError(
         500,
@@ -136,7 +148,55 @@ const approveOrRejectComment = async (req, res) => {
         'Something went wrong while updating the comment status',
       );
     }
-    res
+
+    const acceptedHtml = `
+      <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+        <h2 style="color: #2e6c80;">Your comment was ${status} by admin</h2>
+
+        <p><strong>Your comment:</strong></p>
+        <blockquote style="margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-left: 4px solid #ccc;">
+          ${updatedComment.comment}
+        </blockquote>
+
+        ${
+          status === 'accepted'
+            ? `<p style="color: green;">You can now see your comment on the website.</p>`
+            : `<p style="color: red;">Unfortunately, your comment was not approved.</p>`
+        }
+      </div>
+    `;
+
+    // await sendEmail({
+    //   to: updatedComment?.user?.email,
+    //   subject: `Update on your comment status`,
+    //   html: acceptedHtml,
+    // });
+
+    // if (status === 'accepted' && updatedComment.parentComment?.user?.email) {
+    //   const parentCommentHtml = `
+    //     <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
+    //       <h2 style="color: #2e6c80;">Your comment has a reply</h2>
+
+    //       <p><strong>Your comment:</strong></p>
+    //       <blockquote style="margin: 10px 0; padding: 10px; background-color: #f1f1f1; border-left: 4px solid #ccc;">
+    //         ${updatedComment.parentComment.comment || 'N/A'}
+    //       </blockquote>
+
+    //       <p><strong>Comment reply:</strong></p>
+    //       <blockquote style="margin: 10px 0; padding: 10px; background-color: #e9f7ef; border-left: 4px solid #28a745;">
+    //         ${updatedComment.comment || 'N/A'}
+    //       </blockquote>
+    //     </div>
+    //   `;
+
+    //   await sendEmail({
+    //     to: updatedComment.parentComment.user.email,
+    //     subject: `Your comment has a reply`,
+    //     html: parentCommentHtml,
+    //   });
+    // }
+
+    return res
       .status(200)
       .json(
         new ApiResponse(
@@ -148,13 +208,16 @@ const approveOrRejectComment = async (req, res) => {
   } catch (error) {
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
-    } else {
-      return res
-        .status(500)
-        .json(
-          new ApiError(500, 'Internal server error', error.message || null),
-        );
     }
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Internal server error',
+          error.message || 'Unknown error',
+        ),
+      );
   }
 };
 
@@ -188,8 +251,6 @@ const deleteCommentById = async (req, res) => {
       );
     }
 
-    console.log(commentToBeDeleted);
-
     if (commentToBeDeleted.userId !== userId) {
       throw new ApiError(
         401,
@@ -206,7 +267,6 @@ const deleteCommentById = async (req, res) => {
     });
 
     if (commentToBeDeleted.replies.length > 0) {
-      console.log('Hello');
       await prisma.blogComment.deleteMany({
         where: {
           parentId: commentId,

@@ -13,6 +13,8 @@ const landingPageMenuItemsRoutes = require('./routes/landingPageMenuItems.routes
 const dataRoute = require('./routes/data.routes.js');
 const ratingRoute = require('./routes/rating.routes.js');
 const commentRoute = require('./routes/blogComments.routes.js');
+const blogCategory = require('./routes/blogCategory.routes.js');
+const eventInterested = require('./routes/eventInterested.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -66,6 +68,8 @@ app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 app.use('/api/data', dataRoute);
 app.use('/api/rating', ratingRoute);
 app.use('/api/blog/comment', commentRoute);
+app.use('/api/blog/category', blogCategory);
+app.use('/api/event/interested', eventInterested);
 
 // Root route
 app.get('/', (req, res) => {

@@ -92,6 +92,7 @@ model User {
   BlogComment            BlogComment[]
   RequestToConnect       RequestToConnect[]
 }
+
 // schema.prisma
 
 // Enums for the new fields
@@ -106,8 +107,8 @@ enum ShipmentType {
 }
 
 enum ServiceType {
-  DTD    // Door to Door
-  SELF   // Self Drop & Self Pickup
+  DTD // Door to Door
+  SELF // Self Drop & Self Pickup
 }
 
 enum IncotermType {
@@ -146,13 +147,13 @@ model ForumSubCategory {
 }
 
 model QuotePost {
-  id               String             @id @default(uuid())
+  id               String    @id @default(uuid())
   title            String
   description      String
   userId           String
   name             String?
-  createdAt        DateTime?          @default(now())
-  updatedAt        DateTime?          @updatedAt
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @updatedAt
   totalNetWeight   Float?
   totalGrossWeight Float?
   volumetricWeight Float?
@@ -164,7 +165,7 @@ model QuotePost {
   likesCount       Int?
   commentsCount    Int?
   dangerousGoods   Boolean?
-  status           String?            @default("pending")
+  status           String?   @default("pending")
   rejectionReason  String[]
   acceptReason     String?
   fromPostalCode   String?
@@ -181,19 +182,19 @@ model QuotePost {
   postSubCategory  String?
 
   // New fields from the form
-  postType         PostType?          // Docs or Non-Docs
-  shipmentType     ShipmentType?      // Sample or Commercial
-  serviceType      ServiceType?       // Door to Door or Self Drop & Self Pickup
-  incoterm         IncotermType?      // Selected Incoterm (EXW, FOB, etc.)
-  incotermInfo     String?            // Description or info bound to the selected Incoterm
+  postType     PostType? // Docs or Non-Docs
+  shipmentType ShipmentType? // Sample or Commercial
+  serviceType  ServiceType? // Door to Door or Self Drop & Self Pickup
+  incoterm     IncotermType? // Selected Incoterm (EXW, FOB, etc.)
+  incotermInfo String? // Description or info bound to the selected Incoterm
 
   // Relations
-  quoteReply       QuoteReply[]
-  quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
-  subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
-  mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user             User               @relation(fields: [userId], references: [id])
-  notifications    Notification[]
+  quoteReply    QuoteReply[]
+  quoteLike     QuoteLike[]        @relation("PostToQuoteLike")
+  subCategory   ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
+  mainCategory  ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
+  user          User               @relation(fields: [userId], references: [id])
+  notifications Notification[]
 }
 
 model QuoteReply {
@@ -219,29 +220,30 @@ model QuoteLike {
   user   User      @relation("UserToQuoteLike", fields: [userId], references: [id])
   post   QuotePost @relation("PostToQuoteLike", fields: [postId], references: [id])
 }
+
 model GeneralPost {
-  id                      String             @id @default(uuid())
+  id                      String   @id @default(uuid())
   title                   String
   description             String
   userId                  String
   createdBy               String?
-  createdAt               DateTime           @default(now())
-  updatedAt               DateTime           @updatedAt
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
   viewCount               Int?
-  likesCount              Int?               @default(0)
-  commentsCount           Int?               @default(0)
-  status                  String?            @default("pending")
+  likesCount              Int?     @default(0)
+  commentsCount           Int?     @default(0)
+  status                  String?  @default("pending")
   rejectionReason         String[]
   acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
 
-  user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
-  MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
-  generalReply            GeneralReply[]
-  generalLike             GeneralLike[]      @relation("PostToGeneralLike")
-  notifications           Notification[]
+  user          User               @relation("UserToGeneralPost", fields: [userId], references: [id])
+  MainCategory  ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
+  SubCategory   ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  generalReply  GeneralReply[]
+  generalLike   GeneralLike[]      @relation("PostToGeneralLike")
+  notifications Notification[]
 }
 
 model GeneralReply {
@@ -310,6 +312,8 @@ model Event {
   notifications    Notification[]
   isArchived       Boolean        @default(false)
   unArchiveReasons String[]       @default([])
+  videoUrl         String
+  brochure         String
 }
 
 model BlogCategory {
@@ -377,7 +381,6 @@ model CourseEnquiry {
   notifications         Notification[]
   status                EnquiryStatus  @default(pending)
 }
-
 
 model CountriesData {
   id        Int          @id // Primary key
@@ -497,10 +500,10 @@ model RequestToConnect {
   email    String
   mobileNo String
 
-  message String? 
-  status  RequestStatus @default(PENDING) 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  message String?
+  status  RequestStatus @default(PENDING)
+  userId  String
+  user    User          @relation(fields: [userId], references: [id])
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id])
@@ -512,4 +515,13 @@ model RequestToConnect {
 enum RequestStatus {
   PENDING
   RESOLVED
+}
+
+model EventIntrested {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  mobileNo  String
+  email     String
+  createdAt DateTime @default(now())
 }
