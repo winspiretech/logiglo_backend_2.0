@@ -25,7 +25,6 @@ const sendEmail = async (mailOptions) => {
       from: mailOptions.from || defaultFrom,
       ...mailOptions,
     });
-    console.log('Email sent:', info.messageId);
     return info;
   } catch (error) {
     console.error('Error sending email:', error);
