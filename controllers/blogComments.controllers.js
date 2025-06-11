@@ -145,7 +145,7 @@ const approveOrRejectComment = async (req, res) => {
       throw new ApiError(
         500,
         'Internal server error',
-        'Something went wrong while updating the comment status'
+        'Something went wrong while updating the comment status',
       );
     }
 
@@ -196,16 +196,28 @@ const approveOrRejectComment = async (req, res) => {
     //   });
     // }
 
-    return res.status(200).json(
-      new ApiResponse(200, updatedComment, 'Comment status updated successfully')
-    );
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedComment,
+          'Comment status updated successfully',
+        ),
+      );
   } catch (error) {
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     }
-    return res.status(500).json(
-      new ApiError(500, 'Internal server error', error.message || 'Unknown error')
-    );
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Internal server error',
+          error.message || 'Unknown error',
+        ),
+      );
   }
 };
 

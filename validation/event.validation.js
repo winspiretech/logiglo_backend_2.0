@@ -14,7 +14,7 @@ const EventSchema = z
     endDate: z.coerce.date(),
     coverImages: z.array(z.string()).optional(),
     videoUrl: z.string(),
-    brochure : z.string() 
+    brochure: z.string(),
   })
   .refine((data) => data.endDate >= data.startDate, {
     message: 'End date must be after start date',
