@@ -39,6 +39,7 @@ const quotePostSchema = z.object({
   shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
   postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
   serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
+  viewCount: z.number().optional(),
   incoterm: z
     .enum([
       'EXW',
@@ -130,6 +131,7 @@ const updateQuotePostSchema = z
     shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
     postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
     serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
+    viewCount: z.number().optional(),
     incoterm: z
       .enum([
         'EXW',
