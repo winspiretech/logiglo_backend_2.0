@@ -700,11 +700,6 @@ module.exports.getDraftPosts = async (req, res) => {
         userId,
         status: 'draft',
       },
-      include: {
-        user: true,
-        MainCategory: true,
-        SubCategory: true,
-      },
     });
 
     return res
@@ -942,7 +937,12 @@ module.exports.getPostsByUserId = async (req, res) => {
     }
 
     const userPosts = await prisma.generalPost.findMany({
-      where: { userId },
+      where: {
+        userId,
+        status: {
+          not: 'draft',
+        },
+      },
       include: {
         user: {
           select: {
