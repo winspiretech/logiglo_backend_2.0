@@ -93,7 +93,7 @@ const getAllEventIntrested = async (req, res) => {
   }
 };
 
-const getInterestedDataByEventId = async (req,res) => {
+const getInterestedDataByEventId = async (req, res) => {
   try {
     const { eventId } = req.params;
     if (!eventId) {
@@ -134,6 +134,10 @@ const getInterestedDataByEventId = async (req,res) => {
         );
     }
   }
-}
+};
 
-module.exports = { createEventInterset, getAllEventIntrested, getInterestedDataByEventId };
+module.exports = {
+  createEventInterset,
+  getAllEventIntrested,
+  getInterestedDataByEventId,
+};
