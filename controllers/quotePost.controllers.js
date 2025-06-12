@@ -862,7 +862,12 @@ module.exports.getPostsByUserId = async (req, res) => {
     }
 
     const userPosts = await prisma.quotePost.findMany({
-      where: { userId },
+      where: {
+        userId,
+        status: {
+          not: 'draft',
+        },
+      },
       include: {
         mainCategory: true,
         subCategory: true,
