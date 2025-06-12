@@ -294,10 +294,10 @@ enum EventMode {
 }
 
 model Event {
-  id               String         @id @default(uuid())
+  id               String           @id @default(uuid())
   authorId         String
   coverImages      String[]
-  author           User           @relation(fields: [authorId], references: [id])
+  author           User             @relation(fields: [authorId], references: [id])
   eventTitle       String
   organizer        String
   countryCode      String?
@@ -308,12 +308,13 @@ model Event {
   location         String?
   startDate        DateTime
   endDate          DateTime
-  createdAt        DateTime       @default(now())
+  createdAt        DateTime         @default(now())
   notifications    Notification[]
-  isArchived       Boolean        @default(false)
-  unArchiveReasons String[]       @default([])
+  isArchived       Boolean          @default(false)
+  unArchiveReasons String[]         @default([])
   videoUrl         String
   brochure         String
+  EventIntrested   EventIntrested[]
 }
 
 model BlogCategory {
@@ -524,4 +525,6 @@ model EventIntrested {
   mobileNo  String
   email     String
   createdAt DateTime @default(now())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id])
 }

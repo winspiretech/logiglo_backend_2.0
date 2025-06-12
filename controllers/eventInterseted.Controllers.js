@@ -5,6 +5,10 @@ const eventInterseted = require('../validation/eventInterested.validation');
 
 const createEventInterset = async (req, res) => {
   try {
+    const { eventId } = req.params;
+    if (!eventId) {
+      throw new ApiError(404, 'Event Id required', 'Please send the Event Id');
+    }
     const eventInterestValidation = eventInterseted.safeParse(req.body);
     if (!eventInterestValidation.success) {
       throw new ApiError(
@@ -19,7 +23,8 @@ const createEventInterset = async (req, res) => {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         mobileNo: mobileNo.trim(),
-        email: email.trim().toLowerCase(),
+        email: email.trim(),
+        eventId: eventId,
       },
     });
     if (!createdEventInterest) {

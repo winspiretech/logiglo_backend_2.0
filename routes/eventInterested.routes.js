@@ -8,6 +8,6 @@ const isAdmin = require('../middleware/isAdmin.js');
 const { isUserLoggedIn } = require('../middleware/isUserLoggedIn.js');
 
 router.get('/all-data', isAdmin, getAllEventIntrested);
-router.post('/create', isUserLoggedIn, createEventInterset);
+router.post('/create/:eventId', isUserLoggedIn, createEventInterset);
 
 module.exports = router;
