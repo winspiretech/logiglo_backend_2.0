@@ -923,7 +923,16 @@ module.exports.getRepliesByPostId = async (req, res) => {
     }
 
     const replies = await prisma.quoteReply.findMany({
-      where: { postId },
+      where: { postId, status: 'success' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
 
     return res
