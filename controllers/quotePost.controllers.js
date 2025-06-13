@@ -321,7 +321,7 @@ module.exports.createQuoteLike = async (req, res) => {
   }
 };
 
-// Update an existing QuotePost
+// quotePost.controllers.js
 module.exports.updateQuotePost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateQuotePost(req.params, req.body);
@@ -379,7 +379,7 @@ module.exports.updateQuotePost = async (req, res) => {
     // Log updateData after processing
     console.log('updateData after processing:', updateData);
 
-    // Filter out undefined values to prevent Prisma from setting fields to null
+    // Filter out undefined values and include viewCount
     const filteredUpdateData = Object.fromEntries(
       Object.entries({
         updatedAt: new Date(), // Update the timestamp
@@ -393,7 +393,8 @@ module.exports.updateQuotePost = async (req, res) => {
         width: updateData.width ?? post.width,
         height: updateData.height ?? post.height,
         length: updateData.length ?? post.length,
-        fromPostalCode: updateData.fromPostalCode ?? post.fromPostalCode,
+        fromPostalCode:
+          updateData.fromPostalCodeoitermInfo ?? post.fromPostalCode,
         toPostalCode: updateData.toPostalCode ?? post.toPostalCode,
         fromCity: updateData.fromCity ?? post.fromCity,
         toCity: updateData.toCity ?? post.toCity,
@@ -413,6 +414,7 @@ module.exports.updateQuotePost = async (req, res) => {
         status: updateData.status ?? post.status,
         rejectionReason: updateData.rejectionReason ?? post.rejectionReason,
         acceptReason: updateData.acceptReason ?? post.acceptReason,
+        viewCount: updateData.viewCount ?? post.viewCount, // Include viewCount
       }).filter(([_, value]) => value !== undefined),
     );
 
@@ -921,7 +923,16 @@ module.exports.getRepliesByPostId = async (req, res) => {
     }
 
     const replies = await prisma.quoteReply.findMany({
-      where: { postId },
+      where: { postId, status: 'success' },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
 
     return res
