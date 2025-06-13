@@ -159,6 +159,16 @@ const deleteBlogCategory = async (req, res) => {
       );
     }
 
+    const blogsOnTheGivenCategory = await prisma.blog.findFirst({
+      where : {
+        categoryId : categoryId
+      }
+    });
+
+    if(blogsOnTheGivenCategory){
+      throw new ApiError(401,"This category is used in existing blogs and cannot be deleted","Cannot delete category");
+    }
+
     const deletedCategory = await prisma.blogCategory.delete({
       where: {
         id: categoryId,
