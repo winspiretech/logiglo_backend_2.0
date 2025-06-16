@@ -15,6 +15,7 @@ const ratingRoute = require('./routes/rating.routes.js');
 const commentRoute = require('./routes/blogComments.routes.js');
 const blogCategory = require('./routes/blogCategory.routes.js');
 const eventInterested = require('./routes/eventInterested.routes.js');
+const contactUs = require('./routes/contactUs.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -70,6 +71,7 @@ app.use('/api/rating', ratingRoute);
 app.use('/api/blog/comment', commentRoute);
 app.use('/api/blog/category', blogCategory);
 app.use('/api/event/interested', eventInterested);
+app.use('/api/contact-us', contactUs);
 
 // Root route
 app.get('/', (req, res) => {
