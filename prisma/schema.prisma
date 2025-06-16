@@ -550,3 +550,13 @@ model EventIntrested {
   eventId   String
   event     Event    @relation(fields: [eventId], references: [id])
 }
+
+model ContactUs{
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phoneNo   String
+  city      String
+  message   String
+  createdAt DateTime @default(now())
+}

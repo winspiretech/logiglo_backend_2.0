@@ -7,22 +7,22 @@ const JWT_SECRET = process.env.TOKEN_SECRET;
 const isUserLoggedIn = async (req, res, next) => {
   try {
     const token = req.cookies['Token'];
-    const authHeader = req.headers['authorization'];
-    if (!token && (!authHeader || !authHeader.startsWith('Bearer '))) {
-      throw new ApiError(401, 'Unauthorized. No token found.');
-    }
-    let decodedData = null;
 
-    if (authHeader) {
-      decodedData = jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
-    } else if (token) {
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized. No token found in cookies.',
+      });
+    }
+
+    let decodedData;
+    try {
       decodedData = jwt.verify(token, JWT_SECRET);
-    } else {
-      throw new ApiError(401, 'Unauthorized. No token found.');
-    }
-
-    if (!decodedData) {
-      throw new ApiError(401, 'Unauthorized. No token found.');
+    } catch (err) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid or expired token.',
+      });
     }
 
     const loggedInUser = await prisma.user.findFirst({
@@ -32,17 +32,22 @@ const isUserLoggedIn = async (req, res, next) => {
     });
 
     if (!loggedInUser) {
-      throw new ApiError(401, 'Unauthorized. User mot found');
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized. User not found.',
+      });
     }
-    const { password, ...restOfData } = loggedInUser;
-    req.loggedInUser = restOfData;
+
+    const { password, ...userWithoutPassword } = loggedInUser;
+    req.loggedInUser = userWithoutPassword;
+
     next();
   } catch (error) {
-    if (error instanceof ApiError) {
-      return res.status(error.statusCode).json(error);
-    }
-    console.error(error);
-    return res.status(401).json(error);
+    console.error('Auth Middleware Error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error in auth middleware.',
+    });
   }
 };
 

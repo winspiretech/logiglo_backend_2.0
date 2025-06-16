@@ -101,8 +101,6 @@ const getCourseModules = async (req, res) => {
       where: { id: courseId },
     });
 
-    console.log(course);
-
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
