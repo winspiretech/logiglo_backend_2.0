@@ -77,7 +77,7 @@ const loginUser = async (req, res, next) => {
       },
       process.env.TOKEN_SECRET,
       {
-        expiresIn: '60s',
+        expiresIn: '7d',
       },
     );
 
