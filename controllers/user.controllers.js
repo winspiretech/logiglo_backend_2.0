@@ -75,12 +75,12 @@ const loginUser = async (req, res, next) => {
       { expiresIn: '7d' },
     );
 
-    const isProduction = process.env.NODE_ENV === 'production';
+    // const isProduction = process.env.NODE_ENV === 'production';
 
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction, // true on production, false on localhost
-      sameSite: isProduction ? 'None' : 'Lax', // 'None' for cross-origin, 'Lax' for local dev
+      secure: true, // ✅ required for HTTPS
+      sameSite: 'None', // ✅ required for cross-origin
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     };
