@@ -72,15 +72,15 @@ const loginUser = async (req, res, next) => {
         email: existingUser.email,
       },
       process.env.TOKEN_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '7d' },
     );
 
     const isProduction = process.env.NODE_ENV === 'production';
 
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction,           // true on production, false on localhost
-      sameSite: isProduction ? 'None' : 'Lax',  // 'None' for cross-origin, 'Lax' for local dev
+      secure: isProduction, // true on production, false on localhost
+      sameSite: isProduction ? 'None' : 'Lax', // 'None' for cross-origin, 'Lax' for local dev
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     };
@@ -98,7 +98,9 @@ const loginUser = async (req, res, next) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
@@ -123,11 +125,12 @@ const logoutUser = async (req, res, next) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
-
 
 const getUsers = async (req, res, next) => {
   try {
