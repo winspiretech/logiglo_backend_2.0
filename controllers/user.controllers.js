@@ -44,7 +44,6 @@ const signupController = async (req, res, next) => {
     }
   }
 };
-
 const loginUser = async (req, res, next) => {
   try {
     const { email, password: pass } = req.body;
@@ -53,19 +52,16 @@ const loginUser = async (req, res, next) => {
     }
 
     const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
+      where: { email },
     });
 
     if (!existingUser) {
       throw new ApiError(404, 'User not found');
     }
 
-    // Move destructuring *after* checking if user exists
     const { password, ...userData } = existingUser;
 
-    const comparedPassword = await bcrypt.compare(pass, existingUser.password);
+    const comparedPassword = await bcrypt.compare(pass, password);
     if (!comparedPassword) {
       throw new ApiError(401, 'Invalid credentials');
     }
@@ -76,25 +72,15 @@ const loginUser = async (req, res, next) => {
         email: existingUser.email,
       },
       process.env.TOKEN_SECRET,
-      {
-        expiresIn: '7d',
-      },
+      { expiresIn: '7d' }
     );
 
     const isProduction = process.env.NODE_ENV === 'production';
 
-    let options = {
-      //httpOnly: true,
-      //secure: isProduction,       // false in dev, true in production
-      //sameSite: 'Lax',            // Lax is good balance between safety and usability
-      //maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    const cookieOptions = {
       httpOnly: true,
-      //secure: true,// -- for https
-      //sameSite: 'None',// -- for https
-      sameSite: 'Lax', // -- localhost on both sides
-      //sameSite:'Strict',
-      //partitioned:true,
-      // secure:false,
+      secure: isProduction,           // true on production, false on localhost
+      sameSite: isProduction ? 'None' : 'Lax',  // 'None' for cross-origin, 'Lax' for local dev
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     };
@@ -102,7 +88,7 @@ const loginUser = async (req, res, next) => {
     const data = { ...userData, token };
 
     res
-      .cookie('Token', token, options)
+      .cookie('Token', token, cookieOptions)
       .status(200)
       .json(new ApiResponse(200, data, 'User logged in successfully'));
   } catch (error) {
@@ -112,32 +98,36 @@ const loginUser = async (req, res, next) => {
     } else {
       return res
         .status(500)
-        .json(
-          new ApiError(500, 'Internal server error', error.message || null),
-        );
+        .json(new ApiError(500, 'Internal server error', error.message || null));
     }
   }
 };
 
 const logoutUser = async (req, res, next) => {
   try {
+    const isProduction = process.env.NODE_ENV === 'production';
+
     res
-      .clearCookie('Token')
+      .clearCookie('Token', {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
+        path: '/', // Must match path used in login
+      })
       .status(200)
       .json(new ApiResponse(200, null, 'User logged out successfully'));
   } catch (error) {
-    console.log(error.message || 'Something went wrong in User login');
+    console.log(error.message || 'Something went wrong in User logout');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
       return res
         .status(500)
-        .json(
-          new ApiError(500, 'Internal server error', error.message || null),
-        );
+        .json(new ApiError(500, 'Internal server error', error.message || null));
     }
   }
 };
+
 
 const getUsers = async (req, res, next) => {
   try {
