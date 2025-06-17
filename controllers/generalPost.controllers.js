@@ -12,6 +12,14 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
+const {
+  generalReplyRejectedTemplate,
+  generalReplyAcceptedTemplate,
+  generalPostAcceptedTemplate,
+  generalPostRejectedTemplate,
+  generalPostCreatedTemplate,
+} = require('../utils/emailTemplates');
+const { notifyUser } = require('./notification.controller');
 
 // --- Creation Functions ---
 
@@ -26,13 +34,14 @@ module.exports.createGeneralPost = async (req, res) => {
       ...data
     } = validateCreateGeneralPost(req.body);
 
-    // Verify user exists
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true },
+    });
     if (!user) {
       throw new ApiError(404, 'User not found');
     }
 
-    // Verify main category exists if provided
     let mainCategory = null;
     if (generalPostMainCategory) {
       mainCategory = await prisma.forumMainCategory.findUnique({
@@ -43,7 +52,6 @@ module.exports.createGeneralPost = async (req, res) => {
       }
     }
 
-    // Verify subcategory exists if provided
     let subCategory = null;
     if (generalPostSubCategory) {
       subCategory = await prisma.forumSubCategory.findUnique({
@@ -57,7 +65,7 @@ module.exports.createGeneralPost = async (req, res) => {
     const newGeneralPost = await prisma.generalPost.create({
       data: {
         user: { connect: { id: userId } },
-        createdBy: createdBy || user.name || null,
+        createdBy: createdBy || null,
         MainCategory: generalPostMainCategory
           ? { connect: { id: generalPostMainCategory } }
           : undefined,
@@ -67,6 +75,22 @@ module.exports.createGeneralPost = async (req, res) => {
         ...data,
       },
     });
+
+    // Send notification for post creation
+    const notificationType = 'GENERAL_POST_CREATED';
+    const emailTemplate = generalPostCreatedTemplate(newGeneralPost);
+    console.log('Sending notification:', {
+      userId,
+      notificationType,
+      postId: newGeneralPost.id,
+      emailTemplate,
+    });
+    await notifyUser(
+      userId,
+      notificationType,
+      { postId: newGeneralPost.id },
+      emailTemplate,
+    );
 
     return res
       .status(201)
@@ -78,9 +102,8 @@ module.exports.createGeneralPost = async (req, res) => {
         ),
       );
   } catch (error) {
-    // Handle Zod validation errors
+    console.error('Error in createGeneralPost:', error);
     if (error instanceof z.ZodError) {
-      console.error('Validation error in createGeneralPost:', error.errors);
       return res
         .status(400)
         .json(
@@ -91,13 +114,7 @@ module.exports.createGeneralPost = async (req, res) => {
           ),
         );
     }
-
-    // Handle Prisma-specific errors
     if (error.code === 'P2003') {
-      console.error(
-        `Error in createGeneralPost - Foreign key constraint failed:`,
-        error,
-      );
       return res
         .status(404)
         .json(
@@ -109,10 +126,6 @@ module.exports.createGeneralPost = async (req, res) => {
         );
     }
     if (error.code === 'P2002') {
-      console.error(
-        `Error in createGeneralPost - Unique constraint violation:`,
-        error,
-      );
       return res
         .status(409)
         .json(
@@ -124,10 +137,6 @@ module.exports.createGeneralPost = async (req, res) => {
         );
     }
     if (error.code === 'P2011') {
-      console.error(
-        `Error in createGeneralPost - Null constraint violation:`,
-        error,
-      );
       return res
         .status(400)
         .json(
@@ -138,15 +147,9 @@ module.exports.createGeneralPost = async (req, res) => {
           ),
         );
     }
-
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      console.error(`Error in createGeneralPost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
-    console.error('Error in createGeneralPost - Unexpected error:', error);
     return res
       .status(500)
       .json(
@@ -158,6 +161,7 @@ module.exports.createGeneralPost = async (req, res) => {
       );
   }
 };
+
 // Create a new GeneralReply
 module.exports.createGeneralReply = async (req, res) => {
   try {
@@ -423,13 +427,13 @@ module.exports.updateGeneralPost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateGeneralPost(req.params, req.body);
 
-    // Verify post exists
     const post = await prisma.generalPost.findUnique({ where: { id: postId } });
     if (!post) {
       throw new ApiError(404, 'GeneralPost not found');
     }
 
-    // Verify main category exists if provided
+    const updateData = { ...data };
+
     if (data.generalPostMainCategory) {
       const mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: data.generalPostMainCategory },
@@ -437,11 +441,12 @@ module.exports.updateGeneralPost = async (req, res) => {
       if (!mainCategory) {
         throw new ApiError(404, 'Main category not found');
       }
-      data.MainCategory = { connect: { id: data.generalPostMainCategory } };
-      delete data.generalPostMainCategory;
+      updateData.MainCategory = {
+        connect: { id: data.generalPostMainCategory },
+      };
+      delete updateData.generalPostMainCategory;
     }
 
-    // Verify subcategory exists if provided
     if (data.generalPostSubCategory) {
       const subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: data.generalPostSubCategory },
@@ -449,14 +454,58 @@ module.exports.updateGeneralPost = async (req, res) => {
       if (!subCategory) {
         throw new ApiError(404, 'Subcategory not found');
       }
-      data.SubCategory = { connect: { id: data.generalPostSubCategory } };
-      delete data.generalPostSubCategory;
+      updateData.SubCategory = { connect: { id: data.generalPostSubCategory } };
+      delete updateData.generalPostSubCategory;
     }
+
+    const filteredUpdateData = Object.fromEntries(
+      Object.entries({
+        updatedAt: new Date(),
+        title: updateData.title ?? post.title,
+        description: updateData.description ?? post.description,
+        MainCategory: updateData.MainCategory,
+        SubCategory: updateData.SubCategory,
+        status: updateData.status ?? post.status,
+        rejectionReason: updateData.rejectionReason ?? post.rejectionReason,
+        createdBy: updateData.createdBy ?? post.createdBy,
+      }).filter(([_, value]) => value !== undefined),
+    );
 
     const updatedPost = await prisma.generalPost.update({
       where: { id: postId },
-      data,
+      data: filteredUpdateData,
     });
+
+    if (
+      filteredUpdateData.status &&
+      filteredUpdateData.status !== post.status
+    ) {
+      const userId = post.userId;
+      let emailTemplate = null;
+      let notificationType = null;
+
+      if (filteredUpdateData.status === 'success') {
+        notificationType = 'GENERAL_POST_ACCEPTED';
+        emailTemplate = generalPostAcceptedTemplate(updatedPost, {
+          name: post.createdBy,
+        });
+      } else if (filteredUpdateData.status === 'rejected') {
+        notificationType = 'GENERAL_POST_REJECTED';
+        emailTemplate = generalPostRejectedTemplate(updatedPost, {
+          name: post.createdBy,
+        });
+      }
+
+      if (notificationType && emailTemplate) {
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          postId,
+          emailTemplate,
+        });
+        await notifyUser(userId, notificationType, { postId }, emailTemplate);
+      }
+    }
 
     return res
       .status(200)
@@ -464,7 +513,6 @@ module.exports.updateGeneralPost = async (req, res) => {
         new ApiResponse(200, updatedPost, 'GeneralPost updated successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
     if (error.code === 'P2025') {
       console.error(
         `Error in updateGeneralPost - Record not found for update:`,
@@ -519,14 +567,10 @@ module.exports.updateGeneralPost = async (req, res) => {
           ),
         );
     }
-
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
       console.error(`Error in updateGeneralPost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
     console.error('Error in updateGeneralPost - Unexpected error:', error);
     return res
       .status(500)
@@ -560,7 +604,6 @@ const updateGeneralReplySchema = z.object({
 
 module.exports.updateGeneralReply = async (req, res) => {
   try {
-    // Validate input data
     const parseResult = updateGeneralReplySchema.safeParse({
       params: req.params,
       body: req.body,
@@ -572,18 +615,29 @@ module.exports.updateGeneralReply = async (req, res) => {
     const { replyId } = parseResult.data.params;
     const { postId, parentReplyId, ...data } = parseResult.data.body;
 
-    // Verify reply exists
     const reply = await prisma.generalReply.findUnique({
       where: { id: replyId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+          },
+        },
+        post: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
     });
     if (!reply) {
       throw new ApiError(404, 'GeneralReply not found');
     }
 
-    // Prepare update data
     const updateData = { ...data };
 
-    // Verify post exists if postId is provided
     if (postId) {
       const post = await prisma.generalPost.findUnique({
         where: { id: postId },
@@ -594,7 +648,6 @@ module.exports.updateGeneralReply = async (req, res) => {
       updateData.post = { connect: { id: postId } };
     }
 
-    // Verify parent reply exists if parentReplyId is provided
     if (parentReplyId) {
       const parentReply = await prisma.generalReply.findUnique({
         where: { id: parentReplyId },
@@ -607,11 +660,56 @@ module.exports.updateGeneralReply = async (req, res) => {
       updateData.parentReply = { disconnect: true };
     }
 
-    // Update the reply
     const updatedReply = await prisma.generalReply.update({
       where: { id: replyId },
       data: updateData,
     });
+
+    if (updateData.status && updateData.status !== reply.status) {
+      const userId = reply.userId;
+      let emailTemplate = null;
+      let notificationType = null;
+
+      if (!reply.user || !reply.post) {
+        console.warn(
+          `Missing data for GeneralReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`,
+        );
+      } else {
+        if (updateData.status === 'success') {
+          notificationType = 'GENERAL_REPLY_ACCEPTED';
+          emailTemplate = generalReplyAcceptedTemplate(
+            updatedReply,
+            reply.post,
+          );
+        } else if (updateData.status === 'rejected') {
+          notificationType = 'GENERAL_REPLY_REJECTED';
+          emailTemplate = generalReplyRejectedTemplate(
+            updatedReply,
+            reply.post,
+          );
+        }
+      }
+
+      if (notificationType && emailTemplate) {
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          replyId,
+          emailTemplate,
+        });
+        await notifyUser(userId, notificationType, { replyId }, emailTemplate);
+      } else {
+        console.log(
+          'Notification not sent: invalid type, template, or missing data',
+          {
+            notificationType,
+            emailTemplate,
+            userId,
+            replyId,
+          },
+        );
+      }
+    }
 
     return res
       .status(200)
@@ -619,15 +717,13 @@ module.exports.updateGeneralReply = async (req, res) => {
         new ApiResponse(200, updatedReply, 'GeneralReply updated successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
+    console.error('Error in updateGeneralReply:', error);
     if (error.code === 'P2025') {
-      console.error('Record not found for update:', error);
       return res
         .status(404)
         .json(new ApiError(404, 'GeneralReply not found', error.message));
     }
     if (error.code === 'P2003') {
-      console.error('Foreign key constraint failed:', error);
       return res
         .status(404)
         .json(
@@ -639,7 +735,6 @@ module.exports.updateGeneralReply = async (req, res) => {
         );
     }
     if (error.code === 'P2002') {
-      console.error('Unique constraint violation:', error);
       return res
         .status(409)
         .json(
@@ -651,7 +746,6 @@ module.exports.updateGeneralReply = async (req, res) => {
         );
     }
     if (error.code === 'P2011') {
-      console.error('Null constraint violation:', error);
       return res
         .status(400)
         .json(
@@ -662,15 +756,9 @@ module.exports.updateGeneralReply = async (req, res) => {
           ),
         );
     }
-
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      console.error(`Error in updateGeneralReply: ${error.message}`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
-    console.error('Unexpected error in updateGeneralReply:', error);
     return res
       .status(500)
       .json(
@@ -682,6 +770,7 @@ module.exports.updateGeneralReply = async (req, res) => {
       );
   }
 };
+
 // --- General Fetching Functions ---
 
 // Fetch draft GeneralPosts for a specific user

@@ -12,6 +12,14 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
+const {
+  quotePostAcceptedTemplate,
+  quotePostRejectedTemplate,
+  quotePostCreatedTemplate,
+  quoteReplyAcceptedTemplate,
+  quoteReplyRejectedTemplate,
+} = require('../utils/emailTemplates');
+const { notifyUser } = require('./notification.controller.js');
 const incotermDescriptions = {
   EXW: 'Seller delivers when goods are placed at the disposal of the buyer, not cleared for export and not loaded on any collecting vehicle.',
   FCA: 'Seller delivers the goods, cleared for export, to the carrier nominated by the buyer at the named place.',
@@ -33,19 +41,16 @@ module.exports.createQuotePost = async (req, res) => {
   try {
     const validatedData = validateCreateQuotePost(req.body);
 
-    // Log the validated data to debug
     console.log('Validated data for createQuotePost:', validatedData);
 
     const { userId, postMainCategory, postSubCategory, ...data } =
       validatedData;
 
-    // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       throw new ApiError(404, 'User not found');
     }
 
-    // Verify main category exists if provided
     let mainCategory = null;
     if (postMainCategory) {
       mainCategory = await prisma.forumMainCategory.findUnique({
@@ -56,7 +61,6 @@ module.exports.createQuotePost = async (req, res) => {
       }
     }
 
-    // Verify subcategory exists if provided
     let subCategory = null;
     if (postSubCategory) {
       subCategory = await prisma.forumSubCategory.findUnique({
@@ -67,7 +71,6 @@ module.exports.createQuotePost = async (req, res) => {
       }
     }
 
-    // Bind Incoterm description if Incoterm is provided
     if (data.incoterm) {
       const incotermInfo = incotermDescriptions[data.incoterm];
       if (!incotermInfo) {
@@ -76,7 +79,6 @@ module.exports.createQuotePost = async (req, res) => {
       data.incotermInfo = incotermInfo;
     }
 
-    // Log the data before creating the post
     console.log('Data to create QuotePost:', data);
 
     const newQuotePost = await prisma.quotePost.create({
@@ -93,13 +95,30 @@ module.exports.createQuotePost = async (req, res) => {
       },
     });
 
+    // Send notification for post creation
+    const notificationType = 'QUOTE_POST_CREATED';
+    const emailTemplate = quotePostCreatedTemplate(newQuotePost, {
+      name: user.name,
+    });
+    console.log('Sending notification:', {
+      userId,
+      notificationType,
+      postId: newQuotePost.id,
+      emailTemplate,
+    });
+    await notifyUser(
+      userId,
+      notificationType,
+      { postId: newQuotePost.id },
+      emailTemplate,
+    );
+
     return res
       .status(201)
       .json(
         new ApiResponse(201, newQuotePost, 'QuotePost created successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
     if (error.code === 'P2003') {
       console.error(
         `Error in createQuotePost - Foreign key constraint failed:`,
@@ -115,14 +134,10 @@ module.exports.createQuotePost = async (req, res) => {
           ),
         );
     }
-
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
       console.error(`Error in createQuotePost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
     console.error('Error in createQuotePost - Unexpected error:', error);
     return res
       .status(500)
@@ -321,7 +336,6 @@ module.exports.createQuoteLike = async (req, res) => {
   }
 };
 
-// quotePost.controllers.js
 module.exports.updateQuotePost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateQuotePost(req.params, req.body);
@@ -393,8 +407,7 @@ module.exports.updateQuotePost = async (req, res) => {
         width: updateData.width ?? post.width,
         height: updateData.height ?? post.height,
         length: updateData.length ?? post.length,
-        fromPostalCode:
-          updateData.fromPostalCodeoitermInfo ?? post.fromPostalCode,
+        fromPostalCode: updateData.fromPostalCode ?? post.fromPostalCode,
         toPostalCode: updateData.toPostalCode ?? post.toPostalCode,
         fromCity: updateData.fromCity ?? post.fromCity,
         toCity: updateData.toCity ?? post.toCity,
@@ -421,10 +434,37 @@ module.exports.updateQuotePost = async (req, res) => {
     // Log the filtered update data
     console.log('filteredUpdateData:', filteredUpdateData);
 
+    // Update the post
     const updatedPost = await prisma.quotePost.update({
       where: { id: postId },
       data: filteredUpdateData,
     });
+
+    // Check if status has changed to 'success' or 'rejected' and send notification
+    if (
+      filteredUpdateData.status &&
+      filteredUpdateData.status !== post.status
+    ) {
+      const userId = post.userId;
+      let emailTemplate = null;
+      let notificationType = null;
+
+      if (filteredUpdateData.status === 'success') {
+        notificationType = 'QUOTE_POST_ACCEPTED';
+        emailTemplate = quotePostAcceptedTemplate(updatedPost, {
+          name: post.name,
+        });
+      } else if (filteredUpdateData.status === 'rejected') {
+        notificationType = 'QUOTE_POST_REJECTED';
+        emailTemplate = quotePostRejectedTemplate(updatedPost, {
+          name: post.name,
+        });
+      }
+
+      if (notificationType && emailTemplate) {
+        await notifyUser(userId, notificationType, { postId }, emailTemplate);
+      }
+    }
 
     return res
       .status(200)
@@ -496,10 +536,10 @@ const updateQuoteReplySchema = z.object({
 });
 
 // Update QuoteReply
+
 module.exports.updateQuoteReply = async (req, res) => {
   try {
-    // Validate input data
-    const parseResult = updateQuoteReplySchema.safeParse({
+    const parseResult = quoteReplySchemaUpdate.safeParse({
       params: req.params,
       body: req.body,
     });
@@ -510,27 +550,39 @@ module.exports.updateQuoteReply = async (req, res) => {
     const { replyId } = parseResult.data.params;
     const { postId, parentReplyId, ...data } = parseResult.data.body;
 
-    // Verify reply exists
     const reply = await prisma.quoteReply.findUnique({
       where: { id: replyId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+          },
+        },
+        post: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
     });
     if (!reply) {
       throw new ApiError(404, 'QuoteReply not found');
     }
 
-    // Prepare update data
     const updateData = { ...data };
 
-    // Verify post exists if postId is provided
     if (postId) {
-      const post = await prisma.quotePost.findUnique({ where: { id: postId } });
+      const post = await prisma.quotePost.findUnique({
+        where: { id: postId },
+      });
       if (!post) {
         throw new ApiError(404, 'QuotePost not found');
       }
       updateData.post = { connect: { id: postId } };
     }
 
-    // Verify parent reply exists if parentReplyId is provided
     if (parentReplyId) {
       const parentReply = await prisma.quoteReply.findUnique({
         where: { id: parentReplyId },
@@ -543,11 +595,50 @@ module.exports.updateQuoteReply = async (req, res) => {
       updateData.parentReply = { disconnect: true };
     }
 
-    // Update the reply
     const updatedReply = await prisma.quoteReply.update({
       where: { id: replyId },
       data: updateData,
     });
+
+    if (updateData.status && updateData.status !== reply.status) {
+      const userId = reply.userId;
+      let emailTemplate = null;
+      let notificationType = null;
+
+      if (!reply.user || !reply.post) {
+        console.warn(
+          `Missing data for QuoteReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`,
+        );
+      } else {
+        if (updateData.status === 'success') {
+          notificationType = 'QUOTE_REPLY_ACCEPTED';
+          emailTemplate = quoteReplyAcceptedTemplate(updatedReply, reply.post);
+        } else if (updateData.status === 'rejected') {
+          notificationType = 'QUOTE_REPLY_REJECTED';
+          emailTemplate = quoteReplyRejectedTemplate(updatedReply, reply.post);
+        }
+      }
+
+      if (notificationType && emailTemplate) {
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          replyId,
+          emailTemplate,
+        });
+        await notifyUser(userId, notificationType, { replyId }, emailTemplate);
+      } else {
+        console.log(
+          'Notification not sent: invalid type, template, or missing data',
+          {
+            notificationType,
+            emailTemplate,
+            userId,
+            replyId,
+          },
+        );
+      }
+    }
 
     return res
       .status(200)
@@ -555,15 +646,13 @@ module.exports.updateQuoteReply = async (req, res) => {
         new ApiResponse(200, updatedReply, 'QuoteReply updated successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
+    console.error('Error in updateQuoteReply:', error);
     if (error.code === 'P2025') {
-      console.error('Record not found for update:', error);
       return res
         .status(404)
         .json(new ApiError(404, 'QuoteReply not found', error.message));
     }
     if (error.code === 'P2003') {
-      console.error('Foreign key constraint failed:', error);
       return res
         .status(404)
         .json(
@@ -575,7 +664,6 @@ module.exports.updateQuoteReply = async (req, res) => {
         );
     }
     if (error.code === 'P2002') {
-      console.error('Unique constraint violation:', error);
       return res
         .status(409)
         .json(
@@ -587,7 +675,6 @@ module.exports.updateQuoteReply = async (req, res) => {
         );
     }
     if (error.code === 'P2011') {
-      console.error('Null constraint violation:', error);
       return res
         .status(400)
         .json(
@@ -598,15 +685,9 @@ module.exports.updateQuoteReply = async (req, res) => {
           ),
         );
     }
-
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
-      console.error(`Error in updateQuoteReply: ${error.message}`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
-    console.error('Unexpected error in updateQuoteReply:', error);
     return res
       .status(500)
       .json(

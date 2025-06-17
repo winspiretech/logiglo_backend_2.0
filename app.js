@@ -65,7 +65,7 @@ app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
 app.use('/api/event', eventRoute);
 app.use('/api/education', educationRoute);
-app.use('/api/notifications', notificationRoutes);
+app.use('/api/notification', notificationRoutes);
 app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 app.use('/api/data', dataRoute);
 app.use('/api/rating', ratingRoute);

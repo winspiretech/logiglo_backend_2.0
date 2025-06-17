@@ -87,7 +87,7 @@ model User {
   Course                 Course[]
   Event                  Event[]
   receivedNotifications  Notification[]     @relation("RecipientNotifications")
-  triggeredNotifications Notification[]     @relation("TriggeredNotifications")
+  notificationPreferences UserNotificationPreference?
   Rating                 Rating[]
   BlogComment            BlogComment[]
   RequestToConnect       RequestToConnect[]
@@ -194,7 +194,7 @@ model QuotePost {
   subCategory   ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
   mainCategory  ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
   user          User               @relation(fields: [userId], references: [id])
-  notifications Notification[]
+
 }
 
 model QuoteReply {
@@ -210,7 +210,7 @@ model QuoteReply {
   post            QuotePost      @relation(fields: [postId], references: [id], onDelete: Cascade)
   parentReply     QuoteReply?    @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
   childReplies    QuoteReply[]   @relation("QuoteReplyToReply")
-  notifications   Notification[]
+
 }
 
 model QuoteLike {
@@ -243,7 +243,7 @@ model GeneralPost {
   SubCategory   ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply  GeneralReply[]
   generalLike   GeneralLike[]      @relation("PostToGeneralLike")
-  notifications Notification[]
+
 }
 
 model GeneralReply {
@@ -259,7 +259,7 @@ model GeneralReply {
   post            GeneralPost    @relation(fields: [postId], references: [id], onDelete: Cascade)
   parentReply     GeneralReply?  @relation("GeneralReplyToReply", fields: [parentReplyId], references: [id])
   childReplies    GeneralReply[] @relation("GeneralReplyToReply")
-  notifications   Notification[]
+
 }
 
 model GeneralLike {
@@ -281,7 +281,7 @@ model Blog {
   image_url        String[]
   categoryId       String?
   category         BlogCategory?  @relation(fields: [categoryId], references: [id])
-  notifications    Notification[]
+
   isArchived       Boolean        @default(false)
   unArchiveReasons String[]       @default([])
   BlogComment      BlogComment[]
@@ -309,7 +309,7 @@ model Event {
   startDate        DateTime
   endDate          DateTime
   createdAt        DateTime         @default(now())
-  notifications    Notification[]
+
   isArchived       Boolean          @default(false)
   unArchiveReasons String[]         @default([])
   videoUrl         String
@@ -379,7 +379,7 @@ model CourseEnquiry {
   message               String
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
-  notifications         Notification[]
+
   status                EnquiryStatus  @default(pending)
 }
 
@@ -407,32 +407,54 @@ model CitiesData {
   state    StatesData @relation(fields: [state_id], references: [id])
 }
 
+// Notification Model
 model Notification {
-  id              String           @id @default(uuid())
-  recipientId     String
-  triggeredById   String?
-  type            NotificationType
-  message         String
-  read            Boolean          @default(false)
-  createdAt       DateTime         @default(now())
-  quotePostId     String?
-  generalPostId   String?
-  quoteReplyId    String?
-  generalReplyId  String?
-  blogId          String?
-  eventId         String?
-  courseEnquiryId String?
-  recipient       User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
-  triggeredBy     User?            @relation("TriggeredNotifications", fields: [triggeredById], references: [id])
-  quotePost       QuotePost?       @relation(fields: [quotePostId], references: [id])
-  generalPost     GeneralPost?     @relation(fields: [generalPostId], references: [id])
-  quoteReply      QuoteReply?      @relation(fields: [quoteReplyId], references: [id])
-  generalReply    GeneralReply?    @relation(fields: [generalReplyId], references: [id])
-  blog            Blog?            @relation(fields: [blogId], references: [id])
-  event           Event?           @relation(fields: [eventId], references: [id])
-  courseEnquiry   CourseEnquiry?   @relation(fields: [courseEnquiryId], references: [id])
+  id                    String                    @id @default(uuid())
+  recipientId           String
+  recipient             User                      @relation("RecipientNotifications", fields: [recipientId], references: [id], onDelete: Cascade)
+  type                  String                    // e.g., QUOTE_POST_CREATED, QUOTE_POST_ACCEPTED
+  message               String
+  quotePostId           String?                   // Optional reference to QuotePost
+  quoteReplyId          String?                   // Optional reference to QuoteReply
+  generalPostId         String?                   // Optional reference to GeneralPost
+  generalReplyId        String?                   // Optional reference to GeneralPostReply
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
 }
 
+// User Notification Preferences Model
+model UserNotificationPreference {
+  id                    String                    @id @default(uuid())
+  userId                String                    @unique
+  user                  User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quotePostCreation     Boolean                   @default(false)
+  quotePostModeration   Boolean                   @default(false)
+  quotePostRejected     Boolean                   @default(false)
+  quoteReplyCreation    Boolean                   @default(false)
+  quoteReplyModeration  Boolean                   @default(false)
+  quoteReplyRejected    Boolean                   @default(false)
+  generalPostCreation   Boolean                   @default(false)
+  generalPostModeration Boolean                   @default(false)
+  generalPostRejected   Boolean                   @default(false)
+  generalReplyCreation  Boolean                   @default(false)
+  generalReplyModeration Boolean                  @default(false)
+  generalReplyRejected  Boolean                   @default(false)
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+}
+
+// Email Server Configuration Model
+model EmailServerConfig {
+  id                    String                    @id @default(uuid())
+  host                  String
+  port                  Int
+  secure                Boolean
+  authUser              String
+  authPass              String
+  fromEmail             String
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+}
 model LandingMenuItems {
   id      String  @id @default(uuid())
   name    String
