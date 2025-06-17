@@ -1,4 +1,5 @@
 // app.js
+require('dotenv').config();
 const express = require('express');
 const quotePostRoutes = require('./routes/quotePost.routes.js');
 const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
