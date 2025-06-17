@@ -43,7 +43,8 @@ module.exports.createQuotePost = async (req, res) => {
 
     console.log('Validated data for createQuotePost:', validatedData);
 
-    const { userId, postMainCategory, postSubCategory, ...data } = validatedData;
+    const { userId, postMainCategory, postSubCategory, ...data } =
+      validatedData;
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
@@ -83,8 +84,12 @@ module.exports.createQuotePost = async (req, res) => {
     const newQuotePost = await prisma.quotePost.create({
       data: {
         user: { connect: { id: userId } },
-        mainCategory: postMainCategory ? { connect: { id: postMainCategory } } : undefined,
-        subCategory: postSubCategory ? { connect: { id: postSubCategory } } : undefined,
+        mainCategory: postMainCategory
+          ? { connect: { id: postMainCategory } }
+          : undefined,
+        subCategory: postSubCategory
+          ? { connect: { id: postSubCategory } }
+          : undefined,
         name: user.name,
         ...data,
       },
@@ -92,9 +97,21 @@ module.exports.createQuotePost = async (req, res) => {
 
     // Send notification for post creation
     const notificationType = 'QUOTE_POST_CREATED';
-    const emailTemplate = quotePostCreatedTemplate(newQuotePost, { name: user.name });
-    console.log('Sending notification:', { userId, notificationType, postId: newQuotePost.id, emailTemplate });
-    await notifyUser(userId, notificationType, { postId: newQuotePost.id }, emailTemplate);
+    const emailTemplate = quotePostCreatedTemplate(newQuotePost, {
+      name: user.name,
+    });
+    console.log('Sending notification:', {
+      userId,
+      notificationType,
+      postId: newQuotePost.id,
+      emailTemplate,
+    });
+    await notifyUser(
+      userId,
+      notificationType,
+      { postId: newQuotePost.id },
+      emailTemplate,
+    );
 
     return res
       .status(201)
@@ -103,15 +120,34 @@ module.exports.createQuotePost = async (req, res) => {
       );
   } catch (error) {
     if (error.code === 'P2003') {
-      console.error(`Error in createQuotePost - Foreign key constraint failed:`, error);
-      return res.status(404).json(new ApiError(404, 'Invalid foreign key reference (user, main category, or subcategory)', error.message));
+      console.error(
+        `Error in createQuotePost - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (user, main category, or subcategory)',
+            error.message,
+          ),
+        );
     }
     if (error instanceof ApiError) {
       console.error(`Error in createQuotePost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
     console.error('Error in createQuotePost - Unexpected error:', error);
-    return res.status(500).json(new ApiError(500, 'Failed to create QuotePost due to server error', error.message));
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create QuotePost due to server error',
+          error.message,
+        ),
+      );
   }
 };
 // Create a new QuoteReply
@@ -405,17 +441,24 @@ module.exports.updateQuotePost = async (req, res) => {
     });
 
     // Check if status has changed to 'success' or 'rejected' and send notification
-    if (filteredUpdateData.status && filteredUpdateData.status !== post.status) {
+    if (
+      filteredUpdateData.status &&
+      filteredUpdateData.status !== post.status
+    ) {
       const userId = post.userId;
       let emailTemplate = null;
       let notificationType = null;
 
       if (filteredUpdateData.status === 'success') {
         notificationType = 'QUOTE_POST_ACCEPTED';
-        emailTemplate = quotePostAcceptedTemplate(updatedPost, { name: post.name });
+        emailTemplate = quotePostAcceptedTemplate(updatedPost, {
+          name: post.name,
+        });
       } else if (filteredUpdateData.status === 'rejected') {
         notificationType = 'QUOTE_POST_REJECTED';
-        emailTemplate = quotePostRejectedTemplate(updatedPost, { name: post.name });
+        emailTemplate = quotePostRejectedTemplate(updatedPost, {
+          name: post.name,
+        });
       }
 
       if (notificationType && emailTemplate) {
@@ -563,7 +606,9 @@ module.exports.updateQuoteReply = async (req, res) => {
       let notificationType = null;
 
       if (!reply.user || !reply.post) {
-        console.warn(`Missing data for QuoteReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`);
+        console.warn(
+          `Missing data for QuoteReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`,
+        );
       } else {
         if (updateData.status === 'success') {
           notificationType = 'QUOTE_REPLY_ACCEPTED';
@@ -575,15 +620,23 @@ module.exports.updateQuoteReply = async (req, res) => {
       }
 
       if (notificationType && emailTemplate) {
-        console.log('Sending notification:', { userId, notificationType, replyId, emailTemplate });
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          replyId,
+          emailTemplate,
+        });
         await notifyUser(userId, notificationType, { replyId }, emailTemplate);
       } else {
-        console.log('Notification not sent: invalid type, template, or missing data', {
-          notificationType,
-          emailTemplate,
-          userId,
-          replyId,
-        });
+        console.log(
+          'Notification not sent: invalid type, template, or missing data',
+          {
+            notificationType,
+            emailTemplate,
+            userId,
+            replyId,
+          },
+        );
       }
     }
 
@@ -595,21 +648,55 @@ module.exports.updateQuoteReply = async (req, res) => {
   } catch (error) {
     console.error('Error in updateQuoteReply:', error);
     if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'QuoteReply not found', error.message));
+      return res
+        .status(404)
+        .json(new ApiError(404, 'QuoteReply not found', error.message));
     }
     if (error.code === 'P2003') {
-      return res.status(404).json(new ApiError(404, 'Invalid foreign key reference (post or parent reply)', error.message));
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (post or parent reply)',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2002') {
-      return res.status(409).json(new ApiError(409, 'Unique constraint violation on QuoteReply', error.message));
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on QuoteReply',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2011') {
-      return res.status(400).json(new ApiError(400, 'Required field missing in QuoteReply update', error.message));
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in QuoteReply update',
+            error.message,
+          ),
+        );
     }
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     }
-    return res.status(500).json(new ApiError(500, 'Failed to update QuoteReply due to server error', error.message));
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update QuoteReply due to server error',
+          error.message,
+        ),
+      );
   }
 };
 

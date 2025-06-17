@@ -76,11 +76,24 @@ const notifyUser = async (userId, type, message, emailTemplate) => {
       data: {
         recipientId: userId,
         type,
-        message: typeof message === 'string' ? message : JSON.stringify(message),
-        quotePostId: type.includes('QUOTE') && type.includes('POST') ? message.postId : undefined,
-        quoteReplyId: type.includes('QUOTE') && type.includes('REPLY') ? message.replyId : undefined,
-        generalPostId: type.includes('GENERAL') && type.includes('POST') ? message.postId : undefined,
-        generalReplyId: type.includes('GENERAL') && type.includes('REPLY') ? message.replyId : undefined,
+        message:
+          typeof message === 'string' ? message : JSON.stringify(message),
+        quotePostId:
+          type.includes('QUOTE') && type.includes('POST')
+            ? message.postId
+            : undefined,
+        quoteReplyId:
+          type.includes('QUOTE') && type.includes('REPLY')
+            ? message.replyId
+            : undefined,
+        generalPostId:
+          type.includes('GENERAL') && type.includes('POST')
+            ? message.postId
+            : undefined,
+        generalReplyId:
+          type.includes('GENERAL') && type.includes('REPLY')
+            ? message.replyId
+            : undefined,
       },
     });
 
@@ -100,7 +113,7 @@ const notifyUser = async (userId, type, message, emailTemplate) => {
 
     // Send email if the user has enabled the corresponding preference
     if (preferenceMap[type] && emailTemplate) {
-      const { subject,html, text } = emailTemplate;
+      const { subject, html, text } = emailTemplate;
       await sendEmail({
         to: user.email,
         subject,
@@ -125,19 +138,34 @@ module.exports = {
       });
 
       if (!preferences) {
-        throw new ApiError(404, 'Notification preferences not found for this user');
+        throw new ApiError(
+          404,
+          'Notification preferences not found for this user',
+        );
       }
 
       return res
         .status(200)
-        .json(new ApiResponse(200, preferences, 'Notification preferences fetched successfully'));
+        .json(
+          new ApiResponse(
+            200,
+            preferences,
+            'Notification preferences fetched successfully',
+          ),
+        );
     } catch (error) {
       if (error instanceof ApiError) {
         return res.status(error.statusCode).json(error);
       }
       return res
         .status(500)
-        .json(new ApiError(500, 'Failed to fetch notification preferences', error.message));
+        .json(
+          new ApiError(
+            500,
+            'Failed to fetch notification preferences',
+            error.message,
+          ),
+        );
     }
   },
   updateNotificationPreferences: async (req, res) => {
@@ -145,9 +173,10 @@ module.exports = {
       const userId = req.params.userId;
       const validatedData = notificationPreferenceSchema.parse(req.body);
 
-      const existingPreferences = await prisma.userNotificationPreference.findUnique({
-        where: { userId },
-      });
+      const existingPreferences =
+        await prisma.userNotificationPreference.findUnique({
+          where: { userId },
+        });
 
       if (!existingPreferences) {
         const newPreferences = await prisma.userNotificationPreference.create({
@@ -158,27 +187,49 @@ module.exports = {
         });
         return res
           .status(201)
-          .json(new ApiResponse(201, newPreferences, 'Notification preferences created successfully'));
+          .json(
+            new ApiResponse(
+              201,
+              newPreferences,
+              'Notification preferences created successfully',
+            ),
+          );
       }
 
-      const updatedPreferences = await prisma.userNotificationPreference.update({
-        where: { userId },
-        data: validatedData,
-      });
+      const updatedPreferences = await prisma.userNotificationPreference.update(
+        {
+          where: { userId },
+          data: validatedData,
+        },
+      );
 
       return res
         .status(200)
-        .json(new ApiResponse(200, updatedPreferences, 'Notification preferences updated successfully'));
+        .json(
+          new ApiResponse(
+            200,
+            updatedPreferences,
+            'Notification preferences updated successfully',
+          ),
+        );
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors));
+        return res
+          .status(400)
+          .json(new ApiError(400, 'Invalid input data', error.errors));
       }
       if (error instanceof ApiError) {
         return res.status(error.statusCode).json(error);
       }
       return res
         .status(500)
-        .json(new ApiError(500, 'Failed to update notification preferences', error.message));
+        .json(
+          new ApiError(
+            500,
+            'Failed to update notification preferences',
+            error.message,
+          ),
+        );
     }
   },
   getEmailServerConfig: async (req, res) => {
@@ -189,14 +240,26 @@ module.exports = {
       }
       return res
         .status(200)
-        .json(new ApiResponse(200, config, 'Email server configuration fetched successfully'));
+        .json(
+          new ApiResponse(
+            200,
+            config,
+            'Email server configuration fetched successfully',
+          ),
+        );
     } catch (error) {
       if (error instanceof ApiError) {
         return res.status(error.statusCode).json(error);
       }
       return res
         .status(500)
-        .json(new ApiError(500, 'Failed to fetch email server configuration', error.message));
+        .json(
+          new ApiError(
+            500,
+            'Failed to fetch email server configuration',
+            error.message,
+          ),
+        );
     }
   },
   updateEmailServerConfig: async (req, res) => {
@@ -212,7 +275,13 @@ module.exports = {
         });
         return res
           .status(200)
-          .json(new ApiResponse(200, updatedConfig, 'Email server configuration updated successfully'));
+          .json(
+            new ApiResponse(
+              200,
+              updatedConfig,
+              'Email server configuration updated successfully',
+            ),
+          );
       }
 
       const newConfig = await prisma.emailServerConfig.create({
@@ -220,17 +289,31 @@ module.exports = {
       });
       return res
         .status(201)
-        .json(new ApiResponse(201, newConfig, 'Email server configuration created successfully'));
+        .json(
+          new ApiResponse(
+            201,
+            newConfig,
+            'Email server configuration created successfully',
+          ),
+        );
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors));
+        return res
+          .status(400)
+          .json(new ApiError(400, 'Invalid input data', error.errors));
       }
       if (error instanceof ApiError) {
         return res.status(error.statusCode).json(error);
       }
       return res
         .status(500)
-        .json(new ApiError(500, 'Failed to update email server configuration', error.message));
+        .json(
+          new ApiError(
+            500,
+            'Failed to update email server configuration',
+            error.message,
+          ),
+        );
     }
   },
   sendNotification: async (req, res) => {
@@ -250,7 +333,10 @@ module.exports = {
       // Fetch post or reply data based on the type
       if (type.includes('POST')) {
         if (!postId) {
-          throw new ApiError(400, 'Post ID is required for post-related notifications');
+          throw new ApiError(
+            400,
+            'Post ID is required for post-related notifications',
+          );
         }
         if (type.includes('QUOTE')) {
           post = await prisma.quotePost.findUnique({ where: { id: postId } });
@@ -262,14 +348,25 @@ module.exports = {
         }
       } else if (type.includes('REPLY')) {
         if (!replyId) {
-          throw new ApiError(400, 'Reply ID is required for reply-related notifications');
+          throw new ApiError(
+            400,
+            'Reply ID is required for reply-related notifications',
+          );
         }
         if (type.includes('QUOTE')) {
-          reply = await prisma.quoteReply.findUnique({ where: { id: replyId } });
-          post = await prisma.quotePost.findUnique({ where: { id: reply.postId } });
+          reply = await prisma.quoteReply.findUnique({
+            where: { id: replyId },
+          });
+          post = await prisma.quotePost.findUnique({
+            where: { id: reply.postId },
+          });
         } else {
-          reply = await prisma.generalPostReply.findUnique({ where: { id: replyId } });
-          post = await prisma.generalPost.findUnique({ where: { id: reply.postId } });
+          reply = await prisma.generalPostReply.findUnique({
+            where: { id: replyId },
+          });
+          post = await prisma.generalPost.findUnique({
+            where: { id: reply.postId },
+          });
         }
         if (!reply || !post) {
           throw new ApiError(404, 'Reply or associated post not found');
@@ -320,7 +417,9 @@ module.exports = {
         .json(new ApiResponse(200, null, 'Notification sent successfully'));
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors));
+        return res
+          .status(400)
+          .json(new ApiError(400, 'Invalid input data', error.errors));
       }
       if (error instanceof ApiError) {
         return res.status(error.statusCode).json(error);

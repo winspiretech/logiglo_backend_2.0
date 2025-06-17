@@ -12,7 +12,13 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
-const { generalReplyRejectedTemplate, generalReplyAcceptedTemplate, generalPostAcceptedTemplate, generalPostRejectedTemplate, generalPostCreatedTemplate } = require('../utils/emailTemplates');
+const {
+  generalReplyRejectedTemplate,
+  generalReplyAcceptedTemplate,
+  generalPostAcceptedTemplate,
+  generalPostRejectedTemplate,
+  generalPostCreatedTemplate,
+} = require('../utils/emailTemplates');
 const { notifyUser } = require('./notification.controller');
 
 // --- Creation Functions ---
@@ -60,8 +66,12 @@ module.exports.createGeneralPost = async (req, res) => {
       data: {
         user: { connect: { id: userId } },
         createdBy: createdBy || null,
-        MainCategory: generalPostMainCategory ? { connect: { id: generalPostMainCategory } } : undefined,
-        SubCategory: generalPostSubCategory ? { connect: { id: generalPostSubCategory } } : undefined,
+        MainCategory: generalPostMainCategory
+          ? { connect: { id: generalPostMainCategory } }
+          : undefined,
+        SubCategory: generalPostSubCategory
+          ? { connect: { id: generalPostSubCategory } }
+          : undefined,
         ...data,
       },
     });
@@ -69,8 +79,18 @@ module.exports.createGeneralPost = async (req, res) => {
     // Send notification for post creation
     const notificationType = 'GENERAL_POST_CREATED';
     const emailTemplate = generalPostCreatedTemplate(newGeneralPost);
-    console.log('Sending notification:', { userId, notificationType, postId: newGeneralPost.id, emailTemplate });
-    await notifyUser(userId, notificationType, { postId: newGeneralPost.id }, emailTemplate);
+    console.log('Sending notification:', {
+      userId,
+      notificationType,
+      postId: newGeneralPost.id,
+      emailTemplate,
+    });
+    await notifyUser(
+      userId,
+      notificationType,
+      { postId: newGeneralPost.id },
+      emailTemplate,
+    );
 
     return res
       .status(201)
@@ -84,21 +104,61 @@ module.exports.createGeneralPost = async (req, res) => {
   } catch (error) {
     console.error('Error in createGeneralPost:', error);
     if (error instanceof z.ZodError) {
-      return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors.map((err) => err.message).join(', ')));
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Invalid input data',
+            error.errors.map((err) => err.message).join(', '),
+          ),
+        );
     }
     if (error.code === 'P2003') {
-      return res.status(404).json(new ApiError(404, 'Invalid foreign key reference (user, main category, or subcategory)', error.message));
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (user, main category, or subcategory)',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2002') {
-      return res.status(409).json(new ApiError(409, 'Unique constraint violation on GeneralPost', error.message));
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on GeneralPost',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2011') {
-      return res.status(400).json(new ApiError(400, 'Required field missing in GeneralPost', error.message));
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in GeneralPost',
+            error.message,
+          ),
+        );
     }
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     }
-    return res.status(500).json(new ApiError(500, 'Failed to create GeneralPost due to server error', error.message));
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to create GeneralPost due to server error',
+          error.message,
+        ),
+      );
   }
 };
 
@@ -381,7 +441,9 @@ module.exports.updateGeneralPost = async (req, res) => {
       if (!mainCategory) {
         throw new ApiError(404, 'Main category not found');
       }
-      updateData.MainCategory = { connect: { id: data.generalPostMainCategory } };
+      updateData.MainCategory = {
+        connect: { id: data.generalPostMainCategory },
+      };
       delete updateData.generalPostMainCategory;
     }
 
@@ -414,21 +476,33 @@ module.exports.updateGeneralPost = async (req, res) => {
       data: filteredUpdateData,
     });
 
-    if (filteredUpdateData.status && filteredUpdateData.status !== post.status) {
+    if (
+      filteredUpdateData.status &&
+      filteredUpdateData.status !== post.status
+    ) {
       const userId = post.userId;
       let emailTemplate = null;
       let notificationType = null;
 
       if (filteredUpdateData.status === 'success') {
         notificationType = 'GENERAL_POST_ACCEPTED';
-        emailTemplate = generalPostAcceptedTemplate(updatedPost, { name: post.createdBy });
+        emailTemplate = generalPostAcceptedTemplate(updatedPost, {
+          name: post.createdBy,
+        });
       } else if (filteredUpdateData.status === 'rejected') {
         notificationType = 'GENERAL_POST_REJECTED';
-        emailTemplate = generalPostRejectedTemplate(updatedPost, { name: post.createdBy });
+        emailTemplate = generalPostRejectedTemplate(updatedPost, {
+          name: post.createdBy,
+        });
       }
 
       if (notificationType && emailTemplate) {
-        console.log('Sending notification:', { userId, notificationType, postId, emailTemplate });
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          postId,
+          emailTemplate,
+        });
         await notifyUser(userId, notificationType, { postId }, emailTemplate);
       }
     }
@@ -440,27 +514,73 @@ module.exports.updateGeneralPost = async (req, res) => {
       );
   } catch (error) {
     if (error.code === 'P2025') {
-      console.error(`Error in updateGeneralPost - Record not found for update:`, error);
-      return res.status(404).json(new ApiError(404, 'GeneralPost not found', error.message));
+      console.error(
+        `Error in updateGeneralPost - Record not found for update:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(new ApiError(404, 'GeneralPost not found', error.message));
     }
     if (error.code === 'P2003') {
-      console.error(`Error in updateGeneralPost - Foreign key constraint failed:`, error);
-      return res.status(404).json(new ApiError(404, 'Invalid foreign key reference (main category or subcategory)', error.message));
+      console.error(
+        `Error in updateGeneralPost - Foreign key constraint failed:`,
+        error,
+      );
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (main category or subcategory)',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2002') {
-      console.error(`Error in updateGeneralPost - Unique constraint violation:`, error);
-      return res.status(409).json(new ApiError(409, 'Unique constraint violation on GeneralPost', error.message));
+      console.error(
+        `Error in updateGeneralPost - Unique constraint violation:`,
+        error,
+      );
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on GeneralPost',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2011') {
-      console.error(`Error in updateGeneralPost - Null constraint violation:`, error);
-      return res.status(400).json(new ApiError(400, 'Required field missing in GeneralPost update', error.message));
+      console.error(
+        `Error in updateGeneralPost - Null constraint violation:`,
+        error,
+      );
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in GeneralPost update',
+            error.message,
+          ),
+        );
     }
     if (error instanceof ApiError) {
       console.error(`Error in updateGeneralPost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
     console.error('Error in updateGeneralPost - Unexpected error:', error);
-    return res.status(500).json(new ApiError(500, 'Failed to update GeneralPost due to server error', error.message));
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update GeneralPost due to server error',
+          error.message,
+        ),
+      );
   }
 };
 // Zod schema for updateGeneralReply
@@ -551,27 +671,43 @@ module.exports.updateGeneralReply = async (req, res) => {
       let notificationType = null;
 
       if (!reply.user || !reply.post) {
-        console.warn(`Missing data for GeneralReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`);
+        console.warn(
+          `Missing data for GeneralReply ${replyId}: user=${!!reply.user}, post=${!!reply.post}, userId=${userId}. Skipping notification.`,
+        );
       } else {
         if (updateData.status === 'success') {
           notificationType = 'GENERAL_REPLY_ACCEPTED';
-          emailTemplate = generalReplyAcceptedTemplate(updatedReply, reply.post);
+          emailTemplate = generalReplyAcceptedTemplate(
+            updatedReply,
+            reply.post,
+          );
         } else if (updateData.status === 'rejected') {
           notificationType = 'GENERAL_REPLY_REJECTED';
-          emailTemplate = generalReplyRejectedTemplate(updatedReply, reply.post);
+          emailTemplate = generalReplyRejectedTemplate(
+            updatedReply,
+            reply.post,
+          );
         }
       }
 
       if (notificationType && emailTemplate) {
-        console.log('Sending notification:', { userId, notificationType, replyId, emailTemplate });
+        console.log('Sending notification:', {
+          userId,
+          notificationType,
+          replyId,
+          emailTemplate,
+        });
         await notifyUser(userId, notificationType, { replyId }, emailTemplate);
       } else {
-        console.log('Notification not sent: invalid type, template, or missing data', {
-          notificationType,
-          emailTemplate,
-          userId,
-          replyId,
-        });
+        console.log(
+          'Notification not sent: invalid type, template, or missing data',
+          {
+            notificationType,
+            emailTemplate,
+            userId,
+            replyId,
+          },
+        );
       }
     }
 
@@ -583,21 +719,55 @@ module.exports.updateGeneralReply = async (req, res) => {
   } catch (error) {
     console.error('Error in updateGeneralReply:', error);
     if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'GeneralReply not found', error.message));
+      return res
+        .status(404)
+        .json(new ApiError(404, 'GeneralReply not found', error.message));
     }
     if (error.code === 'P2003') {
-      return res.status(404).json(new ApiError(404, 'Invalid foreign key reference (post or parent reply)', error.message));
+      return res
+        .status(404)
+        .json(
+          new ApiError(
+            404,
+            'Invalid foreign key reference (post or parent reply)',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2002') {
-      return res.status(409).json(new ApiError(409, 'Unique constraint violation on GeneralReply', error.message));
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on GeneralReply',
+            error.message,
+          ),
+        );
     }
     if (error.code === 'P2011') {
-      return res.status(400).json(new ApiError(400, 'Required field missing in GeneralReply update', error.message));
+      return res
+        .status(400)
+        .json(
+          new ApiError(
+            400,
+            'Required field missing in GeneralReply update',
+            error.message,
+          ),
+        );
     }
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     }
-    return res.status(500).json(new ApiError(500, 'Failed to update GeneralReply due to server error', error.message));
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to update GeneralReply due to server error',
+          error.message,
+        ),
+      );
   }
 };
 

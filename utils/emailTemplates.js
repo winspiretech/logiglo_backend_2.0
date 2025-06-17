@@ -49,7 +49,11 @@ module.exports.quotePostCreatedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your quote post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your quote post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.quotePostAcceptedTemplate = (post) => {
@@ -64,7 +68,11 @@ module.exports.quotePostAcceptedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your quote post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your quote post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.quotePostRejectedTemplate = (post) => {
@@ -80,7 +88,11 @@ module.exports.quotePostRejectedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your quote post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your quote post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.quoteReplyAcceptedTemplate = (reply, post) => {
@@ -94,7 +106,11 @@ module.exports.quoteReplyAcceptedTemplate = (reply, post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your reply to the quote post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your reply to the quote post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.quoteReplyRejectedTemplate = (reply, post) => {
@@ -110,7 +126,11 @@ module.exports.quoteReplyRejectedTemplate = (reply, post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your reply to the quote post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your reply to the quote post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.generalPostCreatedTemplate = (post) => {
@@ -124,7 +144,11 @@ module.exports.generalPostCreatedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your general post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your general post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.generalPostAcceptedTemplate = (post) => {
@@ -139,7 +163,11 @@ module.exports.generalPostAcceptedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your general post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your general post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.generalPostRejectedTemplate = (post) => {
@@ -155,7 +183,11 @@ module.exports.generalPostRejectedTemplate = (post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your general post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your general post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.generalReplyAcceptedTemplate = (reply, post) => {
@@ -169,7 +201,11 @@ module.exports.generalReplyAcceptedTemplate = (reply, post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your reply to the general post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your reply to the general post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
 
 module.exports.generalReplyRejectedTemplate = (reply, post) => {
@@ -185,5 +221,9 @@ module.exports.generalReplyRejectedTemplate = (reply, post) => {
     </p>
     <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
   `;
-  return { subject, html: baseTemplate(content, subject), text: `Your reply to the general post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team` };
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your reply to the general post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+  };
 };
