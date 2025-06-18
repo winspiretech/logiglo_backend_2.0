@@ -4,6 +4,14 @@ const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const { sendEmail } = require('../utils/sendEmail.js');
+const { success } = require('zod/v4');
+
+const generateOtp = () => {
+  const otp = crypto.randomInt(100000, 1000000);
+  return otp.toString();
+};
 
 const signupController = async (req, res, next) => {
   try {
@@ -22,7 +30,11 @@ const signupController = async (req, res, next) => {
         throw new ApiError(409, 'User alredy exists');
       }
       const newUser = await prisma.user.create({
-        data: req.body,
+        data: {
+          ...req.body,
+          role: 'user',
+          verified: false,
+        },
       });
       if (newUser) {
         const { password, ...userData } = newUser;
@@ -44,9 +56,11 @@ const signupController = async (req, res, next) => {
     }
   }
 };
+
 const loginUser = async (req, res, next) => {
   try {
     const { email, password: pass } = req.body;
+
     if (!email || !pass) {
       throw new ApiError(400, 'Missing required field');
     }
@@ -66,31 +80,39 @@ const loginUser = async (req, res, next) => {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    const token = jwt.sign(
-      {
-        name: existingUser.name,
-        email: existingUser.email,
+    // Generate OTP
+    const otp = generateOtp();
+
+    // Store OTP in database
+    await prisma.otp.create({
+      data: {
+        userId: existingUser.id, // ✅ You must link OTP with userId
+        otpCode: otp,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // expires in 5 minutes
       },
-      process.env.TOKEN_SECRET,
-      { expiresIn: '7d' },
-    );
+    });
 
-    // const isProduction = process.env.NODE_ENV === 'production';
-
-    const cookieOptions = {
-      httpOnly: true,
-      secure: true, // ✅ required for HTTPS
-      sameSite: 'None', // ✅ required for cross-origin
-      path: '/',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    };
-
-    const data = { ...userData, token };
+    // Send OTP email
+    await sendEmail({
+      to: email,
+      subject: 'Your OTP for Logiglo',
+      html: `
+        <h3>Hello ${existingUser.name},</h3>
+        <p>Your OTP code is:</p>
+        <h2>${otp}</h2>
+        <p>This OTP will expire in 5 minutes.</p>
+      `,
+    });
 
     res
-      .cookie('Token', token, cookieOptions)
       .status(200)
-      .json(new ApiResponse(200, data, 'User logged in successfully'));
+      .json(
+        new ApiResponse(
+          200,
+          { userId: existingUser.id },
+          'OTP sent to your email.',
+        ),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
@@ -247,6 +269,91 @@ const changeUserRole = async (req, res, next) => {
   }
 };
 
+const otpVerification = async (req, res, next) => {
+  try {
+    const { userId, otp } = req.body;
+
+    if (!userId || !otp) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, 'Otp and userId both are required!'));
+    }
+
+    const userOtp = await prisma.otp.findFirst({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    if (!userOtp) {
+      return res.status(400).json(new ApiResponse(400, null, 'OTP not found!'));
+    }
+
+    if (userOtp.expiresAt < new Date()) {
+      return res.status(400).json(new ApiResponse(400, null, 'OTP expired!'));
+    }
+
+    if (userOtp.otpCode !== otp) {
+      return res.status(400).json(new ApiResponse(400, null, 'Invalid OTP!'));
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json(new ApiResponse(404, null, 'User not found!'));
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        name: user.name,
+        email: user.email,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: '7d' },
+    );
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+      path: '/',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    };
+
+    res.cookie('Token', token, cookieOptions);
+
+    // OPTIONAL: delete OTP after successful login
+    await prisma.otp.delete({
+      where: {
+        id: userOtp.id,
+      },
+    });
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, token, 'User logged in successfully'));
+  } catch (error) {
+    console.log(error.message || 'Something went wrong in OTP verification');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   signupController,
   loginUser,
@@ -254,4 +361,5 @@ module.exports = {
   getUsers,
   getAdmins,
   changeUserRole,
+  otpVerification,
 };
