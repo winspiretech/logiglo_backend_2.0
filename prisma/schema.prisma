@@ -91,6 +91,7 @@ model User {
   Rating                 Rating[]
   BlogComment            BlogComment[]
   RequestToConnect       RequestToConnect[]
+  otps                   Otp[]
 }
 
 // schema.prisma
@@ -559,4 +560,14 @@ model ContactUs{
   city      String
   message   String
   createdAt DateTime @default(now())
+}
+
+model Otp {
+  id   String @id @default(uuid())
+  user User   @relation(fields: [userId], references: [id])
+  userId String
+  otpCode String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  verfied Boolean @default(false)
 }
