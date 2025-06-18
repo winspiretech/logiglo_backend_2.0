@@ -9,7 +9,7 @@ const {
   getUsers,
   getAdmins,
   changeUserRole,
-  otpVerification
+  otpVerification,
 } = require('../controllers/user.controllers');
 const router = express.Router();
 

@@ -274,7 +274,9 @@ const otpVerification = async (req, res, next) => {
     const { userId, otp } = req.body;
 
     if (!userId || !otp) {
-      return res.status(400).json(new ApiResponse(400, null, 'Otp and userId both are required!'));
+      return res
+        .status(400)
+        .json(new ApiResponse(400, null, 'Otp and userId both are required!'));
     }
 
     const userOtp = await prisma.otp.findFirst({
@@ -282,8 +284,8 @@ const otpVerification = async (req, res, next) => {
         userId,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: 'desc',
+      },
     });
 
     if (!userOtp) {
@@ -299,11 +301,13 @@ const otpVerification = async (req, res, next) => {
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     if (!user) {
-      return res.status(404).json(new ApiResponse(404, null, 'User not found!'));
+      return res
+        .status(404)
+        .json(new ApiResponse(404, null, 'User not found!'));
     }
 
     // Generate JWT token
@@ -313,7 +317,7 @@ const otpVerification = async (req, res, next) => {
         email: user.email,
       },
       process.env.TOKEN_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '7d' },
     );
 
     const cookieOptions = {
@@ -321,7 +325,7 @@ const otpVerification = async (req, res, next) => {
       secure: true,
       sameSite: 'None',
       path: '/',
-      maxAge: 30 * 24 * 60 * 60 * 1000, 
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     };
 
     res.cookie('Token', token, cookieOptions);
@@ -330,21 +334,25 @@ const otpVerification = async (req, res, next) => {
     await prisma.otp.delete({
       where: {
         id: userOtp.id,
-      }
+      },
     });
 
-    res.status(200).json(new ApiResponse(200, token, 'User logged in successfully'));
-    
+    res
+      .status(200)
+      .json(new ApiResponse(200, token, 'User logged in successfully'));
   } catch (error) {
     console.log(error.message || 'Something went wrong in OTP verification');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
-      return res.status(500).json(new ApiError(500, 'Internal server error', error.message || null));
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
-
 
 module.exports = {
   signupController,
@@ -353,5 +361,5 @@ module.exports = {
   getUsers,
   getAdmins,
   changeUserRole,
-  otpVerification
+  otpVerification,
 };
