@@ -1,3 +1,5 @@
+// Removed: const DOMPurify = require('dompurify');
+
 const baseTemplate = (content, subject) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -5,225 +7,294 @@ const baseTemplate = (content, subject) => `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${subject}</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #F3F4F6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      color: #000000;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #FFFFFF;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .header img {
+      max-width: 150px;
+    }
+    .content {
+      padding: 30px;
+    }
+    .content h1 {
+      font-size: 24px;
+      margin: 0 0 20px;
+      color: #000000;
+    }
+    .content p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #6B7280;
+      margin: 0 0 15px;
+    }
+    .description-html {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #6B7280;
+      margin: 0 0 15px;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #FFC107;
+      color: #000000;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .button:hover {
+      background-color: #FBBF24;
+    }
+    .footer {
+      background-color: #F3F4F6;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #6B7280;
+    }
+    .footer a {
+      color: #000000;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin: 10px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .button {
+        display: block;
+      }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; color: #333333; background-color: #f4f4f4;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
-          <tr>
-            <td style="background-color: #007BFF; text-align: center; padding: 20px;">
-              <img src="http://tester.logiglo.com/Uploads/user/bd21670f-07e5-4b03-ae47-85afc3c1f28b/user_bd21670f-07e5-4b03-ae47-85afc3c1f28b_3c4ed364-aec6-4a98-bcad-32f1513ac872.jpg" alt="Logiglo Logo" style="max-width: 150px;" />
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 30px;">
-              ${content}
-            </td>
-          </tr>
-          <tr>
-            <td style="background-color: #f4f4f4; text-align: center; padding: 20px; font-size: 12px; color: #666666;">
-              <p>Follow us: 
-                <a href="https://twitter.com/logiglo" style="color: #007BFF; text-decoration: none;">Twitter</a> | 
-                <a href="https://linkedin.com/company/logiglo" style="color: #007BFF; text-decoration: none;">LinkedIn</a>
-              </p>
-              <p>&copy; ${new Date().getFullYear()} Logiglo. All rights reserved.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://tester.logiglo.com/Uploads/user/bd21670f-07e5-4b03-ae47-85afc3c1f28b/user_bd21670f-07e5-4b03-ae47-85afc3c1f28b_4dabc5ee-bc3f-4355-bdd8-9784a5195489.jpg" alt="Logiglo Logo">
+    </div>
+    <div class="content">
+      ${content}
+    </div>
+    <div class="footer">
+      Follow us: 
+      <a href="https://twitter.com/logiglo">Twitter</a> | 
+      <a href="https://linkedin.com/company/logiglo">LinkedIn</a>
+      <p>© ${new Date().getFullYear()} Logiglo. All rights reserved.</p>
+    </div>
+  </div>
+  <script>
+    // Sanitize HTML content on load
+    document.querySelectorAll('.description-html').forEach(element => {
+      element.innerHTML = DOMPurify.sanitize(element.innerHTML);
+    });
+  </script>
 </body>
 </html>
 `;
 
 module.exports.quotePostCreatedTemplate = (post) => {
-  const subject = `New Quote Post Created: ${post.title}`;
+  const subject = `New Quote Created: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">Quote Post Created</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your quote post "<strong>${post.title}</strong>" has been successfully created.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/quote/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View Quote Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Quote Created</h1>
+    <p>Your quote post "${post.title}" has been successfully created.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <a href="https://tester.logiglo.com/account" class="button">View Quote In Your Account</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your quote post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your quote post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://tester.logiglo.com/account\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.quotePostAcceptedTemplate = (post) => {
-  const subject = `Quote Post Accepted: ${post.title}`;
+  const subject = `Quote Accepted: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">Quote Post Accepted</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Great news! Your quote post "<strong>${post.title}</strong>" has been accepted.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${post.acceptReason || 'No reason provided'}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/quote/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View Quote Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Quote Accepted</h1>
+    <p>Great news! Your quote "${post.title}" has been accepted.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote </a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your quote post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your quote "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.quotePostRejectedTemplate = (post) => {
-  const subject = `Quote Post Rejected: ${post.title}`;
+  const subject = `Quote Rejected: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">Quote Post Rejected</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your quote post "<strong>${post.title}</strong>" has been rejected.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;">Please review and resubmit if needed.</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/quote/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View Quote Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Quote Rejected</h1>
+    <p>Your quote "${post.title}" has been rejected.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <p><strong>Reason:</strong> ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}</p>
+    <p>Please review and resubmit if needed.</p>
+    <a href="https://tester.logiglo.com/account" class="button">View Quote In Your Account</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your quote post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your quote "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/account\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.quoteReplyAcceptedTemplate = (reply, post) => {
   const subject = `Quote Reply Accepted on Post: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">Quote Reply Accepted</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your reply to the quote post "<strong>${post.title}</strong>" has been accepted.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reply:</strong> ${reply.description || 'No description provided'}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/quote/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View Quote Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Quote Reply Accepted</h1>
+    <p>Your reply to the quote post "${post.title}" has been accepted.</p>
+    <p><strong>Reply:</strong></p>
+    <div class="description-html">${reply.description || 'No description provided'}</div>
+    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote </a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the quote post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the quote post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.quoteReplyRejectedTemplate = (reply, post) => {
   const subject = `Quote Reply Rejected on Post: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">Quote Reply Rejected</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your reply to the quote post "<strong>${post.title}</strong>" has been rejected.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reply:</strong> ${reply.description || 'No description provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${reply.rejectionReason || 'No reason provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;">Please review and resubmit if needed.</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/quote/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View Quote Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Quote Reply Rejected</h1>
+    <p>Your reply to the quote post "${post.title}" has been rejected.</p>
+    <p><strong>Reply:</strong></p>
+    <div class="description-html">${reply.description || 'No description provided'}</div>
+    <p><strong>Reason:</strong> ${reply.rejectionReason || 'No reason provided'}</p>
+    <p>Please review and resubmit if needed.</p>
+    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote </a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the quote post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the quote post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.generalPostCreatedTemplate = (post) => {
-  const subject = `New General Post Created: ${post.title}`;
+  const subject = `New Post Created: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">General Post Created</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your general post "<strong>${post.title}</strong>" has been successfully created.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/general/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View General Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Post Created</h1>
+    <p>Your post "${post.title}" has been successfully created.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <a href="https://tester.logiglo.com/account" class="button">View Post In Your Account</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your general post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your post "${post.title}" has been successfully created.\n\nDescription: ${post.description}\n\nView it at: https://tester.logiglo.com/account\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.generalPostAcceptedTemplate = (post) => {
-  const subject = `General Post Accepted: ${post.title}`;
+  const subject = `Post Accepted: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">General Post Accepted</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Great news! Your general post "<strong>${post.title}</strong>" has been accepted.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${post.acceptReason || 'No reason provided'}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/general/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View General Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Post Accepted</h1>
+    <p>Great news! Your post "${post.title}" has been accepted.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <p><strong>Reason:</strong> ${post.acceptReason || 'No reason provided'}</p>
+    <a href="https://tester.logiglo.com/general/${post.id}" class="button">View Post</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your general post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your post "${post.title}" has been accepted.\n\nDescription: ${post.description}\nReason: ${post.acceptReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.generalPostRejectedTemplate = (post) => {
-  const subject = `General Post Rejected: ${post.title}`;
+  const subject = `Post Rejected: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">General Post Rejected</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your general post "<strong>${post.title}</strong>" has been rejected.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Description:</strong> ${post.description}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;">Please review and resubmit if needed.</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/general/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View General Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Post Rejected</h1>
+    <p>Your post "${post.title}" has been rejected.</p>
+    <p><strong>Description:</strong></p>
+    <div class="description-html">${post.description}</div>
+    <p><strong>Reason:</strong> ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}</p>
+    <p>Please review and resubmit if needed.</p>
+    <a href="https://tester.logiglo.com/account" class="button">View Post In Your Account</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your general post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your post "${post.title}" has been rejected.\n\nDescription: ${post.description}\nReason: ${Array.isArray(post.rejectionReason) ? post.rejectionReason.join(', ') : post.rejectionReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/account\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.generalReplyAcceptedTemplate = (reply, post) => {
-  const subject = `General Reply Accepted on Post: ${post.title}`;
+  const subject = `Reply Accepted on Post: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">General Reply Accepted</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your reply to the general post "<strong>${post.title}</strong>" has been accepted.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reply:</strong> ${reply.description || 'No description provided'}</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/general/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View General Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Reply Accepted</h1>
+    <p>Your reply to the post "${post.title}" has been accepted.</p>
+    <p><strong>Reply:</strong></p>
+    <div class="description-html">${reply.description || 'No description provided'}</div>
+    <a href="https://logiglo.com/general/${post.id}" class="button">View Post</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the general post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
 module.exports.generalReplyRejectedTemplate = (reply, post) => {
-  const subject = `General Reply Rejected on Post: ${post.title}`;
+  const subject = `Reply Rejected on Post: ${post.title}`;
   const content = `
-    <h1 style="font-size: 24px; color: #007BFF;">General Reply Rejected</h1>
-    <p style="font-size: 16px; line-height: 1.5;">Your reply to the general post "<strong>${post.title}</strong>" has been rejected.</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reply:</strong> ${reply.description || 'No description provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;"><strong>Reason:</strong> ${reply.rejectionReason || 'No reason provided'}</p>
-    <p style="font-size: 16px; line-height: 1.5;">Please review and resubmit if needed.</p>
-    <p style="margin: 20px 0;">
-      <a href="https://logiglo.com/general/${post.id}" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">View General Post</a>
-    </p>
-    <p style="font-size: 16px; line-height: 1.5;">Regards,<br>Logiglo Admin Team</p>
+    <h1>Reply Rejected</h1>
+    <p>Your reply to the post "${post.title}" has been rejected.</p>
+    <p><strong>Reply:</strong></p>
+    <div class="description-html">${reply.description || 'No description provided'}</div>
+    <p><strong>Reason:</strong> ${reply.rejectionReason || 'No reason provided'}</p>
+    <p>Please review and resubmit if needed.</p>
+    <a href="https://logiglo.com/general/${post.id}" class="button">View Post</a>
+    <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the general post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
