@@ -310,6 +310,8 @@ const otpVerification = async (req, res, next) => {
         .json(new ApiResponse(404, null, 'User not found!'));
     }
 
+    const { password, ...userDetails } = user;
+
     // Generate JWT token
     const token = jwt.sign(
       {
@@ -328,7 +330,7 @@ const otpVerification = async (req, res, next) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     };
 
-    res.cookie('Token', token, cookieOptions);
+    res.cookie('Token', token, userDetails, cookieOptions);
 
     // OPTIONAL: delete OTP after successful login
     await prisma.otp.delete({
