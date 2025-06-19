@@ -17,6 +17,7 @@ const commentRoute = require('./routes/blogComments.routes.js');
 const blogCategory = require('./routes/blogCategory.routes.js');
 const eventInterested = require('./routes/eventInterested.routes.js');
 const contactUs = require('./routes/contactUs.routes.js');
+const adminRoutes = require('./routes/admin.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -58,6 +59,7 @@ app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/quotePost', quotePostRoutes);
 app.use('/api/generalPost', generalPostRoutes);
 app.use('/api/forumCategory', forumCategoryRoutes);
