@@ -341,7 +341,9 @@ const otpVerification = async (req, res, next) => {
 
     res
       .status(200)
-      .json(new ApiResponse(200, token, userDetails, 'User logged in successfully'));
+      .json(
+        new ApiResponse(200, {token, userDetails}, 'User logged in successfully'),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in OTP verification');
     if (error instanceof ApiError) {
