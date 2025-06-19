@@ -310,7 +310,7 @@ const otpVerification = async (req, res, next) => {
         .json(new ApiResponse(404, null, 'User not found!'));
     }
 
-     const { password, ...userDetails } = user;
+    const { password, ...userDetails } = user;
 
     // Generate JWT token
     const token = jwt.sign(
