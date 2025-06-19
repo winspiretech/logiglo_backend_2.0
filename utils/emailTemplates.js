@@ -105,8 +105,10 @@ const baseTemplate = (content, subject) => `
     </div>
     <div class="footer">
       Follow us: 
-      <a href="https://twitter.com/logiglo">Twitter</a> | 
+      <a href="https://x.com/logiglocom">Twitter</a> | 
       <a href="https://linkedin.com/company/logiglo">LinkedIn</a>
+      <a href="https://www.facebook.com/logiglocom">Facebook</a>
+      <a href="https://www.instagram.com/logiglocom/">Instagram</a>
       <p>© ${new Date().getFullYear()} Logiglo. All rights reserved.</p>
     </div>
   </div>
