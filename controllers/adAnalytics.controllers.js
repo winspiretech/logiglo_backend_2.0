@@ -167,6 +167,14 @@ const createDailyAdStatAnalytics = async (req, res) => {
 
 const createAd = async (req, res) => {
   try {
+    const { bannerImage = null, boxImage = null } = req.body;
+    if (!bannerImage && !boxImage) {
+      throw new ApiError(
+        400,
+        'Please upload any one image, Banner or Box image',
+        'Add Banner or Box image',
+      );
+    }
     const validation = AdSchema.safeParse(req.body);
     if (!validation.success) {
       throw new ApiError(400, 'Ad validation failed', validation.error.errors);
@@ -266,6 +274,15 @@ const getAdBySection = async (req, res) => {
 const updateAd = async (req, res) => {
   try {
     const { adId } = req.params;
+
+    const { bannerImage = null, boxImage = null } = req.body;
+    if (!bannerImage && !boxImage) {
+      throw new ApiError(
+        400,
+        'Please upload any one image, Banner or Box image',
+        'Add Banner or Box image',
+      );
+    }
 
     if (!adId) {
       throw new ApiError(400, 'Ad ID is required');
