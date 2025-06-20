@@ -1,5 +1,7 @@
 const express = require('express');
 const { asyncWrap } = require('../utils/asyncWrap');
+
+const { isUserLoggedIn } = require('../middleware/isUserLoggedIn');
 const {
   signupController,
   loginUser,
@@ -7,6 +9,7 @@ const {
   getUsers,
   getAdmins,
   changeUserRole,
+  otpVerification,
 } = require('../controllers/user.controllers');
 const router = express.Router();
 
@@ -25,5 +28,16 @@ router.get('/all', getUsers);
 router.get('/admins', getAdmins);
 
 router.patch('/change-role', changeUserRole);
+
+router.post('/otp-verification', otpVerification);
+
+// api/me route to check the token
+router.get(
+  '/me',
+  isUserLoggedIn,
+  asyncWrap(async (req, res) => {
+    res.status(200).json(req.loggedInUser);
+  }),
+);
 
 module.exports = router;

@@ -1,28 +1,29 @@
+// src/utils/sendEmail.js
 const nodemailer = require('nodemailer');
+const prisma = require('../models/prismaClient');
 
-// Create reusable transporter object using your SMTP server
-const transporter = nodemailer.createTransport({
-  host: 'mail.logiglo.com',
-  port: 587,
-  secure: false,
-  tls: {
-    rejectUnauthorized: false,
-  },
-  auth: {
-    user: 'webquery@logiglo.com',
-    pass: 'WebLogiglo@123!',
-  },
-});
-
-/**
- * Send email using predefined transporter
- * @param {Object} mailOptions - Includes `to`, `subject`, `text` or `html`
- */
 const sendEmail = async (mailOptions) => {
-  const defaultFrom = '"Logiglo Notifications" <webquery@logiglo.com>';
   try {
+    const emailConfig = await prisma.emailServerConfig.findFirst();
+    if (!emailConfig) {
+      throw new Error('Email server configuration not found');
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: emailConfig.host,
+      port: emailConfig.port,
+      secure: emailConfig.secure,
+      tls: {
+        rejectUnauthorized: false,
+      },
+      auth: {
+        user: emailConfig.authUser,
+        pass: emailConfig.authPass,
+      },
+    });
+
     const info = await transporter.sendMail({
-      from: mailOptions.from || defaultFrom,
+      from: emailConfig.fromEmail,
       ...mailOptions,
     });
     return info;

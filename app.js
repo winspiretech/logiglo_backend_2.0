@@ -1,4 +1,5 @@
 // app.js
+require('dotenv').config();
 const express = require('express');
 const quotePostRoutes = require('./routes/quotePost.routes.js');
 const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
@@ -18,6 +19,7 @@ const eventInterested = require('./routes/eventInterested.routes.js');
 const contactUs = require('./routes/contactUs.routes.js');
 const ads = require('./routes/ad.routes.js');
 const timeSpentRoute = require('./routes/timeSpent.routes.js');
+const adminRoutes = require('./routes/admin.routes.js');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -59,6 +61,7 @@ app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/quotePost', quotePostRoutes);
 app.use('/api/generalPost', generalPostRoutes);
 app.use('/api/forumCategory', forumCategoryRoutes);
@@ -66,7 +69,7 @@ app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
 app.use('/api/event', eventRoute);
 app.use('/api/education', educationRoute);
-app.use('/api/notifications', notificationRoutes);
+app.use('/api/notification', notificationRoutes);
 app.use('/api/landingPageMenuItems', landingPageMenuItemsRoutes);
 app.use('/api/data', dataRoute);
 app.use('/api/rating', ratingRoute);

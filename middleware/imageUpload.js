@@ -3,14 +3,13 @@ const sharp = require('sharp');
 const fs = require('fs').promises;
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
-// Define the base upload path
-const baseUploadPath = path.join('/root/backend/Uploads');
+const baseUploadPath =
+  process.env.UPLOAD_DIR || path.join(__dirname, '..', 'Uploads');
 
-// Valid sections for folder organization
 const validSections = ['education', 'blog', 'user', 'event'];
 
-// Asynchronous directory creation with permissions
 const ensureDirectory = async (dirPath) => {
   try {
     await fs.mkdir(dirPath, { recursive: true });
@@ -20,7 +19,6 @@ const ensureDirectory = async (dirPath) => {
   }
 };
 
-// Initialize directories
 (async () => {
   await ensureDirectory(baseUploadPath);
   for (const section of validSections) {
@@ -28,10 +26,8 @@ const ensureDirectory = async (dirPath) => {
   }
 })();
 
-// Multer Storage Config
 const storage = multer.memoryStorage();
 
-// File Filter
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
   if (allowedTypes.includes(file.mimetype)) {
@@ -47,7 +43,6 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// Middleware for uploading and processing files
 const processFileUpload = async (req, res, next) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });

@@ -174,8 +174,6 @@ const createAd = async (req, res) => {
 
     const { sections, ...adData } = validation.data;
 
-    console.log(sections);
-
     const newAd = await prisma.ad.create({
       data: {
         ...adData,
