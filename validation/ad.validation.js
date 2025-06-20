@@ -5,7 +5,7 @@ const AdSchema = z.object({
   bannerImage: z.string().url('Invalid target URL').optional(),
   boxImage: z.string().url('Invalid target URL').optional(),
   targetUrl: z.string().url('Invalid target URL'),
-  type: z.enum(['banner', 'box']),
+  type: z.enum(['banner', 'box','both']),
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),
   status: z.enum(['active', 'inactive']),
