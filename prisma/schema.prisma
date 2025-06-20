@@ -529,7 +529,7 @@ model EventIntrested {
   event     Event    @relation(fields: [eventId], references: [id])
 }
 
-model ContactUs{
+model ContactUs {
   id        String   @id @default(uuid())
   name      String
   email     String
@@ -537,4 +537,62 @@ model ContactUs{
   city      String
   message   String
   createdAt DateTime @default(now())
+}
+
+enum AdStatus {
+  Active
+  Inactive
+}
+
+model Section {
+  id              String            @id @default(uuid())
+  name            String            @unique
+  ads             Ad[]              @relation("AdSections")
+  AdStat          AdStat[]
+  UserSectionTime UserSectionTime[]
+}
+
+model Ad {
+  id              String            @id @default(uuid())
+  title           String
+  imageUrl        String
+  targetUrl       String
+  location        String
+  startDate       DateTime
+  endDate         DateTime
+  status          AdStatus
+  impressions     Int               @default(0)
+  clicks          Int               @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime?         @updatedAt
+  stats           AdStat[]
+  sections        Section[]         @relation("AdSections")
+  UserSectionTime UserSectionTime[]
+}
+
+model AdStat {
+  id          String   @id @default(uuid())
+  adId        String
+  ad          Ad       @relation(fields: [adId], references: [id])
+  date        DateTime @default(now())
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+  sectionId   String
+  section     Section  @relation(fields: [sectionId], references: [id])
+
+  @@unique([adId, date, sectionId])
+}
+
+model UserSectionTime {
+  id          String   @id @default(uuid())
+  userId      String
+  sectionId   String
+  date        DateTime @default(now())
+  timeSpentMs Int      @default(0)
+  adId        String
+
+  ad      Ad      @relation(fields: [adId], references: [id])
+  section Section @relation(fields: [sectionId], references: [id])
+
+  @@unique([userId, sectionId, date, adId])
 }
