@@ -218,9 +218,33 @@ const createAd = async (req, res) => {
 
 const getAllAds = async (req, res) => {
   try {
-    const ads = await prisma.ad.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+    const { type } = req.query;
+    if (
+      type &&
+      !['box', 'banner', 'both'].includes(type.trim().toLowerCase())
+    ) {
+      throw new ApiError(
+        402,
+        "Send correct type, It should be 'box','banner','both'",
+      );
+    }
+
+    let ads;
+
+    if (type) {
+      ads = await prisma.ad.findMany({
+        where: {
+          type: {
+            in: [type.trim().toLowerCase(), 'both'],
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+    } else {
+      ads = await prisma.ad.findMany({
+        orderBy: { createdAt: 'desc' },
+      });
+    }
 
     if (!ads) {
       throw new ApiError(500, 'Internal server error', 'No ads available');
@@ -246,6 +270,13 @@ const getAdBySection = async (req, res) => {
     if (!section) {
       throw new ApiError(404, 'Section is required', 'Missing section');
     }
+    const { type = 'box' } = req.query;
+    if (!['box', 'banner', 'both'].includes(type.trim().toLowerCase())) {
+      throw new ApiError(
+        402,
+        "Send correct type, It should be 'box','banner','both'",
+      );
+    }
     const ads = await prisma.ad.findMany({
       where: {
         sections: {
@@ -261,6 +292,9 @@ const getAdBySection = async (req, res) => {
         },
         endDate: {
           gte: new Date(),
+        },
+        type: {
+          in: [type.trim().toLowerCase(), 'both'],
         },
       },
       orderBy: { createdAt: 'desc' },
