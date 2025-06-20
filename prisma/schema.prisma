@@ -594,6 +594,7 @@ model Ad {
 enum AdType {
   box
   banner
+  both
 }
 
 model AdStat {
