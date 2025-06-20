@@ -41,6 +41,14 @@ const getAdAnalytics = async (req, res) => {
       adId,
     );
 
+    if (!retrievedData) {
+      throw new ApiError(
+        404,
+        'No data found for the specified period',
+        'No data',
+      );
+    }
+
     return res
       .status(200)
       .json(
@@ -214,6 +222,10 @@ const getAllAds = async (req, res) => {
       orderBy: { createdAt: 'desc' },
     });
 
+    if (!ads) {
+      throw new ApiError(500, 'Internal server error', 'No ads available');
+    }
+
     return res
       .status(200)
       .json(new ApiResponse(200, ads, 'All ads fetched successfully'));
@@ -238,12 +250,12 @@ const getAdBySection = async (req, res) => {
       where: {
         sections: {
           some: {
-            section: {
-              in: [section, 'all'],
+            name: {
+              in: [section.trim().toLowerCase()],
             },
           },
         },
-        status: 'ACTIVE',
+        status: 'active',
         startDate: {
           lte: new Date(),
         },
@@ -254,7 +266,7 @@ const getAdBySection = async (req, res) => {
       orderBy: { createdAt: 'desc' },
     });
 
-    if (!ads.length) {
+    if (!ads) {
       throw new ApiError(500, 'Internal server error', 'No ads available');
     }
     return res
