@@ -319,6 +319,8 @@ const otpVerification = async (req, res, next) => {
         .json(new ApiResponse(404, null, 'User not found!'));
     }
 
+    const { password, ...userDetails } = user;
+
     // Generate JWT token
     const token = jwt.sign(
       {
@@ -348,7 +350,13 @@ const otpVerification = async (req, res, next) => {
 
     res
       .status(200)
-      .json(new ApiResponse(200, token, 'User logged in successfully'));
+      .json(
+        new ApiResponse(
+          200,
+          { token, userDetails },
+          'User logged in successfully',
+        ),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in OTP verification');
     if (error instanceof ApiError) {
