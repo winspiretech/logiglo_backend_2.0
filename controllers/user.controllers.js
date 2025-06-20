@@ -15,36 +15,45 @@ const generateOtp = () => {
 
 const signupController = async (req, res, next) => {
   try {
-    // return res.send(req.body)
+    // Validate input
     const validateUser = UserSchema.safeParse(req.body);
     if (!validateUser.success) {
       throw new ApiError(400, 'Validation Error', validateUser.error.errors);
     }
-    if (validateUser) {
-      const existingUser = await prisma.user.findFirst({
-        where: {
-          OR: [{ email: req.body.email }, { mobileNo: req.body.mobileNo }],
+
+    // Check if user exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ email: req.body.email }, { mobileNo: req.body.mobileNo }],
+      },
+    });
+    if (existingUser) {
+      throw new ApiError(409, 'User already exists');
+    }
+
+    // Create new user along with default notification preferences
+    const newUser = await prisma.user.create({
+      data: {
+        ...req.body,
+        role: 'user',
+        verified: false,
+        notificationPreferences: {
+          create: {}, // this triggers default true values as per your Prisma model
         },
-      });
-      if (existingUser) {
-        throw new ApiError(409, 'User alredy exists');
-      }
-      const newUser = await prisma.user.create({
-        data: {
-          ...req.body,
-          role: 'user',
-          verified: false,
-        },
-      });
-      if (newUser) {
-        const { password, ...userData } = newUser;
-        res
-          .status(201)
-          .json(new ApiResponse(201, userData, 'User created successfully'));
-      }
+      },
+      include: {
+        notificationPreferences: true, // include to return if you want
+      },
+    });
+
+    if (newUser) {
+      const { password, ...userData } = newUser;
+      return res
+        .status(201)
+        .json(new ApiResponse(201, userData, 'User created successfully'));
     }
   } catch (error) {
-    console.log(error.message || 'Something went wrong in User signup');
+    console.error(error.message || 'Something went wrong in User signup');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
