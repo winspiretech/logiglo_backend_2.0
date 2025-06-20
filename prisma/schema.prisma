@@ -58,40 +58,40 @@ enum NotificationType {
 }
 
 model User {
-  id                     String             @id @default(uuid())
-  name                   String
-  email                  String?            @unique
-  password               String?
-  verified               Boolean?           @default(false)
-  role                   String?            @default("user")
-  mobileNo               String?            @unique
-  country                String?
-  city                   String?
-  address                String?
-  postalCode             String?
-  profilePic             String?
-  bio                    String?
-  online                 Boolean?           @default(false)
-  lastSeen               DateTime?
-  rating                 Float?             @default(0)
-  accountType            String?            @default("personal")
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
-  quotePost              QuotePost[]
-  quoteReply             QuoteReply[]
-  quoteLike              QuoteLike[]        @relation("UserToQuoteLike")
-  generalPost            GeneralPost[]      @relation("UserToGeneralPost")
-  generalReply           GeneralReply[]
-  generalLike            GeneralLike[]      @relation("UserToGeneralLike")
-  blog                   Blog[]
-  Course                 Course[]
-  Event                  Event[]
-  receivedNotifications  Notification[]     @relation("RecipientNotifications")
+  id                      String                      @id @default(uuid())
+  name                    String
+  email                   String?                     @unique
+  password                String?
+  verified                Boolean?                    @default(false)
+  role                    String?                     @default("user")
+  mobileNo                String?                     @unique
+  country                 String?
+  city                    String?
+  address                 String?
+  postalCode              String?
+  profilePic              String?
+  bio                     String?
+  online                  Boolean?                    @default(false)
+  lastSeen                DateTime?
+  rating                  Float?                      @default(0)
+  accountType             String?                     @default("personal")
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+  quotePost               QuotePost[]
+  quoteReply              QuoteReply[]
+  quoteLike               QuoteLike[]                 @relation("UserToQuoteLike")
+  generalPost             GeneralPost[]               @relation("UserToGeneralPost")
+  generalReply            GeneralReply[]
+  generalLike             GeneralLike[]               @relation("UserToGeneralLike")
+  blog                    Blog[]
+  Course                  Course[]
+  Event                   Event[]
+  receivedNotifications   Notification[]              @relation("RecipientNotifications")
   notificationPreferences UserNotificationPreference?
-  Rating                 Rating[]
-  BlogComment            BlogComment[]
-  RequestToConnect       RequestToConnect[]
-  otps                   Otp[]
+  Rating                  Rating[]
+  BlogComment             BlogComment[]
+  RequestToConnect        RequestToConnect[]
+  otps                    Otp[]
 }
 
 // schema.prisma
@@ -190,28 +190,26 @@ model QuotePost {
   incotermInfo String? // Description or info bound to the selected Incoterm
 
   // Relations
-  quoteReply    QuoteReply[]
-  quoteLike     QuoteLike[]        @relation("PostToQuoteLike")
-  subCategory   ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
-  mainCategory  ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user          User               @relation(fields: [userId], references: [id])
-
+  quoteReply   QuoteReply[]
+  quoteLike    QuoteLike[]        @relation("PostToQuoteLike")
+  subCategory  ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
+  mainCategory ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
+  user         User               @relation(fields: [userId], references: [id])
 }
 
 model QuoteReply {
-  id              String         @id @default(uuid())
+  id              String       @id @default(uuid())
   userId          String
   postId          String
   parentReplyId   String?
   description     String?
-  createdAt       DateTime       @default(now())
-  status          String?        @default("pending")
+  createdAt       DateTime     @default(now())
+  status          String?      @default("pending")
   rejectionReason String?
-  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post            QuotePost      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  parentReply     QuoteReply?    @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
-  childReplies    QuoteReply[]   @relation("QuoteReplyToReply")
-
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post            QuotePost    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentReply     QuoteReply?  @relation("QuoteReplyToReply", fields: [parentReplyId], references: [id])
+  childReplies    QuoteReply[] @relation("QuoteReplyToReply")
 }
 
 model QuoteLike {
@@ -239,12 +237,11 @@ model GeneralPost {
   generalPostMainCategory String?
   generalPostSubCategory  String?
 
-  user          User               @relation("UserToGeneralPost", fields: [userId], references: [id])
-  MainCategory  ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  SubCategory   ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
-  generalReply  GeneralReply[]
-  generalLike   GeneralLike[]      @relation("PostToGeneralLike")
-
+  user         User               @relation("UserToGeneralPost", fields: [userId], references: [id])
+  MainCategory ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
+  SubCategory  ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  generalReply GeneralReply[]
+  generalLike  GeneralLike[]      @relation("PostToGeneralLike")
 }
 
 model GeneralReply {
@@ -260,7 +257,6 @@ model GeneralReply {
   post            GeneralPost    @relation(fields: [postId], references: [id], onDelete: Cascade)
   parentReply     GeneralReply?  @relation("GeneralReplyToReply", fields: [parentReplyId], references: [id])
   childReplies    GeneralReply[] @relation("GeneralReplyToReply")
-
 }
 
 model GeneralLike {
@@ -272,19 +268,19 @@ model GeneralLike {
 }
 
 model Blog {
-  id               String         @id @default(uuid())
-  title            String
-  description      String
-  authorId         String
-  author           User           @relation(fields: [authorId], references: [id])
-  status           String
-  createdAt        DateTime       @default(now())
-  image_url        String[]
-  categoryId       String?
-  category         BlogCategory?  @relation(fields: [categoryId], references: [id])
+  id          String        @id @default(uuid())
+  title       String
+  description String
+  authorId    String
+  author      User          @relation(fields: [authorId], references: [id])
+  status      String
+  createdAt   DateTime      @default(now())
+  image_url   String[]
+  categoryId  String?
+  category    BlogCategory? @relation(fields: [categoryId], references: [id])
 
-  isArchived       Boolean        @default(false)
-  unArchiveReasons String[]       @default([])
+  isArchived       Boolean       @default(false)
+  unArchiveReasons String[]      @default([])
   BlogComment      BlogComment[]
 }
 
@@ -295,21 +291,21 @@ enum EventMode {
 }
 
 model Event {
-  id               String           @id @default(uuid())
-  authorId         String
-  coverImages      String[]
-  author           User             @relation(fields: [authorId], references: [id])
-  eventTitle       String
-  organizer        String
-  countryCode      String?
-  contactNumber    String?
-  emailAddress     String?
-  description      String
-  mode             EventMode
-  location         String?
-  startDate        DateTime
-  endDate          DateTime
-  createdAt        DateTime         @default(now())
+  id            String    @id @default(uuid())
+  authorId      String
+  coverImages   String[]
+  author        User      @relation(fields: [authorId], references: [id])
+  eventTitle    String
+  organizer     String
+  countryCode   String?
+  contactNumber String?
+  emailAddress  String?
+  description   String
+  mode          EventMode
+  location      String?
+  startDate     DateTime
+  endDate       DateTime
+  createdAt     DateTime  @default(now())
 
   isArchived       Boolean          @default(false)
   unArchiveReasons String[]         @default([])
@@ -369,7 +365,7 @@ enum EnquiryStatus {
 }
 
 model CourseEnquiry {
-  id                    String         @id @default(uuid())
+  id                    String   @id @default(uuid())
   institutionName       String
   institutionType       String
   contactPersonName     String
@@ -378,10 +374,10 @@ model CourseEnquiry {
   email                 String
   website               String
   message               String
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
-  status                EnquiryStatus  @default(pending)
+  status EnquiryStatus @default(pending)
 }
 
 model CountriesData {
@@ -410,52 +406,53 @@ model CitiesData {
 
 // Notification Model
 model Notification {
-  id                    String                    @id @default(uuid())
-  recipientId           String
-  recipient             User                      @relation("RecipientNotifications", fields: [recipientId], references: [id], onDelete: Cascade)
-  type                  String                    // e.g., QUOTE_POST_CREATED, QUOTE_POST_ACCEPTED
-  message               String
-  quotePostId           String?                   // Optional reference to QuotePost
-  quoteReplyId          String?                   // Optional reference to QuoteReply
-  generalPostId         String?                   // Optional reference to GeneralPost
-  generalReplyId        String?                   // Optional reference to GeneralPostReply
-  createdAt             DateTime                  @default(now())
-  updatedAt             DateTime                  @updatedAt
+  id             String   @id @default(uuid())
+  recipientId    String
+  recipient      User     @relation("RecipientNotifications", fields: [recipientId], references: [id], onDelete: Cascade)
+  type           String // e.g., QUOTE_POST_CREATED, QUOTE_POST_ACCEPTED
+  message        String
+  quotePostId    String? // Optional reference to QuotePost
+  quoteReplyId   String? // Optional reference to QuoteReply
+  generalPostId  String? // Optional reference to GeneralPost
+  generalReplyId String? // Optional reference to GeneralPostReply
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 // User Notification Preferences Model
 model UserNotificationPreference {
-  id                    String                    @id @default(uuid())
-  userId                String                    @unique
-  user                  User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  quotePostCreation     Boolean                   @default(true)
-  quotePostModeration   Boolean                   @default(true)
-  quotePostRejected     Boolean                   @default(true)
-  quoteReplyCreation    Boolean                   @default(true)
-  quoteReplyModeration  Boolean                   @default(true)
-  quoteReplyRejected    Boolean                   @default(true)
-  generalPostCreation   Boolean                   @default(true)
-  generalPostModeration Boolean                   @default(true)
-  generalPostRejected   Boolean                   @default(true)
-  generalReplyCreation  Boolean                   @default(true)
-  generalReplyModeration Boolean                  @default(true)
-  generalReplyRejected  Boolean                   @default(true)
-  createdAt             DateTime                  @default(now())
-  updatedAt             DateTime                  @updatedAt
+  id                     String   @id @default(uuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quotePostCreation      Boolean  @default(true)
+  quotePostModeration    Boolean  @default(true)
+  quotePostRejected      Boolean  @default(true)
+  quoteReplyCreation     Boolean  @default(true)
+  quoteReplyModeration   Boolean  @default(true)
+  quoteReplyRejected     Boolean  @default(true)
+  generalPostCreation    Boolean  @default(true)
+  generalPostModeration  Boolean  @default(true)
+  generalPostRejected    Boolean  @default(true)
+  generalReplyCreation   Boolean  @default(true)
+  generalReplyModeration Boolean  @default(true)
+  generalReplyRejected   Boolean  @default(true)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
 
 // Email Server Configuration Model
 model EmailServerConfig {
-  id                    String                    @id @default(uuid())
-  host                  String
-  port                  Int
-  secure                Boolean
-  authUser              String
-  authPass              String
-  fromEmail             String
-  createdAt             DateTime                  @default(now())
-  updatedAt             DateTime                  @updatedAt
+  id        String   @id @default(uuid())
+  host      String
+  port      Int
+  secure    Boolean
+  authUser  String
+  authPass  String
+  fromEmail String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
 model LandingMenuItems {
   id      String  @id @default(uuid())
   name    String
@@ -563,8 +560,8 @@ model ContactUs {
 }
 
 enum AdStatus {
-  Active
-  Inactive
+  active
+  inactive
 }
 
 model Section {
@@ -578,9 +575,10 @@ model Section {
 model Ad {
   id              String            @id @default(uuid())
   title           String
-  imageUrl        String
+  bannerImage     String?
+  boxImage        String?
   targetUrl       String
-  location        String
+  type            AdType
   startDate       DateTime
   endDate         DateTime
   status          AdStatus
@@ -591,6 +589,12 @@ model Ad {
   stats           AdStat[]
   sections        Section[]         @relation("AdSections")
   UserSectionTime UserSectionTime[]
+}
+
+enum AdType {
+  box
+  banner
+  both
 }
 
 model AdStat {
@@ -619,12 +623,13 @@ model UserSectionTime {
 
   @@unique([userId, sectionId, date, adId])
 }
+
 model Otp {
-  id   String @id @default(uuid())
-  user User   @relation(fields: [userId], references: [id])
-  userId String
-  otpCode String
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  otpCode   String
   expiresAt DateTime
   createdAt DateTime @default(now())
-  verfied Boolean @default(false)
+  verfied   Boolean  @default(false)
 }
