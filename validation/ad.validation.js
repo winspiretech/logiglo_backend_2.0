@@ -14,6 +14,7 @@ const AdSchema = z.object({
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   sections: z.array(z.string().uuid()),
+  subSections: z.array(z.string().uuid()).optional(),
 });
 
 module.exports = AdSchema;
