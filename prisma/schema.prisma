@@ -570,6 +570,19 @@ model Section {
   ads             Ad[]              @relation("AdSections")
   AdStat          AdStat[]
   UserSectionTime UserSectionTime[]
+  SubSection      SubSection[]
+  show            Boolean           @default(true)
+}
+
+model SubSection {
+  id        String  @id @default(uuid())
+  name      String
+  sectionId String
+  section   Section @relation(fields: [sectionId], references: [id])
+  ads       Ad[]    @relation("AdSubSections")
+  show            Boolean           @default(true)
+
+  @@unique([name, sectionId])
 }
 
 model Ad {
@@ -588,6 +601,7 @@ model Ad {
   updatedAt       DateTime?         @updatedAt
   stats           AdStat[]
   sections        Section[]         @relation("AdSections")
+  subSections     SubSection[]      @relation("AdSubSections")
   UserSectionTime UserSectionTime[]
 }
 
