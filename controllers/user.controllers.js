@@ -118,7 +118,11 @@ const loginUser = async (req, res, next) => {
       .json(
         new ApiResponse(
           200,
-          { userId: existingUser.id },
+          { userId: existingUser.id,
+            profilePic: existingUser.profilePic,
+            name: existingUser.name,
+            email: existingUser.email
+           },
           'OTP sent to your email.',
         ),
       );
