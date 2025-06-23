@@ -111,7 +111,6 @@ const loginUser = async (req, res, next) => {
         },
       });
     } else {
-      
       // Create new OTP record if not exists
       await prisma.otp.create({
         data: {
