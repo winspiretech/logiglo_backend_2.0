@@ -101,6 +101,35 @@ const loginUser = async (req, res, next) => {
       },
     });
 
+    if (existingOtp) {
+      // Update existing OTP record
+      await prisma.otp.update({
+        where: { userId: existingUser.id },
+        data: {
+          otpCode: otp,
+          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+          createdAt: new Date(),
+          resendCount: 0,
+          blockedUntil: null,
+          verfied: false,
+        },
+      });
+    } else {
+      
+      // Create new OTP record if not exists
+      await prisma.otp.create({
+        data: {
+          userId: existingUser.id,
+          otpCode: otp,
+          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+          resendCount: 0,
+          blockedUntil: null,
+          verfied: false,
+        },
+      });
+    }
+
+
     // Send OTP email
     await sendEmail({
       to: email,
