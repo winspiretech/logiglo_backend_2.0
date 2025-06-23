@@ -32,7 +32,7 @@ router.patch('/change-role', changeUserRole);
 
 router.post('/otp-verification', otpVerification);
 
-router.post("/resend-otp", resendOtp)
+router.post('/resend-otp', resendOtp);
 
 // api/me route to check the token
 router.get(
