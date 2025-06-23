@@ -580,7 +580,7 @@ model SubSection {
   sectionId String
   section   Section @relation(fields: [sectionId], references: [id])
   ads       Ad[]    @relation("AdSubSections")
-  show            Boolean           @default(true)
+  show      Boolean @default(true)
 
   @@unique([name, sectionId])
 }
@@ -639,11 +639,14 @@ model UserSectionTime {
 }
 
 model Otp {
-  id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  otpCode   String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  verfied   Boolean  @default(false)
+  id            String   @id @default(uuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @unique
+  otpCode       String
+  expiresAt     DateTime
+  createdAt     DateTime @default(now())
+  verfied       Boolean  @default(false)
+  resendCount   Int      @default(0)
+  blockedUntil  DateTime?
 }
+
