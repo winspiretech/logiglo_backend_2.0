@@ -243,11 +243,35 @@ const getAllAds = async (req, res) => {
             in: [type.trim().toLowerCase(), 'both'],
           },
         },
+        include: {
+          sections: true,
+          subSections: {
+            include: {
+              section: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
         orderBy: { createdAt: 'desc' },
       });
     } else {
       ads = await prisma.ad.findMany({
         orderBy: { createdAt: 'desc' },
+        include: {
+          sections: true,
+          subSections: {
+            include: {
+              section: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
     }
 
@@ -554,9 +578,9 @@ const getAllSections = async (req, res) => {
         id: true,
         name: true,
       },
-      orderBy: {
-        name: 'asc',
-      },
+      // orderBy: {
+      //   name: 'asc',
+      // },
     });
 
     return res
@@ -802,9 +826,9 @@ const getAllSectionsWithSubSections = async (req, res) => {
             name: true,
             show: true,
           },
-          orderBy: {
-            name: 'asc',
-          },
+          // orderBy: {
+          //   name: 'asc',
+          // },
         },
       },
       orderBy: {
