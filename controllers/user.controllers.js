@@ -153,7 +153,9 @@ const loginUser = async (req, res, next) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
@@ -417,10 +419,12 @@ const resendOtp = async (req, res) => {
 
     // Check if blocked
     if (existingOtp.blockedUntil && existingOtp.blockedUntil > new Date()) {
-      const minutesLeft = Math.ceil((existingOtp.blockedUntil - new Date()) / 60000);
+      const minutesLeft = Math.ceil(
+        (existingOtp.blockedUntil - new Date()) / 60000,
+      );
       throw new ApiError(
         429,
-        `Maximum resend attempts reached. Try again after ${minutesLeft} minute(s).`
+        `Maximum resend attempts reached. Try again after ${minutesLeft} minute(s).`,
       );
     }
 
@@ -436,7 +440,10 @@ const resendOtp = async (req, res) => {
         },
       });
 
-      throw new ApiError(429, 'Maximum resend attempts reached. Blocked for 10 minutes.');
+      throw new ApiError(
+        429,
+        'Maximum resend attempts reached. Blocked for 10 minutes.',
+      );
     }
 
     // Allow resend, increment resend count
@@ -462,7 +469,9 @@ const resendOtp = async (req, res) => {
       `,
     });
 
-    res.status(200).json(new ApiResponse(200, 'OTP has been resent successfully!'));
+    res
+      .status(200)
+      .json(new ApiResponse(200, 'OTP has been resent successfully!'));
   } catch (error) {
     console.error(error);
     if (error instanceof ApiError) {
@@ -470,11 +479,12 @@ const resendOtp = async (req, res) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
-
 
 module.exports = {
   signupController,
@@ -484,5 +494,5 @@ module.exports = {
   getAdmins,
   changeUserRole,
   otpVerification,
-  resendOtp
+  resendOtp,
 };

@@ -65,7 +65,18 @@ const loginAdmin = async (req, res, next) => {
 
     res
       .status(200)
-      .json(new ApiResponse(200, { userId: existingUser.id, name:existingUser.name, email:existingUser.email, profilePic:existingUser.profilePic  }, 'OTP sent to your email.'));
+      .json(
+        new ApiResponse(
+          200,
+          {
+            userId: existingUser.id,
+            name: existingUser.name,
+            email: existingUser.email,
+            profilePic: existingUser.profilePic,
+          },
+          'OTP sent to your email.',
+        ),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
