@@ -4,6 +4,7 @@ const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { sendEmail } = require('../utils/sendEmail.js');
+const { profile } = require('console');
 
 const generateOtp = () => {
   const otp = crypto.randomInt(100000, 1000000);
@@ -26,50 +27,31 @@ const loginAdmin = async (req, res, next) => {
       throw new ApiError(404, 'User not found');
     }
 
+    // const { password, role, name, id, email: useremail, profilePic } = existingUser;
+
     const comparedPassword = await bcrypt.compare(pass, existingUser.password);
     if (!comparedPassword) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
+    // ✅ Check for admin role here
     if (existingUser.role !== 'admin') {
       throw new ApiError(403, 'Access denied: Only admin can login');
     }
 
-    // Generate new OTP
+    // Generate OTP
     const otp = generateOtp();
 
-    // Check if OTP record exists for this user
-    const existingOtp = await prisma.otp.findUnique({
-      where: { userId: existingUser.id },
+    // Store OTP in database
+    await prisma.otp.create({
+      data: {
+        userId: existingUser.id,
+        otpCode: otp,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // expires in 5 minutes
+      },
     });
 
-    if (existingOtp) {
-      // Update existing OTP
-      await prisma.otp.update({
-        where: { userId: existingUser.id },
-        data: {
-          otpCode: otp,
-          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
-          createdAt: new Date(),
-          resendCount: 0,
-          blockedUntil: null,
-          verfied: false,
-        },
-      });
-    } else {
-      // Create new OTP record
-      await prisma.otp.create({
-        data: {
-          userId: existingUser.id,
-          otpCode: otp,
-          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
-          resendCount: 0,
-          blockedUntil: null,
-          verfied: false,
-        },
-      });
-    }
-
+    // Send OTP email
     await sendEmail({
       to: email,
       subject: 'Your OTP for Logiglo',
@@ -81,20 +63,11 @@ const loginAdmin = async (req, res, next) => {
       `,
     });
 
-    res.status(200).json(
-      new ApiResponse(
-        200,
-        {
-          userId: existingUser.id,
-          name: existingUser.name,
-          email: existingUser.email,
-          profilePic: existingUser.profilePic,
-        },
-        'OTP sent to your email.',
-      ),
-    );
+    res
+      .status(200)
+      .json(new ApiResponse(200, { userId: existingUser.id, name:existingUser.name, email:existingUser.email, profilePic:existingUser.profilePic  }, 'OTP sent to your email.'));
   } catch (error) {
-    console.error(error.message || 'Something went wrong in Admin login');
+    console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
