@@ -10,7 +10,6 @@ const {
   getAdmins,
   changeUserRole,
   otpVerification,
-  resendOtp,
 } = require('../controllers/user.controllers');
 const router = express.Router();
 
@@ -31,8 +30,6 @@ router.get('/admins', getAdmins);
 router.patch('/change-role', changeUserRole);
 
 router.post('/otp-verification', otpVerification);
-
-router.post('/resend-otp', resendOtp);
 
 // api/me route to check the token
 router.get(
