@@ -578,9 +578,9 @@ const getAllSections = async (req, res) => {
         id: true,
         name: true,
       },
-      orderBy: {
-        name: 'asc',
-      },
+      // orderBy: {
+      //   name: 'asc',
+      // },
     });
 
     return res
@@ -826,9 +826,9 @@ const getAllSectionsWithSubSections = async (req, res) => {
             name: true,
             show: true,
           },
-          orderBy: {
-            name: 'asc',
-          },
+          // orderBy: {
+          //   name: 'asc',
+          // },
         },
       },
       orderBy: {
