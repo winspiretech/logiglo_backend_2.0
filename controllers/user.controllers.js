@@ -92,9 +92,13 @@ const loginUser = async (req, res, next) => {
     // Generate OTP
     const otp = generateOtp();
 
-    // Check if OTP record already exists for this user
-    const existingOtp = await prisma.otp.findUnique({
-      where: { userId: existingUser.id },
+    // Store OTP in database
+    await prisma.otp.create({
+      data: {
+        userId: existingUser.id, // ✅ You must link OTP with userId
+        otpCode: otp,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // expires in 5 minutes
+      },
     });
 
     if (existingOtp) {
@@ -124,6 +128,7 @@ const loginUser = async (req, res, next) => {
       });
     }
 
+
     // Send OTP email
     await sendEmail({
       to: email,
@@ -136,18 +141,19 @@ const loginUser = async (req, res, next) => {
       `,
     });
 
-    res.status(200).json(
-      new ApiResponse(
-        200,
-        {
-          userId: existingUser.id,
-          profilePic: existingUser.profilePic,
-          name: existingUser.name,
-          email: existingUser.email,
-        },
-        'OTP sent to your email.',
-      ),
-    );
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { userId: existingUser.id,
+            profilePic: existingUser.profilePic,
+            name: existingUser.name,
+            email: existingUser.email
+           },
+          'OTP sent to your email.',
+        ),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
@@ -397,98 +403,6 @@ const otpVerification = async (req, res, next) => {
   }
 };
 
-const resendOtp = async (req, res) => {
-  ``;
-  try {
-    const { email } = req.body;
-
-    // Find user by email
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (!existingUser) {
-      throw new ApiError(404, 'User not found');
-    }
-
-    // Find OTP by unique userId
-    const existingOtp = await prisma.otp.findUnique({
-      where: { userId: existingUser.id },
-    });
-
-    if (!existingOtp) {
-      throw new ApiError(404, 'OTP record not found for this user');
-    }
-
-    // Check if blocked
-    if (existingOtp.blockedUntil && existingOtp.blockedUntil > new Date()) {
-      const minutesLeft = Math.ceil(
-        (existingOtp.blockedUntil - new Date()) / 60000,
-      );
-      throw new ApiError(
-        429,
-        `Maximum resend attempts reached. Try again after ${minutesLeft} minute(s).`,
-      );
-    }
-
-    const newOtp = generateOtp();
-
-    // If resendCount >= 3, block for 10 minutes
-    if (existingOtp.resendCount >= 3) {
-      await prisma.otp.update({
-        where: { userId: existingUser.id },
-        data: {
-          blockedUntil: new Date(Date.now() + 10 * 60 * 1000),
-          resendCount: 0, // reset count after blocking
-        },
-      });
-
-      throw new ApiError(
-        429,
-        'Maximum resend attempts reached. Blocked for 10 minutes.',
-      );
-    }
-
-    // Allow resend, increment resend count
-    await prisma.otp.update({
-      where: { userId: existingUser.id },
-      data: {
-        otpCode: newOtp,
-        expiresAt: new Date(Date.now() + 5 * 60 * 1000),
-        createdAt: new Date(),
-        resendCount: { increment: 1 },
-        blockedUntil: null,
-      },
-    });
-
-    await sendEmail({
-      to: email,
-      subject: 'Your OTP for Logiglo',
-      html: `
-        <h3>Hello ${existingUser.name},</h3>
-        <p>Your new OTP code is:</p>
-        <h2>${newOtp}</h2>
-        <p>This OTP will expire in 5 minutes.</p>
-      `,
-    });
-
-    res
-      .status(200)
-      .json(new ApiResponse(200, 'OTP has been resent successfully!'));
-  } catch (error) {
-    console.error(error);
-    if (error instanceof ApiError) {
-      return res.status(error.statusCode).json(error);
-    } else {
-      return res
-        .status(500)
-        .json(
-          new ApiError(500, 'Internal server error', error.message || null),
-        );
-    }
-  }
-};
-
 module.exports = {
   signupController,
   loginUser,
@@ -497,5 +411,4 @@ module.exports = {
   getAdmins,
   changeUserRole,
   otpVerification,
-  resendOtp,
 };
