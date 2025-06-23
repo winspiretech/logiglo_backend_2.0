@@ -243,11 +243,35 @@ const getAllAds = async (req, res) => {
             in: [type.trim().toLowerCase(), 'both'],
           },
         },
+        include : {
+          sections : true,
+          subSections : {
+            include : {
+              section : {
+                select : {
+                  name : true
+                }
+              }
+            }
+          }
+        },
         orderBy: { createdAt: 'desc' },
       });
     } else {
       ads = await prisma.ad.findMany({
         orderBy: { createdAt: 'desc' },
+        include : {
+          sections : true,
+          subSections : {
+            include : {
+              section : {
+                select : {
+                  name : true
+                }
+              }
+            }
+          }
+        },
       });
     }
 
