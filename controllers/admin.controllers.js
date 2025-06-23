@@ -16,7 +16,7 @@ const loginAdmin = async (req, res, next) => {
     const { email, password: pass } = req.body;
 
     if (!email || !pass) {
-      throw new ApiError(400, 'Missing required fields');
+      throw new ApiError(400, 'Missing required field');
     }
 
     const existingUser = await prisma.user.findUnique({
@@ -27,29 +27,50 @@ const loginAdmin = async (req, res, next) => {
       throw new ApiError(404, 'User not found');
     }
 
-    // const { password, role, name, id, email: useremail, profilePic } = existingUser;
+    // ✅ Check for admin role here
+    if (existingUser.role !== 'admin') {
+      throw new ApiError(403, 'Access denied: Only admin can login');
+    }
 
     const comparedPassword = await bcrypt.compare(pass, existingUser.password);
     if (!comparedPassword) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // ✅ Check for admin role here
-    if (existingUser.role !== 'admin') {
-      throw new ApiError(403, 'Access denied: Only admin can login');
-    }
-
     // Generate OTP
     const otp = generateOtp();
 
-    // Store OTP in database
-    await prisma.otp.create({
-      data: {
-        userId: existingUser.id,
-        otpCode: otp,
-        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // expires in 5 minutes
-      },
+    // Check if OTP already exists for this user
+    const existingOtp = await prisma.otp.findUnique({
+      where: { userId: existingUser.id },
     });
+
+    if (existingOtp) {
+      // Update existing OTP
+      await prisma.otp.update({
+        where: { userId: existingUser.id },
+        data: {
+          otpCode: otp,
+          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+          createdAt: new Date(),
+          resendCount: 0,
+          blockedUntil: null,
+          verfied: false,
+        },
+      });
+    } else {
+      // Create new OTP
+      await prisma.otp.create({
+        data: {
+          userId: existingUser.id,
+          otpCode: otp,
+          expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+          resendCount: 0,
+          blockedUntil: null,
+          verfied: false,
+        },
+      });
+    }
 
     // Send OTP email
     await sendEmail({
@@ -63,9 +84,18 @@ const loginAdmin = async (req, res, next) => {
       `,
     });
 
-    res
-      .status(200)
-      .json(new ApiResponse(200, { userId: existingUser.id, name:existingUser.name, email:existingUser.email, profilePic:existingUser.profilePic  }, 'OTP sent to your email.'));
+    res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          userId: existingUser.id,
+          profilePic: existingUser.profilePic,
+          name: existingUser.name,
+          email: existingUser.email,
+        },
+        'OTP sent to your email.',
+      ),
+    );
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
