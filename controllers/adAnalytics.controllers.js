@@ -71,48 +71,33 @@ const getAdAnalytics = async (req, res) => {
 
 const createDailyAdStatAnalytics = async (req, res) => {
   try {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-    today.setUTCDate(today.getUTCDate() - 40);
-
     const { adId, section } = req.params;
-
     const { changable } = req.query;
 
     if (!adId) throw new ApiError(404, 'Ad ID is required', 'Missing ad ID');
-    if (!section)
-      throw new ApiError(404, 'Section is required', 'Missing section');
+    if (!section) throw new ApiError(404, 'Section is required', 'Missing section');
 
     if (!['impression', 'click'].includes(changable)) {
       throw new ApiError(
         400,
         'Invalid changable value',
-        "Must be 'impression' or 'click'",
+        "Must be 'impression' or 'click'"
       );
     }
 
-    // const sectionData = await prisma.section.findUnique({
-    //     where : {
-    //         names : section
-    //     }
-    // });
+    const matchedSection = await prisma.section.findUnique({
+      where: { name: section.trim().toLowerCase() },
+    });
 
-    const sections = await prisma.section.findMany({});
-
-    const allSections = sections.map((s) => s.name);
-
-    const isContaining = allSections.includes(section);
-
-    if (!isContaining) {
-      throw new ApiError(404, `Use sections as ${[...allSections]}`);
+    if (!matchedSection) {
+      throw new ApiError(
+        404,
+        'Invalid section',
+        'Section not found in database'
+      );
     }
 
-    const dataId = sections.filter((s) => s.name === section)[0].id;
-
-    const data = {
-      impressions: changable === 'impression' ? { increment: 1 } : undefined,
-      clicks: changable === 'click' ? { increment: 1 } : undefined,
-    };
+    const dataId = matchedSection.id;
 
     const adWithSections = await prisma.ad.findUnique({
       where: { id: adId },
@@ -120,20 +105,24 @@ const createDailyAdStatAnalytics = async (req, res) => {
     });
 
     const isSectionLinked = adWithSections?.sections?.some(
-      (s) => s.id === dataId,
+      (s) => s.id === dataId
     );
+
     if (!isSectionLinked) {
       throw new ApiError(
         400,
         'Section not assigned to ad',
-        'Invalid section for this ad',
+        'Invalid section for this ad'
       );
     }
 
-    await prisma.ad.update({
-      where: { id: adId },
-      data,
-    });
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const data = {
+      impressions: changable === 'impression' ? { increment: 1 } : undefined,
+      clicks: changable === 'click' ? { increment: 1 } : undefined,
+    };
 
     await prisma.adStat.upsert({
       where: {
@@ -153,22 +142,20 @@ const createDailyAdStatAnalytics = async (req, res) => {
       },
     });
 
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          `${changable} incremented`,
-          `Ad ${changable} updated successfully`,
-        ),
-      );
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        `${changable} incremented`,
+        `Ad ${changable} updated successfully`
+      )
+    );
   } catch (error) {
     return res
       .status(error instanceof ApiError ? error.statusCode : 500)
       .json(
         error instanceof ApiError
           ? error
-          : new ApiError(500, 'Internal Server Error', error.message || null),
+          : new ApiError(500, 'Internal Server Error', error.message || null)
       );
   }
 };
