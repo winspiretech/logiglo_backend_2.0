@@ -16,6 +16,7 @@ const {
   toggleSectionVisibility,
   toggleSubSectionVisibility,
   getAllSectionsWithSubSections,
+  getIndividualAdDetail,
 } = require('../controllers/adAnalytics.controllers.js');
 const isAdmin = require('../middleware/isAdmin.js');
 
@@ -38,5 +39,6 @@ router.patch(
   isAdmin,
   toggleSubSectionVisibility,
 );
+router.get('/single/:adId', isAdmin, getIndividualAdDetail);
 
 module.exports = router;
