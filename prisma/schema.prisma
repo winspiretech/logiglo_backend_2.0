@@ -645,7 +645,7 @@ model Otp {
   otpCode   String
   expiresAt DateTime
   createdAt DateTime @default(now())
-  verfied   Boolean  @default(false)
+  verified   Boolean  @default(false)
   resendCount   Int      @default(0)
   blockedUntil  DateTime?
 }
