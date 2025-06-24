@@ -967,6 +967,43 @@ const toggleSubSectionVisibility = async (req, res) => {
   }
 };
 
+const getIndividualAdDetail = async (req, res) => {
+  try {
+    const { adId } = req.params;
+    if (!adId) {
+      throw new ApiError(404, 'Ad Id required', 'Ad Id missing');
+    }
+    const adData = await prisma.ad.findUnique({
+      where: {
+        id: adId,
+      },
+      include: {
+        sections: true,
+        subSections: true,
+        stats: true,
+      },
+    });
+    if (!adData) {
+      throw new ApiError(
+        500,
+        'Something went wrong while getting ad detail',
+        'Internal server error',
+      );
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(201, adData, 'Ads data fetched successfully'));
+  } catch (error) {
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message),
+      );
+  }
+};
+
 module.exports = {
   getAdAnalytics,
   getAllAds,
@@ -983,4 +1020,5 @@ module.exports = {
   deleteSubSection,
   toggleSectionVisibility,
   toggleSubSectionVisibility,
+  getIndividualAdDetail,
 };
