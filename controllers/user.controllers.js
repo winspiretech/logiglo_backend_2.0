@@ -364,7 +364,7 @@ const otpVerification = async (req, res, next) => {
 
     const userOtp = await prisma.otp.findFirst({
       where: { userId },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
 
     if (!userOtp) {
@@ -382,7 +382,7 @@ const otpVerification = async (req, res, next) => {
     // ✅ Mark user as verified
     await prisma.user.update({
       where: { id: userId },
-      data: { verified: true }
+      data: { verified: true },
     });
 
     const user = await prisma.user.findUnique({
@@ -390,7 +390,9 @@ const otpVerification = async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(404).json(new ApiResponse(404, null, 'User not found!'));
+      return res
+        .status(404)
+        .json(new ApiResponse(404, null, 'User not found!'));
     }
 
     const { password, ...userDetails } = user;
@@ -401,7 +403,7 @@ const otpVerification = async (req, res, next) => {
         email: user.email,
       },
       process.env.TOKEN_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '7d' },
     );
 
     const cookieOptions = {
@@ -416,27 +418,31 @@ const otpVerification = async (req, res, next) => {
 
     // Delete OTP after successful verification
     await prisma.otp.delete({
-      where: { id: userOtp.id }
+      where: { id: userOtp.id },
     });
 
-    res.status(200).json(
-      new ApiResponse(
-        200,
-        { token, userDetails },
-        'User logged in successfully'
-      )
-    );
-
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { token, userDetails },
+          'User logged in successfully',
+        ),
+      );
   } catch (error) {
     console.log(error.message || 'Something went wrong in OTP verification');
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     } else {
-      return res.status(500).json(new ApiError(500, 'Internal server error', error.message || null));
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
-
 
 const resendOtp = async (req, res) => {
   try {
