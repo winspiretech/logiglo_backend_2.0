@@ -296,51 +296,39 @@ const getAllAds = async (req, res) => {
 const getAdBySection = async (req, res) => {
   try {
     const { section } = req.params;
-    const { type = 'box', subSection } = req.query;
-
     if (!section) {
       throw new ApiError(404, 'Section is required', 'Missing section');
     }
 
-    const validTypes = ['box', 'banner', 'both'];
+    const { type = 'box', subSection } = req.query;
+
     const normalizedType = type.trim().toLowerCase();
-    if (!validTypes.includes(normalizedType)) {
-      throw new ApiError(402, "Send correct type, It should be 'box','banner','both'");
+    if (!['box', 'banner', 'both'].includes(normalizedType)) {
+      throw new ApiError(
+        402,
+        "Send correct type. It should be 'box', 'banner', or 'both'",
+      );
     }
 
     const sectionData = await prisma.section.findMany({
       where: {
-        name: {
-          equals: section.trim(),
-          mode: 'insensitive',
-        },
+        name: section,
       },
       include: {
-        SubSection: subSection
-          ? {
-              where: {
-                name: {
-                  equals: subSection.trim(),
-                  mode: 'insensitive',
-                },
-              },
-              select: {
-                id: true,
-                name: true,
-                show: true,
-              },
-              orderBy: {
-                name: 'asc',
-              },
-            }
-          : false,
-      },
-      orderBy: {
-        name: 'asc',
+        SubSection: {
+          where: {
+            name: subSection,
+          },
+          select: {
+            id: true,
+            name: true,
+            show: true,
+          },
+        },
       },
     });
 
-    if (!sectionData || !sectionData.length) {
+    if (!sectionData?.length) {
       throw new ApiError(404, 'Section not found', `Section ${section} does not exist`);
     }
 
@@ -349,7 +337,7 @@ const getAdBySection = async (req, res) => {
     if (
       sectionItem.show === false ||
       (subSection &&
-        (!sectionItem.SubSection?.length || sectionItem.SubSection[0].show === false))
+        (!sectionItem.SubSection.length || sectionItem.SubSection[0].show === false))
     ) {
       return res.status(400).json(new ApiResponse(400, [], 'Section ads are disabled'));
     }
@@ -372,7 +360,6 @@ const getAdBySection = async (req, res) => {
       },
       type: {
         in: [normalizedType, 'both'],
-        mode: 'insensitive',
       },
       ...(subSection && {
         subSections: {
@@ -394,9 +381,7 @@ const getAdBySection = async (req, res) => {
         subSections: {
           include: {
             section: {
-              select: {
-                name: true,
-              },
+              select: { name: true },
             },
           },
         },
@@ -410,10 +395,11 @@ const getAdBySection = async (req, res) => {
       .json(
         error instanceof ApiError
           ? error
-          : new ApiError(500, 'Internal Server Error', error.message || null)
+          : new ApiError(500, 'Internal Server Error', error.message || null),
       );
   }
 };
+
 
 const updateAd = async (req, res) => {
   try {
