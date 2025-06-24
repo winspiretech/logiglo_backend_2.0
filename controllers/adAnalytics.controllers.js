@@ -296,50 +296,52 @@ const getAllAds = async (req, res) => {
 const getAdBySection = async (req, res) => {
   try {
     const { section } = req.params;
+    const { type = 'box', subSection } = req.query;
+
     if (!section) {
       throw new ApiError(404, 'Section is required', 'Missing section');
     }
 
-    const { type = 'box', subSection } = req.query;
+    const validTypes = ['box', 'banner', 'both'];
+    const normalizedType = type.trim().toLowerCase();
+    if (!validTypes.includes(normalizedType)) {
+      throw new ApiError(402, "Send correct type, It should be 'box','banner','both'");
+    }
 
     const sectionData = await prisma.section.findMany({
       where: {
-        name: section,
+        name: {
+          equals: section.trim(),
+          mode: 'insensitive',
+        },
       },
       include: {
-        SubSection: {
-          where: {
-            name: subSection,
-          },
-          select: {
-            id: true,
-            name: true,
-            show: true,
-          },
-          orderBy: {
-            name: 'asc',
-          },
-        },
+        SubSection: subSection
+          ? {
+              where: {
+                name: {
+                  equals: subSection.trim(),
+                  mode: 'insensitive',
+                },
+              },
+              select: {
+                id: true,
+                name: true,
+                show: true,
+              },
+              orderBy: {
+                name: 'asc',
+              },
+            }
+          : false,
       },
       orderBy: {
         name: 'asc',
       },
     });
 
-    if (!sectionData) {
-      throw new ApiError(
-        404,
-        'Section not found',
-        `Section ${section} does not exist`,
-      );
-    }
-
-    if (!sectionData.length) {
-      throw new ApiError(
-        404,
-        'Section not found',
-        `Section ${section} does not exist`,
-      );
+    if (!sectionData || !sectionData.length) {
+      throw new ApiError(404, 'Section not found', `Section ${section} does not exist`);
     }
 
     const sectionItem = sectionData[0];
@@ -347,26 +349,17 @@ const getAdBySection = async (req, res) => {
     if (
       sectionItem.show === false ||
       (subSection &&
-        (!sectionItem.SubSection.length ||
-          sectionItem.SubSection[0].show === false))
+        (!sectionItem.SubSection?.length || sectionItem.SubSection[0].show === false))
     ) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, [], 'Section ads are disabled'));
-    }
-
-    if (!['box', 'banner', 'both'].includes(type.trim().toLowerCase())) {
-      throw new ApiError(
-        402,
-        "Send correct type, It should be 'box','banner','both'",
-      );
+      return res.status(400).json(new ApiResponse(400, [], 'Section ads are disabled'));
     }
 
     const whereQuery = {
       sections: {
         some: {
           name: {
-            equals: section.trim().toLowerCase(),
+            equals: section.trim(),
+            mode: 'insensitive',
           },
         },
       },
@@ -378,13 +371,15 @@ const getAdBySection = async (req, res) => {
         gte: new Date(),
       },
       type: {
-        in: [type.trim().toLowerCase(), 'both'],
+        in: [normalizedType, 'both'],
+        mode: 'insensitive',
       },
       ...(subSection && {
         subSections: {
           some: {
             name: {
-              equals: subSection.trim().toLowerCase(),
+              equals: subSection.trim(),
+              mode: 'insensitive',
             },
           },
         },
@@ -394,18 +389,28 @@ const getAdBySection = async (req, res) => {
     const ads = await prisma.ad.findMany({
       where: whereQuery,
       orderBy: { createdAt: 'desc' },
+      include: {
+        sections: true,
+        subSections: {
+          include: {
+            section: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
 
-    return res
-      .status(200)
-      .json(new ApiResponse(200, ads, 'Ads fetched successfully'));
+    return res.status(200).json(new ApiResponse(200, ads, 'Ads fetched successfully'));
   } catch (error) {
     return res
       .status(error instanceof ApiError ? error.statusCode : 500)
       .json(
         error instanceof ApiError
           ? error
-          : new ApiError(500, 'Internal Server Error', error.message || null),
+          : new ApiError(500, 'Internal Server Error', error.message || null)
       );
   }
 };
