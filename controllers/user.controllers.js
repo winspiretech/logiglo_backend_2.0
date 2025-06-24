@@ -113,20 +113,18 @@ const loginUser = async (req, res, next) => {
       `,
     });
 
-    res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          {
-            userId: existingUser.id,
-            profilePic: existingUser.profilePic,
-            name: existingUser.name,
-            email: existingUser.email,
-          },
-          'OTP sent to your email.',
-        ),
-      );
+    res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          userId: existingUser.id,
+          profilePic: existingUser.profilePic,
+          name: existingUser.name,
+          email: existingUser.email,
+        },
+        'OTP sent to your email.',
+      ),
+    );
   } catch (error) {
     console.log(error.message || 'Something went wrong in User login');
     if (error instanceof ApiError) {
