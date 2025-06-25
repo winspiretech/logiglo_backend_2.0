@@ -143,15 +143,111 @@ const createDailyAdStatAnalytics = async (req, res) => {
       },
     });
 
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        `${changable} incremented,
+          Ad ${changable} updated successfully`,
+      ),
+    );
+  } catch (error) {
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
+  }
+};
+
+const createBatchAdStatAnalytics = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    today.setUTCDate(today.getUTCDate());
+
+    const entries = req.body;
+
+    if (!Array.isArray(entries) || entries.length === 0) {
+      throw new ApiError(400, 'Request body must be a non-empty array');
+    }
+
+    const sections = await prisma.section.findMany({});
+    const sectionMap = Object.fromEntries(sections.map((s) => [s.name, s.id]));
+
+    const groupedUpdates = {};
+
+    for (const entry of entries) {
+      const { adId, section, changable } = entry;
+
+      if (!adId || !section || !['impression', 'click'].includes(changable)) {
+        continue;
+      }
+
+      const sectionId = sectionMap[section];
+      if (!sectionId) continue;
+
+      const adWithSections = await prisma.ad.findUnique({
+        where: { id: adId },
+        include: { sections: true },
+      });
+
+      const isSectionLinked = adWithSections?.sections?.some(
+        (s) => s.id === sectionId,
+      );
+      if (!isSectionLinked) continue;
+
+      const key = `${adId}_${sectionId}`;
+
+      if (!groupedUpdates[key]) {
+        groupedUpdates[key] = {
+          adId,
+          sectionId,
+          impressions: 0,
+          clicks: 0,
+        };
+      }
+
+      if (changable === 'impression') groupedUpdates[key].impressions += 1;
+      if (changable === 'click') groupedUpdates[key].clicks += 1;
+    }
+
+    for (const key in groupedUpdates) {
+      const { adId, sectionId, impressions, clicks } = groupedUpdates[key];
+
+      const updateData = {
+        impressions: impressions > 0 ? { increment: impressions } : undefined,
+        clicks: clicks > 0 ? { increment: clicks } : undefined,
+      };
+
+      await prisma.ad.update({
+        where: { id: adId },
+        data: updateData,
+      });
+
+      await prisma.adStat.upsert({
+        where: {
+          adId_date_sectionId: {
+            adId,
+            date: today,
+            sectionId,
+          },
+        },
+        update: updateData,
+        create: {
+          adId,
+          sectionId,
+          date: today,
+          impressions,
+          clicks,
+        },
+      });
+    }
+
     return res
       .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          `${changable} incremented`,
-          `Ad ${changable} updated successfully`,
-        ),
-      );
+      .json(new ApiResponse(200, 'Batch analytics updated successfully'));
   } catch (error) {
     return res
       .status(error instanceof ApiError ? error.statusCode : 500)
@@ -997,7 +1093,7 @@ module.exports = {
   getAdAnalytics,
   getAllAds,
   createAd,
-  createDailyAdStatAnalytics,
+  createBatchAdStatAnalytics,
   getAdBySection,
   updateAd,
   deleteSection,

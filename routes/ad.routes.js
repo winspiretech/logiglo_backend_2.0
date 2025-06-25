@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const {
   createAd,
-  createDailyAdStatAnalytics,
   getAdAnalytics,
   getAllAds,
   getAdBySection,
@@ -17,11 +16,13 @@ const {
   toggleSubSectionVisibility,
   getAllSectionsWithSubSections,
   getIndividualAdDetail,
+  createBatchAdStatAnalytics,
 } = require('../controllers/adAnalytics.controllers.js');
 const isAdmin = require('../middleware/isAdmin.js');
+const { isUserLoggedIn } = require('../middleware/isUserLoggedIn.js');
 
 router.post('/create', isAdmin, createAd);
-router.post('/:adId/:section/analytics', isAdmin, createDailyAdStatAnalytics);
+router.post('/:section/analytics', isUserLoggedIn, createBatchAdStatAnalytics);
 router.get('/section/all-section', getAllSections);
 router.get('/analytics/get-analytics/:adId', isAdmin, getAdAnalytics);
 router.get('/all-ads', isAdmin, getAllAds);
