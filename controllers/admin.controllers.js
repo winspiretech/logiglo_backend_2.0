@@ -1,11 +1,13 @@
 const { ApiResponse } = require('../utils/ApiResponse');
+const UserSchema = require('../validation/userSchema.validation.js');
+const EditUserSchema = require('../validation/editUserSchema.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendEmail } = require('../utils/sendEmail.js');
-const { profile } = require('console');
-
+const { success } = require('zod/v4');
 const generateOtp = () => {
   const otp = crypto.randomInt(100000, 1000000);
   return otp.toString();
