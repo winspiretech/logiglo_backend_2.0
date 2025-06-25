@@ -8,7 +8,7 @@ require('dotenv').config();
 const baseUploadPath =
   process.env.UPLOAD_DIR || path.join(__dirname, '..', 'Uploads');
 
-const validSections = ['education', 'blog', 'user', 'event'];
+const validSections = ['education', 'blog', 'user', 'event', 'ads'];
 
 const ensureDirectory = async (dirPath) => {
   try {
