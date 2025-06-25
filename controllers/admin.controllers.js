@@ -11,9 +11,6 @@ const generateOtp = () => {
   return otp.toString();
 };
 
-
-
-
 const loginAdmin = async (req, res, next) => {
   try {
     const { email, password: pass } = req.body;
@@ -30,7 +27,7 @@ const loginAdmin = async (req, res, next) => {
       throw new ApiError(404, 'User not found');
     }
 
-     // ✅ Check for admin role here
+    // ✅ Check for admin role here
     if (existingUser.role !== 'admin') {
       throw new ApiError(403, 'Access denied: Only admin can login');
     }

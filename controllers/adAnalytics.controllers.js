@@ -75,13 +75,14 @@ const createDailyAdStatAnalytics = async (req, res) => {
     const { changable } = req.query;
 
     if (!adId) throw new ApiError(404, 'Ad ID is required', 'Missing ad ID');
-    if (!section) throw new ApiError(404, 'Section is required', 'Missing section');
+    if (!section)
+      throw new ApiError(404, 'Section is required', 'Missing section');
 
     if (!['impression', 'click'].includes(changable)) {
       throw new ApiError(
         400,
         'Invalid changable value',
-        "Must be 'impression' or 'click'"
+        "Must be 'impression' or 'click'",
       );
     }
 
@@ -93,7 +94,7 @@ const createDailyAdStatAnalytics = async (req, res) => {
       throw new ApiError(
         404,
         'Invalid section',
-        'Section not found in database'
+        'Section not found in database',
       );
     }
 
@@ -105,14 +106,14 @@ const createDailyAdStatAnalytics = async (req, res) => {
     });
 
     const isSectionLinked = adWithSections?.sections?.some(
-      (s) => s.id === dataId
+      (s) => s.id === dataId,
     );
 
     if (!isSectionLinked) {
       throw new ApiError(
         400,
         'Section not assigned to ad',
-        'Invalid section for this ad'
+        'Invalid section for this ad',
       );
     }
 
@@ -142,20 +143,22 @@ const createDailyAdStatAnalytics = async (req, res) => {
       },
     });
 
-    return res.status(200).json(
-      new ApiResponse(
-        200,
-        `${changable} incremented`,
-        `Ad ${changable} updated successfully`
-      )
-    );
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          `${changable} incremented`,
+          `Ad ${changable} updated successfully`,
+        ),
+      );
   } catch (error) {
     return res
       .status(error instanceof ApiError ? error.statusCode : 500)
       .json(
         error instanceof ApiError
           ? error
-          : new ApiError(500, 'Internal Server Error', error.message || null)
+          : new ApiError(500, 'Internal Server Error', error.message || null),
       );
   }
 };
@@ -316,7 +319,11 @@ const getAdBySection = async (req, res) => {
     });
 
     if (!sectionData?.length) {
-      throw new ApiError(404, 'Section not found', `Section ${section} does not exist`);
+      throw new ApiError(
+        404,
+        'Section not found',
+        `Section ${section} does not exist`,
+      );
     }
 
     const sectionItem = sectionData[0];
@@ -324,9 +331,12 @@ const getAdBySection = async (req, res) => {
     if (
       sectionItem.show === false ||
       (subSection &&
-        (!sectionItem.SubSection.length || sectionItem.SubSection[0].show === false))
+        (!sectionItem.SubSection.length ||
+          sectionItem.SubSection[0].show === false))
     ) {
-      return res.status(400).json(new ApiResponse(400, [], 'Section ads are disabled'));
+      return res
+        .status(400)
+        .json(new ApiResponse(400, [], 'Section ads are disabled'));
     }
 
     const whereQuery = {
@@ -375,7 +385,9 @@ const getAdBySection = async (req, res) => {
       },
     });
 
-    return res.status(200).json(new ApiResponse(200, ads, 'Ads fetched successfully'));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, ads, 'Ads fetched successfully'));
   } catch (error) {
     return res
       .status(error instanceof ApiError ? error.statusCode : 500)
@@ -386,7 +398,6 @@ const getAdBySection = async (req, res) => {
       );
   }
 };
-
 
 const updateAd = async (req, res) => {
   try {

@@ -35,7 +35,7 @@ router.post('/otp-verification', otpVerification);
 
 router.post('/resend-otp', resendOtp);
 
-router.put('/edit-user', editUserProfile)
+router.put('/edit-user', editUserProfile);
 // api/me route to check the token
 router.get(
   '/me',

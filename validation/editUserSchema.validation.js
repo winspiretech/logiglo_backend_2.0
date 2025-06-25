@@ -1,7 +1,7 @@
 const { z } = require('zod');
 
 const EditUserSchema = z.object({
-  userId: z.string({ required_error: "User ID is required" }), // required to identify user
+  userId: z.string({ required_error: 'User ID is required' }), // required to identify user
   name: z.string().optional(),
   email: z.string().email().optional(),
   password: z.string().min(6).optional(),
