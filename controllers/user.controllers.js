@@ -1,5 +1,6 @@
 const { ApiResponse } = require('../utils/ApiResponse');
 const UserSchema = require('../validation/userSchema.validation.js');
+const EditUserSchema = require('../validation/editUserSchema.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
@@ -535,6 +536,144 @@ const resendOtp = async (req, res) => {
   }
 };
 
+const editUserProfile = async (req, res) => {
+  try {
+    // ✅ 1. Validate input
+    const parsed = EditUserSchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new ApiError(400, parsed.error.errors[0].message);
+    }
+
+    const {
+      userId,
+      name,
+      email,
+      mobileNo,
+      country,
+      city,
+      address,
+      postalCode,
+      profilePic,
+      bio,
+    } = parsed.data;
+
+    // ✅ 2. Fetch user
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!existingUser) {
+      throw new ApiError(404, 'User not found');
+    }
+
+    // ✅ 3. Check for duplicate email
+    if (email && email !== existingUser.email) {
+      const emailExists = await prisma.user.findUnique({ where: { email } });
+      if (emailExists) {
+        throw new ApiError(409, 'Email already in use');
+      }
+    }
+
+    // ✅ 4. Check for duplicate mobile number
+    if (mobileNo && mobileNo !== existingUser.mobileNo) {
+      const mobileExists = await prisma.user.findUnique({
+        where: { mobileNo },
+      });
+      if (mobileExists) {
+        throw new ApiError(409, 'Mobile number already in use');
+      }
+    }
+
+    // ✅ 5. Build update object
+    const updateData = {
+      ...(name && { name }),
+      ...(email && { email }),
+      ...(mobileNo && { mobileNo }),
+      ...(country && { country }),
+      ...(city && { city }),
+      ...(address && { address }),
+      ...(postalCode && { postalCode }),
+      ...(profilePic && { profilePic }),
+      ...(bio && { bio }),
+    };
+
+    // ✅ 6. Handle email change → reset verified + send OTP
+    if (email && email !== existingUser.email) {
+      updateData.verified = false;
+
+      const otp = generateOtp();
+
+      const existingOtp = await prisma.otp.findFirst({
+        where: { userId },
+      });
+
+      if (existingOtp) {
+        await prisma.otp.update({
+          where: { id: existingOtp.id },
+          data: {
+            otpCode: otp,
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 mins
+            createdAt: new Date(),
+            resendCount: 0,
+            blockedUntil: null,
+            verified: false,
+          },
+        });
+      } else {
+        await prisma.otp.create({
+          data: {
+            userId,
+            otpCode: otp,
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+            resendCount: 0,
+            blockedUntil: null,
+            verified: false,
+          },
+        });
+      }
+
+      await sendEmail({
+        to: email,
+        subject: 'Verify your updated email',
+        html: `
+          <h3>Hello ${existingUser.name},</h3>
+          <p>Your OTP code is:</p>
+          <h2>${otp}</h2>
+          <p>This OTP will expire in 5 minutes.</p>
+        `,
+      });
+    }
+
+    // ✅ 7. Update user profile
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+    });
+
+    // ✅ 8. Respond with updated profile
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+
+        email && email !== existingUser.email
+          ? 'Profile updated. Please verify your new email.'
+          : 'Profile updated successfully.',
+      ),
+    );
+  } catch (error) {
+    console.error(error.message || 'Something went wrong while updating user');
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal Server Error', error.message || null),
+        );
+    }
+  }
+};
+
 module.exports = {
   signupController,
   loginUser,
@@ -544,4 +683,5 @@ module.exports = {
   changeUserRole,
   otpVerification,
   resendOtp,
+  editUserProfile,
 };
