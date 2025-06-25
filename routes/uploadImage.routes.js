@@ -40,10 +40,13 @@ router.delete('/delete-file', async (req, res) => {
 
     let pathname;
 
+    // console.log(fileUrl)
+
     try {
       const parsedUrl = new URL(fileUrl);
       pathname = parsedUrl.pathname;
     } catch (err) {
+      console.log(err)
       return res.status(400).json({ message: 'Invalid fileUrl format' });
     }
 
@@ -54,9 +57,7 @@ router.delete('/delete-file', async (req, res) => {
     const relativePath = pathname.replace('/Uploads/', '');
     const absolutePath = path.join(baseUploadPath, relativePath);
 
-    if (!absolutePath.startsWith(baseUploadPath)) {
-      return res.status(400).json({ message: 'Invalid file path' });
-    }
+    if (!absolutePath.startsWith(baseUploadPath)) { return res.status(400).json({ message: 'Invalid file path' }); }
 
     try {
       await fs.access(absolutePath);

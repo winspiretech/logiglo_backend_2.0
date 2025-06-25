@@ -11,6 +11,7 @@ const {
   changeUserRole,
   otpVerification,
   resendOtp,
+  editUserProfile,
 } = require('../controllers/user.controllers');
 const router = express.Router();
 
@@ -34,6 +35,7 @@ router.post('/otp-verification', otpVerification);
 
 router.post('/resend-otp', resendOtp);
 
+router.put('/edit-user', editUserProfile)
 // api/me route to check the token
 router.get(
   '/me',
