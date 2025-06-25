@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
 
 const allowedOrigins = [
   'http://localhost:3004',
