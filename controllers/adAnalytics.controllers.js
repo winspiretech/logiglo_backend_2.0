@@ -71,12 +71,7 @@ const getAdAnalytics = async (req, res) => {
 
 const createDailyAdStatAnalytics = async (req, res) => {
   try {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-    today.setUTCDate(today.getUTCDate() - 40);
-
     const { adId, section } = req.params;
-
     const { changable } = req.query;
 
     if (!adId) throw new ApiError(404, 'Ad ID is required', 'Missing ad ID');
@@ -91,28 +86,19 @@ const createDailyAdStatAnalytics = async (req, res) => {
       );
     }
 
-    // const sectionData = await prisma.section.findUnique({
-    //     where : {
-    //         names : section
-    //     }
-    // });
+    const matchedSection = await prisma.section.findUnique({
+      where: { name: section.trim().toLowerCase() },
+    });
 
-    const sections = await prisma.section.findMany({});
-
-    const allSections = sections.map((s) => s.name);
-
-    const isContaining = allSections.includes(section);
-
-    if (!isContaining) {
-      throw new ApiError(404, `Use sections as ${[...allSections]}`);
+    if (!matchedSection) {
+      throw new ApiError(
+        404,
+        'Invalid section',
+        'Section not found in database',
+      );
     }
 
-    const dataId = sections.filter((s) => s.name === section)[0].id;
-
-    const data = {
-      impressions: changable === 'impression' ? { increment: 1 } : undefined,
-      clicks: changable === 'click' ? { increment: 1 } : undefined,
-    };
+    const dataId = matchedSection.id;
 
     const adWithSections = await prisma.ad.findUnique({
       where: { id: adId },
@@ -122,6 +108,7 @@ const createDailyAdStatAnalytics = async (req, res) => {
     const isSectionLinked = adWithSections?.sections?.some(
       (s) => s.id === dataId,
     );
+
     if (!isSectionLinked) {
       throw new ApiError(
         400,
@@ -130,10 +117,13 @@ const createDailyAdStatAnalytics = async (req, res) => {
       );
     }
 
-    await prisma.ad.update({
-      where: { id: adId },
-      data,
-    });
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const data = {
+      impressions: changable === 'impression' ? { increment: 1 } : undefined,
+      clicks: changable === 'click' ? { increment: 1 } : undefined,
+    };
 
     await prisma.adStat.upsert({
       where: {
@@ -175,7 +165,7 @@ const createBatchAdStatAnalytics = async (req, res) => {
   try {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
-    today.setUTCDate(today.getUTCDate() - 40);
+    today.setUTCDate(today.getUTCDate());
 
     const entries = req.body;
 
@@ -398,6 +388,14 @@ const getAdBySection = async (req, res) => {
 
     const { type = 'box', subSection } = req.query;
 
+    const normalizedType = type.trim().toLowerCase();
+    if (!['box', 'banner', 'both'].includes(normalizedType)) {
+      throw new ApiError(
+        402,
+        "Send correct type. It should be 'box', 'banner', or 'both'",
+      );
+    }
+
     const sectionData = await prisma.section.findMany({
       where: {
         name: section,
@@ -412,25 +410,11 @@ const getAdBySection = async (req, res) => {
             name: true,
             show: true,
           },
-          orderBy: {
-            name: 'asc',
-          },
         },
-      },
-      orderBy: {
-        name: 'asc',
       },
     });
 
-    if (!sectionData) {
-      throw new ApiError(
-        404,
-        'Section not found',
-        `Section ${section} does not exist`,
-      );
-    }
-
-    if (!sectionData.length) {
+    if (!sectionData?.length) {
       throw new ApiError(
         404,
         'Section not found',
@@ -451,18 +435,12 @@ const getAdBySection = async (req, res) => {
         .json(new ApiResponse(400, [], 'Section ads are disabled'));
     }
 
-    if (!['box', 'banner', 'both'].includes(type.trim().toLowerCase())) {
-      throw new ApiError(
-        402,
-        "Send correct type, It should be 'box','banner','both'",
-      );
-    }
-
     const whereQuery = {
       sections: {
         some: {
           name: {
-            equals: section.trim().toLowerCase(),
+            equals: section.trim(),
+            mode: 'insensitive',
           },
         },
       },
@@ -474,13 +452,14 @@ const getAdBySection = async (req, res) => {
         gte: new Date(),
       },
       type: {
-        in: [type.trim().toLowerCase(), 'both'],
+        in: [normalizedType, 'both'],
       },
       ...(subSection && {
         subSections: {
           some: {
             name: {
-              equals: subSection.trim().toLowerCase(),
+              equals: subSection.trim(),
+              mode: 'insensitive',
             },
           },
         },
@@ -490,6 +469,16 @@ const getAdBySection = async (req, res) => {
     const ads = await prisma.ad.findMany({
       where: whereQuery,
       orderBy: { createdAt: 'desc' },
+      include: {
+        sections: true,
+        subSections: {
+          include: {
+            section: {
+              select: { name: true },
+            },
+          },
+        },
+      },
     });
 
     return res
