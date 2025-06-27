@@ -11,11 +11,13 @@ const {
   getArchivedBlogs,
   toggleArchiveBlog,
   addUnarchiveBlogReason,
+  getRequiredAmountBlog
 } = require('../controllers/blog.controllers.js');
 const isAdmin = require('../middleware/isAdmin.js');
 
 router.post('/create', isAdmin, createBlog);
 router.get('/admins-blogs', isAdmin, getAdminsBlogs);
+router.get('/landing-page/limit',getRequiredAmountBlog);
 router.delete('/:id', isAdmin, deleteBlog);
 router.get('/archived', isAdmin, getArchivedBlogs);
 router.get('/', getAllBlogs);

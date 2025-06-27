@@ -451,6 +451,30 @@ const addUnarchiveBlogReason = async (req, res) => {
   }
 };
 
+const getRequiredAmountBlog = async (req, res) => {
+  try {
+    const amount = parseInt(req.query.amount) || 10;
+    const blogsData = await prisma.blog.findMany({
+      take: amount
+    });
+    if (!blogsData) {
+      throw new ApiError(500, "Internal serevr error", "Cannot fetch blogs at this movement please try again")
+    }
+    res.status(200)
+      .json(new ApiResponse(200, blogsData, "Blogs data fetched successfully"))
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+}
+
 module.exports = {
   test,
   createBlog,
@@ -462,4 +486,5 @@ module.exports = {
   toggleArchiveBlog,
   getArchivedBlogs,
   addUnarchiveBlogReason,
+  getRequiredAmountBlog
 };
