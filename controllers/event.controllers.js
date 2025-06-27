@@ -440,15 +440,22 @@ const addUnarchiveEventReason = async (req, res) => {
 
 const getRequiredAmountEvents = async (req, res) => {
   try {
-    const  amount = parseInt(req.query.amount) || 10 
+    const amount = parseInt(req.query.amount) || 10;
     const eventsData = await prisma.event.findMany({
-      take: amount
+      take: amount,
     });
     if (!eventsData) {
-      throw new ApiError(500, "Internal serevr error", "Cannot fetch events at this movement please try again")
+      throw new ApiError(
+        500,
+        'Internal serevr error',
+        'Cannot fetch events at this movement please try again',
+      );
     }
-    res.status(200)
-      .json(new ApiResponse(200, eventsData, "Events data fetched successfully"))
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, eventsData, 'Events data fetched successfully'),
+      );
   } catch (error) {
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
@@ -460,7 +467,7 @@ const getRequiredAmountEvents = async (req, res) => {
         );
     }
   }
-}
+};
 
 module.exports = {
   test,
@@ -473,5 +480,5 @@ module.exports = {
   archiveEvent,
   getArchivedEvents,
   addUnarchiveEventReason,
-  getRequiredAmountEvents
+  getRequiredAmountEvents,
 };

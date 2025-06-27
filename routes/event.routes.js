@@ -17,7 +17,7 @@ const isAdmin = require('../middleware/isAdmin');
 
 router.get('/test', test);
 router.post('/create', isAdmin, addEvents);
-router.get('/landing-page/limit',getRequiredAmountEvents);
+router.get('/landing-page/limit', getRequiredAmountEvents);
 router.get('/admin-events', isAdmin, getAdminEvents);
 router.get('/', getAllEvents);
 router.get('/archived', isAdmin, getArchivedEvents);

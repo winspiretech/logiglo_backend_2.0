@@ -455,13 +455,18 @@ const getRequiredAmountBlog = async (req, res) => {
   try {
     const amount = parseInt(req.query.amount) || 10;
     const blogsData = await prisma.blog.findMany({
-      take: amount
+      take: amount,
     });
     if (!blogsData) {
-      throw new ApiError(500, "Internal serevr error", "Cannot fetch blogs at this movement please try again")
+      throw new ApiError(
+        500,
+        'Internal serevr error',
+        'Cannot fetch blogs at this movement please try again',
+      );
     }
-    res.status(200)
-      .json(new ApiResponse(200, blogsData, "Blogs data fetched successfully"))
+    res
+      .status(200)
+      .json(new ApiResponse(200, blogsData, 'Blogs data fetched successfully'));
   } catch (error) {
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
@@ -473,7 +478,7 @@ const getRequiredAmountBlog = async (req, res) => {
         );
     }
   }
-}
+};
 
 module.exports = {
   test,
@@ -486,5 +491,5 @@ module.exports = {
   toggleArchiveBlog,
   getArchivedBlogs,
   addUnarchiveBlogReason,
-  getRequiredAmountBlog
+  getRequiredAmountBlog,
 };

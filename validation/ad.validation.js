@@ -1,4 +1,4 @@
-const { z } = require("zod");
+const { z } = require('zod');
 
 const isValidUrl = (value) => {
   try {
@@ -26,14 +26,18 @@ const AdSchema = z
     sections: z.array(z.string().uuid()),
     subSections: z.array(z.string().uuid()).optional(),
   })
-  .refine((data) => {
-    if (data.type === 'banner') return isValidUrl(data.bannerImage);
-    if (data.type === 'box') return isValidUrl(data.boxImage);
-    if (data.type === 'both') return isValidUrl(data.bannerImage) && isValidUrl(data.boxImage);
-    return true;
-  }, {
-    message: 'Provide valid image URLs based on selected ad type',
-    path: ['type'],
-  });
+  .refine(
+    (data) => {
+      if (data.type === 'banner') return isValidUrl(data.bannerImage);
+      if (data.type === 'box') return isValidUrl(data.boxImage);
+      if (data.type === 'both')
+        return isValidUrl(data.bannerImage) && isValidUrl(data.boxImage);
+      return true;
+    },
+    {
+      message: 'Provide valid image URLs based on selected ad type',
+      path: ['type'],
+    },
+  );
 
 module.exports = AdSchema;
