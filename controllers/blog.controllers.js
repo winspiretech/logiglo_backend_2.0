@@ -457,7 +457,7 @@ const getRequiredAmountBlog = async (req, res) => {
     const blogsData = await prisma.blog.findMany({
       where: {
         isArchived: false,
-      }
+      },
       take: amount,
     });
     if (!blogsData) {
