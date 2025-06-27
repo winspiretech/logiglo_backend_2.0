@@ -68,7 +68,6 @@ const signupController = async (req, res, next) => {
   }
 };
 
-
 const loginUser = async (req, res, next) => {
   try {
     const { email, password: pass, captchaToken } = req.body;
