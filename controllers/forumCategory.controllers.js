@@ -255,6 +255,7 @@ module.exports.getAllForumMainCategories = async (req, res) => {
 
     // Fetch all categories
     const categories = await prisma.forumMainCategory.findMany({
+      where: { enabled: true }, // Only fetch enabled categorie
       include: includeSubCategories ? { subCategory: true } : undefined,
     });
 
