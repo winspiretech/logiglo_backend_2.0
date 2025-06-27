@@ -455,6 +455,9 @@ const getRequiredAmountBlog = async (req, res) => {
   try {
     const amount = parseInt(req.query.amount) || 10;
     const blogsData = await prisma.blog.findMany({
+      where: {
+        isArchived: false,
+      }
       take: amount,
     });
     if (!blogsData) {
