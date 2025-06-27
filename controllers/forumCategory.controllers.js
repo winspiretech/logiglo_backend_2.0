@@ -535,7 +535,7 @@ module.exports.getForumSubCategoryById = async (req, res) => {
           include: {
             quoteLike: true,
             quoteReply: true,
-            user: { select: { id: true, name: true } },
+            user: { select: { id: true, name: true, profilePic: true } },
           },
         },
         generalPost: includePosts && {
@@ -543,7 +543,7 @@ module.exports.getForumSubCategoryById = async (req, res) => {
           include: {
             generalLike: true,
             generalReply: true,
-            user: { select: { id: true, name: true } },
+            user: { select: { id: true, name: true, profilePic: true } },
           },
         },
       },

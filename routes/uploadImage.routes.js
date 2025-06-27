@@ -40,10 +40,13 @@ router.delete('/delete-file', async (req, res) => {
 
     let pathname;
 
+    // console.log(fileUrl)
+
     try {
       const parsedUrl = new URL(fileUrl);
       pathname = parsedUrl.pathname;
     } catch (err) {
+      console.log(err);
       return res.status(400).json({ message: 'Invalid fileUrl format' });
     }
 
