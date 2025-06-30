@@ -20,6 +20,10 @@ const contactUs = require('./routes/contactUs.routes.js');
 const ads = require('./routes/ad.routes.js');
 const timeSpentRoute = require('./routes/timeSpent.routes.js');
 const adminRoutes = require('./routes/admin.routes.js');
+const session = require("express-session");
+const passport = require("passport");
+require("./middleware/passportLinkedIn.js"); 
+const authRoutes = require("./routes/auth");
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -31,6 +35,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({
+  secret: "some_secret_key",
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(authRoutes);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
@@ -40,6 +54,7 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://tester.logiglo.com',
   'https://tester.logiglo.com',
+  'http://192.168.1.144:3001'
 ];
 
 const corsOptions = {
