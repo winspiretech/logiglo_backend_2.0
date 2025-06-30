@@ -468,6 +468,7 @@ module.exports.updateGeneralPost = async (req, res) => {
         status: updateData.status ?? post.status,
         rejectionReason: updateData.rejectionReason ?? post.rejectionReason,
         createdBy: updateData.createdBy ?? post.createdBy,
+        viewCount: updateData.viewCount ?? post.viewCount,
       }).filter(([_, value]) => value !== undefined),
     );
 
