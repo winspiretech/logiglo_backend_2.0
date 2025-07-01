@@ -2,7 +2,10 @@ const AdSchema = require('../validation/ad.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
-const {forcefullyClearCahedData,getCahedSectionAndSubsection} = require("../utils/cahingSection.js");
+const {
+  forcefullyClearCahedData,
+  getCahedSectionAndSubsection,
+} = require('../utils/cahingSection.js');
 
 const getAdAnalytics = async (req, res) => {
   try {
@@ -166,7 +169,8 @@ const createBatchAdStatAnalytics = async (req, res) => {
   try {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
-    const [cahedSection,cahedSubSection] = await getCahedSectionAndSubsection(prisma);
+    const [cahedSection, cahedSubSection] =
+      await getCahedSectionAndSubsection(prisma);
 
     const entries = req.body;
 
@@ -174,19 +178,19 @@ const createBatchAdStatAnalytics = async (req, res) => {
       throw new ApiError(400, 'Request body must be a non-empty array');
     }
 
-    const sections = cahedSection
-    const subsections = cahedSubSection
+    const sections = cahedSection;
+    const subsections = cahedSubSection;
 
     const sectionMap = Object.fromEntries(
       sections
         .filter((s) => typeof s.name === 'string')
-        .map((s) => [s.name.trim().toLowerCase(), s.id])
+        .map((s) => [s.name.trim().toLowerCase(), s.id]),
     );
 
     const subSectionMap = Object.fromEntries(
       subsections
         .filter((s) => typeof s.name === 'string')
-        .map((s) => [s.name.trim().toLowerCase(), s.id])
+        .map((s) => [s.name.trim().toLowerCase(), s.id]),
     );
 
     const groupedUpdates = {};
@@ -194,7 +198,8 @@ const createBatchAdStatAnalytics = async (req, res) => {
     for (const entry of entries) {
       let { adId, section, subSection, changable } = entry;
 
-      if (!adId || !section || !['impression', 'click'].includes(changable)) continue;
+      if (!adId || !section || !['impression', 'click'].includes(changable))
+        continue;
 
       section = section.trim().toLowerCase();
       subSection = subSection?.trim().toLowerCase();
@@ -213,7 +218,9 @@ const createBatchAdStatAnalytics = async (req, res) => {
         },
       });
 
-      const isSectionLinked = adWithSections?.sections?.some((s) => s.id === sectionId);
+      const isSectionLinked = adWithSections?.sections?.some(
+        (s) => s.id === sectionId,
+      );
       const isSubSectionLinked = subSectionId
         ? adWithSections?.subSections?.some((ss) => ss.id === subSectionId)
         : true;
@@ -237,7 +244,8 @@ const createBatchAdStatAnalytics = async (req, res) => {
     }
 
     for (const key in groupedUpdates) {
-      const { adId, sectionId, subSectionId, impressions, clicks } = groupedUpdates[key];
+      const { adId, sectionId, subSectionId, impressions, clicks } =
+        groupedUpdates[key];
 
       const updateData = {
         impressions: impressions > 0 ? { increment: impressions } : undefined,
@@ -279,7 +287,7 @@ const createBatchAdStatAnalytics = async (req, res) => {
       .json(
         error instanceof ApiError
           ? error
-          : new ApiError(500, 'Internal Server Error', error.message || null)
+          : new ApiError(500, 'Internal Server Error', error.message || null),
       );
   }
 };
@@ -667,7 +675,7 @@ const deleteSection = async (req, res) => {
       );
     }
 
-    forcefullyClearCahedData()
+    forcefullyClearCahedData();
 
     res
       .status(200)
@@ -916,7 +924,7 @@ const createSubSection = async (req, res) => {
       },
     });
 
-    forcefullyClearCahedData()
+    forcefullyClearCahedData();
 
     return res
       .status(201)
