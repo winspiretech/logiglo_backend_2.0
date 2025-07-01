@@ -2,6 +2,10 @@ const AdSchema = require('../validation/ad.validation.js');
 const prisma = require('../models/prismaClient');
 const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
+const {
+  forcefullyClearCahedData,
+  getCahedSectionAndSubsection,
+} = require('../utils/cahingSection.js');
 
 const getAdAnalytics = async (req, res) => {
   try {
@@ -165,7 +169,8 @@ const createBatchAdStatAnalytics = async (req, res) => {
   try {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
-    today.setUTCDate(today.getUTCDate());
+    const [cahedSection, cahedSubSection] =
+      await getCahedSectionAndSubsection(prisma);
 
     const entries = req.body;
 
@@ -173,37 +178,62 @@ const createBatchAdStatAnalytics = async (req, res) => {
       throw new ApiError(400, 'Request body must be a non-empty array');
     }
 
-    const sections = await prisma.section.findMany({});
-    const sectionMap = Object.fromEntries(sections.map((s) => [s.name, s.id]));
+    const sections = cahedSection;
+    const subsections = cahedSubSection;
+
+    const sectionMap = Object.fromEntries(
+      sections
+        .filter((s) => typeof s.name === 'string')
+        .map((s) => [s.name.trim().toLowerCase(), s.id]),
+    );
+
+    const subSectionMap = Object.fromEntries(
+      subsections
+        .filter((s) => typeof s.name === 'string')
+        .map((s) => [s.name.trim().toLowerCase(), s.id]),
+    );
 
     const groupedUpdates = {};
 
     for (const entry of entries) {
-      const { adId, section, changable } = entry;
+      let { adId, section, subSection, changable } = entry;
 
-      if (!adId || !section || !['impression', 'click'].includes(changable)) {
+      if (!adId || !section || !['impression', 'click'].includes(changable))
         continue;
-      }
+
+      section = section.trim().toLowerCase();
+      subSection = subSection?.trim().toLowerCase();
 
       const sectionId = sectionMap[section];
       if (!sectionId) continue;
 
+      const subSectionId = subSection ? subSectionMap[subSection] : null;
+      if (subSection && !subSectionId) continue;
+
       const adWithSections = await prisma.ad.findUnique({
         where: { id: adId },
-        include: { sections: true },
+        include: {
+          sections: true,
+          subSections: true,
+        },
       });
 
       const isSectionLinked = adWithSections?.sections?.some(
         (s) => s.id === sectionId,
       );
-      if (!isSectionLinked) continue;
+      const isSubSectionLinked = subSectionId
+        ? adWithSections?.subSections?.some((ss) => ss.id === subSectionId)
+        : true;
 
-      const key = `${adId}_${sectionId}`;
+      if (!isSectionLinked || !isSubSectionLinked) continue;
+
+      const key = `${adId}_${sectionId}_${subSectionId || 'null'}`;
 
       if (!groupedUpdates[key]) {
         groupedUpdates[key] = {
           adId,
           sectionId,
+          subSectionId,
           impressions: 0,
           clicks: 0,
         };
@@ -214,7 +244,8 @@ const createBatchAdStatAnalytics = async (req, res) => {
     }
 
     for (const key in groupedUpdates) {
-      const { adId, sectionId, impressions, clicks } = groupedUpdates[key];
+      const { adId, sectionId, subSectionId, impressions, clicks } =
+        groupedUpdates[key];
 
       const updateData = {
         impressions: impressions > 0 ? { increment: impressions } : undefined,
@@ -228,16 +259,18 @@ const createBatchAdStatAnalytics = async (req, res) => {
 
       await prisma.adStat.upsert({
         where: {
-          adId_date_sectionId: {
+          adId_date_sectionId_subSectionId: {
             adId,
             date: today,
             sectionId,
+            subSectionId,
           },
         },
         update: updateData,
         create: {
           adId,
           sectionId,
+          subSectionId,
           date: today,
           impressions,
           clicks,
@@ -386,7 +419,9 @@ const getAdBySection = async (req, res) => {
       throw new ApiError(404, 'Section is required', 'Missing section');
     }
 
-    const { type = 'box', subSection } = req.query;
+    let { type = 'box', subSection } = req.query;
+
+    subSection = subSection.trim().toLowerCase();
 
     const normalizedType = type.trim().toLowerCase();
     if (!['box', 'banner', 'both'].includes(normalizedType)) {
@@ -582,6 +617,8 @@ const createSection = async (req, res) => {
       },
     });
 
+    forcefullyClearCahedData();
+
     res
       .status(201)
       .json(new ApiResponse(201, newSection, 'Section created successfully'));
@@ -637,6 +674,8 @@ const deleteSection = async (req, res) => {
         'Something went wrong while deleting the section',
       );
     }
+
+    forcefullyClearCahedData();
 
     res
       .status(200)
@@ -885,6 +924,8 @@ const createSubSection = async (req, res) => {
       },
     });
 
+    forcefullyClearCahedData();
+
     return res
       .status(201)
       .json(new ApiResponse(201, newSub, 'Subsection created successfully'));
@@ -967,6 +1008,8 @@ const deleteSubSection = async (req, res) => {
     const deleted = await prisma.subSection.delete({
       where: { id: subSectionId },
     });
+
+    forcefullyClearCahedData();
 
     return res
       .status(200)
