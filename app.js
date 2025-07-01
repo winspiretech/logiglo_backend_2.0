@@ -57,6 +57,7 @@ const allowedOrigins = [
   'http://tester.logiglo.com',
   'https://tester.logiglo.com',
   'http://192.168.1.144:3001',
+  'http://192.168.1.3:3001',
 ];
 
 const corsOptions = {
