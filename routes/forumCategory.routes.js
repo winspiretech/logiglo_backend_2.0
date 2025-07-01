@@ -19,7 +19,10 @@ router.get(
   '/getallforummaincategories',
   forumCategoryController.getAllForumMainCategories,
 );
-
+router.get(
+  '/getallforummaincategoriesall',
+  forumCategoryController.getAllForumMainCategoriesAll,
+);
 // ForumSubCategory routes
 router.post(
   '/createforumsubcategory',

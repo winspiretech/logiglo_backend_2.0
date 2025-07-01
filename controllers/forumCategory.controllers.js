@@ -255,6 +255,7 @@ module.exports.getAllForumMainCategories = async (req, res) => {
 
     // Fetch all categories
     const categories = await prisma.forumMainCategory.findMany({
+      where: { enabled: true }, // Only fetch enabled categorie
       include: includeSubCategories ? { subCategory: true } : undefined,
     });
 
@@ -281,7 +282,39 @@ module.exports.getAllForumMainCategories = async (req, res) => {
       );
   }
 };
+// Get all ForumMainCategories
+module.exports.getAllForumMainCategoriesAll = async (req, res) => {
+  try {
+    const includeSubCategories = req.query.includeSubCategories === 'true';
 
+    // Fetch all categories
+    const categories = await prisma.forumMainCategory.findMany({
+      include: includeSubCategories ? { subCategory: true } : undefined,
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          categories,
+          'Main categories retrieved successfully',
+        ),
+      );
+  } catch (error) {
+    // Handle unexpected errors
+    console.error('Unexpected error fetching all ForumMainCategories:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch main categories due to server error',
+          error.message,
+        ),
+      );
+  }
+};
 // --- ForumSubCategory Controllers ---
 
 // Create a new ForumSubCategory

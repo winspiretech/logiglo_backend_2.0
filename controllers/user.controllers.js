@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendEmail } = require('../utils/sendEmail.js');
 const { success } = require('zod/v4');
+const axios = require('axios');
 
 const generateOtp = () => {
   const otp = crypto.randomInt(100000, 1000000);
@@ -69,12 +70,31 @@ const signupController = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
   try {
-    const { email, password: pass } = req.body;
+    const { email, password: pass, captchaToken } = req.body;
 
-    if (!email || !pass) {
-      throw new ApiError(400, 'Missing required fields');
+    if (!email || !pass || !captchaToken) {
+      throw new ApiError(400, 'Missing required fields or CAPTCHA');
     }
 
+    // 🔐 Verify CAPTCHA
+    const captchaRes = await axios.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      null,
+      {
+        params: {
+          secret: '6LeidW8rAAAAAJNph5HujgXq8hYLFWrq_2PlJhfg',
+          response: captchaToken,
+        },
+      },
+    );
+
+    if (!captchaRes.data.success) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'CAPTCHA verification failed'));
+    }
+
+    // ✅ Email & password validation
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -88,7 +108,7 @@ const loginUser = async (req, res, next) => {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // ✅ Check if user is already verified
+    // 🔐 If verified user → Generate JWT and login
     if (existingUser.verified) {
       const token = jwt.sign(
         {
@@ -139,10 +159,9 @@ const loginUser = async (req, res, next) => {
       );
     }
 
-    // 🔄 If not verified — Generate OTP
+    // 🔄 If not verified — Generate and send OTP
     const otp = generateOtp();
 
-    // Either update existing OTP or create new
     const existingOtp = await prisma.otp.findFirst({
       where: { userId: existingUser.id },
     });
@@ -172,7 +191,6 @@ const loginUser = async (req, res, next) => {
       });
     }
 
-    // Send OTP Email
     await sendEmail({
       to: email,
       subject: 'Your OTP for Logiglo',
@@ -210,7 +228,6 @@ const loginUser = async (req, res, next) => {
     }
   }
 };
-
 const logoutUser = async (req, res, next) => {
   try {
     const isProduction = process.env.NODE_ENV === 'production';
