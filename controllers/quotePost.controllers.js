@@ -1136,7 +1136,8 @@ module.exports.getQuotePostByPostId = async (req, res) => {
           where: { status: 'success' },
           select: {
             id: true,
-            description: true,
+            quotePrice: true,
+            email:true,
             status: true,
             parentReplyId: true,
             createdAt: true,
