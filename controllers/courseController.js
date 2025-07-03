@@ -208,6 +208,45 @@ const validateCourseById = async (req, res) => {
   }
 };
 
+/* Get Expired and About-to-Expire Courses */
+const getExpiringCourses = async (req, res) => {
+  try {
+    const now = new Date();
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(now.getDate() + 7);
+
+    // Get expired courses
+    const expiredCourses = await prisma.course.findMany({
+      where: {
+        validUntil: {
+          lt: now,
+        },
+      },
+    });
+
+    // Get about-to-expire courses (within 7 days)
+    const expiringSoonCourses = await prisma.course.findMany({
+      where: {
+        validUntil: {
+          gte: now,
+          lte: sevenDaysFromNow,
+        },
+        isActive: true,
+      },
+    });
+
+    return res.status(200).json({
+      expiredCourses,
+      expiringSoonCourses,
+    });
+  } catch (error) {
+    console.error('Error fetching expiring courses:', error);
+    return res
+      .status(500)
+      .json({ message: 'Server error while fetching expiring courses' });
+  }
+};
+
 module.exports = {
   createCourse,
   getAllCourses,
@@ -215,4 +254,5 @@ module.exports = {
   deleteCourse,
   getCourseById,
   validateCourseById,
+  getExpiringCourses,
 };

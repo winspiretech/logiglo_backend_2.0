@@ -2,10 +2,10 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-// Start LinkedIn auth
+// Step 1: Redirect user to LinkedIn
 router.get('/auth/linkedin', passport.authenticate('linkedin'));
 
-// Callback from LinkedIn
+// Step 2: Handle callback from LinkedIn after login
 router.get(
   '/auth/linkedin/callback',
   passport.authenticate('linkedin', {
@@ -20,9 +20,9 @@ router.get(
       profileUrl: user._json?.vanityName || '',
     };
 
-    const encodedData = encodeURIComponent(JSON.stringify(userData));
+    const encodedData = encodeURICompon`ent(JSON.stringify(userData));
 
-    // redirect to signup page on frontend
+    // Redirect to signup page on frontend with prefilled LinkedIn data
     res.redirect(`http://localhost:3001/signup?linkedin_data=${encodedData}`);
   },
 );
