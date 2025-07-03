@@ -20,7 +20,7 @@ router.get(
       profileUrl: user._json?.vanityName || '',
     };
 
-    const encodedData = encodeURIComponent(JSON.stringify(userData));
+    const encodedData = encodeURICompon`ent(JSON.stringify(userData));
 
     // Redirect to signup page on frontend with prefilled LinkedIn data
     res.redirect(`http://localhost:3001/signup?linkedin_data=${encodedData}`);

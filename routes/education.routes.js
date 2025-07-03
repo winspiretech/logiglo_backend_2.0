@@ -7,6 +7,7 @@ const {
   deleteCourse,
   getCourseById,
   validateCourseById,
+  getExpiringCourses,
 } = require('../controllers/courseController');
 
 // modules imports
@@ -43,6 +44,7 @@ router.delete('/deleteCourse/:id', deleteCourse);
 router.get('/getAllCourses', getAllCourses);
 router.get('/getCourseById/:id', getCourseById);
 router.patch('/validateCourse/:id', validateCourseById);
+router.get('/getExpiringCourses', getExpiringCourses);
 
 // routes for course modules
 router.post('/courses/:courseId/modules', createCourseModule);
