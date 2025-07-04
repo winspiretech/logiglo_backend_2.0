@@ -474,7 +474,7 @@ const getAdBySection = async (req, res) => {
       sections: {
         some: {
           name: {
-            equals: section.trim(),
+            contains: section.trim(),
             mode: 'insensitive',
           },
         },
