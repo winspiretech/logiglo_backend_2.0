@@ -1,6 +1,7 @@
 const prisma = require('../models/prismaClient');
 const { sendEmail } = require('../utils/sendEmail'); // ✅ Destructure for clarity
 
+//creation of courseEnquiry
 const handleCourseEnquiry = async (req, res) => {
   try {
     const {
