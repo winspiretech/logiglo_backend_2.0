@@ -153,9 +153,9 @@ module.exports.createQuotePost = async (req, res) => {
 // Create a new QuoteReply
 module.exports.createQuoteReply = async (req, res) => {
   try {
-    const { userId, postId, parentReplyId, ...data } = validateCreateQuoteReply(
-      req.body,
-    );
+    const validatedData = validateCreateQuoteReply(req.body);
+    console.log('Validated data for createQuoteReply:', validatedData);
+    const { userId, postId, parentReplyId, ...data } = validatedData;
 
     // Verify user exists
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -179,6 +179,7 @@ module.exports.createQuoteReply = async (req, res) => {
       }
     }
 
+    console.log('Data to create QuoteReply:', data);
     const newQuoteReply = await prisma.quoteReply.create({
       data: {
         user: { connect: { id: userId } },
@@ -196,7 +197,6 @@ module.exports.createQuoteReply = async (req, res) => {
         new ApiResponse(201, newQuoteReply, 'QuoteReply created successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
     if (error.code === 'P2003') {
       console.error(
         `Error in createQuoteReply - Foreign key constraint failed:`,
@@ -213,13 +213,18 @@ module.exports.createQuoteReply = async (req, res) => {
         );
     }
 
-    // Handle known ApiError instances
+    if (error instanceof z.ZodError) {
+      console.error('Validation error in createQuoteReply:', error.errors);
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
+
     if (error instanceof ApiError) {
       console.error(`Error in createQuoteReply - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
 
-    // Handle unexpected errors
     console.error('Error in createQuoteReply - Unexpected error:', error);
     return res
       .status(500)
@@ -529,7 +534,8 @@ const updateQuoteReplySchema = z.object({
       .uuid('Invalid parent reply ID format')
       .optional()
       .nullable(),
-    description: z.string().optional(),
+    quotePrice: z.number().optional(),
+    email: z.string().email('Invalid email format').optional(),
     status: z.string().optional(),
     rejectionReason: z.string().optional(),
   }),
@@ -539,7 +545,7 @@ const updateQuoteReplySchema = z.object({
 
 module.exports.updateQuoteReply = async (req, res) => {
   try {
-    const parseResult = quoteReplySchemaUpdate.safeParse({
+    const parseResult = updateQuoteReplySchema.safeParse({
       params: req.params,
       body: req.body,
     });
@@ -1130,7 +1136,8 @@ module.exports.getQuotePostByPostId = async (req, res) => {
           where: { status: 'success' },
           select: {
             id: true,
-            description: true,
+            quotePrice: true,
+            email:true,
             status: true,
             parentReplyId: true,
             createdAt: true,

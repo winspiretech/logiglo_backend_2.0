@@ -202,7 +202,8 @@ model QuoteReply {
   userId          String
   postId          String
   parentReplyId   String?
-  description     String?
+  quotePrice      Float?
+  email           String?
   createdAt       DateTime     @default(now())
   status          String?      @default("pending")
   rejectionReason String?

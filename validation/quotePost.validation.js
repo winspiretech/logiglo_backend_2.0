@@ -154,13 +154,20 @@ const updateQuotePostSchema = z
     message: 'At least one field must be provided for update',
   });
 
-// Zod schema for QuoteReply
 const quoteReplySchema = z.object({
   id: z.string().uuid().optional(),
-  userId: z.string().uuid(),
-  postId: z.string().uuid(),
-  description: z.string().nullable().optional(),
-  parentReplyId: z.string().uuid().nullable().optional(),
+  userId: z.string().uuid('Invalid user ID format'),
+  postId: z.string().uuid('Invalid post ID format'),
+  parentReplyId: z
+    .string()
+    .uuid('Invalid parent reply ID format')
+    .nullable()
+    .optional(),
+  quotePrice: z
+    .number({ message: 'Quote price must be a number' })
+    .nullable()
+    .optional(),
+  email: z.string().email('Invalid email format').nullable().optional(),
   createdAt: z
     .date()
     .default(() => new Date())

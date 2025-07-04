@@ -180,15 +180,16 @@ module.exports.quoteReplyAcceptedTemplate = (reply, post) => {
   const content = `
     <h1>Quote Reply Accepted</h1>
     <p>Your reply to the quote post "${post.title}" has been accepted.</p>
-    <p><strong>Reply:</strong></p>
-    <div class="description-html">${reply.description || 'No description provided'}</div>
-    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote </a>
+    <p><strong>Quote Details:</strong></p>
+    <p>Price: ${reply.quotePrice ? `$${reply.quotePrice.toFixed(2)}` : 'No price provided'}</p>
+    <p>Contact Email: ${reply.email || 'No email provided'}</p>
+    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote</a>
     <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the quote post "${post.title}" has been accepted.\n\nReply: ${reply.description || 'No description provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the quote post "${post.title}" has been accepted.\n\nQuote Details:\nPrice: ${reply.quotePrice ? `$${reply.quotePrice.toFixed(2)}` : 'No price provided'}\nContact Email: ${reply.email || 'No email provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
@@ -197,17 +198,18 @@ module.exports.quoteReplyRejectedTemplate = (reply, post) => {
   const content = `
     <h1>Quote Reply Rejected</h1>
     <p>Your reply to the quote post "${post.title}" has been rejected.</p>
-    <p><strong>Reply:</strong></p>
-    <div class="description-html">${reply.description || 'No description provided'}</div>
+    <p><strong>Quote Details:</strong></p>
+    <p>Price: ${reply.quotePrice ? `$${reply.quotePrice.toFixed(2)}` : 'No price provided'}</p>
+    <p>Contact Email: ${reply.email || 'No email provided'}</p>
     <p><strong>Reason:</strong> ${reply.rejectionReason || 'No reason provided'}</p>
     <p>Please review and resubmit if needed.</p>
-    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote </a>
+    <a href="https://tester.logiglo.com/quote/${post.id}" class="button">View Quote</a>
     <p>Regards,<br>Logiglo Admin Team</p>
   `;
   return {
     subject,
     html: baseTemplate(content, subject),
-    text: `Your reply to the quote post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
+    text: `Your reply to the quote post "${post.title}" has been rejected.\n\nQuote Details:\nPrice: ${reply.quotePrice ? `$${reply.quotePrice.toFixed(2)}` : 'No price provided'}\nContact Email: ${reply.email || 'No email provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://tester.logiglo.com/quote/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
 
@@ -235,7 +237,6 @@ module.exports.generalPostAcceptedTemplate = (post) => {
     <p>Great news! Your post "${post.title}" has been accepted.</p>
     <p><strong>Description:</strong></p>
     <div class="description-html">${post.description}</div>
-    <p><strong>Reason:</strong> ${post.acceptReason || 'No reason provided'}</p>
     <a href="https://tester.logiglo.com/general/${post.id}" class="button">View Post</a>
     <p>Regards,<br>Logiglo Admin Team</p>
   `;
