@@ -1137,7 +1137,7 @@ module.exports.getQuotePostByPostId = async (req, res) => {
           select: {
             id: true,
             quotePrice: true,
-            email:true,
+            email: true,
             status: true,
             parentReplyId: true,
             createdAt: true,
