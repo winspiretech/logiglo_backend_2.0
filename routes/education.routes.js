@@ -53,7 +53,7 @@ router.delete('/modules/:moduleId', deleteCourseModule);
 router.get('/courses/:courseId/modules', getCourseModules);
 
 // POST route for submitting a course enquiry
-router.post('/enquire', handleCourseEnquiry);
+router.post('/doEnquire', handleCourseEnquiry);
 router.get('/getAllEnquiries', getAllEnquiries);
 router.get('/course-enquiry/:id', getEnquiryById);
 router.patch('/course-enquiry/:id/status', updateEnquiryStatus);
