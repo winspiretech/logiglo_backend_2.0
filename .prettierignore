@@ -1,0 +1,9 @@
+node_modules/
+build/
+dist/
+.next/
+generated/
+docker-compose.yml
+package-lock.json
+package
+json data/
