@@ -29,9 +29,15 @@ jobs:
       - name: Deploy to Server (Production or Test)
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ github.ref == 'refs/heads/main' && secrets.MAIN_REMOTE_HOST || secrets.REMOTE_HOST }}
-          username: ${{ github.ref == 'refs/heads/main' && 'root' || secrets.REMOTE_USER }}
-          key: ${{ github.ref == 'refs/heads/main' && secrets.MAIN_REMOTE_KEY || secrets.REMOTE_KEY }}
+          host:
+            ${{ github.ref == 'refs/heads/main' && secrets.MAIN_REMOTE_HOST ||
+            secrets.REMOTE_HOST }}
+          username:
+            ${{ github.ref == 'refs/heads/main' && 'root' || secrets.REMOTE_USER
+            }}
+          key:
+            ${{ github.ref == 'refs/heads/main' && secrets.MAIN_REMOTE_KEY ||
+            secrets.REMOTE_KEY }}
           script: |
             if [ -d "/backend" ] && [ ! -L "/backend" ]; then
               rm -rf /backend
