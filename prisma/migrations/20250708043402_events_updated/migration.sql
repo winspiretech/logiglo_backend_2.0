@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Event" ALTER COLUMN "brochure" DROP NOT NULL,
+ALTER COLUMN "videoUrl" DROP NOT NULL;
