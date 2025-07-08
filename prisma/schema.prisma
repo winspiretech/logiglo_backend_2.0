@@ -310,8 +310,8 @@ model Event {
 
   isArchived       Boolean          @default(false)
   unArchiveReasons String[]         @default([])
-  videoUrl         String
-  brochure         String
+  videoUrl         String?
+  brochure         String?
   EventIntrested   EventIntrested[]
 }
 
