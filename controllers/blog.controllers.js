@@ -459,9 +459,9 @@ const getRequiredAmountBlog = async (req, res) => {
         isArchived: false,
       },
       take: amount,
-      orderBy : {
-        createdAt : 'desc'
-      }
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     if (!blogsData) {
       throw new ApiError(
