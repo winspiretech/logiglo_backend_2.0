@@ -444,9 +444,6 @@ const getRequiredAmountEvents = async (req, res) => {
     const eventsData = await prisma.event.findMany({
       where: {
         isArchived: false,
-        startDate: {
-          gt: new Date(),
-        },
       },
       take: amount,
       orderBy: {
