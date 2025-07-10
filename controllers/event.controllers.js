@@ -442,7 +442,16 @@ const getRequiredAmountEvents = async (req, res) => {
   try {
     const amount = parseInt(req.query.amount) || 10;
     const eventsData = await prisma.event.findMany({
+      where:{
+        isArchived : false,
+        startDate : {
+          gt : new Date()
+        }
+      },
       take: amount,
+      orderBy : {
+        startDate : 'desc'
+      }
     });
     if (!eventsData) {
       throw new ApiError(
