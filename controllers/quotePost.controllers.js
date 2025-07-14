@@ -41,7 +41,14 @@ module.exports.createQuotePost = async (req, res) => {
   try {
     const validatedData = validateCreateQuotePost(req.body);
 
-    const { userId, postMainCategory, postSubCategory, formId, postFieldValues, ...data } = validatedData;
+    const {
+      userId,
+      postMainCategory,
+      postSubCategory,
+      formId,
+      postFieldValues,
+      ...data
+    } = validatedData;
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
@@ -105,14 +112,22 @@ module.exports.createQuotePost = async (req, res) => {
 
       if (postFieldValues && formId) {
         // Validate that all fieldIds belong to the form
-        const formFieldIds = form.sections.flatMap(section => section.fields.map(field => field.id));
+        const formFieldIds = form.sections.flatMap((section) =>
+          section.fields.map((field) => field.id),
+        );
         for (const { fieldId, value } of postFieldValues) {
           if (!formFieldIds.includes(fieldId)) {
-            throw new ApiError(404, `Field ${fieldId} not found in form ${formId}`);
+            throw new ApiError(
+              404,
+              `Field ${fieldId} not found in form ${formId}`,
+            );
           }
           const field = await tx.field.findUnique({ where: { id: fieldId } });
           if (!field || field.section.formId !== formId) {
-            throw new ApiError(404, `Field ${fieldId} not associated with form ${formId}`);
+            throw new ApiError(
+              404,
+              `Field ${fieldId} not associated with form ${formId}`,
+            );
           }
           // Additional validation based on field type
           if (field.type === 'NUMBER' && isNaN(parseFloat(value))) {
@@ -121,9 +136,15 @@ module.exports.createQuotePost = async (req, res) => {
           if (field.type === 'DATE' && !Date.parse(value)) {
             throw new ApiError(400, `Field ${fieldId} requires a valid date`);
           }
-          if (['DROPDOWN', 'RADIO', 'CHECKBOX'].includes(field.type) && field.options.length > 0) {
+          if (
+            ['DROPDOWN', 'RADIO', 'CHECKBOX'].includes(field.type) &&
+            field.options.length > 0
+          ) {
             if (!field.options.includes(value)) {
-              throw new ApiError(400, `Field ${fieldId} value must be one of: ${field.options.join(', ')}`);
+              throw new ApiError(
+                400,
+                `Field ${fieldId} value must be one of: ${field.options.join(', ')}`,
+              );
             }
           }
           await tx.postFieldValue.create({

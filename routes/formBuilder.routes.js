@@ -7,7 +7,10 @@ const formBuilderController = require('../controllers/formBuilder.controllers.js
 router.post('/createform', formBuilderController.createForm);
 
 // Update an existing form
-router.patch('/updateform/:formId', formBuilderController.updateFormWithStructure);
+router.patch(
+  '/updateform/:formId',
+  formBuilderController.updateFormWithStructure,
+);
 
 // Delete a form
 router.delete('/deleteform/:formId', formBuilderController.deleteForm);
@@ -23,7 +26,10 @@ router.delete('/deletefield/:fieldId', formBuilderController.deleteField);
 router.post('/createsection', formBuilderController.createSection);
 
 // Update section positions (for drag-and-drop)
-router.patch('/updatesectionposition', formBuilderController.updateSectionPosition);
+router.patch(
+  '/updatesectionposition',
+  formBuilderController.updateSectionPosition,
+);
 
 // --- Field Routes ---
 
