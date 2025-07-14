@@ -146,12 +146,89 @@ model ForumSubCategory {
 
   @@unique([name, mainCategoryId])
 }
+// New Enums
+enum FieldType {
+  TEXT
+  DROPDOWN
+  RADIO
+  CHECKBOX
+  DATE
+  NUMBER
+  TEXTAREA
+}
 
+// New Models for Dynamic Form Builder
+model Form {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  sections    FormSection[]
+  quotePosts  QuotePost[]
+
+}
+
+model FormSection {
+  id        String   @id @default(uuid())
+  formId    String
+  name      String
+  position  Int
+  form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  fields    Field[]
+  @@unique([formId, position])
+}
+
+model Field {
+  id           String      @id @default(uuid())
+  sectionId    String
+  name         String      @default("name")// Add this
+  type         FieldType
+  label        String
+  placeholder  String?
+  position     Int
+  required     Boolean     @default(false)
+  options      String[]    @default([])
+  optionSetId  String?
+  section      FormSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  optionSet    OptionSet?  @relation(fields: [optionSetId], references: [id])
+  postFieldValues PostFieldValue[]
+  
+  @@unique([sectionId, position])
+}
+
+
+model OptionSet {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  options   String[]
+  fields    Field[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostFieldValue {
+  id        String @id @default(uuid())
+  postId    String
+  fieldId   String
+  value     String
+
+  quotePost   QuotePost?  @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
+  generalPost GeneralPost?@relation(fields: [postId], references: [id], onDelete: Cascade, map: "generalPost_postId_fkey")
+  field       Field       @relation(fields: [fieldId], references: [id])
+
+  @@unique([postId, fieldId])
+}
+
+
+
+// Modified QuotePost Model (Removed FormConfig, Added Form)
 model QuotePost {
   id               String    @id @default(uuid())
   title            String
   description      String
   userId           String
+  formId           String?   // Links to Form
   name             String?
   createdAt        DateTime? @default(now())
   updatedAt        DateTime? @updatedAt
@@ -181,20 +258,19 @@ model QuotePost {
   toState          String?
   postMainCategory String?
   postSubCategory  String?
-
-  // New fields from the form
-  postType     PostType? // Docs or Non-Docs
-  shipmentType ShipmentType? // Sample or Commercial
-  serviceType  ServiceType? // Door to Door or Self Drop & Self Pickup
-  incoterm     IncotermType? // Selected Incoterm (EXW, FOB, etc.)
-  incotermInfo String? // Description or info bound to the selected Incoterm
-
+  postType         PostType?
+  shipmentType     ShipmentType?
+  serviceType      ServiceType?
+  incoterm         IncotermType?
+  incotermInfo     String?
   // Relations
-  quoteReply   QuoteReply[]
-  quoteLike    QuoteLike[]        @relation("PostToQuoteLike")
-  subCategory  ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
-  mainCategory ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user         User               @relation(fields: [userId], references: [id])
+  form             Form?              @relation(fields: [formId], references: [id])
+  quoteReply       QuoteReply[]
+  quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
+  subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
+  mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
+  user             User               @relation(fields: [userId], references: [id])
+  postFieldValues  PostFieldValue[]
 }
 
 model QuoteReply {
@@ -226,6 +302,7 @@ model GeneralPost {
   title                   String
   description             String
   userId                  String
+  formId                  String?   // Links to Form
   createdBy               String?
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
@@ -237,12 +314,12 @@ model GeneralPost {
   acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
-
-  user         User               @relation("UserToGeneralPost", fields: [userId], references: [id])
-  MainCategory ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  SubCategory  ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
-  generalReply GeneralReply[]
-  generalLike  GeneralLike[]      @relation("PostToGeneralLike")
+  user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
+  MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
+  SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  generalReply            GeneralReply[]
+  generalLike             GeneralLike[]      @relation("PostToGeneralLike")
+  postFieldValues         PostFieldValue[]
 }
 
 model GeneralReply {
