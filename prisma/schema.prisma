@@ -208,17 +208,17 @@ model OptionSet {
 }
 
 model PostFieldValue {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   postId    String
   fieldId   String
   value     String
 
-  quotePost   QuotePost?  @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
-  generalPost GeneralPost?@relation(fields: [postId], references: [id], onDelete: Cascade, map: "generalPost_postId_fkey")
-  field       Field       @relation(fields: [fieldId], references: [id])
+  quotePost QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
+  field     Field     @relation(fields: [fieldId], references: [id])
 
   @@unique([postId, fieldId])
 }
+
 
 
 
@@ -319,7 +319,7 @@ model GeneralPost {
   SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
   generalLike             GeneralLike[]      @relation("PostToGeneralLike")
-  postFieldValues         PostFieldValue[]
+
 }
 
 model GeneralReply {

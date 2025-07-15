@@ -40,12 +40,13 @@ const quotePostSchema = z.object({
   postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
   serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
   viewCount: z.number().optional(),
+  formId: z.string().uuid('Invalid form ID').optional(),
   postFieldValues: z
     .array(
       z.object({
-        fieldId: z.string().uuid('Invalid field ID format'),
+        fieldId: z.string().uuid('Invalid field ID'),
         value: z.string().min(1, 'Field value is required'),
-      }),
+      })
     )
     .optional(),
   incoterm: z
@@ -140,14 +141,15 @@ const updateQuotePostSchema = z
     postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
     serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
     viewCount: z.number().optional(),
-    postFieldValues: z
-      .array(
-        z.object({
-          fieldId: z.string().uuid('Invalid field ID format'),
-          value: z.string().min(1, 'Field value is required'),
-        }),
-      )
-      .optional(),
+  formId: z.string().uuid('Invalid form ID').optional(),
+  postFieldValues: z
+    .array(
+      z.object({
+        fieldId: z.string().uuid('Invalid field ID'),
+        value: z.string().min(1, 'Field value is required'),
+      })
+    )
+    .optional(),
     incoterm: z
       .enum([
         'EXW',

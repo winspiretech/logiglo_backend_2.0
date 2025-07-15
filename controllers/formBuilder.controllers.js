@@ -183,40 +183,57 @@ module.exports.updateFormWithStructure = async (req, res) => {
       });
 
       if (sections) {
-        // Delete old sections and fields
-        await tx.field.deleteMany({
-          where: {
-            section: {
-              formId,
-            },
-          },
-        });
-        await tx.formSection.deleteMany({
-          where: { formId },
-        });
-
-        // Re-create sections and fields
         for (const section of sections) {
-          const newSection = await tx.formSection.create({
-            data: {
-              name: section.name,
-              position: section.position,
-              formId: form.id,
-            },
-          });
+          let updatedSection;
 
-          for (const field of section.fields) {
-            await tx.field.create({
+          // Update existing section
+          if (section.id) {
+            updatedSection = await tx.formSection.update({
+              where: { id: section.id },
               data: {
-                label: field.label,
-                type: field.type,
-                placeholder: field.placeholder,
-                required: field.required ?? false,
-                options: field.options || [],
-                position: field.position,
-                sectionId: newSection.id,
+                name: section.name,
+                position: section.position,
               },
             });
+          } else {
+            // Create new section if id is not provided
+            updatedSection = await tx.formSection.create({
+              data: {
+                name: section.name,
+                position: section.position,
+                formId: form.id,
+              },
+            });
+          }
+
+          for (const field of section.fields) {
+            if (field.id) {
+              // Update existing field
+              await tx.field.update({
+                where: { id: field.id },
+                data: {
+                  label: field.label,
+                  type: field.type,
+                  placeholder: field.placeholder,
+                  required: field.required ?? false,
+                  options: field.options || [],
+                  position: field.position,
+                },
+              });
+            } else {
+              // Create new field if id not provided
+              await tx.field.create({
+                data: {
+                  label: field.label,
+                  type: field.type,
+                  placeholder: field.placeholder,
+                  required: field.required ?? false,
+                  options: field.options || [],
+                  position: field.position,
+                  sectionId: updatedSection.id,
+                },
+              });
+            }
           }
         }
       }

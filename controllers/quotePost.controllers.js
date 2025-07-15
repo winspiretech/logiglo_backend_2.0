@@ -40,7 +40,6 @@ const incotermDescriptions = {
 module.exports.createQuotePost = async (req, res) => {
   try {
     const validatedData = validateCreateQuotePost(req.body);
-
     const {
       userId,
       postMainCategory,
@@ -50,50 +49,46 @@ module.exports.createQuotePost = async (req, res) => {
       ...data
     } = validatedData;
 
+    // 1. Validate user
     const user = await prisma.user.findUnique({ where: { id: userId } });
-    if (!user) {
-      throw new ApiError(404, 'User not found');
-    }
+    if (!user) throw new ApiError(404, 'User not found');
 
+    // 2. Validate main category
     let mainCategory = null;
     if (postMainCategory) {
       mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: postMainCategory },
       });
-      if (!mainCategory) {
-        throw new ApiError(404, 'Main category not found');
-      }
+      if (!mainCategory) throw new ApiError(404, 'Main category not found');
     }
 
+    // 3. Validate sub category
     let subCategory = null;
     if (postSubCategory) {
       subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: postSubCategory },
       });
-      if (!subCategory) {
-        throw new ApiError(404, 'Subcategory not found');
-      }
+      if (!subCategory) throw new ApiError(404, 'Subcategory not found');
     }
 
+    // 4. Validate form and fields
     let form = null;
     if (formId) {
       form = await prisma.form.findUnique({
         where: { id: formId },
         include: { sections: { include: { fields: true } } },
       });
-      if (!form) {
-        throw new ApiError(404, 'Form not found');
-      }
+      if (!form) throw new ApiError(404, 'Form not found');
     }
 
+    // 5. Inject incoterm info if applicable
     if (data.incoterm) {
       const incotermInfo = incotermDescriptions[data.incoterm];
-      if (!incotermInfo) {
-        throw new ApiError(400, 'Invalid Incoterm provided');
-      }
+      if (!incotermInfo) throw new ApiError(400, 'Invalid Incoterm provided');
       data.incotermInfo = incotermInfo;
     }
 
+    // 6. Create QuotePost with PostFieldValues in transaction
     const newQuotePost = await prisma.$transaction(async (tx) => {
       const post = await tx.quotePost.create({
         data: {
@@ -110,49 +105,57 @@ module.exports.createQuotePost = async (req, res) => {
         },
       });
 
-      if (postFieldValues && formId) {
-        // Validate that all fieldIds belong to the form
-        const formFieldIds = form.sections.flatMap((section) =>
+      if (postFieldValues && form) {
+        const validFieldIds = form.sections.flatMap((section) =>
           section.fields.map((field) => field.id),
         );
+
         for (const { fieldId, value } of postFieldValues) {
-          if (!formFieldIds.includes(fieldId)) {
+          if (!validFieldIds.includes(fieldId)) {
             throw new ApiError(
               404,
               `Field ${fieldId} not found in form ${formId}`,
             );
           }
-          const field = await tx.field.findUnique({ where: { id: fieldId } });
+
+          const field = await tx.field.findUnique({
+            where: { id: fieldId },
+            include: { section: true },
+          });
+
           if (!field || field.section.formId !== formId) {
             throw new ApiError(
               404,
               `Field ${fieldId} not associated with form ${formId}`,
             );
           }
-          // Additional validation based on field type
+
+          // Type checks
           if (field.type === 'NUMBER' && isNaN(parseFloat(value))) {
-            throw new ApiError(400, `Field ${fieldId} requires a valid number`);
+            throw new ApiError(400, `Field ${field.label} must be a number`);
           }
           if (field.type === 'DATE' && !Date.parse(value)) {
-            throw new ApiError(400, `Field ${fieldId} requires a valid date`);
+            throw new ApiError(
+              400,
+              `Field ${field.label} must be a valid date`,
+            );
           }
           if (
             ['DROPDOWN', 'RADIO', 'CHECKBOX'].includes(field.type) &&
-            field.options.length > 0
+            field.options.length > 0 &&
+            !field.options.includes(value)
           ) {
-            if (!field.options.includes(value)) {
-              throw new ApiError(
-                400,
-                `Field ${fieldId} value must be one of: ${field.options.join(', ')}`,
-              );
-            }
+            throw new ApiError(
+              400,
+              `Field ${field.label} must be one of: ${field.options.join(', ')}`,
+            );
           }
+
           await tx.postFieldValue.create({
             data: {
-              postId: post.id,
+              postId: post.id, // ✅ this is now unambiguous
               fieldId,
               value,
-              quotePost: { connect: { id: post.id } },
             },
           });
         }
@@ -161,7 +164,7 @@ module.exports.createQuotePost = async (req, res) => {
       return post;
     });
 
-    // Send notification for post creation
+    // 7. Notify user
     const notificationType = 'QUOTE_POST_CREATED';
     const emailTemplate = quotePostCreatedTemplate(newQuotePost, {
       name: user.name,
@@ -173,6 +176,7 @@ module.exports.createQuotePost = async (req, res) => {
       emailTemplate,
     );
 
+    // 8. Return success
     return res
       .status(201)
       .json(
@@ -180,47 +184,31 @@ module.exports.createQuotePost = async (req, res) => {
       );
   } catch (error) {
     console.error('Error in createQuotePost:', error);
+
     if (error instanceof z.ZodError) {
       return res
         .status(400)
         .json(new ApiError(400, 'Invalid input data', error.errors));
     }
+
     if (error.code === 'P2003') {
       return res
         .status(404)
         .json(
-          new ApiError(
-            404,
-            'Invalid foreign key reference (user, main category, subcategory, or form)',
-            error.message,
-          ),
+          new ApiError(404, 'Invalid foreign key reference', error.message),
         );
     }
+
     if (error.code === 'P2002') {
       return res
         .status(409)
-        .json(
-          new ApiError(
-            409,
-            'Unique constraint violation on QuotePost',
-            error.message,
-          ),
-        );
+        .json(new ApiError(409, 'Unique constraint violation', error.message));
     }
-    if (error.code === 'P2011') {
-      return res
-        .status(400)
-        .json(
-          new ApiError(
-            400,
-            'Required field missing in QuotePost',
-            error.message,
-          ),
-        );
-    }
+
     if (error instanceof ApiError) {
       return res.status(error.statusCode).json(error);
     }
+
     return res
       .status(500)
       .json(
@@ -1235,19 +1223,13 @@ module.exports.getQuotePostByPostId = async (req, res) => {
           include: {
             sections: {
               include: {
-                fields: {
-                  include: {
-                    optionSet: true,
-                  },
-                },
+                fields: { include: { optionSet: true } },
               },
             },
           },
         },
         postFieldValues: {
-          include: {
-            field: true,
-          },
+          include: { field: true },
         },
         quoteReply: {
           where: { status: 'success' },
