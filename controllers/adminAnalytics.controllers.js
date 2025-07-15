@@ -10,15 +10,23 @@ dayjs.extend(weekOfYear);
 
 const getNewUsersInDefinedTime = async (req, res) => {
   try {
-    const { filter = "daily", count = 7 } = req.query;
+    const { filter = 'daily', count = 7 } = req.query;
 
-    if (!["daily", "weekly", "monthly", "yearly"].includes(filter)) {
-      throw new ApiError(400, "Invalid filter", "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'");
+    if (!['daily', 'weekly', 'monthly', 'yearly'].includes(filter)) {
+      throw new ApiError(
+        400,
+        'Invalid filter',
+        "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'",
+      );
     }
 
     const units = parseInt(count);
     if (isNaN(units) || units < 1 || units > 100) {
-      throw new ApiError(400, "Invalid count", "Count must be a number between 1 and 100");
+      throw new ApiError(
+        400,
+        'Invalid count',
+        'Count must be a number between 1 and 100',
+      );
     }
 
     const now = dayjs();
@@ -27,25 +35,26 @@ const getNewUsersInDefinedTime = async (req, res) => {
     let getLabel;
 
     switch (filter) {
-      case "daily":
+      case 'daily':
         format = 'YYYY-MM-DD';
         rangeStart = now.subtract(units - 1, 'day');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         break;
-      case "weekly":
+      case 'weekly':
         format = 'IYYY-"W"IW'; // ISO Year and Week (PostgreSQL)
         rangeStart = now.subtract(units - 1, 'week');
-        getLabel = d => `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
+        getLabel = (d) =>
+          `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
         break;
-      case "monthly":
+      case 'monthly':
         format = 'YYYY-MM';
         rangeStart = now.subtract(units - 1, 'month');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         break;
-      case "yearly":
+      case 'yearly':
         format = 'YYYY';
         rangeStart = now.subtract(units - 1, 'year');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         break;
     }
 
@@ -59,20 +68,34 @@ const getNewUsersInDefinedTime = async (req, res) => {
     `);
 
     const resultMap = new Map();
-    results.forEach(row => {
+    results.forEach((row) => {
       resultMap.set(row.period, Number(row.count));
     });
 
     const fullPeriods = Array.from({ length: units }, (_, i) =>
-      getLabel(rangeStart.add(i, filter === 'daily' ? 'day' : filter === 'weekly' ? 'week' : filter === 'monthly' ? 'month' : 'year'))
+      getLabel(
+        rangeStart.add(
+          i,
+          filter === 'daily'
+            ? 'day'
+            : filter === 'weekly'
+              ? 'week'
+              : filter === 'monthly'
+                ? 'month'
+                : 'year',
+        ),
+      ),
     );
 
-    const finalData = fullPeriods.map(period => ({
+    const finalData = fullPeriods.map((period) => ({
       period,
       count: resultMap.get(period) || 0,
     }));
 
-    const totalUsersInRange = finalData.reduce((acc, curr) => acc + curr.count, 0);
+    const totalUsersInRange = finalData.reduce(
+      (acc, curr) => acc + curr.count,
+      0,
+    );
 
     const response = new ApiResponse(
       200,
@@ -84,18 +107,19 @@ const getNewUsersInDefinedTime = async (req, res) => {
         rangeEnd: now.toDate(),
         data: finalData,
       },
-      "User registration analytics retrieved successfully"
+      'User registration analytics retrieved successfully',
     );
 
     return res.status(200).json(response);
-
   } catch (error) {
-    console.error("User analytics error:", error);
-    return res.status(error instanceof ApiError ? error.statusCode : 500).json(
-      error instanceof ApiError
-        ? error
-        : new ApiError(500, "Internal Server Error", error.message || null)
-    );
+    console.error('User analytics error:', error);
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
   }
 };
 
