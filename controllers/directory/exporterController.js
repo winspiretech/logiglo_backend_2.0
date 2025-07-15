@@ -92,7 +92,6 @@ const getExporters = async (req, res) => {
   }
 };
 
-
 const getExporterById = async (req, res) => {
   try {
     const { id } = req.params;

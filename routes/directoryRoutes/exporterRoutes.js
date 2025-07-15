@@ -7,7 +7,7 @@ const {
   getStates,
   getExporterTypes,
   getProducts,
-} = require('../../controllers/directory/exporterController.js')
+} = require('../../controllers/directory/exporterController.js');
 
 // Exporter list and detail
 router.get('/', getExporters); // /api/exporters

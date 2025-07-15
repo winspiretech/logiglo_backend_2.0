@@ -1,16 +1,19 @@
-const path = require("path");
-const XLSX = require("xlsx");
-const prisma = require("../../models/prismaClient");
+const path = require('path');
+const XLSX = require('xlsx');
+const prisma = require('../../models/prismaClient');
 
 // Enum
 const ExporterCategory = {
-  EXPORTER: "EXPORTER",
-  ORGANIC: "ORGANIC",
+  EXPORTER: 'EXPORTER',
+  ORGANIC: 'ORGANIC',
 };
 
 // 👇 Change these before each import
 const CATEGORY = ExporterCategory.EXPORTER; // or ORGANIC
-const filePath = path.join(__dirname, "../../import-data/Exporter_Directory Chattisgarh.xls");
+const filePath = path.join(
+  __dirname,
+  '../../import-data/Exporter_Directory Chattisgarh.xls',
+);
 
 async function importExporters() {
   try {
@@ -28,15 +31,16 @@ async function importExporters() {
         }
       }
 
-      const name = normalizedRow["exporter name"];
-      const fullAddress = normalizedRow["address"];
-      const stateName = normalizedRow["state"];
-      const exporterTypeName = normalizedRow["exporter type"];
-      const certificationBody = normalizedRow["certification body name"] || null;
+      const name = normalizedRow['exporter name'];
+      const fullAddress = normalizedRow['address'];
+      const stateName = normalizedRow['state'];
+      const exporterTypeName = normalizedRow['exporter type'];
+      const certificationBody =
+        normalizedRow['certification body name'] || null;
 
       // ✅ Use only the two known email column headers
       const email =
-        normalizedRow["e-mail id"] || normalizedRow["e-mail"] || null;
+        normalizedRow['e-mail id'] || normalizedRow['e-mail'] || null;
 
       if (!name || !fullAddress || !stateName || !exporterTypeName) {
         console.warn(`⚠️ Skipping row — missing required fields.`);
@@ -44,13 +48,13 @@ async function importExporters() {
       }
 
       // Extract city and pincode from address
-      let city = "";
-      let pincode = "";
+      let city = '';
+      let pincode = '';
       const pinMatch = fullAddress.match(/\b\d{6}\b/);
       if (pinMatch) {
         pincode = pinMatch[0];
       }
-      const parts = fullAddress.split(",");
+      const parts = fullAddress.split(',');
       if (parts.length >= 2) {
         city = parts[parts.length - 2].trim();
       }
@@ -60,7 +64,7 @@ async function importExporters() {
         where: {
           name: {
             equals: stateName.trim(),
-            mode: "insensitive",
+            mode: 'insensitive',
           },
         },
       });
@@ -99,7 +103,7 @@ async function importExporters() {
 
     console.log(`🎉 Import completed for category: ${CATEGORY}`);
   } catch (err) {
-    console.error("❌ Import error:", err);
+    console.error('❌ Import error:', err);
   } finally {
     await prisma.$disconnect();
   }
