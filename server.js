@@ -12,7 +12,7 @@
 
 const http = require('http');
 const app = require('./app');
-const { initSocket } = require('./socket/socket'); 
+const { initSocket } = require('./socket/socket');
 const { archiveOldBlogs } = require('./jobs/archiveOldBlogs.job');
 const { archiveOldEvents } = require('./jobs/archiveOldEvents.job');
 

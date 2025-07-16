@@ -114,7 +114,7 @@ const loginUser = async (req, res, next) => {
         {
           name: existingUser.name,
           email: existingUser.email,
-          userId: existingUser.id
+          userId: existingUser.id,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: '7d' },
@@ -420,7 +420,7 @@ const otpVerification = async (req, res, next) => {
       {
         name: user.name,
         email: user.email,
-        userId : user.id
+        userId: user.id,
       },
       process.env.TOKEN_SECRET,
       { expiresIn: '7d' },
