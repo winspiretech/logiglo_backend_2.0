@@ -414,6 +414,7 @@ module.exports.createQuoteLike = async (req, res) => {
 module.exports.updateQuotePost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateQuotePost(req.params, req.body);
+    console.log('Received postFieldValues:', data.postFieldValues);
 
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
@@ -465,10 +466,8 @@ module.exports.updateQuotePost = async (req, res) => {
         create: updateData.postFieldValues.map(({ fieldId, value }) => ({
           field: { connect: { id: fieldId } },
           value,
-          quotePost: { connect: { id: postId } },
         })),
       };
-      delete updateData.postFieldValues;
     }
 
     if (updateData.incoterm) {
@@ -484,14 +483,6 @@ module.exports.updateQuotePost = async (req, res) => {
         updatedAt: new Date(),
         title: updateData.title ?? post.title,
         description: updateData.description ?? post.description,
-        totalNetWeight: updateData.totalNetWeight ?? post.totalNetWeight,
-        totalGrossWeight: updateData.totalGrossWeight ?? post.totalGrossWeight,
-        volumetricWeight: updateData.volumetricWeight ?? post.volumetricWeight,
-        transitInsurance: updateData.transitInsurance ?? post.transitInsurance,
-        dangerousGoods: updateData.dangerousGoods ?? post.dangerousGoods,
-        width: updateData.width ?? post.width,
-        height: updateData.height ?? post.height,
-        length: updateData.length ?? post.length,
         fromPostalCode: updateData.fromPostalCode ?? post.fromPostalCode,
         toPostalCode: updateData.toPostalCode ?? post.toPostalCode,
         fromCity: updateData.fromCity ?? post.fromCity,
@@ -502,9 +493,6 @@ module.exports.updateQuotePost = async (req, res) => {
         toAddress: updateData.toAddress ?? post.toAddress,
         fromState: updateData.fromState ?? post.fromState,
         toState: updateData.toState ?? post.toState,
-        postType: updateData.postType ?? post.postType,
-        shipmentType: updateData.shipmentType ?? post.shipmentType,
-        serviceType: updateData.serviceType ?? post.serviceType,
         incoterm: updateData.incoterm ?? post.incoterm,
         incotermInfo: updateData.incotermInfo ?? post.incotermInfo,
         mainCategory: updateData.mainCategory,
