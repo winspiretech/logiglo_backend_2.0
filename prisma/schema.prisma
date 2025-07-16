@@ -460,6 +460,7 @@ model StatesData {
   country_id Int
   country    CountriesData @relation(fields: [country_id], references: [id])
   cities     CitiesData[]
+  exporters  Exporter[]
 }
 
 model CitiesData {
@@ -716,4 +717,45 @@ model Otp {
   verified     Boolean   @default(false)
   resendCount  Int       @default(0)
   blockedUntil DateTime?
+}
+
+// Exporters Directory
+model ExporterType {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  exporters Exporter[]
+}
+
+enum ExporterCategory {
+  EXPORTER
+  ORGANIC
+}
+
+
+model Exporter {
+  id                      String           @id @default(uuid())
+  name                    String
+  fullAddress             String
+  city                    String
+  pincode                 String
+  email                   String?
+  stateId                 Int
+  exporterTypeId          String
+  category                ExporterCategory @default(EXPORTER)
+  certificationBodyName   String?          // 👈 Add this line (nullable)
+  products                Product[]        @relation("ExporterProducts")
+
+  state                   StatesData       @relation(fields: [stateId], references: [id])
+  exporterType            ExporterType     @relation(fields: [exporterTypeId], references: [id])
+
+  @@index([stateId])
+  @@index([exporterTypeId])
+  @@index([category])
+}
+
+
+model Product {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  exporters Exporter[] @relation("ExporterProducts")
 }
