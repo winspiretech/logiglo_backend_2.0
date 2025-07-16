@@ -13,6 +13,7 @@ const {
   resendOtp,
   editUserProfile,
 } = require('../controllers/user.controllers');
+const isAdmin = require('../middleware/isAdmin');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -25,11 +26,11 @@ router.post('/login', loginUser);
 
 router.post('/logout', logoutUser);
 
-router.get('/all', getUsers);
+router.get('/all', isAdmin, getUsers);
 
-router.get('/admins', getAdmins);
+router.get('/admins',isAdmin, getAdmins);
 
-router.patch('/change-role', changeUserRole);
+router.patch('/change-role',isAdmin, changeUserRole);
 
 router.post('/otp-verification', otpVerification);
 

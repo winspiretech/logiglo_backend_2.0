@@ -4,9 +4,11 @@ const { ApiResponse } = require('../utils/ApiResponse');
 const dayjs = require('dayjs');
 const isoWeek = require('dayjs/plugin/isoWeek');
 const weekOfYear = require('dayjs/plugin/weekOfYear');
+const advancedFormat = require('dayjs/plugin/advancedFormat');
 
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
+dayjs.extend(advancedFormat);
 
 const getNewUsersInDefinedTime = async (req, res) => {
   try {
@@ -123,4 +125,97 @@ const getNewUsersInDefinedTime = async (req, res) => {
   }
 };
 
-module.exports = { getNewUsersInDefinedTime };
+const getTotalUsersOverTime = async (req, res) => {
+  try {
+    const { filter = "daily", count = 7, date } = req.query;
+
+    if (!["daily", "weekly", "monthly", "yearly"].includes(filter)) {
+      throw new ApiError(400, "Invalid filter", "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'");
+    }
+
+    const units = parseInt(count);
+    if (isNaN(units) || units < 1 || units > 100) {
+      throw new ApiError(400, "Invalid count", "Count must be a number between 1 and 100");
+    }
+
+    const anchorDate = date ? dayjs(date) : dayjs();
+    let rangeStart;
+    let format;
+    let getLabel;
+    let addUnit;
+    let getPeriodEnd;
+
+    switch (filter) {
+      case "daily":
+        format = 'YYYY-MM-DD';
+        rangeStart = anchorDate.subtract(units - 1, 'day');
+        getLabel = d => d.format(format);
+        addUnit = 'day';
+        getPeriodEnd = d => d.endOf('day');
+        break;
+      case "weekly":
+        format = 'IYYY-"W"IW';
+        rangeStart = anchorDate.subtract(units - 1, 'week');
+        getLabel = d => `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
+        addUnit = 'week';
+        getPeriodEnd = d => d.endOf('week');
+        break;
+      case "monthly":
+        format = 'YYYY-MM';
+        rangeStart = anchorDate.subtract(units - 1, 'month');
+        getLabel = d => d.format(format);
+        addUnit = 'month';
+        getPeriodEnd = d => d.endOf('month');
+        break;
+      case "yearly":
+        format = 'YYYY';
+        rangeStart = anchorDate.subtract(units - 1, 'year');
+        getLabel = d => d.format(format);
+        addUnit = 'year';
+        getPeriodEnd = d => d.endOf('year');
+        break;
+    }
+
+    const allPeriods = Array.from({ length: units }, (_, i) => {
+      const date = rangeStart.add(i, addUnit);
+      return {
+        period: getLabel(date),
+        endDate: getPeriodEnd(date).toISOString(),
+      };
+    });
+
+    const allUsers = await prisma.user.findMany({
+      select: { createdAt: true },
+    });
+
+    const data = allPeriods.map(({ period, endDate }) => {
+      const userCount = allUsers.filter(user => user.createdAt <= new Date(endDate)).length;
+      return { period, count: userCount };
+    });
+
+    const response = new ApiResponse(
+      200,
+      {
+        filter,
+        numberOfFetchedData: units,
+        anchorDate: anchorDate.toISOString(),
+        rangeStart: rangeStart.toISOString(),
+        rangeEnd: anchorDate.toISOString(),
+        data,
+      },
+      "Cumulative user totals retrieved successfully"
+    );
+
+    return res.status(200).json(response);
+
+  } catch (error) {
+    console.error("User total analytics error:", error);
+    return res.status(error instanceof ApiError ? error.statusCode : 500).json(
+      error instanceof ApiError
+        ? error
+        : new ApiError(500, "Internal Server Error", error.message || null)
+    );
+  }
+};
+
+module.exports = { getNewUsersInDefinedTime , getTotalUsersOverTime };
