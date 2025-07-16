@@ -146,6 +146,7 @@ model ForumSubCategory {
 
   @@unique([name, mainCategoryId])
 }
+
 // New Enums
 enum FieldType {
   TEXT
@@ -159,44 +160,43 @@ enum FieldType {
 
 // New Models for Dynamic Form Builder
 model Form {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   sections    FormSection[]
   quotePosts  QuotePost[]
-
 }
 
 model FormSection {
-  id        String   @id @default(uuid())
-  formId    String
-  name      String
-  position  Int
-  form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
-  fields    Field[]
+  id       String  @id @default(uuid())
+  formId   String
+  name     String
+  position Int
+  form     Form    @relation(fields: [formId], references: [id], onDelete: Cascade)
+  fields   Field[]
+
   @@unique([formId, position])
 }
 
 model Field {
-  id           String      @id @default(uuid())
-  sectionId    String
-  name         String      @default("name")// Add this
-  type         FieldType
-  label        String
-  placeholder  String?
-  position     Int
-  required     Boolean     @default(false)
-  options      String[]    @default([])
-  optionSetId  String?
-  section      FormSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  optionSet    OptionSet?  @relation(fields: [optionSetId], references: [id])
+  id              String           @id @default(uuid())
+  sectionId       String
+  name            String           @default("name") // Add this
+  type            FieldType
+  label           String
+  placeholder     String?
+  position        Int
+  required        Boolean          @default(false)
+  options         String[]         @default([])
+  optionSetId     String?
+  section         FormSection      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  optionSet       OptionSet?       @relation(fields: [optionSetId], references: [id])
   postFieldValues PostFieldValue[]
-  
+
   @@unique([sectionId, position])
 }
-
 
 model OptionSet {
   id        String   @id @default(uuid())
@@ -208,10 +208,10 @@ model OptionSet {
 }
 
 model PostFieldValue {
-  id        String   @id @default(uuid())
-  postId    String
-  fieldId   String
-  value     String
+  id      String @id @default(uuid())
+  postId  String
+  fieldId String
+  value   String
 
   quotePost QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
   field     Field     @relation(fields: [fieldId], references: [id])
@@ -219,31 +219,21 @@ model PostFieldValue {
   @@unique([postId, fieldId])
 }
 
-
-
-
 // Modified QuotePost Model (Removed FormConfig, Added Form)
 model QuotePost {
-  id               String    @id @default(uuid())
-  title            String
-  description      String
-  userId           String
-  formId           String?   // Links to Form
-  name             String?
-  createdAt        DateTime? @default(now())
-  updatedAt        DateTime? @updatedAt
-  totalNetWeight   Float?
-  totalGrossWeight Float?
-  volumetricWeight Float?
-  transitInsurance Boolean?
-  width            Float?
-  height           Float?
-  length           Float?
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  userId      String
+  formId      String? // Links to Form
+  name        String?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
   viewCount        Int?
   likesCount       Int?
   commentsCount    Int?
-  dangerousGoods   Boolean?
-  status           String?   @default("pending")
+  status           String?            @default("pending")
   rejectionReason  String[]
   acceptReason     String?
   fromPostalCode   String?
@@ -259,8 +249,6 @@ model QuotePost {
   postMainCategory String?
   postSubCategory  String?
   postType         PostType?
-  shipmentType     ShipmentType?
-  serviceType      ServiceType?
   incoterm         IncotermType?
   incotermInfo     String?
   // Relations
@@ -298,18 +286,18 @@ model QuoteLike {
 }
 
 model GeneralPost {
-  id                      String   @id @default(uuid())
+  id                      String             @id @default(uuid())
   title                   String
   description             String
   userId                  String
-  formId                  String?   // Links to Form
+  formId                  String? // Links to Form
   createdBy               String?
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
   viewCount               Int?
-  likesCount              Int?     @default(0)
-  commentsCount           Int?     @default(0)
-  status                  String?  @default("pending")
+  likesCount              Int?               @default(0)
+  commentsCount           Int?               @default(0)
+  status                  String?            @default("pending")
   rejectionReason         String[]
   acceptReason            String?
   generalPostMainCategory String?
@@ -319,7 +307,6 @@ model GeneralPost {
   SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
   generalReply            GeneralReply[]
   generalLike             GeneralLike[]      @relation("PostToGeneralLike")
-
 }
 
 model GeneralReply {
@@ -691,14 +678,14 @@ enum AdType {
 }
 
 model AdStat {
-  id           String     @id @default(uuid())
+  id           String      @id @default(uuid())
   adId         String
-  ad           Ad         @relation(fields: [adId], references: [id])
-  date         DateTime   @default(now())
-  impressions  Int        @default(0)
-  clicks       Int        @default(0)
+  ad           Ad          @relation(fields: [adId], references: [id])
+  date         DateTime    @default(now())
+  impressions  Int         @default(0)
+  clicks       Int         @default(0)
   sectionId    String
-  section      Section    @relation(fields: [sectionId], references: [id])
+  section      Section     @relation(fields: [sectionId], references: [id])
   subSectionId String?
   subSection   SubSection? @relation(fields: [subSectionId], references: [id])
 
