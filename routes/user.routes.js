@@ -28,9 +28,9 @@ router.post('/logout', logoutUser);
 
 router.get('/all', isAdmin, getUsers);
 
-router.get('/admins',isAdmin, getAdmins);
+router.get('/admins', isAdmin, getAdmins);
 
-router.patch('/change-role',isAdmin, changeUserRole);
+router.patch('/change-role', isAdmin, changeUserRole);
 
 router.post('/otp-verification', otpVerification);
 

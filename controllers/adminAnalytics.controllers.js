@@ -127,15 +127,23 @@ const getNewUsersInDefinedTime = async (req, res) => {
 
 const getTotalUsersOverTime = async (req, res) => {
   try {
-    const { filter = "daily", count = 7, date } = req.query;
+    const { filter = 'daily', count = 7, date } = req.query;
 
-    if (!["daily", "weekly", "monthly", "yearly"].includes(filter)) {
-      throw new ApiError(400, "Invalid filter", "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'");
+    if (!['daily', 'weekly', 'monthly', 'yearly'].includes(filter)) {
+      throw new ApiError(
+        400,
+        'Invalid filter',
+        "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'",
+      );
     }
 
     const units = parseInt(count);
     if (isNaN(units) || units < 1 || units > 100) {
-      throw new ApiError(400, "Invalid count", "Count must be a number between 1 and 100");
+      throw new ApiError(
+        400,
+        'Invalid count',
+        'Count must be a number between 1 and 100',
+      );
     }
 
     const anchorDate = date ? dayjs(date) : dayjs();
@@ -146,33 +154,34 @@ const getTotalUsersOverTime = async (req, res) => {
     let getPeriodEnd;
 
     switch (filter) {
-      case "daily":
+      case 'daily':
         format = 'YYYY-MM-DD';
         rangeStart = anchorDate.subtract(units - 1, 'day');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         addUnit = 'day';
-        getPeriodEnd = d => d.endOf('day');
+        getPeriodEnd = (d) => d.endOf('day');
         break;
-      case "weekly":
+      case 'weekly':
         format = 'IYYY-"W"IW';
         rangeStart = anchorDate.subtract(units - 1, 'week');
-        getLabel = d => `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
+        getLabel = (d) =>
+          `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
         addUnit = 'week';
-        getPeriodEnd = d => d.endOf('week');
+        getPeriodEnd = (d) => d.endOf('week');
         break;
-      case "monthly":
+      case 'monthly':
         format = 'YYYY-MM';
         rangeStart = anchorDate.subtract(units - 1, 'month');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         addUnit = 'month';
-        getPeriodEnd = d => d.endOf('month');
+        getPeriodEnd = (d) => d.endOf('month');
         break;
-      case "yearly":
+      case 'yearly':
         format = 'YYYY';
         rangeStart = anchorDate.subtract(units - 1, 'year');
-        getLabel = d => d.format(format);
+        getLabel = (d) => d.format(format);
         addUnit = 'year';
-        getPeriodEnd = d => d.endOf('year');
+        getPeriodEnd = (d) => d.endOf('year');
         break;
     }
 
@@ -189,7 +198,9 @@ const getTotalUsersOverTime = async (req, res) => {
     });
 
     const data = allPeriods.map(({ period, endDate }) => {
-      const userCount = allUsers.filter(user => user.createdAt <= new Date(endDate)).length;
+      const userCount = allUsers.filter(
+        (user) => user.createdAt <= new Date(endDate),
+      ).length;
       return { period, count: userCount };
     });
 
@@ -203,19 +214,20 @@ const getTotalUsersOverTime = async (req, res) => {
         rangeEnd: anchorDate.toISOString(),
         data,
       },
-      "Cumulative user totals retrieved successfully"
+      'Cumulative user totals retrieved successfully',
     );
 
     return res.status(200).json(response);
-
   } catch (error) {
-    console.error("User total analytics error:", error);
-    return res.status(error instanceof ApiError ? error.statusCode : 500).json(
-      error instanceof ApiError
-        ? error
-        : new ApiError(500, "Internal Server Error", error.message || null)
-    );
+    console.error('User total analytics error:', error);
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
   }
 };
 
-module.exports = { getNewUsersInDefinedTime , getTotalUsersOverTime };
+module.exports = { getNewUsersInDefinedTime, getTotalUsersOverTime };
