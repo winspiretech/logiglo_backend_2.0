@@ -193,7 +193,9 @@ module.exports.updateFormWithStructure = async (req, res) => {
         for (const section of sections) {
           let updatedSection;
           if (section.id) {
-            const sectionExists = await tx.formSection.findUnique({ where: { id: section.id } });
+            const sectionExists = await tx.formSection.findUnique({
+              where: { id: section.id },
+            });
             if (!sectionExists) {
               throw new Error(`Section with ID ${section.id} not found`);
             }
@@ -203,13 +205,19 @@ module.exports.updateFormWithStructure = async (req, res) => {
             });
           } else {
             updatedSection = await tx.formSection.create({
-              data: { name: section.name, position: section.position, formId: form.id },
+              data: {
+                name: section.name,
+                position: section.position,
+                formId: form.id,
+              },
             });
           }
 
           for (const field of section.fields) {
             if (field.id) {
-              const fieldExists = await tx.field.findUnique({ where: { id: field.id } });
+              const fieldExists = await tx.field.findUnique({
+                where: { id: field.id },
+              });
               if (!fieldExists) {
                 throw new Error(`Field with ID ${field.id} not found`);
               }
@@ -246,16 +254,28 @@ module.exports.updateFormWithStructure = async (req, res) => {
 
     return res
       .status(200)
-      .json(new ApiResponse(200, updatedForm, 'Form updated successfully with structure'));
+      .json(
+        new ApiResponse(
+          200,
+          updatedForm,
+          'Form updated successfully with structure',
+        ),
+      );
   } catch (error) {
     console.error('Error in updateFormWithStructure:', error);
     if (error instanceof z.ZodError) {
-      return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors));
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
     }
     if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'Resource not found', error.message));
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Resource not found', error.message));
     }
-    return res.status(500).json(new ApiError(500, 'Failed to update form', error.message));
+    return res
+      .status(500)
+      .json(new ApiError(500, 'Failed to update form', error.message));
   }
 };
 
