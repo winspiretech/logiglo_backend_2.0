@@ -175,6 +175,13 @@ module.exports.updateFormWithStructure = async (req, res) => {
   try {
     const { formId } = req.params;
     const { title, description, sections } = updateFormSchema.parse(req.body);
+    console.log('Request input:', { formId, title, description, sections });
+
+    // Verify form exists
+    const formExists = await prisma.form.findUnique({ where: { id: formId } });
+    if (!formExists) {
+      return res.status(404).json(new ApiError(404, 'Form not found'));
+    }
 
     const updatedForm = await prisma.$transaction(async (tx) => {
       const form = await tx.form.update({
@@ -185,30 +192,27 @@ module.exports.updateFormWithStructure = async (req, res) => {
       if (sections) {
         for (const section of sections) {
           let updatedSection;
-
-          // Update existing section
           if (section.id) {
+            const sectionExists = await tx.formSection.findUnique({ where: { id: section.id } });
+            if (!sectionExists) {
+              throw new Error(`Section with ID ${section.id} not found`);
+            }
             updatedSection = await tx.formSection.update({
               where: { id: section.id },
-              data: {
-                name: section.name,
-                position: section.position,
-              },
+              data: { name: section.name, position: section.position },
             });
           } else {
-            // Create new section if id is not provided
             updatedSection = await tx.formSection.create({
-              data: {
-                name: section.name,
-                position: section.position,
-                formId: form.id,
-              },
+              data: { name: section.name, position: section.position, formId: form.id },
             });
           }
 
           for (const field of section.fields) {
             if (field.id) {
-              // Update existing field
+              const fieldExists = await tx.field.findUnique({ where: { id: field.id } });
+              if (!fieldExists) {
+                throw new Error(`Field with ID ${field.id} not found`);
+              }
               await tx.field.update({
                 where: { id: field.id },
                 data: {
@@ -221,7 +225,6 @@ module.exports.updateFormWithStructure = async (req, res) => {
                 },
               });
             } else {
-              // Create new field if id not provided
               await tx.field.create({
                 data: {
                   label: field.label,
@@ -243,25 +246,16 @@ module.exports.updateFormWithStructure = async (req, res) => {
 
     return res
       .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          updatedForm,
-          'Form updated successfully with structure',
-        ),
-      );
+      .json(new ApiResponse(200, updatedForm, 'Form updated successfully with structure'));
   } catch (error) {
+    console.error('Error in updateFormWithStructure:', error);
     if (error instanceof z.ZodError) {
-      return res
-        .status(400)
-        .json(new ApiError(400, 'Invalid input data', error.errors));
+      return res.status(400).json(new ApiError(400, 'Invalid input data', error.errors));
     }
     if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'Form not found'));
+      return res.status(404).json(new ApiError(404, 'Resource not found', error.message));
     }
-    return res
-      .status(500)
-      .json(new ApiError(500, 'Failed to update form', error.message));
+    return res.status(500).json(new ApiError(500, 'Failed to update form', error.message));
   }
 };
 
