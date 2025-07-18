@@ -27,6 +27,7 @@ const initSocket = (server) => {
 
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
       socket.userId = decoded.userId;
+      console.log(`✅ User authenticated: ${socket.userId}`);
       return next();
     } catch (err) {
       return next(new Error('Authentication error: Invalid token'));
