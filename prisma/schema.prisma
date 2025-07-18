@@ -214,7 +214,7 @@ model PostFieldValue {
   value   String
 
   quotePost QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
-  field     Field     @relation(fields: [fieldId], references: [id])
+field     Field     @relation(fields: [fieldId], references: [id], onDelete: Cascade)
 
   @@unique([postId, fieldId])
 }
