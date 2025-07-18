@@ -396,8 +396,8 @@ module.exports.updateSectionPosition = async (req, res) => {
       })
       .parse(req.body);
 
-    // Validate unique positions
-    const positions = sectionUpdates.map((update) => update.position);
+    // Validate positions
+    const positions = sectionUpdates.map((u) => u.position);
     const uniquePositions = new Set(positions);
     if (uniquePositions.size !== positions.length) {
       throw new ApiError(
@@ -406,47 +406,49 @@ module.exports.updateSectionPosition = async (req, res) => {
       );
     }
 
-    // Ensure positions are sequential (0, 1, 2, ...)
-    const expectedPositions = Array.from(
-      { length: sectionUpdates.length },
-      (_, i) => i,
-    );
-    const sortedPositions = [...positions].sort((a, b) => a - b);
-    if (!sortedPositions.every((pos, i) => pos === expectedPositions[i])) {
+    const expected = Array.from({ length: sectionUpdates.length }, (_, i) => i);
+    const sorted = [...positions].sort((a, b) => a - b);
+    if (!sorted.every((val, idx) => val === expected[idx])) {
       throw new ApiError(400, 'Positions must be sequential starting from 0');
     }
 
-    // Verify all sections belong to the given formId
+    // Validate all sections belong to this form
     const existingSections = await prisma.formSection.findMany({
       where: {
         formId,
-        id: { in: sectionUpdates.map((update) => update.id) },
+        id: { in: sectionUpdates.map((s) => s.id) },
       },
       select: { id: true },
     });
 
-    const existingSectionIds = new Set(
-      existingSections.map((section) => section.id),
-    );
-    const invalidIds = sectionUpdates.filter(
-      (update) => !existingSectionIds.has(update.id),
-    );
+    const existingIds = new Set(existingSections.map((s) => s.id));
+    const invalidIds = sectionUpdates.filter((s) => !existingIds.has(s.id));
     if (invalidIds.length > 0) {
       throw new ApiError(
         404,
-        `Invalid section IDs: ${invalidIds.map((u) => u.id).join(', ')}`,
+        `Invalid section IDs: ${invalidIds.map((s) => s.id).join(', ')}`,
       );
     }
 
-    // Update positions in a transaction
-    const updatePromises = sectionUpdates.map((update) =>
+    // Two-step transaction to avoid unique constraint conflict
+    const tempOffset = 1000;
+
+    const resetToTemp = sectionUpdates.map((s, i) =>
       prisma.formSection.update({
-        where: { id: update.id, formId },
-        data: { position: update.position },
+        where: { id: s.id, formId },
+        data: { position: tempOffset + i },
       }),
     );
 
-    await prisma.$transaction(updatePromises);
+    const applyFinal = sectionUpdates.map((s) =>
+      prisma.formSection.update({
+        where: { id: s.id, formId },
+        data: { position: s.position },
+      }),
+    );
+
+    await prisma.$transaction([...resetToTemp, ...applyFinal]);
+
     return res
       .status(200)
       .json(
@@ -574,14 +576,41 @@ module.exports.updateFieldPosition = async (req, res) => {
       })
       .parse(req.body);
 
-    const updatePromises = fieldUpdates.map((update) =>
+    // Step 1: Ensure unique + sequential positions
+    const positions = fieldUpdates.map((u) => u.position);
+    const uniquePositions = new Set(positions);
+    if (uniquePositions.size !== positions.length) {
+      throw new ApiError(400, 'Duplicate positions detected in field updates');
+    }
+
+    const expectedPositions = Array.from(
+      { length: fieldUpdates.length },
+      (_, i) => i,
+    );
+    const sortedPositions = [...positions].sort((a, b) => a - b);
+    if (!sortedPositions.every((pos, i) => pos === expectedPositions[i])) {
+      throw new ApiError(400, 'Positions must be sequential starting from 0');
+    }
+
+    // Step 2: Move all fields temporarily to safe offset to avoid unique constraint violation
+    const tempOffset = 1000;
+    const resetPromises = fieldUpdates.map((update, index) =>
       prisma.field.update({
-        where: { id: update.id, sectionId: sectionId },
+        where: { id: update.id, sectionId },
+        data: { position: tempOffset + index },
+      }),
+    );
+
+    // Step 3: Apply the real positions
+    const applyPromises = fieldUpdates.map((update) =>
+      prisma.field.update({
+        where: { id: update.id, sectionId },
         data: { position: update.position },
       }),
     );
 
-    await prisma.$transaction(updatePromises);
+    await prisma.$transaction([...resetPromises, ...applyPromises]);
+
     return res
       .status(200)
       .json(new ApiResponse(200, null, 'Field positions updated successfully'));
