@@ -175,6 +175,13 @@ module.exports.updateFormWithStructure = async (req, res) => {
   try {
     const { formId } = req.params;
     const { title, description, sections } = updateFormSchema.parse(req.body);
+    console.log('Request input:', { formId, title, description, sections });
+
+    // Verify form exists
+    const formExists = await prisma.form.findUnique({ where: { id: formId } });
+    if (!formExists) {
+      return res.status(404).json(new ApiError(404, 'Form not found'));
+    }
 
     const updatedForm = await prisma.$transaction(async (tx) => {
       const form = await tx.form.update({
@@ -185,18 +192,18 @@ module.exports.updateFormWithStructure = async (req, res) => {
       if (sections) {
         for (const section of sections) {
           let updatedSection;
-
-          // Update existing section
           if (section.id) {
+            const sectionExists = await tx.formSection.findUnique({
+              where: { id: section.id },
+            });
+            if (!sectionExists) {
+              throw new Error(`Section with ID ${section.id} not found`);
+            }
             updatedSection = await tx.formSection.update({
               where: { id: section.id },
-              data: {
-                name: section.name,
-                position: section.position,
-              },
+              data: { name: section.name, position: section.position },
             });
           } else {
-            // Create new section if id is not provided
             updatedSection = await tx.formSection.create({
               data: {
                 name: section.name,
@@ -208,7 +215,12 @@ module.exports.updateFormWithStructure = async (req, res) => {
 
           for (const field of section.fields) {
             if (field.id) {
-              // Update existing field
+              const fieldExists = await tx.field.findUnique({
+                where: { id: field.id },
+              });
+              if (!fieldExists) {
+                throw new Error(`Field with ID ${field.id} not found`);
+              }
               await tx.field.update({
                 where: { id: field.id },
                 data: {
@@ -221,7 +233,6 @@ module.exports.updateFormWithStructure = async (req, res) => {
                 },
               });
             } else {
-              // Create new field if id not provided
               await tx.field.create({
                 data: {
                   label: field.label,
@@ -251,13 +262,16 @@ module.exports.updateFormWithStructure = async (req, res) => {
         ),
       );
   } catch (error) {
+    console.error('Error in updateFormWithStructure:', error);
     if (error instanceof z.ZodError) {
       return res
         .status(400)
         .json(new ApiError(400, 'Invalid input data', error.errors));
     }
     if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'Form not found'));
+      return res
+        .status(404)
+        .json(new ApiError(404, 'Resource not found', error.message));
     }
     return res
       .status(500)
@@ -369,6 +383,7 @@ module.exports.deleteSection = async (req, res) => {
 module.exports.updateSectionPosition = async (req, res) => {
   try {
     const { formId } = req.params;
+
     const { sectionUpdates } = z
       .object({
         sectionUpdates: z
@@ -382,57 +397,51 @@ module.exports.updateSectionPosition = async (req, res) => {
       })
       .parse(req.body);
 
-    // Validate unique positions
-    const positions = sectionUpdates.map((update) => update.position);
-    const uniquePositions = new Set(positions);
-    if (uniquePositions.size !== positions.length) {
-      throw new ApiError(
-        400,
-        'Duplicate positions detected in section updates',
-      );
+    // Ensure positions are unique
+    const seen = new Set();
+    for (const s of sectionUpdates) {
+      if (seen.has(s.position)) {
+        throw new ApiError(400, 'Duplicate positions are not allowed');
+      }
+      seen.add(s.position);
     }
 
-    // Ensure positions are sequential (0, 1, 2, ...)
-    const expectedPositions = Array.from(
-      { length: sectionUpdates.length },
-      (_, i) => i,
-    );
-    const sortedPositions = [...positions].sort((a, b) => a - b);
-    if (!sortedPositions.every((pos, i) => pos === expectedPositions[i])) {
-      throw new ApiError(400, 'Positions must be sequential starting from 0');
-    }
-
-    // Verify all sections belong to the given formId
+    // Verify all sections belong to the form
     const existingSections = await prisma.formSection.findMany({
       where: {
         formId,
-        id: { in: sectionUpdates.map((update) => update.id) },
+        id: { in: sectionUpdates.map((s) => s.id) },
       },
       select: { id: true },
     });
 
-    const existingSectionIds = new Set(
-      existingSections.map((section) => section.id),
-    );
-    const invalidIds = sectionUpdates.filter(
-      (update) => !existingSectionIds.has(update.id),
-    );
-    if (invalidIds.length > 0) {
+    const validIds = new Set(existingSections.map((s) => s.id));
+    const invalid = sectionUpdates.filter((s) => !validIds.has(s.id));
+    if (invalid.length > 0) {
       throw new ApiError(
         404,
-        `Invalid section IDs: ${invalidIds.map((u) => u.id).join(', ')}`,
+        `Invalid section IDs: ${invalid.map((s) => s.id).join(', ')}`,
       );
     }
 
-    // Update positions in a transaction
-    const updatePromises = sectionUpdates.map((update) =>
+    const TEMP_OFFSET = 100000;
+
+    const reset = sectionUpdates.map((s, i) =>
       prisma.formSection.update({
-        where: { id: update.id, formId },
-        data: { position: update.position },
+        where: { id: s.id, formId },
+        data: { position: TEMP_OFFSET + i },
       }),
     );
 
-    await prisma.$transaction(updatePromises);
+    const apply = sectionUpdates.map((s) =>
+      prisma.formSection.update({
+        where: { id: s.id, formId },
+        data: { position: s.position },
+      }),
+    );
+
+    await prisma.$transaction([...reset, ...apply]);
+
     return res
       .status(200)
       .json(
@@ -547,6 +556,7 @@ module.exports.deleteField = async (req, res) => {
 module.exports.updateFieldPosition = async (req, res) => {
   try {
     const { sectionId } = req.params;
+
     const { fieldUpdates } = z
       .object({
         fieldUpdates: z
@@ -560,14 +570,51 @@ module.exports.updateFieldPosition = async (req, res) => {
       })
       .parse(req.body);
 
-    const updatePromises = fieldUpdates.map((update) =>
+    // Ensure positions are unique
+    const seen = new Set();
+    for (const f of fieldUpdates) {
+      if (seen.has(f.position)) {
+        throw new ApiError(400, 'Duplicate positions are not allowed');
+      }
+      seen.add(f.position);
+    }
+
+    // Verify all fields belong to the section
+    const existingFields = await prisma.field.findMany({
+      where: {
+        sectionId,
+        id: { in: fieldUpdates.map((f) => f.id) },
+      },
+      select: { id: true },
+    });
+
+    const validIds = new Set(existingFields.map((f) => f.id));
+    const invalid = fieldUpdates.filter((f) => !validIds.has(f.id));
+    if (invalid.length > 0) {
+      throw new ApiError(
+        404,
+        `Invalid field IDs: ${invalid.map((f) => f.id).join(', ')}`,
+      );
+    }
+
+    const TEMP_OFFSET = 100000;
+
+    const reset = fieldUpdates.map((f, i) =>
       prisma.field.update({
-        where: { id: update.id, sectionId: sectionId },
-        data: { position: update.position },
+        where: { id: f.id, sectionId },
+        data: { position: TEMP_OFFSET + i },
       }),
     );
 
-    await prisma.$transaction(updatePromises);
+    const apply = fieldUpdates.map((f) =>
+      prisma.field.update({
+        where: { id: f.id, sectionId },
+        data: { position: f.position },
+      }),
+    );
+
+    await prisma.$transaction([...reset, ...apply]);
+
     return res
       .status(200)
       .json(new ApiResponse(200, null, 'Field positions updated successfully'));
@@ -576,6 +623,9 @@ module.exports.updateFieldPosition = async (req, res) => {
       return res
         .status(400)
         .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
     }
     return res
       .status(500)
