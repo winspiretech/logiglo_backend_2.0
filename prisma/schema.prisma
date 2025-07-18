@@ -92,6 +92,7 @@ model User {
   BlogComment             BlogComment[]
   RequestToConnect        RequestToConnect[]
   otps                    Otp[]
+  UserSectionTime         UserSectionTime[]
 }
 
 // schema.prisma
@@ -233,7 +234,7 @@ model QuotePost {
   viewCount        Int?
   likesCount       Int?
   commentsCount    Int?
-  status           String?            @default("pending")
+  status           String?  @default("pending")
   rejectionReason  String[]
   acceptReason     String?
   fromPostalCode   String?
@@ -249,16 +250,16 @@ model QuotePost {
   postMainCategory String?
   postSubCategory  String?
 
-  incoterm         IncotermType?
-  incotermInfo     String?
+  incoterm        IncotermType?
+  incotermInfo    String?
   // Relations
-  form             Form?              @relation(fields: [formId], references: [id])
-  quoteReply       QuoteReply[]
-  quoteLike        QuoteLike[]        @relation("PostToQuoteLike")
-  subCategory      ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
-  mainCategory     ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user             User               @relation(fields: [userId], references: [id])
-  postFieldValues  PostFieldValue[]
+  form            Form?              @relation(fields: [formId], references: [id])
+  quoteReply      QuoteReply[]
+  quoteLike       QuoteLike[]        @relation("PostToQuoteLike")
+  subCategory     ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
+  mainCategory    ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
+  user            User               @relation(fields: [userId], references: [id])
+  postFieldValues PostFieldValue[]
 }
 
 model QuoteReply {
@@ -635,7 +636,6 @@ model Section {
   name            String            @unique
   ads             Ad[]              @relation("AdSections")
   AdStat          AdStat[]
-  UserSectionTime UserSectionTime[]
   SubSection      SubSection[]
   show            Boolean           @default(true)
 }
@@ -669,7 +669,6 @@ model Ad {
   stats           AdStat[]
   sections        Section[]         @relation("AdSections")
   subSections     SubSection[]      @relation("AdSubSections")
-  UserSectionTime UserSectionTime[]
 }
 
 enum AdType {
@@ -696,15 +695,14 @@ model AdStat {
 model UserSectionTime {
   id          String   @id @default(uuid())
   userId      String
-  sectionId   String
   date        DateTime @default(now())
+  firstSeen   DateTime @default(now())
+  lastSeen    DateTime @default(now())
   timeSpentMs Int      @default(0)
-  adId        String
 
-  ad      Ad      @relation(fields: [adId], references: [id])
-  section Section @relation(fields: [sectionId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 
-  @@unique([userId, sectionId, date, adId])
+  @@unique([userId, date])
 }
 
 model Otp {
@@ -731,28 +729,26 @@ enum ExporterCategory {
   ORGANIC
 }
 
-
 model Exporter {
-  id                      String           @id @default(uuid())
-  name                    String
-  fullAddress             String
-  city                    String
-  pincode                 String
-  email                   String?
-  stateId                 Int
-  exporterTypeId          String
-  category                ExporterCategory @default(EXPORTER)
-  certificationBodyName   String?          // 👈 Add this line (nullable)
-  products                Product[]        @relation("ExporterProducts")
+  id                    String           @id @default(uuid())
+  name                  String
+  fullAddress           String
+  city                  String
+  pincode               String
+  email                 String?
+  stateId               Int
+  exporterTypeId        String
+  category              ExporterCategory @default(EXPORTER)
+  certificationBodyName String? // 👈 Add this line (nullable)
+  products              Product[]        @relation("ExporterProducts")
 
-  state                   StatesData       @relation(fields: [stateId], references: [id])
-  exporterType            ExporterType     @relation(fields: [exporterTypeId], references: [id])
+  state        StatesData   @relation(fields: [stateId], references: [id])
+  exporterType ExporterType @relation(fields: [exporterTypeId], references: [id])
 
   @@index([stateId])
   @@index([exporterTypeId])
   @@index([category])
 }
-
 
 model Product {
   id        String     @id @default(uuid())

@@ -230,4 +230,167 @@ const getTotalUsersOverTime = async (req, res) => {
   }
 };
 
-module.exports = { getNewUsersInDefinedTime, getTotalUsersOverTime };
+const trackDailyActivity = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { sectionId = null, timeSpentMs = 0 } = req.body;
+
+    if (!userId) {
+      return res
+        .status(401)
+        .json({ message: 'Unauthorized: No user ID found' });
+    }
+
+    const today = dayjs().startOf('day').toDate();
+
+    await prisma.userSectionTime.upsert({
+      where: {
+        userId_sectionId_date: {
+          userId,
+          sectionId,
+          date: today,
+        },
+      },
+      update: {
+        timeSpentMs: {
+          increment: timeSpentMs,
+        },
+        lastSeen: new Date(),
+      },
+      create: {
+        userId,
+        sectionId,
+        date: today,
+        timeSpentMs,
+        lastSeen: new Date(),
+      },
+    });
+
+    return res.status(200).json({ message: 'Activity tracked successfully' });
+  } catch (error) {
+    console.error('User total analytics error:', error);
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
+  }
+};
+
+const getOnlineUsersOverTime = async (req, res) => {
+  try {
+    const { filter = 'daily', count = 7 } = req.query;
+
+    if (!['daily', 'weekly', 'monthly', 'yearly'].includes(filter)) {
+      throw new ApiError(
+        400,
+        'Invalid filter',
+        "Filter must be 'daily', 'weekly', 'monthly', or 'yearly'",
+      );
+    }
+
+    const units = parseInt(count);
+    if (isNaN(units) || units < 1 || units > 100) {
+      throw new ApiError(
+        400,
+        'Invalid count',
+        'Count must be a number between 1 and 100',
+      );
+    }
+
+    const now = dayjs();
+    let rangeStart;
+    let format;
+    let getLabel;
+
+    switch (filter) {
+      case 'daily':
+        format = 'YYYY-MM-DD';
+        rangeStart = now.subtract(units - 1, 'day');
+        getLabel = (d) => d.format(format);
+        break;
+      case 'weekly':
+        format = 'IYYY-"W"IW';
+        rangeStart = now.subtract(units - 1, 'week');
+        getLabel = (d) =>
+          `${d.isoWeekYear()}-W${String(d.isoWeek()).padStart(2, '0')}`;
+        break;
+      case 'monthly':
+        format = 'YYYY-MM';
+        rangeStart = now.subtract(units - 1, 'month');
+        getLabel = (d) => d.format(format);
+        break;
+      case 'yearly':
+        format = 'YYYY';
+        rangeStart = now.subtract(units - 1, 'year');
+        getLabel = (d) => d.format(format);
+        break;
+    }
+
+    const results = await prisma.$queryRawUnsafe(`
+      SELECT TO_CHAR("date", '${format}') AS period, COUNT(DISTINCT "userId") AS count
+      FROM "UserSectionTime"
+      WHERE "date" BETWEEN '${rangeStart.toISOString()}' AND '${now.toISOString()}'
+      GROUP BY period
+      ORDER BY period;
+    `);
+
+    const resultMap = new Map();
+    results.forEach((row) => resultMap.set(row.period, Number(row.count)));
+
+    const fullPeriods = Array.from({ length: units }, (_, i) =>
+      getLabel(
+        rangeStart.add(
+          i,
+          filter === 'daily'
+            ? 'day'
+            : filter === 'weekly'
+              ? 'week'
+              : filter === 'monthly'
+                ? 'month'
+                : 'year',
+        ),
+      ),
+    );
+
+    const finalData = fullPeriods.map((period) => ({
+      period,
+      count: resultMap.get(period) || 0,
+    }));
+
+    const totalUsers = finalData.reduce((acc, curr) => acc + curr.count, 0);
+
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          filter,
+          numberOfFetchedData: units,
+          totalUsers,
+          rangeStart: rangeStart.toDate(),
+          rangeEnd: now.toDate(),
+          data: finalData,
+        },
+        'Online user activity retrieved successfully',
+      ),
+    );
+  } catch (error) {
+    console.error('Online user activity error:', error);
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
+  }
+};
+
+module.exports = {
+  getNewUsersInDefinedTime,
+  getTotalUsersOverTime,
+  trackDailyActivity,
+  getOnlineUsersOverTime,
+};

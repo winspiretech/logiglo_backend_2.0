@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "UserSectionTime" ADD COLUMN     "firstSeen" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

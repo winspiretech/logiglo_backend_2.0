@@ -22,9 +22,9 @@ const initSocket = (server) => {
       const parsed = cookie.parse(rawCookie);
       const token = parsed.Token;
 
-      if (!token) {
+      if (!token)
         return next(new Error('Authentication error: No token in cookie'));
-      }
+
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
       socket.userId = decoded.userId;
       return next();
@@ -33,31 +33,68 @@ const initSocket = (server) => {
     }
   });
 
+  // ✅ Main socket connection
   io.on('connection', async (socket) => {
     const userId = socket.userId;
+    const now = new Date();
+    const dateOnly = new Date(now.toISOString().split('T')[0]);
+
     try {
+      // Mark user as online
       await prisma.user.update({
         where: { id: userId },
         data: {
           online: true,
-          lastSeen: new Date(),
+          lastSeen: now,
+        },
+      });
+
+      await prisma.userSectionTime.upsert({
+        where: {
+          userId_date: {
+            userId,
+            date: dateOnly,
+          },
+        },
+        update: {},
+        create: {
+          userId,
+          date: dateOnly,
+          firstSeen: now,
+          lastSeen: now,
+          timeSpentMs: 0,
         },
       });
     } catch (err) {
-      console.error('❌ Error setting online:', err.message);
+      console.error('❌ Error on connect:', err.message);
     }
 
     socket.on('disconnect', async () => {
+      const disconnectTime = new Date();
+
       try {
-        await prisma.user.update({
-          where: { id: userId },
-          data: {
-            online: false,
-            lastSeen: new Date(),
-          },
-        });
+        await prisma.$transaction([
+          prisma.user.update({
+            where: { id: userId },
+            data: {
+              online: false,
+              lastSeen: disconnectTime,
+            },
+          }),
+          prisma.userSectionTime.update({
+            where: {
+              userId_date: {
+                userId,
+                date: dateOnly,
+              },
+            },
+            data: {
+              lastSeen: disconnectTime,
+            },
+          }),
+        ]);
       } catch (err) {
-        console.error('❌ Error updating lastSeen:', err.message);
+        console.error('❌ Error on disconnect:', err.message);
       }
     });
   });
