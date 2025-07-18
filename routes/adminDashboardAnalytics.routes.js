@@ -5,7 +5,7 @@ const {
   getNewUsersInDefinedTime,
   getTotalUsersOverTime,
   trackDailyActivity,
-  getOnlineUsersOverTime
+  getOnlineUsersOverTime,
 } = require('../controllers/adminAnalytics.controllers.js');
 
 router.get('/periodic-signups', isAdmin, getNewUsersInDefinedTime);

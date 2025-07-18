@@ -20,12 +20,13 @@ const initSocket = (server) => {
       if (!rawCookie) return next(new Error('Authentication error: No cookie'));
 
       const parsed = cookie.parse(rawCookie);
-      const token = parsed.Token; 
+      const token = parsed.Token;
 
-      if (!token) return next(new Error('Authentication error: No token in cookie'));
+      if (!token)
+        return next(new Error('Authentication error: No token in cookie'));
 
-      const decoded = jwt.verify(token, process.env.TOKEN_SECRET); 
-      socket.userId = decoded.userId; 
+      const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+      socket.userId = decoded.userId;
       return next();
     } catch (err) {
       return next(new Error('Authentication error: Invalid token'));
@@ -36,7 +37,7 @@ const initSocket = (server) => {
   io.on('connection', async (socket) => {
     const userId = socket.userId;
     const now = new Date();
-    const dateOnly = new Date(now.toISOString().split("T")[0]);
+    const dateOnly = new Date(now.toISOString().split('T')[0]);
 
     try {
       // Mark user as online
@@ -44,7 +45,7 @@ const initSocket = (server) => {
         where: { id: userId },
         data: {
           online: true,
-          lastSeen: now, 
+          lastSeen: now,
         },
       });
 
@@ -100,4 +101,3 @@ const initSocket = (server) => {
 };
 
 module.exports = { initSocket, getIO: () => io };
-
