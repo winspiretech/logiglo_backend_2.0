@@ -77,6 +77,7 @@ app.use(cors(corsOptions));
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // Routes
+
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/quotePost', quotePostRoutes);
