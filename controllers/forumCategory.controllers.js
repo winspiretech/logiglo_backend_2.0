@@ -564,11 +564,18 @@ module.exports.getForumSubCategoryById = async (req, res) => {
       include: {
         mainCategory: true,
         quotePost: includePosts && {
-          where: { status: 'success' }, // Filter for successful quote posts
+          where: { status: 'success' }, // Only include approved posts
           include: {
             quoteLike: true,
             quoteReply: true,
             user: { select: { id: true, name: true, profilePic: true } },
+            postFieldValues: {
+              include: {
+                field: {
+                  select: { label: true, type: true },
+                },
+              },
+            },
           },
         },
         generalPost: includePosts && {

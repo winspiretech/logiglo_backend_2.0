@@ -11,17 +11,10 @@ const quotePostSchema = z.object({
   categoryId: z.string().uuid().nullable().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
-  totalNetWeight: z.number().nullable().optional(),
-  totalGrossWeight: z.number().nullable().optional(),
-  volumetricWeight: z.number().nullable().optional(),
-  transitInsurance: z.boolean().nullable().optional(),
-  width: z.number().nullable().optional(),
-  height: z.number().nullable().optional(),
-  length: z.number().nullable().optional(),
+
   viewCount: z.number().nullable().optional(),
   likesCount: z.number().nullable().optional(),
   commentsCount: z.number().nullable().optional(),
-  dangerousGoods: z.boolean().nullable().optional(),
   status: z.string().optional(),
   rejectionReason: z.string().nullable().optional(),
   fromPostalCode: z.string().nullable().optional(),
@@ -40,6 +33,15 @@ const quotePostSchema = z.object({
   postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
   serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
   viewCount: z.number().optional(),
+  formId: z.string().uuid('Invalid form ID').optional(),
+  postFieldValues: z
+    .array(
+      z.object({
+        fieldId: z.string().uuid('Invalid field ID'),
+        value: z.string().min(1, 'Field value is required'),
+      }),
+    )
+    .optional(),
   incoterm: z
     .enum([
       'EXW',
@@ -105,14 +107,6 @@ const updateQuotePostSchema = z
     description: z.string().nullable().optional(),
     name: z.string().nullable().optional(),
     categoryId: z.string().uuid().nullable().optional(),
-    totalNetWeight: z.number().nullable().optional(),
-    totalGrossWeight: z.number().nullable().optional(),
-    volumetricWeight: z.number().nullable().optional(),
-    transitInsurance: z.boolean().nullable().optional(),
-    width: z.number().nullable().optional(),
-    height: z.number().nullable().optional(),
-    length: z.number().nullable().optional(),
-    dangerousGoods: z.boolean().nullable().optional(),
     status: z.string().optional(),
     rejectionReason: z.array(z.string()).optional(),
     acceptReason: z.string().nullable().optional(),
@@ -132,6 +126,15 @@ const updateQuotePostSchema = z
     postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
     serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
     viewCount: z.number().optional(),
+    formId: z.string().uuid('Invalid form ID').optional(),
+    postFieldValues: z
+      .array(
+        z.object({
+          fieldId: z.string().uuid('Invalid field ID'),
+          value: z.string().min(1, 'Field value is required'),
+        }),
+      )
+      .optional(),
     incoterm: z
       .enum([
         'EXW',

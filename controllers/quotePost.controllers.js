@@ -40,71 +40,134 @@ const incotermDescriptions = {
 module.exports.createQuotePost = async (req, res) => {
   try {
     const validatedData = validateCreateQuotePost(req.body);
+    const {
+      userId,
+      postMainCategory,
+      postSubCategory,
+      formId,
+      postFieldValues,
+      ...data
+    } = validatedData;
 
-    console.log('Validated data for createQuotePost:', validatedData);
-
-    const { userId, postMainCategory, postSubCategory, ...data } =
-      validatedData;
-
+    // 1. Validate user
     const user = await prisma.user.findUnique({ where: { id: userId } });
-    if (!user) {
-      throw new ApiError(404, 'User not found');
-    }
+    if (!user) throw new ApiError(404, 'User not found');
 
+    // 2. Validate main category
     let mainCategory = null;
     if (postMainCategory) {
       mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: postMainCategory },
       });
-      if (!mainCategory) {
-        throw new ApiError(404, 'Main category not found');
-      }
+      if (!mainCategory) throw new ApiError(404, 'Main category not found');
     }
 
+    // 3. Validate sub category
     let subCategory = null;
     if (postSubCategory) {
       subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: postSubCategory },
       });
-      if (!subCategory) {
-        throw new ApiError(404, 'Subcategory not found');
-      }
+      if (!subCategory) throw new ApiError(404, 'Subcategory not found');
     }
 
+    // 4. Validate form and fields
+    let form = null;
+    if (formId) {
+      form = await prisma.form.findUnique({
+        where: { id: formId },
+        include: { sections: { include: { fields: true } } },
+      });
+      if (!form) throw new ApiError(404, 'Form not found');
+    }
+
+    // 5. Inject incoterm info if applicable
     if (data.incoterm) {
       const incotermInfo = incotermDescriptions[data.incoterm];
-      if (!incotermInfo) {
-        throw new ApiError(400, 'Invalid Incoterm provided');
-      }
+      if (!incotermInfo) throw new ApiError(400, 'Invalid Incoterm provided');
       data.incotermInfo = incotermInfo;
     }
 
-    console.log('Data to create QuotePost:', data);
+    // 6. Create QuotePost with PostFieldValues in transaction
+    const newQuotePost = await prisma.$transaction(async (tx) => {
+      const post = await tx.quotePost.create({
+        data: {
+          user: { connect: { id: userId } },
+          mainCategory: postMainCategory
+            ? { connect: { id: postMainCategory } }
+            : undefined,
+          subCategory: postSubCategory
+            ? { connect: { id: postSubCategory } }
+            : undefined,
+          form: formId ? { connect: { id: formId } } : undefined,
+          name: user.name,
+          ...data,
+        },
+      });
 
-    const newQuotePost = await prisma.quotePost.create({
-      data: {
-        user: { connect: { id: userId } },
-        mainCategory: postMainCategory
-          ? { connect: { id: postMainCategory } }
-          : undefined,
-        subCategory: postSubCategory
-          ? { connect: { id: postSubCategory } }
-          : undefined,
-        name: user.name,
-        ...data,
-      },
+      if (postFieldValues && form) {
+        const validFieldIds = form.sections.flatMap((section) =>
+          section.fields.map((field) => field.id),
+        );
+
+        for (const { fieldId, value } of postFieldValues) {
+          if (!validFieldIds.includes(fieldId)) {
+            throw new ApiError(
+              404,
+              `Field ${fieldId} not found in form ${formId}`,
+            );
+          }
+
+          const field = await tx.field.findUnique({
+            where: { id: fieldId },
+            include: { section: true },
+          });
+
+          if (!field || field.section.formId !== formId) {
+            throw new ApiError(
+              404,
+              `Field ${fieldId} not associated with form ${formId}`,
+            );
+          }
+
+          // Type checks
+          if (field.type === 'NUMBER' && isNaN(parseFloat(value))) {
+            throw new ApiError(400, `Field ${field.label} must be a number`);
+          }
+          if (field.type === 'DATE' && !Date.parse(value)) {
+            throw new ApiError(
+              400,
+              `Field ${field.label} must be a valid date`,
+            );
+          }
+          if (
+            ['DROPDOWN', 'RADIO', 'CHECKBOX'].includes(field.type) &&
+            field.options.length > 0 &&
+            !field.options.includes(value)
+          ) {
+            throw new ApiError(
+              400,
+              `Field ${field.label} must be one of: ${field.options.join(', ')}`,
+            );
+          }
+
+          await tx.postFieldValue.create({
+            data: {
+              postId: post.id, // ✅ this is now unambiguous
+              fieldId,
+              value,
+            },
+          });
+        }
+      }
+
+      return post;
     });
 
-    // Send notification for post creation
+    // 7. Notify user
     const notificationType = 'QUOTE_POST_CREATED';
     const emailTemplate = quotePostCreatedTemplate(newQuotePost, {
       name: user.name,
-    });
-    console.log('Sending notification:', {
-      userId,
-      notificationType,
-      postId: newQuotePost.id,
-      emailTemplate,
     });
     await notifyUser(
       userId,
@@ -113,32 +176,39 @@ module.exports.createQuotePost = async (req, res) => {
       emailTemplate,
     );
 
+    // 8. Return success
     return res
       .status(201)
       .json(
         new ApiResponse(201, newQuotePost, 'QuotePost created successfully'),
       );
   } catch (error) {
+    console.error('Error in createQuotePost:', error);
+
+    if (error instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
+
     if (error.code === 'P2003') {
-      console.error(
-        `Error in createQuotePost - Foreign key constraint failed:`,
-        error,
-      );
       return res
         .status(404)
         .json(
-          new ApiError(
-            404,
-            'Invalid foreign key reference (user, main category, or subcategory)',
-            error.message,
-          ),
+          new ApiError(404, 'Invalid foreign key reference', error.message),
         );
     }
+
+    if (error.code === 'P2002') {
+      return res
+        .status(409)
+        .json(new ApiError(409, 'Unique constraint violation', error.message));
+    }
+
     if (error instanceof ApiError) {
-      console.error(`Error in createQuotePost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-    console.error('Error in createQuotePost - Unexpected error:', error);
+
     return res
       .status(500)
       .json(
@@ -340,27 +410,19 @@ module.exports.createQuoteLike = async (req, res) => {
       );
   }
 };
-
+// Update an existing QuotePost
 module.exports.updateQuotePost = async (req, res) => {
   try {
     const { postId, data } = validateUpdateQuotePost(req.params, req.body);
+    console.log('Received postFieldValues:', data.postFieldValues);
 
-    // Log the validated data to debug
-    console.log('Validated data:', data);
-
-    // Verify post exists
     const post = await prisma.quotePost.findUnique({ where: { id: postId } });
     if (!post) {
       throw new ApiError(404, 'QuotePost not found');
     }
 
-    // Prepare update data
     const updateData = { ...data };
 
-    // Log the updateData to confirm all fields are present
-    console.log('updateData before processing:', updateData);
-
-    // Verify main category exists if provided
     if (updateData.postMainCategory) {
       const mainCategory = await prisma.forumMainCategory.findUnique({
         where: { id: updateData.postMainCategory },
@@ -374,7 +436,6 @@ module.exports.updateQuotePost = async (req, res) => {
       delete updateData.postMainCategory;
     }
 
-    // Verify subcategory exists if provided
     if (updateData.postSubCategory) {
       const subCategory = await prisma.forumSubCategory.findUnique({
         where: { id: updateData.postSubCategory },
@@ -386,7 +447,29 @@ module.exports.updateQuotePost = async (req, res) => {
       delete updateData.postSubCategory;
     }
 
-    // Bind Incoterm description if Incoterm is updated
+    if (updateData.formId) {
+      const form = await prisma.form.findUnique({
+        where: { id: updateData.formId },
+      });
+      if (!form) {
+        throw new ApiError(404, 'Form not found');
+      }
+      updateData.form = { connect: { id: updateData.formId } };
+      delete updateData.formId;
+    } else if (updateData.formId === null) {
+      updateData.form = { disconnect: true };
+    }
+
+    if (updateData.postFieldValues) {
+      updateData.postFieldValues = {
+        deleteMany: { postId },
+        create: updateData.postFieldValues.map(({ fieldId, value }) => ({
+          field: { connect: { id: fieldId } },
+          value,
+        })),
+      };
+    }
+
     if (updateData.incoterm) {
       const incotermInfo = incotermDescriptions[updateData.incoterm];
       if (!incotermInfo) {
@@ -395,23 +478,11 @@ module.exports.updateQuotePost = async (req, res) => {
       updateData.incotermInfo = incotermInfo;
     }
 
-    // Log updateData after processing
-    console.log('updateData after processing:', updateData);
-
-    // Filter out undefined values and include viewCount
     const filteredUpdateData = Object.fromEntries(
       Object.entries({
-        updatedAt: new Date(), // Update the timestamp
+        updatedAt: new Date(),
         title: updateData.title ?? post.title,
         description: updateData.description ?? post.description,
-        totalNetWeight: updateData.totalNetWeight ?? post.totalNetWeight,
-        totalGrossWeight: updateData.totalGrossWeight ?? post.totalGrossWeight,
-        volumetricWeight: updateData.volumetricWeight ?? post.volumetricWeight,
-        transitInsurance: updateData.transitInsurance ?? post.transitInsurance,
-        dangerousGoods: updateData.dangerousGoods ?? post.dangerousGoods,
-        width: updateData.width ?? post.width,
-        height: updateData.height ?? post.height,
-        length: updateData.length ?? post.length,
         fromPostalCode: updateData.fromPostalCode ?? post.fromPostalCode,
         toPostalCode: updateData.toPostalCode ?? post.toPostalCode,
         fromCity: updateData.fromCity ?? post.fromCity,
@@ -422,30 +493,24 @@ module.exports.updateQuotePost = async (req, res) => {
         toAddress: updateData.toAddress ?? post.toAddress,
         fromState: updateData.fromState ?? post.fromState,
         toState: updateData.toState ?? post.toState,
-        postType: updateData.postType ?? post.postType,
-        shipmentType: updateData.shipmentType ?? post.shipmentType,
-        serviceType: updateData.serviceType ?? post.serviceType,
         incoterm: updateData.incoterm ?? post.incoterm,
         incotermInfo: updateData.incotermInfo ?? post.incotermInfo,
         mainCategory: updateData.mainCategory,
         subCategory: updateData.subCategory,
+        form: updateData.form,
+        postFieldValues: updateData.postFieldValues,
         status: updateData.status ?? post.status,
         rejectionReason: updateData.rejectionReason ?? post.rejectionReason,
         acceptReason: updateData.acceptReason ?? post.acceptReason,
-        viewCount: updateData.viewCount ?? post.viewCount, // Include viewCount
+        viewCount: updateData.viewCount ?? post.viewCount,
       }).filter(([_, value]) => value !== undefined),
     );
 
-    // Log the filtered update data
-    console.log('filteredUpdateData:', filteredUpdateData);
-
-    // Update the post
     const updatedPost = await prisma.quotePost.update({
       where: { id: postId },
       data: filteredUpdateData,
     });
 
-    // Check if status has changed to 'success' or 'rejected' and send notification
     if (
       filteredUpdateData.status &&
       filteredUpdateData.status !== post.status
@@ -477,7 +542,6 @@ module.exports.updateQuotePost = async (req, res) => {
         new ApiResponse(200, updatedPost, 'QuotePost updated successfully'),
       );
   } catch (error) {
-    // Handle Prisma-specific errors
     if (error.code === 'P2025') {
       console.error(
         `Error in updateQuotePost - Record not found for update:`,
@@ -497,19 +561,30 @@ module.exports.updateQuotePost = async (req, res) => {
         .json(
           new ApiError(
             404,
-            'Invalid foreign key reference (main category or subcategory)',
+            'Invalid foreign key reference (main category, subcategory, or form)',
             error.message,
           ),
         );
     }
-
-    // Handle known ApiError instances
+    if (error.code === 'P2002') {
+      console.error(
+        `Error in updateQuotePost - Unique constraint violation:`,
+        error,
+      );
+      return res
+        .status(409)
+        .json(
+          new ApiError(
+            409,
+            'Unique constraint violation on QuotePost',
+            error.message,
+          ),
+        );
+    }
     if (error instanceof ApiError) {
       console.error(`Error in updateQuotePost - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
     console.error('Error in updateQuotePost - Unexpected error:', error);
     return res
       .status(500)
@@ -1132,6 +1207,18 @@ module.exports.getQuotePostByPostId = async (req, res) => {
         },
         mainCategory: true,
         subCategory: true,
+        form: {
+          include: {
+            sections: {
+              include: {
+                fields: { include: { optionSet: true } },
+              },
+            },
+          },
+        },
+        postFieldValues: {
+          include: { field: true },
+        },
         quoteReply: {
           where: { status: 'success' },
           select: {
@@ -1161,13 +1248,10 @@ module.exports.getQuotePostByPostId = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, post, 'QuotePost fetched successfully'));
   } catch (error) {
-    // Handle known ApiError instances
     if (error instanceof ApiError) {
       console.error(`Error in getQuotePostByPostId - ${error.message}:`, error);
       return res.status(error.statusCode).json(error);
     }
-
-    // Handle unexpected errors
     console.error('Error in getQuotePostByPostId - Unexpected error:', error);
     return res
       .status(500)
