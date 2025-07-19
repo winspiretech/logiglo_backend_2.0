@@ -45,6 +45,7 @@ const loginAdmin = async (req, res, next) => {
         {
           name: existingUser.name,
           email: existingUser.email,
+          userId: existingUser.id,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: '7d' },
