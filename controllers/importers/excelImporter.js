@@ -14,15 +14,15 @@ const ExporterCategory = {
 // Aliases for known state name inconsistencies
 const stateAliasMap = {
   // Delhi
-  'delhi': 'delhi',
+  delhi: 'delhi',
   'new delhi': 'delhi',
   'delhi (nct)': 'delhi',
   'delhi nct': 'delhi',
   'nct delhi': 'delhi',
 
   // Telangana
-  'telengana': 'telangana',
-  'telangana': 'telangana',
+  telengana: 'telangana',
+  telangana: 'telangana',
   'telangana state': 'telangana',
 
   // Andaman & Nicobar
@@ -38,9 +38,9 @@ const stateAliasMap = {
   'dadra & nagar haveli and daman & diu': 'Daman and Diu',
 
   // Pondicherry
-  'pondicherry': 'pondicherry',
-  'puducherry': 'pondicherry',
-  'puduchery': 'pondicherry',
+  pondicherry: 'pondicherry',
+  puducherry: 'pondicherry',
+  puduchery: 'pondicherry',
 
   // Jammu & Kashmir
   'jammu & kashmir': 'jammu and kashmir',
@@ -48,68 +48,68 @@ const stateAliasMap = {
   'j&k': 'jammu and kashmir',
 
   // Odisha
-  'orissa': 'odisha',
-  'odisha': 'odisha',
+  orissa: 'odisha',
+  odisha: 'odisha',
 
   // Uttarakhand
-  'uttaranchal': 'uttarakhand',
-  'uttarakhand': 'uttarakhand',
+  uttaranchal: 'uttarakhand',
+  uttarakhand: 'uttarakhand',
 
   // Chhattisgarh
-  'chattisgarh': 'chhattisgarh',
-  'chhattisgarh': 'chhattisgarh',
+  chattisgarh: 'chhattisgarh',
+  chhattisgarh: 'chhattisgarh',
 
   // Maharashtra
-  'maharastra': 'maharashtra',
-  'maharashtra': 'maharashtra',
+  maharastra: 'maharashtra',
+  maharashtra: 'maharashtra',
 
   // Tamil Nadu
-  'tamilnadu': 'tamil nadu',
+  tamilnadu: 'tamil nadu',
   'tamil nadu': 'tamil nadu',
 
   // UP
-  'up': 'uttar pradesh',
+  up: 'uttar pradesh',
   'uttar pradesh': 'uttar pradesh',
 
   // MP
-  'mp': 'madhya pradesh',
+  mp: 'madhya pradesh',
   'madhya pradesh': 'madhya pradesh',
 
   // Andhra
-  'ap': 'andhra pradesh',
+  ap: 'andhra pradesh',
   'andhra pradesh': 'andhra pradesh',
 
   // WB
-  'wb': 'west bengal',
+  wb: 'west bengal',
   'west bengal': 'west bengal',
 
   // HP
-  'hp': 'himachal pradesh',
+  hp: 'himachal pradesh',
   'himachal pradesh': 'himachal pradesh',
 
   // NE (ambiguous)
-  'ne': 'nagaland',
+  ne: 'nagaland',
   'ne states': 'nagaland',
 
   // All other lowercase names
-  'assam': 'assam',
-  'bihar': 'bihar',
-  'goa': 'goa',
-  'gujarat': 'gujarat',
-  'haryana': 'haryana',
-  'jharkhand': 'jharkhand',
-  'karnataka': 'karnataka',
-  'kerala': 'kerala',
-  'manipur': 'manipur',
-  'meghalaya': 'meghalaya',
-  'mizoram': 'mizoram',
-  'nagaland': 'nagaland',
-  'punjab': 'punjab',
-  'rajasthan': 'rajasthan',
-  'sikkim': 'sikkim',
-  'tripura': 'tripura',
-  'ladakh': 'ladakh',
-  'lakshadweep': 'lakshadweep',
+  assam: 'assam',
+  bihar: 'bihar',
+  goa: 'goa',
+  gujarat: 'gujarat',
+  haryana: 'haryana',
+  jharkhand: 'jharkhand',
+  karnataka: 'karnataka',
+  kerala: 'kerala',
+  manipur: 'manipur',
+  meghalaya: 'meghalaya',
+  mizoram: 'mizoram',
+  nagaland: 'nagaland',
+  punjab: 'punjab',
+  rajasthan: 'rajasthan',
+  sikkim: 'sikkim',
+  tripura: 'tripura',
+  ladakh: 'ladakh',
+  lakshadweep: 'lakshadweep',
 };
 
 router.post('/', upload.single('file'), async (req, res) => {
@@ -150,7 +150,7 @@ router.post('/', upload.single('file'), async (req, res) => {
         const ignoredKeys = ['s.no.'];
 
         const unknownKeys = Object.keys(normalizedRow).filter(
-          (key) => !allowedKeys.includes(key) && !ignoredKeys.includes(key)
+          (key) => !allowedKeys.includes(key) && !ignoredKeys.includes(key),
         );
 
         if (unknownKeys.length) {
@@ -164,7 +164,8 @@ router.post('/', upload.single('file'), async (req, res) => {
       const fullAddress = normalizedRow['address'];
       const rawStateName = normalizedRow['state'];
       const exporterTypeName = normalizedRow['exporter type'];
-      const certificationBody = normalizedRow['certification body name'] || null;
+      const certificationBody =
+        normalizedRow['certification body name'] || null;
       let email = normalizedRow['e-mail id'] || normalizedRow['e-mail'] || null;
 
       if (!name || !fullAddress || !rawStateName || !exporterTypeName) {
@@ -176,9 +177,13 @@ router.post('/', upload.single('file'), async (req, res) => {
       // Extract valid email
       if (email) {
         const possibleEmails = email.split(/[,/&\\]/).map((e) => e.trim());
-        email = possibleEmails.find((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) || null;
+        email =
+          possibleEmails.find((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) ||
+          null;
         if (!email) {
-          console.warn(`📧 Invalid email for ${name}: ${normalizedRow['e-mail id'] || normalizedRow['e-mail']} — Ignoring`);
+          console.warn(
+            `📧 Invalid email for ${name}: ${normalizedRow['e-mail id'] || normalizedRow['e-mail']} — Ignoring`,
+          );
         }
       }
 
@@ -196,7 +201,8 @@ router.post('/', upload.single('file'), async (req, res) => {
 
       // Normalize state name
       const rawLower = rawStateName.trim().toLowerCase();
-      const normalizedStateName = stateAliasMap[rawLower] || rawStateName.trim();
+      const normalizedStateName =
+        stateAliasMap[rawLower] || rawStateName.trim();
 
       const state = await prisma.statesData.findFirst({
         where: {
