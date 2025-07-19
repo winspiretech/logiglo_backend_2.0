@@ -114,9 +114,12 @@ const stateAliasMap = {
 
 router.post('/', upload.single('file'), async (req, res) => {
   const file = req.file;
-  const category = req.body.category || ExporterCategory.EXPORTER;
+  const category = req.body.category.toUpperCase(); 
   const DRY_RUN = req.body.dryRun === 'true';
 
+  if(!category) {
+    return res.status(400).json({ error: 'Category is required' });
+  }
   if (!file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
