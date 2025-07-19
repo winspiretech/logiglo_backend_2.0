@@ -1,4 +1,3 @@
-const { get } = require('../../app');
 const prisma = require('../../models/prismaClient');
 const { ApiError } = require('../../utils/ApiError');
 const { ApiResponse } = require('../../utils/ApiResponse');
