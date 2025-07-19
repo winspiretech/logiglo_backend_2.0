@@ -388,9 +388,43 @@ const getOnlineUsersOverTime = async (req, res) => {
   }
 };
 
+const getUsersFromEachCountry = async (req, res) => {
+  try {
+    const countryWiseUsersCountRaw = await prisma.user.groupBy({
+      by: ['country'],
+      _count: {
+        id: true,
+      },
+    });
+
+    const countryWiseUsersCount = countryWiseUsersCountRaw.map(entry => ({
+      country: entry.country,
+      count: entry._count.id,
+    }));
+
+    if(!countryWiseUsersCount){
+      throw new ApiError(500,"Error while fetching country wise users data","Internal server error")
+    }
+
+    res.status(201)
+    .json(new ApiResponse(201,countryWiseUsersCount,"Country wise users count fetched successfully"))
+
+  } catch (error) {
+    console.error('Online user activity error:', error);
+    return res
+      .status(error instanceof ApiError ? error.statusCode : 500)
+      .json(
+        error instanceof ApiError
+          ? error
+          : new ApiError(500, 'Internal Server Error', error.message || null),
+      );
+  }
+}
+
 module.exports = {
   getNewUsersInDefinedTime,
   getTotalUsersOverTime,
   trackDailyActivity,
   getOnlineUsersOverTime,
+  getUsersFromEachCountry
 };
