@@ -22,6 +22,7 @@ const timeSpentRoute = require('./routes/timeSpent.routes.js');
 const adminRoutes = require('./routes/admin.routes.js');
 const formBuilderRoutes = require('./routes/formBuilder.routes.js');
 const exporterRoutes = require('./routes/directoryRoutes/exporterRoutes.js');
+const importerRoute = require('./controllers/importers/excelImporter.js');
 const adminDashboardRoutes = require('./routes/adminDashboardAnalytics.routes.js');
 const userDashboardRoutes = require('./routes/userDashboard.routes.js');
 const session = require('express-session');
@@ -100,6 +101,7 @@ app.use('/api/contact-us', contactUs);
 app.use('/api/ads', ads);
 app.use('/api/section-times', timeSpentRoute);
 app.use('/api/exporters', exporterRoutes);
+app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
 app.use('/api/user-dashboard', userDashboardRoutes);
 
