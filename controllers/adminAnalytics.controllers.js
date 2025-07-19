@@ -397,18 +397,28 @@ const getUsersFromEachCountry = async (req, res) => {
       },
     });
 
-    const countryWiseUsersCount = countryWiseUsersCountRaw.map(entry => ({
+    const countryWiseUsersCount = countryWiseUsersCountRaw.map((entry) => ({
       country: entry.country,
       count: entry._count.id,
     }));
 
-    if(!countryWiseUsersCount){
-      throw new ApiError(500,"Error while fetching country wise users data","Internal server error")
+    if (!countryWiseUsersCount) {
+      throw new ApiError(
+        500,
+        'Error while fetching country wise users data',
+        'Internal server error',
+      );
     }
 
-    res.status(201)
-    .json(new ApiResponse(201,countryWiseUsersCount,"Country wise users count fetched successfully"))
-
+    res
+      .status(201)
+      .json(
+        new ApiResponse(
+          201,
+          countryWiseUsersCount,
+          'Country wise users count fetched successfully',
+        ),
+      );
   } catch (error) {
     console.error('Online user activity error:', error);
     return res
@@ -419,12 +429,12 @@ const getUsersFromEachCountry = async (req, res) => {
           : new ApiError(500, 'Internal Server Error', error.message || null),
       );
   }
-}
+};
 
 module.exports = {
   getNewUsersInDefinedTime,
   getTotalUsersOverTime,
   trackDailyActivity,
   getOnlineUsersOverTime,
-  getUsersFromEachCountry
+  getUsersFromEachCountry,
 };
