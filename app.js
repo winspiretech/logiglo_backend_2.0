@@ -21,6 +21,7 @@ const ads = require('./routes/ad.routes.js');
 const timeSpentRoute = require('./routes/timeSpent.routes.js');
 const adminRoutes = require('./routes/admin.routes.js');
 const exporterRoutes = require('./routes/directoryRoutes/exporterRoutes.js');
+const importerRoute = require('./controllers/importers/excelImporter.js');
 const session = require('express-session');
 const passport = require('passport');
 require('./middleware/passportLinkedIn.js');
@@ -95,6 +96,7 @@ app.use('/api/contact-us', contactUs);
 app.use('/api/ads', ads);
 app.use('/api/section-times', timeSpentRoute);
 app.use('/api/exporters', exporterRoutes);
+app.use('/api/exporters/import', importerRoute);
 
 // Root route
 app.get('/', (req, res) => {
