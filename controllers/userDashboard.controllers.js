@@ -64,15 +64,24 @@ const upcomingEventsInGiveDays = async (req, res) => {
   try {
     const { days = 3 } = req.query;
     const today = new Date();
-    const givenDaysLater = new Date();
-    givenDaysLater.setDate(today.getDate() + days);
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    const givenDaysLater = new Date(tomorrow);
+    givenDaysLater.setDate(tomorrow.getDate() + parseInt(days));
+    givenDaysLater.setHours(23, 59, 59, 999);
 
     const upcomingEvents = await prisma.event.findMany({
       where: {
         startDate: {
-          gte: today,
+          gte: tomorrow,
           lte: givenDaysLater,
         },
+      },
+      orderBy: {
+        startDate: 'asc',
       },
     });
 
@@ -80,17 +89,17 @@ const upcomingEventsInGiveDays = async (req, res) => {
       throw new ApiError(
         500,
         'Internal server error',
-        'Something went wrong while fetching upcoming events',
+        'Error while fetching upcoming events',
       );
     }
 
     res
-      .status(201)
+      .status(200)
       .json(
         new ApiResponse(
-          201,
+          200,
           { upcomingEvents, totalUpcomingEvents: upcomingEvents.length },
-          'Upcoming events fetched successfully',
+          `Events from ${tomorrow.toISOString()} to ${givenDaysLater.toISOString()}`,
         ),
       );
   } catch (error) {
