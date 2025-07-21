@@ -85,6 +85,10 @@ const upcomingEventsInGiveDays = async (req, res) => {
       },
     });
 
+    if (!upcomingEvents) {
+      throw new ApiError(500, "Internal server error", "Error while fetching upcoming events")
+    }
+
     res
       .status(200)
       .json(
@@ -95,10 +99,17 @@ const upcomingEventsInGiveDays = async (req, res) => {
         ),
       );
   } catch (error) {
-    console.error(error.message || 'Error fetching upcoming events');
-    return res
-      .status(500)
-      .json(new ApiError(500, 'Internal server error', error.message || null));
+    console.error(error.message || 'Error fetching user profile');
+
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
   }
 };
 
