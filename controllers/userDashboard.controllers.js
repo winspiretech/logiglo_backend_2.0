@@ -75,6 +75,7 @@ const upcomingEventsInGiveDays = async (req, res) => {
 
     const upcomingEvents = await prisma.event.findMany({
       where: {
+        isArchived: false,
         startDate: {
           gte: tomorrow,
           lte: givenDaysLater,
@@ -131,6 +132,7 @@ const getLatestBlogPosts = async (req, res) => {
 
     const getNewBlogs = await prisma.blog.findMany({
       where: {
+        isArchived: false,
         createdAt: {
           gte: givenDaysBefore,
           lte: thisDay,
