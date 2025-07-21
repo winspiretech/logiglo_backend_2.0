@@ -117,4 +117,64 @@ const upcomingEventsInGiveDays = async (req, res) => {
   }
 };
 
-module.exports = { getUserProfileWithCompletion, upcomingEventsInGiveDays };
+const getLatestBlogPosts = async (req, res) => {
+  try {
+    const { days = 3 } = req.query;
+    const today = new Date();
+
+    const thisDay = new Date(today);
+    thisDay.setDate(today.getDate());
+
+    const givenDaysBefore = new Date(thisDay);
+    givenDaysBefore.setDate(thisDay.getDate() - parseInt(days));
+    givenDaysBefore.setHours(0, 0, 0, 0);
+
+    const getNewBlogs = await prisma.blog.findMany({
+      where: {
+        createdAt: {
+          gte: givenDaysBefore,
+          lte: thisDay,
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+
+    if (!getNewBlogs) {
+      throw new ApiError(
+        500,
+        'Internal server error',
+        'Something went wrong while fetching latest blogs',
+      );
+    }
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { getNewBlogs, latestBlogs: getNewBlogs.length },
+          'Latest blogs fetched successfully',
+        ),
+      );
+  } catch (error) {
+    console.error(error.message || 'Error fetching user profile');
+
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    } else {
+      return res
+        .status(500)
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
+    }
+  }
+};
+
+module.exports = {
+  getUserProfileWithCompletion,
+  upcomingEventsInGiveDays,
+  getLatestBlogPosts,
+};
