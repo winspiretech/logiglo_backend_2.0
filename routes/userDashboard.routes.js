@@ -3,6 +3,7 @@ const { isUserLoggedIn } = require('../middleware/isUserLoggedIn');
 const {
   getUserProfileWithCompletion,
   upcomingEventsInGiveDays,
+  getLatestBlogPosts,
 } = require('../controllers/userDashboard.controllers');
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.get(
   getUserProfileWithCompletion,
 );
 router.get('/upcoming-events', isUserLoggedIn, upcomingEventsInGiveDays);
+router.get('/latest-blogs', isUserLoggedIn, getLatestBlogPosts);
 
 module.exports = router;
