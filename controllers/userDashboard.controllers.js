@@ -86,7 +86,11 @@ const upcomingEventsInGiveDays = async (req, res) => {
     });
 
     if (!upcomingEvents) {
-      throw new ApiError(500, "Internal server error", "Error while fetching upcoming events")
+      throw new ApiError(
+        500,
+        'Internal server error',
+        'Error while fetching upcoming events',
+      );
     }
 
     res
