@@ -29,4 +29,10 @@ router.post('/createoptionset', formBuilderController.createOptionSet);
 router.get('/getformbyid/:formId', formBuilderController.getFormById);
 router.get('/getallforms', formBuilderController.getAllForms);
 
+router.get(
+  '/getformbyidforuser/:formId',
+  formBuilderController.getFormByIdForUser,
+);
+router.get('/getallformsforuser', formBuilderController.getAllFormsForUser);
+
 module.exports = router;
