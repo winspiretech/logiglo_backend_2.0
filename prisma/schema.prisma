@@ -92,6 +92,7 @@ model User {
   BlogComment             BlogComment[]
   RequestToConnect        RequestToConnect[]
   otps                    Otp[]
+  UserSectionTime         UserSectionTime[]
 }
 
 // schema.prisma
@@ -147,26 +148,94 @@ model ForumSubCategory {
   @@unique([name, mainCategoryId])
 }
 
+// New Enums
+enum FieldType {
+  TEXT
+  DROPDOWN
+  RADIO
+  CHECKBOX
+  DATE
+  NUMBER
+  TEXTAREA
+}
+
+// New Models for Dynamic Form Builder
+model Form {
+  id          String        @id @default(uuid())
+  title       String
+  description String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  sections    FormSection[]
+  quotePosts  QuotePost[]
+}
+
+model FormSection {
+  id       String  @id @default(uuid())
+  formId   String
+  name     String
+  position Int
+  enabled  Boolean @default(true) // Add this line
+  form     Form    @relation(fields: [formId], references: [id], onDelete: Cascade)
+  fields   Field[]
+
+  @@unique([formId, position])
+}
+
+model Field {
+  id              String           @id @default(uuid())
+  sectionId       String
+  name            String           @default("name")
+  type            FieldType
+  label           String
+  placeholder     String?
+  position        Int
+  required        Boolean          @default(false)
+  options         String[]         @default([])
+  optionSetId     String?
+  enabled         Boolean          @default(true) // Add this line
+  section         FormSection      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  optionSet       OptionSet?       @relation(fields: [optionSetId], references: [id])
+  postFieldValues PostFieldValue[]
+
+  @@unique([sectionId, position])
+}
+model OptionSet {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  options   String[]
+  fields    Field[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostFieldValue {
+  id      String @id @default(uuid())
+  postId  String
+  fieldId String
+  value   String
+
+  quotePost QuotePost @relation(fields: [postId], references: [id], onDelete: Cascade, map: "quotePost_postId_fkey")
+field     Field     @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, fieldId])
+}
+
+// Modified QuotePost Model (Removed FormConfig, Added Form)
 model QuotePost {
-  id               String    @id @default(uuid())
-  title            String
-  description      String
-  userId           String
-  name             String?
-  createdAt        DateTime? @default(now())
-  updatedAt        DateTime? @updatedAt
-  totalNetWeight   Float?
-  totalGrossWeight Float?
-  volumetricWeight Float?
-  transitInsurance Boolean?
-  width            Float?
-  height           Float?
-  length           Float?
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  userId      String
+  formId      String? // Links to Form
+  name        String?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
   viewCount        Int?
   likesCount       Int?
   commentsCount    Int?
-  dangerousGoods   Boolean?
-  status           String?   @default("pending")
+  status           String?  @default("pending")
   rejectionReason  String[]
   acceptReason     String?
   fromPostalCode   String?
@@ -182,19 +251,16 @@ model QuotePost {
   postMainCategory String?
   postSubCategory  String?
 
-  // New fields from the form
-  postType     PostType? // Docs or Non-Docs
-  shipmentType ShipmentType? // Sample or Commercial
-  serviceType  ServiceType? // Door to Door or Self Drop & Self Pickup
-  incoterm     IncotermType? // Selected Incoterm (EXW, FOB, etc.)
-  incotermInfo String? // Description or info bound to the selected Incoterm
-
+  incoterm        IncotermType?
+  incotermInfo    String?
   // Relations
-  quoteReply   QuoteReply[]
-  quoteLike    QuoteLike[]        @relation("PostToQuoteLike")
-  subCategory  ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
-  mainCategory ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
-  user         User               @relation(fields: [userId], references: [id])
+  form            Form?              @relation(fields: [formId], references: [id])
+  quoteReply      QuoteReply[]
+  quoteLike       QuoteLike[]        @relation("PostToQuoteLike")
+  subCategory     ForumSubCategory?  @relation(fields: [postSubCategory], references: [id])
+  mainCategory    ForumMainCategory? @relation(fields: [postMainCategory], references: [id])
+  user            User               @relation(fields: [userId], references: [id])
+  postFieldValues PostFieldValue[]
 }
 
 model QuoteReply {
@@ -222,27 +288,27 @@ model QuoteLike {
 }
 
 model GeneralPost {
-  id                      String   @id @default(uuid())
+  id                      String             @id @default(uuid())
   title                   String
   description             String
   userId                  String
+  formId                  String? // Links to Form
   createdBy               String?
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
   viewCount               Int?
-  likesCount              Int?     @default(0)
-  commentsCount           Int?     @default(0)
-  status                  String?  @default("pending")
+  likesCount              Int?               @default(0)
+  commentsCount           Int?               @default(0)
+  status                  String?            @default("pending")
   rejectionReason         String[]
   acceptReason            String?
   generalPostMainCategory String?
   generalPostSubCategory  String?
-
-  user         User               @relation("UserToGeneralPost", fields: [userId], references: [id])
-  MainCategory ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
-  SubCategory  ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
-  generalReply GeneralReply[]
-  generalLike  GeneralLike[]      @relation("PostToGeneralLike")
+  user                    User               @relation("UserToGeneralPost", fields: [userId], references: [id])
+  MainCategory            ForumMainCategory? @relation(fields: [generalPostMainCategory], references: [id])
+  SubCategory             ForumSubCategory?  @relation(fields: [generalPostSubCategory], references: [id])
+  generalReply            GeneralReply[]
+  generalLike             GeneralLike[]      @relation("PostToGeneralLike")
 }
 
 model GeneralReply {
@@ -571,7 +637,6 @@ model Section {
   name            String            @unique
   ads             Ad[]              @relation("AdSections")
   AdStat          AdStat[]
-  UserSectionTime UserSectionTime[]
   SubSection      SubSection[]
   show            Boolean           @default(true)
 }
@@ -605,7 +670,6 @@ model Ad {
   stats           AdStat[]
   sections        Section[]         @relation("AdSections")
   subSections     SubSection[]      @relation("AdSubSections")
-  UserSectionTime UserSectionTime[]
 }
 
 enum AdType {
@@ -632,15 +696,14 @@ model AdStat {
 model UserSectionTime {
   id          String   @id @default(uuid())
   userId      String
-  sectionId   String
   date        DateTime @default(now())
+  firstSeen   DateTime @default(now())
+  lastSeen    DateTime @default(now())
   timeSpentMs Int      @default(0)
-  adId        String
 
-  ad      Ad      @relation(fields: [adId], references: [id])
-  section Section @relation(fields: [sectionId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 
-  @@unique([userId, sectionId, date, adId])
+  @@unique([userId, date])
 }
 
 model Otp {
@@ -667,28 +730,26 @@ enum ExporterCategory {
   ORGANIC
 }
 
-
 model Exporter {
-  id                      String           @id @default(uuid())
-  name                    String
-  fullAddress             String
-  city                    String
-  pincode                 String
-  email                   String?
-  stateId                 Int
-  exporterTypeId          String
-  category                ExporterCategory @default(EXPORTER)
-  certificationBodyName   String?          // 👈 Add this line (nullable)
-  products                Product[]        @relation("ExporterProducts")
+  id                    String           @id @default(uuid())
+  name                  String
+  fullAddress           String
+  city                  String
+  pincode               String
+  email                 String?
+  stateId               Int
+  exporterTypeId        String
+  category              ExporterCategory @default(EXPORTER)
+  certificationBodyName String? // 👈 Add this line (nullable)
+  products              Product[]        @relation("ExporterProducts")
 
-  state                   StatesData       @relation(fields: [stateId], references: [id])
-  exporterType            ExporterType     @relation(fields: [exporterTypeId], references: [id])
+  state        StatesData   @relation(fields: [stateId], references: [id])
+  exporterType ExporterType @relation(fields: [exporterTypeId], references: [id])
 
   @@index([stateId])
   @@index([exporterTypeId])
   @@index([category])
 }
-
 
 model Product {
   id        String     @id @default(uuid())

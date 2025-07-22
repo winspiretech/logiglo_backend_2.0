@@ -20,8 +20,11 @@ const contactUs = require('./routes/contactUs.routes.js');
 const ads = require('./routes/ad.routes.js');
 const timeSpentRoute = require('./routes/timeSpent.routes.js');
 const adminRoutes = require('./routes/admin.routes.js');
+const formBuilderRoutes = require('./routes/formBuilder.routes.js');
 const exporterRoutes = require('./routes/directoryRoutes/exporterRoutes.js');
 const importerRoute = require('./controllers/importers/excelImporter.js');
+const adminDashboardRoutes = require('./routes/adminDashboardAnalytics.routes.js');
+const userDashboardRoutes = require('./routes/userDashboard.routes.js');
 const session = require('express-session');
 const passport = require('passport');
 require('./middleware/passportLinkedIn.js');
@@ -76,10 +79,12 @@ app.use(cors(corsOptions));
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // Routes
+
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/quotePost', quotePostRoutes);
 app.use('/api/generalPost', generalPostRoutes);
+app.use('/api/form', formBuilderRoutes);
 app.use('/api/forumCategory', forumCategoryRoutes);
 app.use('/api/uploadFiles', uploadRoute);
 app.use('/api/blog', blogRoute);
@@ -97,6 +102,8 @@ app.use('/api/ads', ads);
 app.use('/api/section-times', timeSpentRoute);
 app.use('/api/exporters', exporterRoutes);
 app.use('/api/exporters/import', importerRoute);
+app.use('/api/admin-dashboard', adminDashboardRoutes);
+app.use('/api/user-dashboard', userDashboardRoutes);
 
 // Root route
 app.get('/', (req, res) => {
