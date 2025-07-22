@@ -907,3 +907,90 @@ module.exports.updatePostFieldValues = async (postId, fieldValues) => {
     );
   }
 };
+module.exports.getFormByIdForUser = async (req, res) => {
+  try {
+    const { formId } = req.params;
+
+    const form = await prisma.form.findUnique({
+      where: { id: formId },
+      include: {
+        sections: {
+          orderBy: { position: 'asc' },
+          include: {
+            fields: {
+              orderBy: { position: 'asc' },
+              include: { optionSet: true },
+            },
+          },
+        },
+      },
+    });
+
+    if (!form) throw new ApiError(404, 'Form not found');
+
+    // Filter only enabled sections and fields
+    const filteredSections = form.sections
+      .filter((section) => section.enabled)
+      .map((section) => ({
+        ...section,
+        fields: section.fields.filter((field) => field.enabled),
+      }));
+
+    const filteredForm = {
+      ...form,
+      sections: filteredSections,
+    };
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, filteredForm, 'Form fetched successfully'));
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    }
+    return res
+      .status(500)
+      .json(new ApiError(500, 'Failed to fetch form', error.message));
+  }
+};
+module.exports.getAllFormsForUser = async (req, res) => {
+  try {
+    const forms = await prisma.form.findMany({
+      include: {
+        sections: {
+          orderBy: { position: 'asc' },
+          include: {
+            fields: {
+              orderBy: { position: 'asc' },
+              include: { optionSet: true },
+            },
+          },
+        },
+      },
+    });
+
+    // Filter only enabled sections and fields for each form
+    const filteredForms = forms.map((form) => ({
+      ...form,
+      sections: form.sections
+        .filter((section) => section.enabled)
+        .map((section) => ({
+          ...section,
+          fields: section.fields.filter((field) => field.enabled),
+        })),
+    }));
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, filteredForms, 'Forms fetched successfully'));
+  } catch (error) {
+    return res
+      .status(500)
+      .json(new ApiError(500, 'Failed to fetch forms', error.message));
+  }
+};
