@@ -55,6 +55,7 @@ const createFormSchema = z.object({
     z.object({
       name: z.string().min(1, 'Section name is required'),
       position: z.number().int(),
+      enabled: z.boolean().optional().default(true), // Add this line
       fields: z.array(
         z.object({
           label: z.string().min(1, 'Field label is required'),
@@ -71,6 +72,7 @@ const createFormSchema = z.object({
           required: z.boolean().optional().default(false),
           options: z.array(z.string()).optional(),
           position: z.number().int(),
+          enabled: z.boolean().optional().default(true), // Add this line
         }),
       ),
     }),
@@ -144,12 +146,13 @@ const updateFormSchema = z.object({
   sections: z
     .array(
       z.object({
-        id: z.string().optional(), // optional for new sections
+        id: z.string().optional(),
         name: z.string(),
         position: z.number(),
+        enabled: z.boolean().optional().default(true), // Add this line
         fields: z.array(
           z.object({
-            id: z.string().optional(), // optional for new fields
+            id: z.string().optional(),
             label: z.string(),
             type: z.enum([
               'TEXT',
@@ -164,6 +167,7 @@ const updateFormSchema = z.object({
             required: z.boolean().optional(),
             options: z.array(z.string()).optional(),
             position: z.number(),
+            enabled: z.boolean().optional().default(true), // Add this line
           }),
         ),
       }),
@@ -175,13 +179,6 @@ module.exports.updateFormWithStructure = async (req, res) => {
   try {
     const { formId } = req.params;
     const { title, description, sections } = updateFormSchema.parse(req.body);
-    console.log('Request input:', { formId, title, description, sections });
-
-    // Verify form exists
-    const formExists = await prisma.form.findUnique({ where: { id: formId } });
-    if (!formExists) {
-      return res.status(404).json(new ApiError(404, 'Form not found'));
-    }
 
     const updatedForm = await prisma.$transaction(async (tx) => {
       const form = await tx.form.update({
@@ -201,13 +198,18 @@ module.exports.updateFormWithStructure = async (req, res) => {
             }
             updatedSection = await tx.formSection.update({
               where: { id: section.id },
-              data: { name: section.name, position: section.position },
+              data: {
+                name: section.name,
+                position: section.position,
+                enabled: section.enabled ?? true,
+              },
             });
           } else {
             updatedSection = await tx.formSection.create({
               data: {
                 name: section.name,
                 position: section.position,
+                enabled: section.enabled ?? true, // Include enabled
                 formId: form.id,
               },
             });
@@ -230,6 +232,7 @@ module.exports.updateFormWithStructure = async (req, res) => {
                   required: field.required ?? false,
                   options: field.options || [],
                   position: field.position,
+                  enabled: field.enabled ?? true, // Include enabled
                 },
               });
             } else {
@@ -241,6 +244,7 @@ module.exports.updateFormWithStructure = async (req, res) => {
                   required: field.required ?? false,
                   options: field.options || [],
                   position: field.position,
+                  enabled: field.enabled ?? true, // Include enabled
                   sectionId: updatedSection.id,
                 },
               });
@@ -358,26 +362,104 @@ module.exports.updateSection = async (req, res) => {
       .json(new ApiError(500, 'Failed to update section', error.message));
   }
 };
-
-// Delete Section
-module.exports.deleteSection = async (req, res) => {
+// Toggle Section Enabled Status
+module.exports.toggleSection = async (req, res) => {
   try {
     const { sectionId } = req.params;
-    await prisma.formSection.delete({
+    const { enabled } = z
+      .object({
+        enabled: z.boolean(),
+      })
+      .parse(req.body);
+
+    const updatedSection = await prisma.formSection.update({
       where: { id: sectionId },
+      data: { enabled },
     });
+
     return res
       .status(200)
-      .json(new ApiResponse(200, null, 'Section deleted successfully'));
+      .json(
+        new ApiResponse(
+          200,
+          updatedSection,
+          `Section ${enabled ? 'enabled' : 'disabled'} successfully`,
+        ),
+      );
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
     if (error.code === 'P2025') {
       return res.status(404).json(new ApiError(404, 'Section not found'));
     }
     return res
       .status(500)
-      .json(new ApiError(500, 'Failed to delete section', error.message));
+      .json(
+        new ApiError(500, 'Failed to toggle section status', error.message),
+      );
   }
 };
+
+// Toggle Field Enabled Status
+module.exports.toggleField = async (req, res) => {
+  try {
+    const { fieldId } = req.params;
+    const { enabled } = z
+      .object({
+        enabled: z.boolean(),
+      })
+      .parse(req.body);
+
+    const updatedField = await prisma.field.update({
+      where: { id: fieldId },
+      data: { enabled },
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          updatedField,
+          `Field ${enabled ? 'enabled' : 'disabled'} successfully`,
+        ),
+      );
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json(new ApiError(400, 'Invalid input data', error.errors));
+    }
+    if (error.code === 'P2025') {
+      return res.status(404).json(new ApiError(404, 'Field not found'));
+    }
+    return res
+      .status(500)
+      .json(new ApiError(500, 'Failed to toggle field status', error.message));
+  }
+};
+// // Delete Section
+// module.exports.deleteSection = async (req, res) => {
+//   try {
+//     const { sectionId } = req.params;
+//     await prisma.formSection.delete({
+//       where: { id: sectionId },
+//     });
+//     return res
+//       .status(200)
+//       .json(new ApiResponse(200, null, 'Section deleted successfully'));
+//   } catch (error) {
+//     if (error.code === 'P2025') {
+//       return res.status(404).json(new ApiError(404, 'Section not found'));
+//     }
+//     return res
+//       .status(500)
+//       .json(new ApiError(500, 'Failed to delete section', error.message));
+//   }
+// };
 
 // Update Section Positions (reorder)
 module.exports.updateSectionPosition = async (req, res) => {
@@ -533,24 +615,24 @@ module.exports.updateField = async (req, res) => {
 };
 
 // Delete Field
-module.exports.deleteField = async (req, res) => {
-  try {
-    const { fieldId } = req.params;
-    await prisma.field.delete({
-      where: { id: fieldId },
-    });
-    return res
-      .status(200)
-      .json(new ApiResponse(200, null, 'Field deleted successfully'));
-  } catch (error) {
-    if (error.code === 'P2025') {
-      return res.status(404).json(new ApiError(404, 'Field not found'));
-    }
-    return res
-      .status(500)
-      .json(new ApiError(500, 'Failed to delete field', error.message));
-  }
-};
+// module.exports.deleteField = async (req, res) => {
+//   try {
+//     const { fieldId } = req.params;
+//     await prisma.field.delete({
+//       where: { id: fieldId },
+//     });
+//     return res
+//       .status(200)
+//       .json(new ApiResponse(200, null, 'Field deleted successfully'));
+//   } catch (error) {
+//     if (error.code === 'P2025') {
+//       return res.status(404).json(new ApiError(404, 'Field not found'));
+//     }
+//     return res
+//       .status(500)
+//       .json(new ApiError(500, 'Failed to delete field', error.message));
+//   }
+// };
 
 // Update Field Positions (reorder within a section)
 module.exports.updateFieldPosition = async (req, res) => {
@@ -717,7 +799,6 @@ module.exports.getFormById = async (req, res) => {
       .json(new ApiError(500, 'Failed to fetch form', error.message));
   }
 };
-
 // Get all forms
 module.exports.getAllForms = async (req, res) => {
   try {
@@ -743,7 +824,6 @@ module.exports.getAllForms = async (req, res) => {
       .json(new ApiError(500, 'Failed to fetch forms', error.message));
   }
 };
-
 // Save Post Field Values (used when creating a QuotePost or GeneralPost)
 module.exports.savePostFieldValues = async (postId, fieldValues) => {
   try {
