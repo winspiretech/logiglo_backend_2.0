@@ -175,6 +175,7 @@ model FormSection {
   formId   String
   name     String
   position Int
+  enabled  Boolean @default(true) // Add this line
   form     Form    @relation(fields: [formId], references: [id], onDelete: Cascade)
   fields   Field[]
 
@@ -184,7 +185,7 @@ model FormSection {
 model Field {
   id              String           @id @default(uuid())
   sectionId       String
-  name            String           @default("name") // Add this
+  name            String           @default("name")
   type            FieldType
   label           String
   placeholder     String?
@@ -192,13 +193,13 @@ model Field {
   required        Boolean          @default(false)
   options         String[]         @default([])
   optionSetId     String?
+  enabled         Boolean          @default(true) // Add this line
   section         FormSection      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   optionSet       OptionSet?       @relation(fields: [optionSetId], references: [id])
   postFieldValues PostFieldValue[]
 
   @@unique([sectionId, position])
 }
-
 model OptionSet {
   id        String   @id @default(uuid())
   name      String   @unique
