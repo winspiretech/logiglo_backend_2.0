@@ -6,8 +6,8 @@ const NodeCache = require('node-cache');
 const cache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
 const TOP_USERS_CACHE_KEY = 'top_10_users';
-
 const TOP_POSTS_CACHE_KEY = 'top_10_mixed_posts';
+const TOTAL_COUNTS_CACHE_KEY = 'total_counts';
 
 module.exports.getTopLikedPosts = async (req, res) => {
   try {
@@ -134,6 +134,7 @@ module.exports.getTopLikedPosts = async (req, res) => {
       );
   }
 };
+
 module.exports.getTopPerformingUsers = async (req, res) => {
   try {
     const cachedUsers = cache.get(TOP_USERS_CACHE_KEY);
@@ -213,6 +214,51 @@ module.exports.getTopPerformingUsers = async (req, res) => {
         new ApiError(
           500,
           'Failed to fetch top performing users due to server error',
+          error.message,
+        ),
+      );
+  }
+};
+
+module.exports.getTotalCounts = async (req, res) => {
+  try {
+    const cachedCounts = cache.get(TOTAL_COUNTS_CACHE_KEY);
+    if (cachedCounts) {
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(200, cachedCounts, 'Total counts fetched from cache'),
+        );
+    }
+
+    const [userCount, quotePostCount, generalPostCount] = await Promise.all([
+      prisma.user.count(),
+      prisma.quotePost.count(),
+      prisma.generalPost.count(),
+    ]);
+
+    const totalCounts = {
+      totalUsers: userCount,
+      totalPosts: quotePostCount + generalPostCount,
+      totalQuotePosts: quotePostCount,
+      totalGeneralPosts: generalPostCount,
+    };
+
+    cache.set(TOTAL_COUNTS_CACHE_KEY, totalCounts);
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, totalCounts, 'Total counts fetched successfully'),
+      );
+  } catch (error) {
+    console.error('Error in getTotalCounts:', error);
+    return res
+      .status(500)
+      .json(
+        new ApiError(
+          500,
+          'Failed to fetch total counts due to server error',
           error.message,
         ),
       );
