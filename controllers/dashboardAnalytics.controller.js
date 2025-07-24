@@ -161,6 +161,7 @@ module.exports.getTopPerformingUsers = async (req, res) => {
         id: true,
         name: true,
         email: true,
+        profilePic: true,
         quotePost: { select: { id: true } },
         generalPost: { select: { id: true } },
         quoteReply: { select: { id: true } },
@@ -193,6 +194,7 @@ module.exports.getTopPerformingUsers = async (req, res) => {
         return {
           id: user.id,
           name: user.name,
+          profile: user.profilePic || null,
           email: user.email,
           points: totalPoints,
           activities,
