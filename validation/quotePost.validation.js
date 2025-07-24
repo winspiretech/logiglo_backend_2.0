@@ -11,17 +11,8 @@ const quotePostSchema = z.object({
   categoryId: z.string().uuid().nullable().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
-  totalNetWeight: z.number().nullable().optional(),
-  totalGrossWeight: z.number().nullable().optional(),
-  volumetricWeight: z.number().nullable().optional(),
-  transitInsurance: z.boolean().nullable().optional(),
-  width: z.number().nullable().optional(),
-  height: z.number().nullable().optional(),
-  length: z.number().nullable().optional(),
   viewCount: z.number().nullable().optional(),
   likesCount: z.number().nullable().optional(),
-  commentsCount: z.number().nullable().optional(),
-  dangerousGoods: z.boolean().nullable().optional(),
   status: z.string().optional(),
   rejectionReason: z.string().nullable().optional(),
   fromPostalCode: z.string().nullable().optional(),
@@ -36,9 +27,6 @@ const quotePostSchema = z.object({
   toState: z.string().nullable().optional(),
   postMainCategory: z.string().uuid().nullable().optional(),
   postSubCategory: z.string().uuid().nullable().optional(),
-  shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
-  postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
-  serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
   viewCount: z.number().optional(),
   incoterm: z
     .enum([
@@ -129,8 +117,6 @@ const updateQuotePostSchema = z
     postMainCategory: z.string().uuid().nullable().optional(),
     postSubCategory: z.string().uuid().nullable().optional(),
     shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
-    postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
-    serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
     viewCount: z.number().optional(),
     incoterm: z
       .enum([
