@@ -28,6 +28,15 @@ const quotePostSchema = z.object({
   postMainCategory: z.string().uuid().nullable().optional(),
   postSubCategory: z.string().uuid().nullable().optional(),
   viewCount: z.number().optional(),
+  formId: z.string().uuid('Invalid form ID').optional(),
+  postFieldValues: z
+    .array(
+      z.object({
+        fieldId: z.string().uuid('Invalid field ID'),
+        value: z.string().min(1, 'Field value is required'),
+      }),
+    )
+    .optional(),
   incoterm: z
     .enum([
       'EXW',
@@ -93,14 +102,6 @@ const updateQuotePostSchema = z
     description: z.string().nullable().optional(),
     name: z.string().nullable().optional(),
     categoryId: z.string().uuid().nullable().optional(),
-    totalNetWeight: z.number().nullable().optional(),
-    totalGrossWeight: z.number().nullable().optional(),
-    volumetricWeight: z.number().nullable().optional(),
-    transitInsurance: z.boolean().nullable().optional(),
-    width: z.number().nullable().optional(),
-    height: z.number().nullable().optional(),
-    length: z.number().nullable().optional(),
-    dangerousGoods: z.boolean().nullable().optional(),
     status: z.string().optional(),
     rejectionReason: z.array(z.string()).optional(),
     acceptReason: z.string().nullable().optional(),
@@ -118,6 +119,15 @@ const updateQuotePostSchema = z
     postSubCategory: z.string().uuid().nullable().optional(),
     shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
     viewCount: z.number().optional(),
+    formId: z.string().uuid('Invalid form ID').optional(),
+    postFieldValues: z
+      .array(
+        z.object({
+          fieldId: z.string().uuid('Invalid field ID'),
+          value: z.string().min(1, 'Field value is required'),
+        }),
+      )
+      .optional(),
     incoterm: z
       .enum([
         'EXW',
