@@ -33,7 +33,6 @@ module.exports.getTopLikedPosts = async (req, res) => {
           description: true,
           userId: true,
           createdAt: true,
-          likesCount: true,
           incoterm: true,
           user: {
             select: {
@@ -54,9 +53,12 @@ module.exports.getTopLikedPosts = async (req, res) => {
               name: true,
             },
           },
+          quoteLike: {
+            select: {
+              id: true,
+            },
+          },
         },
-        orderBy: { likesCount: 'desc' },
-        take: 10,
       }),
 
       prisma.generalPost.findMany({
@@ -67,7 +69,6 @@ module.exports.getTopLikedPosts = async (req, res) => {
           description: true,
           userId: true,
           createdAt: true,
-          likesCount: true,
           user: {
             select: {
               id: true,
@@ -87,9 +88,12 @@ module.exports.getTopLikedPosts = async (req, res) => {
               name: true,
             },
           },
+          generalLike: {
+            select: {
+              id: true,
+            },
+          },
         },
-        orderBy: { likesCount: 'desc' },
-        take: 10,
       }),
     ]);
 
@@ -99,12 +103,14 @@ module.exports.getTopLikedPosts = async (req, res) => {
         type: 'QuotePost',
         mainCategory: post.mainCategory,
         subCategory: post.subCategory,
+        likesCount: post.quoteLike.length, // Calculate likes count from QuoteLike relation
       })),
       ...generalPosts.map((post) => ({
         ...post,
         type: 'GeneralPost',
-        mainCategory: post.MainCategory, // normalize field name
-        subCategory: post.SubCategory, // normalize field name
+        mainCategory: post.MainCategory, // Normalize field name
+        subCategory: post.SubCategory, // Normalize field name
+        likesCount: post.generalLike.length, // Calculate likes count from GeneralLike relation
       })),
     ]
       .sort((a, b) => (b.likesCount ?? 0) - (a.likesCount ?? 0))
@@ -155,6 +161,7 @@ module.exports.getTopPerformingUsers = async (req, res) => {
         id: true,
         name: true,
         email: true,
+        profilePic: true,
         quotePost: { select: { id: true } },
         generalPost: { select: { id: true } },
         quoteReply: { select: { id: true } },
@@ -187,6 +194,7 @@ module.exports.getTopPerformingUsers = async (req, res) => {
         return {
           id: user.id,
           name: user.name,
+          profile: user.profilePic || null,
           email: user.email,
           points: totalPoints,
           activities,
