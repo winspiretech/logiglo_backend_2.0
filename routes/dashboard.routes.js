@@ -12,5 +12,4 @@ router.get(
   dashboardAnalyticsController.getTopPerformingUsers,
 );
 
-
 module.exports = router;
