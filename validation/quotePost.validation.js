@@ -11,10 +11,8 @@ const quotePostSchema = z.object({
   categoryId: z.string().uuid().nullable().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
-
   viewCount: z.number().nullable().optional(),
   likesCount: z.number().nullable().optional(),
-  commentsCount: z.number().nullable().optional(),
   status: z.string().optional(),
   rejectionReason: z.string().nullable().optional(),
   fromPostalCode: z.string().nullable().optional(),
@@ -29,9 +27,6 @@ const quotePostSchema = z.object({
   toState: z.string().nullable().optional(),
   postMainCategory: z.string().uuid().nullable().optional(),
   postSubCategory: z.string().uuid().nullable().optional(),
-  shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
-  postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
-  serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
   viewCount: z.number().optional(),
   formId: z.string().uuid('Invalid form ID').optional(),
   postFieldValues: z
@@ -123,8 +118,6 @@ const updateQuotePostSchema = z
     postMainCategory: z.string().uuid().nullable().optional(),
     postSubCategory: z.string().uuid().nullable().optional(),
     shipmentType: z.enum(['SAMPLE', 'COMMERCIAL']).nullable().optional(),
-    postType: z.enum(['DOCS', 'NON_DOCS']).nullable().optional(),
-    serviceType: z.enum(['DTD', 'SELF']).nullable().optional(),
     viewCount: z.number().optional(),
     formId: z.string().uuid('Invalid form ID').optional(),
     postFieldValues: z
