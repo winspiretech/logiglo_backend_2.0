@@ -34,9 +34,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy only necessary files from build stage
-# Copy the rest of the application
-COPY . .
+# Copy everything from build stage
+COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
 # Reinstall sharp for the production environment
 RUN npm install --os=linux --cpu=x64 sharp
