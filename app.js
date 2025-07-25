@@ -112,7 +112,7 @@ app.use('/api/section-times', timeSpentRoute);
 app.use('/api/exporters', exporterRoutes);
 app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
-app.use('/api/user-dashboard', userDashboardRoutes); 
+app.use('/api/user-dashboard', userDashboardRoutes);
 
 // Root route
 app.get('/', (req, res) => {
