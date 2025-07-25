@@ -35,11 +35,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only necessary files from build stage
-COPY --from=build /logiglo_backend_2.0/node_modules ./node_modules
-COPY --from=build /logiglo_backend_2.0/package.json ./package.json
-COPY --from=build /logiglo_backend_2.0/package-lock.json ./package-lock.json
-COPY --from=build /logiglo_backend_2.0/prisma ./prisma
-COPY --from=build /logiglo_backend_2.0/dist ./dist  # Adjust if your app has a different output directory
+# Copy the rest of the application
+COPY . .
 
 # Reinstall sharp for the production environment
 RUN npm install --os=linux --cpu=x64 sharp
