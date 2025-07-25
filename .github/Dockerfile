@@ -1,23 +1,18 @@
 # Stage 1: Build stage
-FROM node:20-alpine AS build
+FROM node:20-slim AS build
 
 WORKDIR /logiglo_backend_2.0
 
-# Install build dependencies for Sharp, Prisma, etc.
-RUN apk add --no-cache \
+# Install required build tools
+RUN apt-get update && apt-get install -y \
     python3 \
-    make \
-    g++ \
-    libc6-compat \
-    vips-dev \
-    libpng-dev \
-    cairo-dev \
-    jpeg-dev \
-    pango-dev \
-    giflib-dev \
-    openssl
+    build-essential \
+    pkg-config \
+    libvips-dev \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy package files and install dependencies (including dev)
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
@@ -28,33 +23,31 @@ COPY . .
 RUN npx prisma generate
 
 # Stage 2: Production image
-FROM node:20-alpine AS production
+FROM node:20-slim
 
 WORKDIR /logiglo_backend_2.0
 
-# Install runtime dependencies (no build tools needed here)
-RUN apk add --no-cache \
-    libc6-compat \
-    vips \
-    libpng \
-    cairo \
-    jpeg \
-    pango \
-    giflib \
-    libpq \
-    openssl
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libvips42 \
+    libpq-dev \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy everything from build stage
 COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
-# Prune dev dependencies
-RUN npm prune --production
+# Reinstall sharp for the production environment
+RUN npm install --os=linux --cpu=x64 sharp
 
-# Expose the port your app runs on
-EXPOSE 3000
+# Remove dev dependencies
+RUN npm prune --production
 
 # Set environment variables
 ENV NODE_ENV=production
 
-# Run database migration and start server
+# Expose the app port
+EXPOSE 3000
+
+# Run DB migration and start the app
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
