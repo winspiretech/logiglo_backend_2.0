@@ -5,6 +5,19 @@ const dayjs = require('dayjs');
 const isoWeek = require('dayjs/plugin/isoWeek');
 const weekOfYear = require('dayjs/plugin/weekOfYear');
 const advancedFormat = require('dayjs/plugin/advancedFormat');
+const { BetaAnalyticsDataClient } = require('@google-analytics/data');
+
+const decoded = Buffer.from(
+  process.env.GOOGLE_SERVICE_KEY_BASE64,
+  'base64',
+).toString('utf-8');
+const credentials = JSON.parse(decoded);
+
+const GA4_PROPERTY_ID = '497722859';
+const analyticsDataClient = new BetaAnalyticsDataClient({
+  credentials,
+  scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
+});
 
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
@@ -431,10 +444,147 @@ const getUsersFromEachCountry = async (req, res) => {
   }
 };
 
+const getRealtimeUserSummary = async (req, res) => {
+  try {
+    const [response] = await analyticsDataClient.runRealtimeReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      metrics: [{ name: 'activeUsers' }],
+      dimensions: [{ name: 'customUser:user_type' }],
+    });
+
+    const breakdown = (response.rows || []).map((row) => ({
+      userType: row.dimensionValues?.[0]?.value || 'unknown',
+      activeUsers: parseInt(row.metricValues?.[0]?.value || '0'),
+    }));
+
+    const total = breakdown.reduce((sum, r) => sum + r.activeUsers, 0);
+
+    res.json({ total, breakdown });
+  } catch (err) {
+    console.error('GA4 Realtime Error:', err);
+    res.status(500).json({ message: 'Failed to fetch realtime data' });
+  }
+};
+
+const getTopBlogsAndEvents = async (req, res) => {
+  try {
+    // === Top Blogs ===
+    const [blogsResponse] = await analyticsDataClient.runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
+      dimensions: [
+        { name: 'customEvent:blog_id' },
+        { name: 'customEvent:blog_title' },
+      ],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          stringFilter: {
+            value: 'view_blog',
+            matchType: 'EXACT',
+          },
+        },
+      },
+      orderBys: [
+        {
+          metric: { metricName: 'eventCount' },
+          desc: true,
+        },
+      ],
+      limit: 20,
+    });
+
+    const topBlogs = (blogsResponse.rows || []).map((row) => ({
+      id: row.dimensionValues?.[0]?.value,
+      title: row.dimensionValues?.[1]?.value,
+      views: parseInt(row.metricValues?.[0]?.value || '0'),
+    }));
+
+    // === Top Events ===
+    const [eventsResponse] = await analyticsDataClient.runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
+      dimensions: [
+        { name: 'customEvent:event_id' },
+        { name: 'customEvent:event_title' },
+      ],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          stringFilter: {
+            value: 'view_event',
+            matchType: 'EXACT',
+          },
+        },
+      },
+      orderBys: [
+        {
+          metric: { metricName: 'eventCount' },
+          desc: true,
+        },
+      ],
+      limit: 20,
+    });
+
+    const topEvents = (eventsResponse.rows || []).map((row) => ({
+      id: row.dimensionValues?.[0]?.value,
+      title: row.dimensionValues?.[1]?.value,
+      views: parseInt(row.metricValues?.[0]?.value || '0'),
+    }));
+
+    res.json({ topBlogs, topEvents });
+  } catch (err) {
+    console.error(' GA4 Top Content Error:', err);
+    res.status(500).json({ message: 'Failed to fetch top blogs/events' });
+  }
+};
+
+const getAllTopModulesByPageView = async (req, res) => {
+  try {
+    const [response] = await analyticsDataClient.runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [{ name: 'screenPageViews' }],
+      dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
+      limit: 1000,
+      orderBys: [
+        {
+          metric: { metricName: 'screenPageViews' },
+          desc: true,
+        },
+      ],
+    });
+
+    const rows = response.rows || [];
+
+    const moduleViewCounts = {};
+
+    for (const row of rows) {
+      const path = row.dimensionValues?.[0]?.value || '';
+      const views = parseInt(row.metricValues?.[0]?.value || '0');
+
+      const match = path.match(/^\/([^/?#]+)/); // Get first path segment
+      const module = match ? match[1] : 'unknown';
+
+      moduleViewCounts[module] = (moduleViewCounts[module] || 0) + views;
+    }
+
+    res.json({ topModules: moduleViewCounts });
+  } catch (err) {
+    console.error('GA4 Top Modules Error:', err);
+    res.status(500).json({ message: 'Failed to fetch top module views' });
+  }
+};
+
 module.exports = {
   getNewUsersInDefinedTime,
   getTotalUsersOverTime,
   trackDailyActivity,
   getOnlineUsersOverTime,
   getUsersFromEachCountry,
+  getRealtimeUserSummary,
+  getTopBlogsAndEvents,
+  getAllTopModulesByPageView,
 };
