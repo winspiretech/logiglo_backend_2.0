@@ -23,19 +23,26 @@ COPY . .
 RUN npx prisma generate
 
 # Stage 2: Production image
-FROM node:20-slim AS production
+FROM node:20-slim
 
 WORKDIR /logiglo_backend_2.0
 
-# Install runtime dependencies only
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y \
-    libvips \
+    libvips42 \
     libpq-dev \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy from build stage
-COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
+# Copy only necessary files from build stage
+COPY --from=build /logiglo_backend_2.0/node_modules ./node_modules
+COPY --from=build /logiglo_backend_2.0/package.json ./package.json
+COPY --from=build /logiglo_backend_2.0/package-lock.json ./package-lock.json
+COPY --from=build /logiglo_backend_2.0/prisma ./prisma
+COPY --from=build /logiglo_backend_2.0/dist ./dist  # Adjust if your app has a different output directory
+
+# Reinstall sharp for the production environment
+RUN npm install --os=linux --cpu=x64 sharp
 
 # Remove dev dependencies
 RUN npm prune --production
