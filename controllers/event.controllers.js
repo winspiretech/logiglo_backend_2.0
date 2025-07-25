@@ -441,7 +441,7 @@ const addUnarchiveEventReason = async (req, res) => {
 const getRequiredAmountEvents = async (req, res) => {
   try {
     const amount = parseInt(req.query.amount) || 10;
-    const skip = parseInt(req.query.skip) || 10;
+    const skip = parseInt(req.query.skip) || 0;
     const eventsData = await prisma.event.findMany({
       where: {
         isArchived: false,
