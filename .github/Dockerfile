@@ -17,8 +17,13 @@ RUN apk add --no-cache \
     giflib-dev \
     openssl
 
-# Copy package files and install dependencies (including dev)
+# Copy package files
 COPY package*.json ./
+
+# Pre-install musl-compatible sharp (important)
+RUN npm install --platform=linux --libc=musl sharp
+
+# Install remaining dependencies including dev dependencies
 RUN npm ci
 
 # Copy the rest of the application
