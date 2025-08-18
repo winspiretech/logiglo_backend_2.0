@@ -49,6 +49,8 @@ jobs:
             echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
             docker pull ${{ secrets.DOCKER_USERNAME }}/logiglo_backend_2.0:latest
             cd /root/backend
-            docker-compose down --remove-orphans
-            docker-compose up -d
-            docker image prune -f
+            # Use project-specific docker-compose commands
+            docker-compose --project-name logiglo-backend down
+            docker-compose --project-name logiglo-backend up -d
+            # Only prune images related to this project
+            docker image prune -f --filter "until=24h"
