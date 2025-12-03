@@ -8,10 +8,10 @@ const { z } = require('zod');
 const querySchema = z.object({
   startDate: z.string().optional(), // ISO date or date-only
   endDate: z.string().optional(),
-  location: z.string().optional(),  // e.g. "Sydney International ..., Australia" or "Australia"
+  location: z.string().optional(), // e.g. "Sydney International ..., Australia" or "Australia"
   mode: z.enum(['online', 'offline', 'hybrid']).optional(),
   page: z.coerce.number().int().positive().optional().default(1),
-  limit: z.coerce.number().int().positive().max(100).optional().default(20)
+  limit: z.coerce.number().int().positive().max(100).optional().default(20),
 });
 
 function parseDateSafe(s) {
@@ -501,18 +501,30 @@ const filterEvents = async (req, res) => {
     const startParam = parseDateSafe(q.startDate);
     const endParam = parseDateSafe(q.endDate);
     if (q.startDate && !startParam) {
-      return res.status(400).json({ statusCode: 400, error: 'INVALID_DATE', message: 'startDate is invalid ISO date' });
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'INVALID_DATE',
+        message: 'startDate is invalid ISO date',
+      });
     }
     if (q.endDate && !endParam) {
-      return res.status(400).json({ statusCode: 400, error: 'INVALID_DATE', message: 'endDate is invalid ISO date' });
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'INVALID_DATE',
+        message: 'endDate is invalid ISO date',
+      });
     }
     if (startParam && endParam && startParam > endParam) {
-      return res.status(400).json({ statusCode: 400, error: 'INVALID_RANGE', message: 'startDate must be <= endDate' });
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'INVALID_RANGE',
+        message: 'startDate must be <= endDate',
+      });
     }
 
     // Build where clause incrementally
     const where = {
-      isArchived: false
+      isArchived: false,
     };
 
     const andClauses = [];
@@ -526,7 +538,9 @@ const filterEvents = async (req, res) => {
     if (q.location) {
       // If user provided a full location string, pick last token after comma; otherwise use the whole string.
       const raw = q.location.trim();
-      const countryCandidate = raw.includes(',') ? raw.split(',').pop().trim() : raw;
+      const countryCandidate = raw.includes(',')
+        ? raw.split(',').pop().trim()
+        : raw;
       if (countryCandidate.length > 0) {
         // ensure location is not null and endsWith the country (case-insensitive)
         andClauses.push({
@@ -534,8 +548,8 @@ const filterEvents = async (req, res) => {
             not: null,
             endsWith: countryCandidate,
             // 'mode' insensitivity supported in Prisma (Postgres / MySQL depending on version)
-            mode: 'insensitive'
-          }
+            mode: 'insensitive',
+          },
         });
       }
     }
@@ -543,9 +557,9 @@ const filterEvents = async (req, res) => {
     if (startParam && endParam) {
       andClauses.push({
         AND: [
-          { startDate: { lte: endParam } },  // event starts before or on the filter end
-          { endDate: { gte: startParam } }   // event ends after or on the filter start
-        ]
+          { startDate: { lte: endParam } }, // event starts before or on the filter end
+          { endDate: { gte: startParam } }, // event ends after or on the filter start
+        ],
       });
     } else if (startParam) {
       // return events that end on/after startParam (i.e. events that are still ongoing or start after)
@@ -582,23 +596,31 @@ const filterEvents = async (req, res) => {
         countryCode: true,
         brochure: true,
         videoUrl: true,
-        isArchived: true
+        isArchived: true,
         // add more fields if needed (or include relations)
-      }
+      },
     });
 
     return res.json({
       statusCode: 200,
       message: 'OK',
       data: events,
-      meta: { total, page, limit }
+      meta: { total, page, limit },
     });
   } catch (err) {
     if (err.name === 'ZodError') {
-      return res.status(400).json({ statusCode: 400, error: 'VALIDATION_ERROR', message: err.errors.map(e => e.message).join('; ') });
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'VALIDATION_ERROR',
+        message: err.errors.map((e) => e.message).join('; '),
+      });
     }
     console.error('filterEvents error', err);
-    return res.status(500).json({ statusCode: 500, error: 'INTERNAL_ERROR', message: 'Something went wrong' });
+    return res.status(500).json({
+      statusCode: 500,
+      error: 'INTERNAL_ERROR',
+      message: 'Something went wrong',
+    });
   }
 };
 
@@ -614,5 +636,5 @@ module.exports = {
   getArchivedEvents,
   addUnarchiveEventReason,
   getRequiredAmountEvents,
-  filterEvents
+  filterEvents,
 };

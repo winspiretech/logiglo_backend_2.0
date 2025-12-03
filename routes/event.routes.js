@@ -12,7 +12,7 @@ const {
   getArchivedEvents,
   addUnarchiveEventReason,
   getRequiredAmountEvents,
-  filterEvents
+  filterEvents,
 } = require('../controllers/event.controllers');
 const isAdmin = require('../middleware/isAdmin');
 
