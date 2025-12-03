@@ -3,6 +3,22 @@ const { ApiError } = require('../utils/ApiError');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { deleteFileByUrl } = require('../utils/deleteFileByUrl');
 const EventSchema = require('../validation/event.validation');
+const { z } = require('zod');
+
+const querySchema = z.object({
+  startDate: z.string().optional(), // ISO date or date-only
+  endDate: z.string().optional(),
+  location: z.string().optional(),  // e.g. "Sydney International ..., Australia" or "Australia"
+  mode: z.enum(['online', 'offline', 'hybrid']).optional(),
+  page: z.coerce.number().int().positive().optional().default(1),
+  limit: z.coerce.number().int().positive().max(100).optional().default(20)
+});
+
+function parseDateSafe(s) {
+  if (!s) return null;
+  const d = new Date(s);
+  return isNaN(d.getTime()) ? null : d;
+}
 
 const test = async (req, res) => {
   res.send('Success');
@@ -477,6 +493,115 @@ const getRequiredAmountEvents = async (req, res) => {
   }
 };
 
+const filterEvents = async (req, res) => {
+  try {
+    const q = querySchema.parse(req.query);
+
+    // Validate dates
+    const startParam = parseDateSafe(q.startDate);
+    const endParam = parseDateSafe(q.endDate);
+    if (q.startDate && !startParam) {
+      return res.status(400).json({ statusCode: 400, error: 'INVALID_DATE', message: 'startDate is invalid ISO date' });
+    }
+    if (q.endDate && !endParam) {
+      return res.status(400).json({ statusCode: 400, error: 'INVALID_DATE', message: 'endDate is invalid ISO date' });
+    }
+    if (startParam && endParam && startParam > endParam) {
+      return res.status(400).json({ statusCode: 400, error: 'INVALID_RANGE', message: 'startDate must be <= endDate' });
+    }
+
+    // Build where clause incrementally
+    const where = {
+      isArchived: false
+    };
+
+    const andClauses = [];
+
+    // mode filter
+    if (q.mode) {
+      andClauses.push({ mode: q.mode });
+    }
+
+    // location filter: we filter by country present at the *end* of the location string.
+    if (q.location) {
+      // If user provided a full location string, pick last token after comma; otherwise use the whole string.
+      const raw = q.location.trim();
+      const countryCandidate = raw.includes(',') ? raw.split(',').pop().trim() : raw;
+      if (countryCandidate.length > 0) {
+        // ensure location is not null and endsWith the country (case-insensitive)
+        andClauses.push({
+          location: {
+            not: null,
+            endsWith: countryCandidate,
+            // 'mode' insensitivity supported in Prisma (Postgres / MySQL depending on version)
+            mode: 'insensitive'
+          }
+        });
+      }
+    }
+
+    if (startParam && endParam) {
+      andClauses.push({
+        AND: [
+          { startDate: { lte: endParam } },  // event starts before or on the filter end
+          { endDate: { gte: startParam } }   // event ends after or on the filter start
+        ]
+      });
+    } else if (startParam) {
+      // return events that end on/after startParam (i.e. events that are still ongoing or start after)
+      andClauses.push({ endDate: { gte: startParam } });
+    } else if (endParam) {
+      // return events that start on/before endParam
+      andClauses.push({ startDate: { lte: endParam } });
+    }
+
+    if (andClauses.length) where.AND = andClauses;
+
+    const page = q.page;
+    const limit = q.limit;
+    const skip = (page - 1) * limit;
+
+    // Count (for pagination)
+    const total = await prisma.event.count({ where });
+
+    // Retrieve paginated records (select only needed fields to keep it fast)
+    const events = await prisma.event.findMany({
+      where,
+      orderBy: { startDate: 'asc' },
+      skip,
+      take: limit,
+      select: {
+        id: true,
+        eventTitle: true,
+        organizer: true,
+        startDate: true,
+        endDate: true,
+        location: true,
+        mode: true,
+        coverImages: true,
+        countryCode: true,
+        brochure: true,
+        videoUrl: true,
+        isArchived: true
+        // add more fields if needed (or include relations)
+      }
+    });
+
+    return res.json({
+      statusCode: 200,
+      message: 'OK',
+      data: events,
+      meta: { total, page, limit }
+    });
+  } catch (err) {
+    if (err.name === 'ZodError') {
+      return res.status(400).json({ statusCode: 400, error: 'VALIDATION_ERROR', message: err.errors.map(e => e.message).join('; ') });
+    }
+    console.error('filterEvents error', err);
+    return res.status(500).json({ statusCode: 500, error: 'INTERNAL_ERROR', message: 'Something went wrong' });
+  }
+};
+
 module.exports = {
   test,
   addEvents,
@@ -489,4 +614,5 @@ module.exports = {
   getArchivedEvents,
   addUnarchiveEventReason,
   getRequiredAmountEvents,
+  filterEvents
 };
