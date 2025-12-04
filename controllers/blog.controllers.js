@@ -621,22 +621,18 @@ async function searchBlogs(req, res) {
     });
   } catch (err) {
     if (err && err.errors)
-      return res
-        .status(400)
-        .json({
-          statusCode: 400,
-          error: 'VALIDATION_ERROR',
-          message: 'Invalid query',
-          details: err.errors,
-        });
-    return res
-      .status(500)
-      .json({
-        statusCode: 500,
-        error: 'SERVER_ERROR',
-        message: 'Search failed',
-        details: err.message,
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'VALIDATION_ERROR',
+        message: 'Invalid query',
+        details: err.errors,
       });
+    return res.status(500).json({
+      statusCode: 500,
+      error: 'SERVER_ERROR',
+      message: 'Search failed',
+      details: err.message,
+    });
   }
 }
 
@@ -676,22 +672,18 @@ async function filterBlogs(req, res) {
     });
   } catch (err) {
     if (err && err.errors)
-      return res
-        .status(400)
-        .json({
-          statusCode: 400,
-          error: 'VALIDATION_ERROR',
-          message: 'Invalid filter params',
-          details: err.errors,
-        });
-    return res
-      .status(500)
-      .json({
-        statusCode: 500,
-        error: 'SERVER_ERROR',
-        message: 'Filter failed',
-        details: err.message,
+      return res.status(400).json({
+        statusCode: 400,
+        error: 'VALIDATION_ERROR',
+        message: 'Invalid filter params',
+        details: err.errors,
       });
+    return res.status(500).json({
+      statusCode: 500,
+      error: 'SERVER_ERROR',
+      message: 'Filter failed',
+      details: err.message,
+    });
   }
 }
 
