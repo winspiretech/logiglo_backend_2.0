@@ -7,26 +7,44 @@ const { z } = require('zod');
 
 const schema = z.object({
   q: z.string().trim().min(1),
-  limit: z.preprocess(v => parseInt(v,10), z.number().int().min(1).max(50).optional()).default(50),
+  limit: z
+    .preprocess(
+      (v) => parseInt(v, 10),
+      z.number().int().min(1).max(50).optional(),
+    )
+    .default(50),
   cursor: z.string().optional(),
-  page: z.preprocess(v => v === undefined ? undefined : parseInt(v,10), z.number().int().min(1).optional()),
-  sort: z.enum(['newest','oldest']).optional().default('newest')
+  page: z.preprocess(
+    (v) => (v === undefined ? undefined : parseInt(v, 10)),
+    z.number().int().min(1).optional(),
+  ),
+  sort: z.enum(['newest', 'oldest']).optional().default('newest'),
 });
 
-
 const schema2 = z.object({
-  categoryIds: z.string().optional(),     // comma-separated ids
-  categoryNames: z.string().optional(),   // comma-separated names
+  categoryIds: z.string().optional(), // comma-separated ids
+  categoryNames: z.string().optional(), // comma-separated names
   authorId: z.string().optional(),
   status: z.string().optional(),
-  hasImage: z.preprocess(v => v === 'true' ? true : v === 'false' ? false : undefined, z.boolean().optional()),
-  freshness: z.enum(['last24h','last7d','last30d']).optional(),
+  hasImage: z.preprocess(
+    (v) => (v === 'true' ? true : v === 'false' ? false : undefined),
+    z.boolean().optional(),
+  ),
+  freshness: z.enum(['last24h', 'last7d', 'last30d']).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
-  limit: z.preprocess(v => parseInt(v,10), z.number().int().min(1).max(50).optional()).default(50),
+  limit: z
+    .preprocess(
+      (v) => parseInt(v, 10),
+      z.number().int().min(1).max(50).optional(),
+    )
+    .default(50),
   cursor: z.string().optional(),
-  page: z.preprocess(v => v === undefined ? undefined : parseInt(v,10), z.number().int().min(1).optional()),
-  sort: z.enum(['newest','oldest']).optional().default('newest')
+  page: z.preprocess(
+    (v) => (v === undefined ? undefined : parseInt(v, 10)),
+    z.number().int().min(1).optional(),
+  ),
+  sort: z.enum(['newest', 'oldest']).optional().default('newest'),
 });
 
 function buildWhere(parsed) {
@@ -34,20 +52,26 @@ function buildWhere(parsed) {
 
   // categories by ids
   if (parsed.categoryIds) {
-    const ids = parsed.categoryIds.split(',').map(s => s.trim()).filter(Boolean);
+    const ids = parsed.categoryIds
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     if (ids.length) where.categoryId = { in: ids };
   }
 
   // categories by names (relation)
   if (parsed.categoryNames) {
-    const names = parsed.categoryNames.split(',').map(s => s.trim()).filter(Boolean);
+    const names = parsed.categoryNames
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     if (names.length) where.category = { name: { in: names } };
   }
 
   if (parsed.authorId) where.authorId = parsed.authorId;
   if (parsed.status) where.status = parsed.status;
 
-  if (parsed.hasImage === true) where.image_url = { hasSome: [''] };// placeholder: Prisma doesn't have direct "array not empty" so use length check via raw if needed
+  if (parsed.hasImage === true) where.image_url = { hasSome: [''] }; // placeholder: Prisma doesn't have direct "array not empty" so use length check via raw if needed
   if (parsed.hasImage === false) where.image_url = { equals: [] };
 
   // freshness / date-range
@@ -55,13 +79,20 @@ function buildWhere(parsed) {
     let gte, lte;
     if (parsed.freshness) {
       const now = new Date();
-      if (parsed.freshness === 'last24h') gte = new Date(now.getTime() - 24*60*60*1000);
-      if (parsed.freshness === 'last7d') gte = new Date(now.getTime() - 7*24*60*60*1000);
-      if (parsed.freshness === 'last30d') gte = new Date(now.getTime() - 30*24*60*60*1000);
+      if (parsed.freshness === 'last24h')
+        gte = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      if (parsed.freshness === 'last7d')
+        gte = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      if (parsed.freshness === 'last30d')
+        gte = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
     }
     if (parsed.startDate) gte = new Date(parsed.startDate);
     if (parsed.endDate) lte = new Date(parsed.endDate);
-    if (gte || lte) { where.createdAt = {}; if (gte) where.createdAt.gte = gte; if (lte) where.createdAt.lte = lte; }
+    if (gte || lte) {
+      where.createdAt = {};
+      if (gte) where.createdAt.gte = gte;
+      if (lte) where.createdAt.lte = lte;
+    }
   }
 
   return where;
@@ -554,34 +585,58 @@ async function searchBlogs(req, res) {
     const parsed = schema.parse(req.query);
     const limit = parsed.limit;
     const take = limit + 1;
-    const orderBy = parsed.sort === 'oldest' ? { createdAt: 'asc' } : { createdAt: 'desc' };
+    const orderBy =
+      parsed.sort === 'oldest' ? { createdAt: 'asc' } : { createdAt: 'desc' };
     const where = {
       isArchived: false,
       OR: [
         { title: { contains: parsed.q, mode: 'insensitive' } },
         // { description: { contains: parsed.q, mode: 'insensitive' } }
-      ]
+      ],
     };
 
     const findArgs = {
       where,
       take,
       orderBy,
-      include: { category: { select: { id:true, name:true } } }
+      include: { category: { select: { id: true, name: true } } },
     };
 
-    if (parsed.cursor) { findArgs.cursor = { id: parsed.cursor }; findArgs.skip = 1; }
-    else if (parsed.page) { findArgs.skip = (parsed.page - 1) * limit; }
+    if (parsed.cursor) {
+      findArgs.cursor = { id: parsed.cursor };
+      findArgs.skip = 1;
+    } else if (parsed.page) {
+      findArgs.skip = (parsed.page - 1) * limit;
+    }
 
     const rows = await prisma.blog.findMany(findArgs);
     const hasNext = rows.length > limit;
     const items = hasNext ? rows.slice(0, limit) : rows;
     const nextCursor = items.length ? items[items.length - 1].id : null;
 
-    return res.json({ message: 'Search results', data: items, meta: { limit, nextCursor, hasNextPage: hasNext } });
+    return res.json({
+      message: 'Search results',
+      data: items,
+      meta: { limit, nextCursor, hasNextPage: hasNext },
+    });
   } catch (err) {
-    if (err && err.errors) return res.status(400).json({ statusCode:400, error:'VALIDATION_ERROR', message:'Invalid query', details: err.errors });
-    return res.status(500).json({ statusCode:500, error:'SERVER_ERROR', message:'Search failed', details: err.message });
+    if (err && err.errors)
+      return res
+        .status(400)
+        .json({
+          statusCode: 400,
+          error: 'VALIDATION_ERROR',
+          message: 'Invalid query',
+          details: err.errors,
+        });
+    return res
+      .status(500)
+      .json({
+        statusCode: 500,
+        error: 'SERVER_ERROR',
+        message: 'Search failed',
+        details: err.message,
+      });
   }
 }
 
@@ -590,7 +645,8 @@ async function filterBlogs(req, res) {
     const parsed = schema2.parse(req.query);
     const limit = parsed.limit;
     const take = limit + 1;
-    const orderBy = parsed.sort === 'oldest' ? { createdAt: 'asc' } : { createdAt: 'desc' };
+    const orderBy =
+      parsed.sort === 'oldest' ? { createdAt: 'asc' } : { createdAt: 'desc' };
 
     const where = buildWhere(parsed);
 
@@ -598,21 +654,44 @@ async function filterBlogs(req, res) {
       where,
       take,
       orderBy,
-      include: { category: { select: { id:true, name:true } } }
+      include: { category: { select: { id: true, name: true } } },
     };
 
-    if (parsed.cursor) { findArgs.cursor = { id: parsed.cursor }; findArgs.skip = 1; }
-    else if (parsed.page) { findArgs.skip = (parsed.page - 1) * limit; }
+    if (parsed.cursor) {
+      findArgs.cursor = { id: parsed.cursor };
+      findArgs.skip = 1;
+    } else if (parsed.page) {
+      findArgs.skip = (parsed.page - 1) * limit;
+    }
 
     const rows = await prisma.blog.findMany(findArgs);
     const hasNext = rows.length > limit;
     const items = hasNext ? rows.slice(0, limit) : rows;
     const nextCursor = items.length ? items[items.length - 1].id : null;
 
-    return res.json({ message: 'Filtered results', data: items, meta: { limit, nextCursor, hasNextPage: hasNext } });
+    return res.json({
+      message: 'Filtered results',
+      data: items,
+      meta: { limit, nextCursor, hasNextPage: hasNext },
+    });
   } catch (err) {
-    if (err && err.errors) return res.status(400).json({ statusCode:400, error:'VALIDATION_ERROR', message:'Invalid filter params', details: err.errors });
-    return res.status(500).json({ statusCode:500, error:'SERVER_ERROR', message:'Filter failed', details: err.message });
+    if (err && err.errors)
+      return res
+        .status(400)
+        .json({
+          statusCode: 400,
+          error: 'VALIDATION_ERROR',
+          message: 'Invalid filter params',
+          details: err.errors,
+        });
+    return res
+      .status(500)
+      .json({
+        statusCode: 500,
+        error: 'SERVER_ERROR',
+        message: 'Filter failed',
+        details: err.message,
+      });
   }
 }
 
@@ -629,5 +708,5 @@ module.exports = {
   addUnarchiveBlogReason,
   getRequiredAmountBlog,
   searchBlogs,
-  filterBlogs
+  filterBlogs,
 };

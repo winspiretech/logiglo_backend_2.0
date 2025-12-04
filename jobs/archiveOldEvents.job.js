@@ -15,7 +15,9 @@ const performArchiveForCron = async () => {
       data: { isArchived: true },
     });
 
-    logger.info(`[archiveOldEvents:prod] ${result.count} event(s) archived at ${now.toISOString()}`);
+    logger.info(
+      `[archiveOldEvents:prod] ${result.count} event(s) archived at ${now.toISOString()}`,
+    );
     return result;
   } catch (err) {
     logger.error('[archiveOldEvents:prod] error while archiving events:', err);
@@ -27,9 +29,14 @@ const performArchiveForCron = async () => {
  * Start scheduled prod job.
  * Default schedule: '0 0 * * *' (midnight daily). Do NOT run anything immediately.
  */
-const archiveOldEvents = ({ schedule = '0 0 * * *', timezone= 'Asia/Kolkata' } = {}) => {
+const archiveOldEvents = ({
+  schedule = '0 0 * * *',
+  timezone = 'Asia/Kolkata',
+} = {}) => {
   if (scheduledTask) {
-    logger.warn('[archiveOldEvents:prod] job already scheduled. Skipping duplicate scheduling.');
+    logger.warn(
+      '[archiveOldEvents:prod] job already scheduled. Skipping duplicate scheduling.',
+    );
     return scheduledTask;
   }
 
@@ -42,7 +49,7 @@ const archiveOldEvents = ({ schedule = '0 0 * * *', timezone= 'Asia/Kolkata' } =
         logger.error('[archiveOldEvents:prod] scheduled run failed:', err);
       }
     },
-    { scheduled: true, timezone }
+    { scheduled: true, timezone },
   );
 
   logger.info(`[archiveOldEvents:prod] scheduled job (cron: "${schedule}").`);

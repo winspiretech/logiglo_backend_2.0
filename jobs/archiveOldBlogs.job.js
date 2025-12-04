@@ -22,7 +22,6 @@
 
 // module.exports = { archiveOldBlogs };
 
-
 // jobs/archiveOldBlogs.prod.job.js
 const cron = require('node-cron');
 const prisma = require('../models/prismaClient'); // adjust path if needed
@@ -48,7 +47,9 @@ const performArchiveForCron = async () => {
       data: { isArchived: true },
     });
 
-    logger.info(`[archiveOldBlogs:prod] ${result.count} blog(s) archived at ${now.toISOString()} (cutoff: ${cutoff.toISOString()})`);
+    logger.info(
+      `[archiveOldBlogs:prod] ${result.count} blog(s) archived at ${now.toISOString()} (cutoff: ${cutoff.toISOString()})`,
+    );
     return result;
   } catch (err) {
     logger.error('[archiveOldBlogs:prod] error while archiving blogs:', err);
@@ -60,9 +61,14 @@ const performArchiveForCron = async () => {
  * Start cron-only job. Default schedule: '0 0 * * *' (daily at midnight).
  * Does NOT expose a one-off helper.
  */
-const archiveOldBlogs = ({ schedule = '0 0 * * *', timezone ='Asia/Kolkata' } = {}) => {
+const archiveOldBlogs = ({
+  schedule = '0 0 * * *',
+  timezone = 'Asia/Kolkata',
+} = {}) => {
   if (scheduledTask) {
-    logger.warn('[archiveOldBlogs:prod] job already scheduled. Skipping duplicate scheduling.');
+    logger.warn(
+      '[archiveOldBlogs:prod] job already scheduled. Skipping duplicate scheduling.',
+    );
     return scheduledTask;
   }
 
@@ -75,7 +81,7 @@ const archiveOldBlogs = ({ schedule = '0 0 * * *', timezone ='Asia/Kolkata' } = 
         logger.error('[archiveOldBlogs:prod] scheduled run failed:', err);
       }
     },
-    { scheduled: true, timezone }
+    { scheduled: true, timezone },
   );
 
   logger.info(`[archiveOldBlogs:prod] scheduled job (cron: "${schedule}").`);
