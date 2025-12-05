@@ -687,6 +687,7 @@ async function filterBlogs(req, res) {
   }
 }
 
+
 module.exports = {
   test,
   createBlog,
