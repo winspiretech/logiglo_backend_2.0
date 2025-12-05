@@ -12,6 +12,8 @@ const {
   toggleArchiveBlog,
   addUnarchiveBlogReason,
   getRequiredAmountBlog,
+  searchBlogs,
+  filterBlogs,
 } = require('../controllers/blog.controllers.js');
 const isAdmin = require('../middleware/isAdmin.js');
 
@@ -21,6 +23,8 @@ router.get('/landing-page/limit', getRequiredAmountBlog);
 router.delete('/:id', isAdmin, deleteBlog);
 router.get('/archived', isAdmin, getArchivedBlogs);
 router.get('/', getAllBlogs);
+router.get('/search', searchBlogs);
+router.get('/filter', filterBlogs);
 router.get('/:id', getBlog);
 router.patch('/:id', isAdmin, editBlog);
 router.patch('/archive/:id', isAdmin, toggleArchiveBlog);

@@ -12,6 +12,7 @@ const {
   getArchivedEvents,
   addUnarchiveEventReason,
   getRequiredAmountEvents,
+  filterEvents,
 } = require('../controllers/event.controllers');
 const isAdmin = require('../middleware/isAdmin');
 
@@ -20,6 +21,7 @@ router.post('/create', isAdmin, addEvents);
 router.get('/landing-page/limit', getRequiredAmountEvents);
 router.get('/admin-events', isAdmin, getAdminEvents);
 router.get('/', getAllEvents);
+router.get('/filter', filterEvents);
 router.get('/archived', isAdmin, getArchivedEvents);
 router.get('/:id', getEvent);
 router.patch('/:id', isAdmin, updateEvent);

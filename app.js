@@ -37,6 +37,15 @@ const cors = require('cors');
 
 const app = express();
 
+// const { getActiveUsersSummary } = require('./utils/analytics');
+
+// getActiveUsersSummary()
+//   .then(({ total, breakdown }) => {
+//     console.log('🟢 Total Active Users:', total);
+//     console.log('🟢 Breakdown by user type:', breakdown);
+//   })
+//   .catch(console.error);
+
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
