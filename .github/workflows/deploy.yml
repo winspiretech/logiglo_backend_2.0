@@ -47,27 +47,27 @@ jobs:
               ln -s /root/backend /backend
             fi
             mkdir -p /root/backend
-            
+
             # Login to Docker Hub
             echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-            
+
             # Pull the latest image
             docker pull ${{ secrets.DOCKER_USERNAME }}/logiglo_backend_2.0:latest
-            
+
             cd /root/backend
-            
+
             # IMPORTANT: Use correct project name "backend" not "logiglo-backend"
             docker-compose --project-name backend pull backend
-            
+
             # Force recreate backend container with new image
             docker-compose --project-name backend up -d --no-deps --force-recreate backend
-            
+
             # Wait for container to start
             sleep 5
-            
+
             # Clean up old images
             docker image prune -f --filter "dangling=true"
-            
+
             # Verify deployment
             echo "========================================="
             echo "✅ Deployment Complete!"
