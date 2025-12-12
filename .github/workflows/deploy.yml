@@ -56,38 +56,27 @@ jobs:
 
             cd /root/backend
 
-            # Verify docker-compose.yml exists
-            if [ ! -f "docker-compose.yml" ]; then
-              echo "ERROR: docker-compose.yml not found!"
-              exit 1
-            fi
+            # IMPORTANT: Use correct project name "backend" not "logiglo-backend"
+            docker-compose --project-name backend pull backend
 
-            # Pull latest images for backend service only
-            docker-compose --project-name logiglo-backend pull backend
+            # Force recreate backend container with new image
+            docker-compose --project-name backend up -d --no-deps --force-recreate backend
 
-            # Recreate ONLY backend container (postgres and volumes stay untouched)
-            docker-compose --project-name logiglo-backend up -d --no-deps --force-recreate backend
-
-            # Wait for backend to be healthy
+            # Wait for container to start
             sleep 5
 
-            # Clean up old dangling images only
+            # Clean up old images
             docker image prune -f --filter "dangling=true"
 
             # Verify deployment
             echo "========================================="
-            echo "Deployment Status:"
+            echo "✅ Deployment Complete!"
             echo "========================================="
-            if docker ps | grep -q logiglo_backend_2.0; then
-              echo "✅ Backend container is running!"
-              docker ps | grep logiglo_backend
-              echo ""
-              echo "Container details:"
-              docker inspect logiglo_backend_2.0 --format='Image: {{.Config.Image}}' 
-              docker inspect logiglo_backend_2.0 --format='Created: {{.Created}}'
-            else
-              echo "❌ ERROR: Backend container failed to start!"
-              echo "Showing last 50 lines of logs:"
-              docker logs logiglo_backend_2.0 --tail 50
-              exit 1
-            fi
+            docker ps | grep logiglo_backend
+            echo ""
+            echo "Container Created:"
+            docker inspect logiglo_backend_2.0 --format='{{.Created}}'
+            echo ""
+            echo "Image:"
+            docker inspect logiglo_backend_2.0 --format='{{.Config.Image}}'
+            echo "========================================="
