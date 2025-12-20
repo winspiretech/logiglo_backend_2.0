@@ -32,11 +32,13 @@ const generateMetaTags = ({
   type = 'article',
   publishedTime,
   modifiedTime,
-  author
+  author,
 }) => {
   const fullTitle = escapeHtml(title ? `${title} | Logiglo` : 'Logiglo');
-  const safeDescription = escapeHtml(description || 'Logiglo - Logistics Platform');
-  
+  const safeDescription = escapeHtml(
+    description || 'Logiglo - Logistics Platform',
+  );
+
   return `
     <title>${fullTitle}</title>
     <meta name="description" content="${safeDescription}" />
@@ -69,19 +71,19 @@ const generateMetaTags = ({
 // Middleware for blog SEO
 const blogSEO = async (req, res, next) => {
   const { id } = req.params;
-  
+
   try {
     const blog = await prisma.blog.findFirst({
-      where: { 
+      where: {
         id,
-        isArchived: false 
+        isArchived: false,
       },
       include: {
         category: true,
-        author: { 
-          select: { name: true } 
-        }
-      }
+        author: {
+          select: { name: true },
+        },
+      },
     });
 
     if (blog) {
@@ -93,7 +95,7 @@ const blogSEO = async (req, res, next) => {
         url: `https://logiglo.com/landing/blog/${id}`,
         type: 'article',
         publishedTime: blog.createdAt?.toISOString(),
-        author: blog.author?.name || 'Logiglo'
+        author: blog.author?.name || 'Logiglo',
       });
 
       req.seoMetaTags = metaTags;
@@ -102,20 +104,20 @@ const blogSEO = async (req, res, next) => {
     console.error('Blog SEO middleware error:', error);
     // Continue without SEO tags if error occurs
   }
-  
+
   next();
 };
 
 // Middleware for event SEO
 const eventSEO = async (req, res, next) => {
   const { id } = req.params;
-  
+
   try {
     const event = await prisma.event.findFirst({
-      where: { 
+      where: {
         id,
-        isArchived: false 
-      }
+        isArchived: false,
+      },
     });
 
     if (event) {
@@ -127,7 +129,7 @@ const eventSEO = async (req, res, next) => {
         url: `https://logiglo.com/landing/event/${id}`,
         type: 'article',
         publishedTime: event.createdAt?.toISOString(),
-        modifiedTime: event.startDate?.toISOString()
+        modifiedTime: event.startDate?.toISOString(),
       });
 
       req.seoMetaTags = metaTags;
@@ -136,12 +138,12 @@ const eventSEO = async (req, res, next) => {
     console.error('Event SEO middleware error:', error);
     // Continue without SEO tags if error occurs
   }
-  
+
   next();
 };
 
 module.exports = {
   blogSEO,
   eventSEO,
-  generateMetaTags
+  generateMetaTags,
 };

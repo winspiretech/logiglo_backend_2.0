@@ -86,21 +86,23 @@ const serveWithSEO = (req, res) => {
   try {
     // Path to your React build index.html
     const indexPath = path.join(__dirname, '../client/build', 'index.html');
-    
+
     // Check if build exists
     if (!fs.existsSync(indexPath)) {
       console.error('Build index.html not found at:', indexPath);
-      return res.status(404).send('Build not found. Run `npm run build` in client folder.');
+      return res
+        .status(404)
+        .send('Build not found. Run `npm run build` in client folder.');
     }
 
     let html = fs.readFileSync(indexPath, 'utf8');
-    
+
     // Inject meta tags if available from middleware
     if (req.seoMetaTags) {
       // Replace the closing </head> tag with meta tags + </head>
       html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
     }
-    
+
     res.send(html);
   } catch (error) {
     console.error('Error serving HTML:', error);
@@ -153,13 +155,15 @@ app.use('/api/user-dashboard', userDashboardRoutes);
 const buildPath = path.join(__dirname, '../client/build');
 if (fs.existsSync(buildPath)) {
   app.use(express.static(buildPath));
-  
+
   // Catch-all route for React Router (must be last)
   app.get('*', (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
   });
 } else {
-  console.warn('⚠️ React build folder not found. Run `npm run build` in client directory.');
+  console.warn(
+    '⚠️ React build folder not found. Run `npm run build` in client directory.',
+  );
 }
 
 // Root route (fallback if build doesn't exist)
