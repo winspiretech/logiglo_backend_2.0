@@ -96,8 +96,8 @@ app.get(/^\/(landing\/)?(blog|event)\/[a-zA-Z0-9-]+$/, async (req, res) => {
       method: 'GET',
       headers: {
         'User-Agent': req.get('User-Agent'),
-        'Accept': 'text/html'
-      }
+        Accept: 'text/html',
+      },
     };
 
     const request = http.request(options, (response) => {
