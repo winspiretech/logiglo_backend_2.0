@@ -39,6 +39,7 @@ jobs:
             ${{ github.ref == 'refs/heads/main' && secrets.MAIN_REMOTE_KEY ||
             secrets.REMOTE_KEY }}
           script: |
+            # Create directory structure
             if [ -d "/backend" ] && [ ! -L "/backend" ]; then
               rm -rf /backend
               ln -s /root/backend /backend
@@ -46,11 +47,36 @@ jobs:
               ln -s /root/backend /backend
             fi
             mkdir -p /root/backend
+
+            # Login to Docker Hub
             echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+            # Pull the latest image
             docker pull ${{ secrets.DOCKER_USERNAME }}/logiglo_backend_2.0:latest
+
             cd /root/backend
-            # Use project-specific docker-compose commands
-            docker-compose --project-name logiglo-backend down
-            docker-compose --project-name logiglo-backend up -d
-            # Only prune images related to this project
-            docker image prune -f --filter "until=24h"
+
+            # IMPORTANT: Use correct project name "backend" not "logiglo-backend"
+            docker-compose --project-name backend pull backend
+
+            # Force recreate backend container with new image
+            docker-compose --project-name backend up -d --no-deps --force-recreate backend
+
+            # Wait for container to start
+            sleep 5
+
+            # Clean up old images
+            docker image prune -f --filter "dangling=true"
+
+            # Verify deployment
+            echo "========================================="
+            echo "✅ Deployment Complete!"
+            echo "========================================="
+            docker ps | grep logiglo_backend
+            echo ""
+            echo "Container Created:"
+            docker inspect logiglo_backend_2.0 --format='{{.Created}}'
+            echo ""
+            echo "Image:"
+            docker inspect logiglo_backend_2.0 --format='{{.Config.Image}}'
+            echo "========================================="
