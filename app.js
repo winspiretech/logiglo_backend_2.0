@@ -32,7 +32,7 @@ const passport = require('passport');
 require('./middleware/passportLinkedIn.js');
 
 // Import SEO middleware
-const { blogSEO, eventSEO } = require('./middleware/seoMiddleware.js');
+const { universalSEO } = require('./middleware/seoMiddleware.js');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -77,44 +77,56 @@ app.use(cors(corsOptions));
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // =================================================================
-// SEO-OPTIMIZED ROUTES - MUST BE BEFORE API ROUTES
-// These handle direct URL access for crawlers (Google, Facebook, etc.)
+// SEO MIDDLEWARE - Apply to all requests
 // =================================================================
+app.use(universalSEO);
 
-// Helper function to serve HTML with injected meta tags
-const serveWithSEO = (req, res) => {
+// =================================================================
+// SEO-OPTIMIZED ROUTES - Fetch from frontend and inject meta tags
+// =================================================================
+app.get(/^\/(landing\/)?(blog|event)\/[a-zA-Z0-9-]+$/, async (req, res) => {
   try {
-    // Path to your React build index.html
-    const indexPath = path.join(__dirname, '../client/build', 'index.html');
+    const http = require('http');
 
-    // Check if build exists
-    if (!fs.existsSync(indexPath)) {
-      console.error('Build index.html not found at:', indexPath);
-      return res
-        .status(404)
-        .send('Build not found. Run `npm run build` in client folder.');
-    }
+    // Fetch HTML from frontend container (port 3001)
+    const options = {
+      hostname: 'localhost',
+      port: 3001,
+      path: req.path,
+      method: 'GET',
+      headers: {
+        'User-Agent': req.get('User-Agent'),
+        Accept: 'text/html',
+      },
+    };
 
-    let html = fs.readFileSync(indexPath, 'utf8');
+    const request = http.request(options, (response) => {
+      let html = '';
 
-    // Inject meta tags if available from middleware
-    if (req.seoMetaTags) {
-      // Replace the closing </head> tag with meta tags + </head>
-      html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
-    }
+      response.on('data', (chunk) => {
+        html += chunk;
+      });
 
-    res.send(html);
+      response.on('end', () => {
+        // Inject SEO meta tags if available
+        if (req.seoMetaTags) {
+          html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
+        }
+        res.send(html);
+      });
+    });
+
+    request.on('error', (error) => {
+      console.error('Error fetching from frontend:', error);
+      res.status(500).send('Server error');
+    });
+
+    request.end();
   } catch (error) {
-    console.error('Error serving HTML:', error);
+    console.error('SEO route error:', error);
     res.status(500).send('Server error');
   }
-};
-
-// SEO Routes for Blog Detail Pages
-app.get('/landing/blog/:id', blogSEO, serveWithSEO);
-
-// SEO Routes for Event Detail Pages
-app.get('/landing/event/:id', eventSEO, serveWithSEO);
+});
 
 // =================================================================
 // API ROUTES
@@ -146,27 +158,7 @@ app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
 app.use('/api/user-dashboard', userDashboardRoutes);
 
-// =================================================================
-// SERVE REACT APP FOR ALL OTHER ROUTES
-// This must be AFTER all API routes
-// =================================================================
-
-// Serve static files from React build
-const buildPath = path.join(__dirname, '../client/build');
-if (fs.existsSync(buildPath)) {
-  app.use(express.static(buildPath));
-
-  // Catch-all route for React Router (must be last)
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
-  });
-} else {
-  console.warn(
-    '⚠️ React build folder not found. Run `npm run build` in client directory.',
-  );
-}
-
-// Root route (fallback if build doesn't exist)
+// Root route
 app.get('/', (req, res) => {
   res.json({
     message: 'Shree Ganeshay Namah || Radhay Radhay',
