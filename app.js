@@ -1,6 +1,7 @@
-// app.js
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const quotePostRoutes = require('./routes/quotePost.routes.js');
 const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
 const userRoutes = require('./routes/user.routes.js');
@@ -29,22 +30,14 @@ const userDashboardRoutes = require('./routes/userDashboard.routes.js');
 const session = require('express-session');
 const passport = require('passport');
 require('./middleware/passportLinkedIn.js');
-// const authRoutesPassport = require('./routes/auth');
 
-const path = require('path');
+// Import SEO middleware
+const { blogSEO, eventSEO } = require('./middleware/seoMiddleware.js');
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
-
-// const { getActiveUsersSummary } = require('./utils/analytics');
-
-// getActiveUsersSummary()
-//   .then(({ total, breakdown }) => {
-//     console.log('🟢 Total Active Users:', total);
-//     console.log('🟢 Breakdown by user type:', breakdown);
-//   })
-//   .catch(console.error);
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
@@ -53,11 +46,6 @@ app.use(cookieParser());
 app.use(
   session({ secret: 'secret_key', resave: false, saveUninitialized: true }),
 );
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// app.use(authRoutesPassport);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
@@ -88,7 +76,47 @@ app.use(cors(corsOptions));
 // Serve static files from the uploads volume
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
-// Routes
+// =================================================================
+// SEO-OPTIMIZED ROUTES - MUST BE BEFORE API ROUTES
+// These handle direct URL access for crawlers (Google, Facebook, etc.)
+// =================================================================
+
+// Helper function to serve HTML with injected meta tags
+const serveWithSEO = (req, res) => {
+  try {
+    // Path to your React build index.html
+    const indexPath = path.join(__dirname, '../client/build', 'index.html');
+    
+    // Check if build exists
+    if (!fs.existsSync(indexPath)) {
+      console.error('Build index.html not found at:', indexPath);
+      return res.status(404).send('Build not found. Run `npm run build` in client folder.');
+    }
+
+    let html = fs.readFileSync(indexPath, 'utf8');
+    
+    // Inject meta tags if available from middleware
+    if (req.seoMetaTags) {
+      // Replace the closing </head> tag with meta tags + </head>
+      html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
+    }
+    
+    res.send(html);
+  } catch (error) {
+    console.error('Error serving HTML:', error);
+    res.status(500).send('Server error');
+  }
+};
+
+// SEO Routes for Blog Detail Pages
+app.get('/landing/blog/:id', blogSEO, serveWithSEO);
+
+// SEO Routes for Event Detail Pages
+app.get('/landing/event/:id', eventSEO, serveWithSEO);
+
+// =================================================================
+// API ROUTES
+// =================================================================
 
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
@@ -116,7 +144,25 @@ app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
 app.use('/api/user-dashboard', userDashboardRoutes);
 
-// Root route
+// =================================================================
+// SERVE REACT APP FOR ALL OTHER ROUTES
+// This must be AFTER all API routes
+// =================================================================
+
+// Serve static files from React build
+const buildPath = path.join(__dirname, '../client/build');
+if (fs.existsSync(buildPath)) {
+  app.use(express.static(buildPath));
+  
+  // Catch-all route for React Router (must be last)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+} else {
+  console.warn('⚠️ React build folder not found. Run `npm run build` in client directory.');
+}
+
+// Root route (fallback if build doesn't exist)
 app.get('/', (req, res) => {
   res.json({
     message: 'Shree Ganeshay Namah || Radhay Radhay',
