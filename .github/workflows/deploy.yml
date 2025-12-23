@@ -59,8 +59,12 @@ jobs:
             # IMPORTANT: Use correct project name "backend" not "logiglo-backend"
             docker-compose --project-name backend pull backend
 
+            # Stop and remove the old container first
+            docker-compose --project-name backend stop backend || true
+            docker-compose --project-name backend rm -f backend || true
+
             # Force recreate backend container with new image
-            docker-compose --project-name backend up -d --no-deps --force-recreate backend
+            docker-compose --project-name backend up -d --force-recreate backend
 
             # Wait for container to start
             sleep 5
