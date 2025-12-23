@@ -12,13 +12,14 @@ const {
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
-const {
-  quotePostAcceptedTemplate,
-  quotePostRejectedTemplate,
-  quotePostCreatedTemplate,
-  quoteReplyAcceptedTemplate,
-  quoteReplyRejectedTemplate,
-} = require('../utils/emailTemplates');
+// Old email templates - no longer needed
+// const {
+//   quotePostAcceptedTemplate,
+//   quotePostRejectedTemplate,
+//   quotePostCreatedTemplate,
+//   quoteReplyAcceptedTemplate,
+//   quoteReplyRejectedTemplate,
+// } = require('../utils/emailTemplates');
 const { notifyUser } = require('./notification.controller.js');
 const incotermDescriptions = {
   EXW: 'Seller delivers when goods are placed at the disposal of the buyer, not cleared for export and not loaded on any collecting vehicle.',
@@ -166,14 +167,15 @@ module.exports.createQuotePost = async (req, res) => {
 
     // 7. Notify user
     const notificationType = 'QUOTE_POST_CREATED';
-    const emailTemplate = quotePostCreatedTemplate(newQuotePost, {
-      name: user.name,
-    });
+    const emailData = {
+      title: newQuotePost.title,
+      description: newQuotePost.description,
+    };
     await notifyUser(
       userId,
       notificationType,
       { postId: newQuotePost.id },
-      emailTemplate,
+      emailData,
     );
 
     // 8. Return success
@@ -516,23 +518,29 @@ module.exports.updateQuotePost = async (req, res) => {
       filteredUpdateData.status !== post.status
     ) {
       const userId = post.userId;
-      let emailTemplate = null;
+      let emailData = null;
       let notificationType = null;
 
       if (filteredUpdateData.status === 'success') {
         notificationType = 'QUOTE_POST_ACCEPTED';
-        emailTemplate = quotePostAcceptedTemplate(updatedPost, {
-          name: post.name,
-        });
+        emailData = {
+          title: updatedPost.title,
+          description: updatedPost.description,
+          postId: updatedPost.id,
+        };
       } else if (filteredUpdateData.status === 'rejected') {
         notificationType = 'QUOTE_POST_REJECTED';
-        emailTemplate = quotePostRejectedTemplate(updatedPost, {
-          name: post.name,
-        });
+        emailData = {
+          title: updatedPost.title,
+          description: updatedPost.description,
+          rejectionReason: Array.isArray(updatedPost.rejectionReason)
+            ? updatedPost.rejectionReason.join(', ')
+            : updatedPost.rejectionReason || 'No reason provided',
+        };
       }
 
-      if (notificationType && emailTemplate) {
-        await notifyUser(userId, notificationType, { postId }, emailTemplate);
+      if (notificationType && emailData) {
+        await notifyUser(userId, notificationType, { postId }, emailData);
       }
     }
 
@@ -683,7 +691,7 @@ module.exports.updateQuoteReply = async (req, res) => {
 
     if (updateData.status && updateData.status !== reply.status) {
       const userId = reply.userId;
-      let emailTemplate = null;
+      let emailData = null;
       let notificationType = null;
 
       if (!reply.user || !reply.post) {
@@ -693,27 +701,36 @@ module.exports.updateQuoteReply = async (req, res) => {
       } else {
         if (updateData.status === 'success') {
           notificationType = 'QUOTE_REPLY_ACCEPTED';
-          emailTemplate = quoteReplyAcceptedTemplate(updatedReply, reply.post);
+          emailData = {
+            postTitle: reply.post.title,
+            postId: reply.post.id,
+            quotePrice: updatedReply.quotePrice,
+            contactEmail: updatedReply.email,
+          };
         } else if (updateData.status === 'rejected') {
           notificationType = 'QUOTE_REPLY_REJECTED';
-          emailTemplate = quoteReplyRejectedTemplate(updatedReply, reply.post);
+          emailData = {
+            postTitle: reply.post.title,
+            postId: reply.post.id,
+            quotePrice: updatedReply.quotePrice,
+            contactEmail: updatedReply.email,
+            rejectionReason: updatedReply.rejectionReason,
+          };
         }
       }
 
-      if (notificationType && emailTemplate) {
+      if (notificationType && emailData) {
         console.log('Sending notification:', {
           userId,
           notificationType,
           replyId,
-          emailTemplate,
         });
-        await notifyUser(userId, notificationType, { replyId }, emailTemplate);
+        await notifyUser(userId, notificationType, { replyId }, emailData);
       } else {
         console.log(
-          'Notification not sent: invalid type, template, or missing data',
+          'Notification not sent: invalid type, data, or missing data',
           {
             notificationType,
-            emailTemplate,
             userId,
             replyId,
           },

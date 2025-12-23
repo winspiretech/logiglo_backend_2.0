@@ -1,5 +1,6 @@
 const prisma = require('../models/prismaClient');
-const { sendEmail } = require('../utils/sendEmail'); // add this
+// const { sendEmail } = require('../utils/sendEmail'); // Old email service
+const { sendRequestToConnectEmail } = require('../utils/notificationService'); // New notification microservice
 
 const createRequest = async (req, res) => {
   try {
@@ -21,16 +22,10 @@ const createRequest = async (req, res) => {
     });
 
     // ✅ Send confirmation email to user
-    const htmlToUser = `
-      <p>Dear ${name},</p>
-      <p>Thank you for contacting us. We have received your request and will get back to you shortly.</p>
-      <p>Regards,<br>Logiglo Team</p>
-    `;
-
-    await sendEmail({
-      to: email,
-      subject: 'We have received your request!',
-      html: htmlToUser,
+    await sendRequestToConnectEmail({
+      email,
+      userName: name,
+      userId,
     });
 
     res.status(201).json(newRequest);
