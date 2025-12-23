@@ -6,7 +6,8 @@ const { ApiError } = require('../utils/ApiError');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { sendEmail } = require('../utils/sendEmail.js');
+// const { sendEmail } = require('../utils/sendEmail.js'); // Old email service
+const { sendOTPEmail } = require('../utils/notificationService'); // New notification microservice
 const { success } = require('zod/v4');
 const generateOtp = () => {
   const otp = crypto.randomInt(100000, 1000000);
@@ -125,15 +126,12 @@ const loginAdmin = async (req, res, next) => {
     }
 
     // Send OTP Email
-    await sendEmail({
-      to: email,
-      subject: 'Your OTP for Logiglo',
-      html: `
-        <h3>Hello ${existingUser.name},</h3>
-        <p>Your OTP code is:</p>
-        <h2>${otp}</h2>
-        <p>This OTP will expire in 5 minutes.</p>
-      `,
+    await sendOTPEmail({
+      email,
+      userName: existingUser.name,
+      otpCode: otp,
+      expiryMinutes: 5,
+      userId: existingUser.id,
     });
 
     res.status(200).json(

@@ -2,19 +2,34 @@ const prisma = require('../models/prismaClient');
 const { ApiResponse } = require('../utils/ApiResponse');
 const { ApiError } = require('../utils/ApiError');
 const { z } = require('zod');
-const { sendEmail } = require('../utils/sendEmail');
+// const { sendEmail } = require('../utils/sendEmail'); // Old email service
+// Old email templates - no longer needed
+// const {
+//   quotePostCreatedTemplate,
+//   quotePostAcceptedTemplate,
+//   quotePostRejectedTemplate,
+//   quoteReplyAcceptedTemplate,
+//   quoteReplyRejectedTemplate,
+//   generalPostCreatedTemplate,
+//   generalPostAcceptedTemplate,
+//   generalPostRejectedTemplate,
+//   generalReplyAcceptedTemplate,
+//   generalReplyRejectedTemplate,
+// } = require('../utils/emailTemplates');
+
+// New notification microservice
 const {
-  quotePostCreatedTemplate,
-  quotePostAcceptedTemplate,
-  quotePostRejectedTemplate,
-  quoteReplyAcceptedTemplate,
-  quoteReplyRejectedTemplate,
-  generalPostCreatedTemplate,
-  generalPostAcceptedTemplate,
-  generalPostRejectedTemplate,
-  generalReplyAcceptedTemplate,
-  generalReplyRejectedTemplate,
-} = require('../utils/emailTemplates');
+  sendQuotePostCreatedEmail,
+  sendQuotePostAcceptedEmail,
+  sendQuotePostRejectedEmail,
+  sendQuoteReplyAcceptedEmail,
+  sendQuoteReplyRejectedEmail,
+  sendGeneralPostCreatedEmail,
+  sendGeneralPostAcceptedEmail,
+  sendGeneralPostRejectedEmail,
+  sendGeneralReplyAcceptedEmail,
+  sendGeneralReplyRejectedEmail,
+} = require('../utils/notificationService');
 
 // Validation schemas (unchanged)
 const notificationPreferenceSchema = z.object({
@@ -60,7 +75,7 @@ const sendNotificationSchema = z.object({
 });
 
 // Helper function to send notifications to the creator
-const notifyUser = async (userId, type, message, emailTemplate) => {
+const notifyUser = async (userId, type, message, emailData) => {
   try {
     const preferences = await prisma.userNotificationPreference.findUnique({
       where: { userId },
@@ -112,14 +127,30 @@ const notifyUser = async (userId, type, message, emailTemplate) => {
     };
 
     // Send email if the user has enabled the corresponding preference
-    if (preferenceMap[type] && emailTemplate) {
-      const { subject, html, text } = emailTemplate;
-      await sendEmail({
-        to: user.email,
-        subject,
-        html,
-        text,
-      });
+    if (preferenceMap[type] && emailData) {
+      // Call the appropriate notification service function based on type
+      const emailFunctions = {
+        QUOTE_POST_CREATED: sendQuotePostCreatedEmail,
+        QUOTE_POST_ACCEPTED: sendQuotePostAcceptedEmail,
+        QUOTE_POST_REJECTED: sendQuotePostRejectedEmail,
+        QUOTE_REPLY_ACCEPTED: sendQuoteReplyAcceptedEmail,
+        QUOTE_REPLY_REJECTED: sendQuoteReplyRejectedEmail,
+        GENERAL_POST_CREATED: sendGeneralPostCreatedEmail,
+        GENERAL_POST_ACCEPTED: sendGeneralPostAcceptedEmail,
+        GENERAL_POST_REJECTED: sendGeneralPostRejectedEmail,
+        GENERAL_REPLY_ACCEPTED: sendGeneralReplyAcceptedEmail,
+        GENERAL_REPLY_REJECTED: sendGeneralReplyRejectedEmail,
+      };
+
+      const emailFunction = emailFunctions[type];
+      if (emailFunction) {
+        await emailFunction({
+          email: user.email,
+          userName: user.name,
+          userId: user.id,
+          ...emailData,
+        });
+      }
     }
   } catch (error) {
     console.error(`Error sending notification for user ${userId}:`, error);
@@ -373,44 +404,91 @@ module.exports = {
         }
       }
 
-      // Determine the appropriate email template
+      // Prepare email data based on the notification type
+      let emailData = null;
       switch (type) {
         case 'QUOTE_POST_CREATED':
-          emailTemplate = quotePostCreatedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+          };
           break;
         case 'QUOTE_POST_ACCEPTED':
-          emailTemplate = quotePostAcceptedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+            postId: post.id,
+          };
           break;
         case 'QUOTE_POST_REJECTED':
-          emailTemplate = quotePostRejectedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+            rejectionReason: Array.isArray(post.rejectionReason)
+              ? post.rejectionReason.join(', ')
+              : post.rejectionReason || 'No reason provided',
+          };
           break;
         case 'QUOTE_REPLY_ACCEPTED':
-          emailTemplate = quoteReplyAcceptedTemplate(reply, post, user);
+          emailData = {
+            postTitle: post.title,
+            postId: post.id,
+            quotePrice: reply.quotePrice,
+            contactEmail: reply.email,
+          };
           break;
         case 'QUOTE_REPLY_REJECTED':
-          emailTemplate = quoteReplyRejectedTemplate(reply, post, user);
+          emailData = {
+            postTitle: post.title,
+            postId: post.id,
+            quotePrice: reply.quotePrice,
+            contactEmail: reply.email,
+            rejectionReason: reply.rejectionReason || 'No reason provided',
+          };
           break;
         case 'GENERAL_POST_CREATED':
-          emailTemplate = generalPostCreatedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+          };
           break;
         case 'GENERAL_POST_ACCEPTED':
-          emailTemplate = generalPostAcceptedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+            postId: post.id,
+          };
           break;
         case 'GENERAL_POST_REJECTED':
-          emailTemplate = generalPostRejectedTemplate(post, user);
+          emailData = {
+            title: post.title,
+            description: post.description,
+            rejectionReason: Array.isArray(post.rejectionReason)
+              ? post.rejectionReason.join(', ')
+              : post.rejectionReason || 'No reason provided',
+          };
           break;
         case 'GENERAL_REPLY_ACCEPTED':
-          emailTemplate = generalReplyAcceptedTemplate(reply, post, user);
+          emailData = {
+            postTitle: post.title,
+            postId: post.id,
+            replyDescription: reply.description || 'No description provided',
+          };
           break;
         case 'GENERAL_REPLY_REJECTED':
-          emailTemplate = generalReplyRejectedTemplate(reply, post, user);
+          emailData = {
+            postTitle: post.title,
+            postId: post.id,
+            replyDescription: reply.description || 'No description provided',
+            rejectionReason: reply.rejectionReason || 'No reason provided',
+          };
           break;
         default:
           throw new ApiError(400, 'Invalid notification type');
       }
 
       // Send the notification
-      await notifyUser(userId, type, { postId, replyId }, emailTemplate);
+      await notifyUser(userId, type, { postId, replyId }, emailData);
 
       return res
         .status(200)

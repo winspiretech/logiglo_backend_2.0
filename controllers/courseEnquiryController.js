@@ -1,5 +1,9 @@
 const prisma = require('../models/prismaClient');
-const { sendEmail } = require('../utils/sendEmail'); // ✅ Destructure for clarity
+// const { sendEmail } = require('../utils/sendEmail'); // Old email service
+const {
+  sendCourseEnquiryAdminEmail,
+  sendCourseEnquiryUserEmail,
+} = require('../utils/notificationService'); // New notification microservice
 
 //creation of courseEnquiry
 const handleCourseEnquiry = async (req, res) => {
@@ -43,38 +47,24 @@ const handleCourseEnquiry = async (req, res) => {
       },
     });
 
-    // HTML content for admin (your email)
-    const htmlToAdmin = `
-      <h2>New Course Enquiry</h2>
-      <p><strong>Institution Name:</strong> ${institutionName}</p>
-      <p><strong>Institution Type:</strong> ${institutionType}</p>
-      <p><strong>Contact Person:</strong> ${contactPersonName} (${contactPersonPosition})</p>
-      <p><strong>Contact Number:</strong> ${contactNumber}</p>
-      <p><strong>Website:</strong> ${website || 'N/A'}</p>
-      <p><strong>Email:</strong> ${email || 'N/A'}</p>
-      <p><strong>Message:</strong> ${message}</p>
-    `;
-
-    // HTML content to user (if email provided)
-    const htmlToUser = `
-      <p>Dear ${contactPersonName},</p>
-      <p>Thank you for your enquiry regarding our courses. We have received your request and our team will get in touch with you soon.</p>
-      <p>Regards,<br>Logiglo Team</p>
-    `;
-
     // Send email to admin
-    await sendEmail({
-      to: 'webquery@logiglo.com  ',
-      subject: 'New Course Enquiry Received',
-      html: htmlToAdmin,
+    await sendCourseEnquiryAdminEmail({
+      adminEmail: 'webquery@logiglo.com',
+      institutionName,
+      institutionType,
+      contactPersonName,
+      contactPersonPosition,
+      contactNumber,
+      website,
+      email,
+      message,
     });
 
     // Send confirmation to user (if email provided)
     if (email) {
-      await sendEmail({
-        to: email,
-        subject: 'We have received your course enquiry!',
-        html: htmlToUser,
+      await sendCourseEnquiryUserEmail({
+        email,
+        contactPersonName,
       });
     }
 
