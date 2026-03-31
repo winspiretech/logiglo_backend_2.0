@@ -35,6 +35,15 @@ const addEvents = async (req, res) => {
     if (!eventValidation.success) {
       throw new ApiError(401, 'Validation Error', eventValidation.error.errors);
     }
+    const existingEvent = await prisma.event.findFirst({
+      where: {
+        eventTitle: req.body.eventTitle,
+        startDate: req.body.startDate,
+      },
+    });
+    if (existingEvent) {
+      throw new ApiError(409, 'Event with this title and start date already exists');
+    }
     const newEvent = await prisma.event.create({
       data: {
         ...req.body,
