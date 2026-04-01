@@ -29,7 +29,9 @@ const getCareersIframeUrl = async (req, res) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
@@ -70,7 +72,9 @@ const updateCareersIframeUrl = async (req, res) => {
     } else {
       return res
         .status(500)
-        .json(new ApiError(500, 'Internal server error', error.message || null));
+        .json(
+          new ApiError(500, 'Internal server error', error.message || null),
+        );
     }
   }
 };
