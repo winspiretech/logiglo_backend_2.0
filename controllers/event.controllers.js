@@ -42,7 +42,10 @@ const addEvents = async (req, res) => {
       },
     });
     if (existingEvent) {
-      throw new ApiError(409, 'Event with this title and start date already exists');
+      throw new ApiError(
+        409,
+        'Event with this title and start date already exists',
+      );
     }
     const newEvent = await prisma.event.create({
       data: {
@@ -71,6 +74,46 @@ const addEvents = async (req, res) => {
           new ApiError(500, 'Internal server error', error.message || null),
         );
     }
+  }
+};
+const checkDuplicateEvent = async (req, res) => {
+  try {
+    const exactMatch = await prisma.event.findFirst({
+      where: {
+        eventTitle: req.body.eventTitle,
+        startDate: new Date(req.body.startDate),
+      },
+    });
+    if (exactMatch) {
+      throw new ApiError(
+        409,
+        'Event with this title and start date already exists',
+      );
+    }
+    const sameTitleEvent = await prisma.event.findFirst({
+      where: {
+        eventTitle: req.body.eventTitle,
+      },
+    });
+    if (sameTitleEvent) {
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            { sameTitle: true },
+            'Event with same title already exists',
+          ),
+        );
+    }
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { sameTitle: false }, 'No duplicate found'));
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json(error);
+    }
+    return res.status(500).json(new ApiError(500, 'Internal server error'));
   }
 };
 
@@ -646,4 +689,5 @@ module.exports = {
   addUnarchiveEventReason,
   getRequiredAmountEvents,
   filterEvents,
+  checkDuplicateEvent,
 };
