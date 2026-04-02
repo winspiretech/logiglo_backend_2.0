@@ -13,11 +13,13 @@ const {
   addUnarchiveEventReason,
   getRequiredAmountEvents,
   filterEvents,
+  checkDuplicateEvent,
 } = require('../controllers/event.controllers');
 const isAdmin = require('../middleware/isAdmin');
 
 router.get('/test', test);
 router.post('/create', isAdmin, addEvents);
+router.post('/check-duplicate', isAdmin, checkDuplicateEvent);
 router.get('/landing-page/limit', getRequiredAmountEvents);
 router.get('/admin-events', isAdmin, getAdminEvents);
 router.get('/', getAllEvents);

@@ -756,3 +756,9 @@ model Product {
   name      String     @unique
   exporters Exporter[] @relation("ExporterProducts")
 }
+model SiteSettings {
+  id               String   @id @default(uuid())
+  careersIframeUrl String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

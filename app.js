@@ -1,6 +1,7 @@
-// app.js
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const quotePostRoutes = require('./routes/quotePost.routes.js');
 const forumCategoryRoutes = require('./routes/forumCategory.routes.js');
 const userRoutes = require('./routes/user.routes.js');
@@ -26,25 +27,20 @@ const importerRoute = require('./controllers/importers/excelImporter.js');
 const dashboardAnalyticsroutes = require('./routes/dashboard.routes.js');
 const adminDashboardRoutes = require('./routes/adminDashboardAnalytics.routes.js');
 const userDashboardRoutes = require('./routes/userDashboard.routes.js');
+
+const siteSettingsRoutes = require('./routes/siteSettings.routes');
+
 const session = require('express-session');
 const passport = require('passport');
 require('./middleware/passportLinkedIn.js');
-// const authRoutesPassport = require('./routes/auth');
 
-const path = require('path');
+// Import SEO middleware
+const { universalSEO } = require('./middleware/seoMiddleware.js');
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
-
-// const { getActiveUsersSummary } = require('./utils/analytics');
-
-// getActiveUsersSummary()
-//   .then(({ total, breakdown }) => {
-//     console.log('🟢 Total Active Users:', total);
-//     console.log('🟢 Breakdown by user type:', breakdown);
-//   })
-//   .catch(console.error);
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
@@ -53,11 +49,6 @@ app.use(cookieParser());
 app.use(
   session({ secret: 'secret_key', resave: false, saveUninitialized: true }),
 );
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// app.use(authRoutesPassport);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
@@ -88,7 +79,61 @@ app.use(cors(corsOptions));
 // Serve static files from the uploads volume
 app.use('/Uploads', express.static('/root/backend/Uploads'));
 
-// Routes
+// =================================================================
+// SEO MIDDLEWARE - Apply to all requests
+// =================================================================
+app.use(universalSEO);
+
+// =================================================================
+// SEO-OPTIMIZED ROUTES - Fetch from frontend and inject meta tags
+// =================================================================
+app.get(/^\/(landing\/)?(blog|event)\/[a-zA-Z0-9-]+$/, async (req, res) => {
+  try {
+    const http = require('http');
+
+    // Fetch HTML from frontend container (port 3001)
+    const options = {
+      hostname: 'localhost',
+      port: 3001,
+      path: req.path,
+      method: 'GET',
+      headers: {
+        'User-Agent': req.get('User-Agent'),
+        Accept: 'text/html',
+      },
+    };
+
+    const request = http.request(options, (response) => {
+      let html = '';
+
+      response.on('data', (chunk) => {
+        html += chunk;
+      });
+
+      response.on('end', () => {
+        // Inject SEO meta tags if available
+        if (req.seoMetaTags) {
+          html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
+        }
+        res.send(html);
+      });
+    });
+
+    request.on('error', (error) => {
+      console.error('Error fetching from frontend:', error);
+      res.status(500).send('Server error');
+    });
+
+    request.end();
+  } catch (error) {
+    console.error('SEO route error:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// =================================================================
+// API ROUTES
+// =================================================================
 
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
@@ -115,6 +160,7 @@ app.use('/api/exporters', exporterRoutes);
 app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
 app.use('/api/user-dashboard', userDashboardRoutes);
+app.use('/api/site-settings', siteSettingsRoutes);
 
 // Root route
 app.get('/', (req, res) => {
