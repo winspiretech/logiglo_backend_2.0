@@ -40,13 +40,14 @@ const updateCareersIframeUrl = async (req, res) => {
   try {
     const { careersIframeUrl } = req.body;
 
-const urlToSave = careersIframeUrl?.trim() === "" ? null : careersIframeUrl ?? null;
+    const urlToSave =
+      careersIframeUrl?.trim() === '' ? null : (careersIframeUrl ?? null);
 
-const settings = await prisma.siteSettings.upsert({
-  where: { id: SINGLETON_ID },
-  update: { careersIframeUrl: urlToSave },
-  create: { id: SINGLETON_ID, careersIframeUrl: urlToSave },
-});
+    const settings = await prisma.siteSettings.upsert({
+      where: { id: SINGLETON_ID },
+      update: { careersIframeUrl: urlToSave },
+      create: { id: SINGLETON_ID, careersIframeUrl: urlToSave },
+    });
 
     if (!settings) {
       throw new ApiError(
