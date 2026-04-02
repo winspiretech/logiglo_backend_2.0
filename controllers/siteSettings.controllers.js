@@ -40,14 +40,13 @@ const updateCareersIframeUrl = async (req, res) => {
   try {
     const { careersIframeUrl } = req.body;
 
-    if (careersIframeUrl === undefined) {
-      throw new ApiError(400, 'careersIframeUrl is required');
-    }
+    const urlToSave =
+      careersIframeUrl?.trim() === '' ? null : (careersIframeUrl ?? null);
 
     const settings = await prisma.siteSettings.upsert({
       where: { id: SINGLETON_ID },
-      update: { careersIframeUrl },
-      create: { id: SINGLETON_ID, careersIframeUrl },
+      update: { careersIframeUrl: urlToSave },
+      create: { id: SINGLETON_ID, careersIframeUrl: urlToSave },
     });
 
     if (!settings) {
