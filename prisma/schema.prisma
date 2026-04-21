@@ -364,6 +364,7 @@ model Event {
   author        User      @relation(fields: [authorId], references: [id])
   eventTitle    String
   organizer     String
+  eventLink     String? 
   countryCode   String?
   contactNumber String?
   emailAddress  String?
