@@ -640,6 +640,7 @@ const filterEvents = async (req, res) => {
         id: true,
         eventTitle: true,
         organizer: true,
+        eventLink: true, 
         startDate: true,
         endDate: true,
         location: true,
