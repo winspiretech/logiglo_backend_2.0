@@ -205,19 +205,19 @@ const updateEvent = async (req, res) => {
       );
     }
 
-   const coverImages = req.body['coverImages']
-  ? Array.isArray(req.body['coverImages'])
-    ? req.body['coverImages']
-    : [req.body['coverImages']]
-  : [];
-const { coverImages: _removed, ...restBody } = req.body;
+    const coverImages = req.body['coverImages']
+      ? Array.isArray(req.body['coverImages'])
+        ? req.body['coverImages']
+        : [req.body['coverImages']]
+      : [];
+    const { coverImages: _removed, ...restBody } = req.body;
 
     const updatedEvent = await prisma.event.update({
       where: {
         id: id,
       },
       data: {
-         ...restBody, 
+        ...restBody,
         eventTitle,
         description,
         coverImages: coverImages,

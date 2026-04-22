@@ -16,16 +16,15 @@ router.post('/create', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'token cf2b1348a8043a1:fc333cfd9592a3f', // ← replace with real token
-        }
-      }
+          Authorization: 'token cf2b1348a8043a1:fc333cfd9592a3f', // ← replace with real token
+        },
+      },
     );
 
     return res.status(200).json(response.data);
-
   } catch (error) {
     return res.status(500).json({
-      message: error?.response?.data?.message || 'Failed to create partner'
+      message: error?.response?.data?.message || 'Failed to create partner',
     });
   }
 });
