@@ -29,6 +29,7 @@ const adminDashboardRoutes = require('./routes/adminDashboardAnalytics.routes.js
 const userDashboardRoutes = require('./routes/userDashboard.routes.js');
 
 const siteSettingsRoutes = require('./routes/siteSettings.routes');
+const partnerRoutes = require('./routes/partner.routes');
 
 const session = require('express-session');
 const passport = require('passport');
@@ -161,6 +162,8 @@ app.use('/api/exporters/import', importerRoute);
 app.use('/api/admin-dashboard', adminDashboardRoutes);
 app.use('/api/user-dashboard', userDashboardRoutes);
 app.use('/api/site-settings', siteSettingsRoutes);
+
+app.use('/api/partner', partnerRoutes);
 
 // Root route
 app.get('/', (req, res) => {

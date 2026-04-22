@@ -192,6 +192,7 @@ const getEvent = async (req, res) => {
 const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
+
     if (!id) {
       throw new ApiError(401, 'Event ID is required');
     }
@@ -203,14 +204,23 @@ const updateEvent = async (req, res) => {
         'Title or Description is empty',
       );
     }
+
+    const coverImages = req.body['coverImages']
+      ? Array.isArray(req.body['coverImages'])
+        ? req.body['coverImages']
+        : [req.body['coverImages']]
+      : [];
+    const { coverImages: _removed, ...restBody } = req.body;
+
     const updatedEvent = await prisma.event.update({
       where: {
         id: id,
       },
       data: {
+        ...restBody,
         eventTitle,
         description,
-        ...req.body,
+        coverImages: coverImages,
       },
     });
     if (!updatedEvent) {
