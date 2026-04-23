@@ -301,3 +301,22 @@ module.exports.generalReplyRejectedTemplate = (reply, post) => {
     text: `Your reply to the post "${post.title}" has been rejected.\n\nReply: ${reply.description || 'No description provided'}\nReason: ${reply.rejectionReason || 'No reason provided'}\n\nView it at: https://logiglo.com/general/${post.id}\n\nRegards,\nLogiglo Admin Team`,
   };
 };
+
+module.exports.partnerOtpTemplate = (otpCode, email) => {
+  const subject = 'Your OTP for Partner Registration - Logiglo';
+  const content = `
+    <h1>Partner Registration OTP</h1>
+    <p>Use the OTP below to verify your email for partner registration.</p>
+    <div style="background: #F3F4F6; padding: 16px; border-radius: 8px; text-align: center; margin: 20px 0;">
+      <h1 style="color: #111827; letter-spacing: 8px; font-size: 36px;">${otpCode}</h1>
+    </div>
+    <p>This OTP is valid for <strong>10 minutes</strong>.</p>
+    <p>If you did not request this, please ignore this email.</p>
+    <p>Regards,<br>Logiglo Team</p>
+  `;
+  return {
+    subject,
+    html: baseTemplate(content, subject),
+    text: `Your OTP for partner registration is: ${otpCode}. Valid for 10 minutes.`,
+  };
+};
