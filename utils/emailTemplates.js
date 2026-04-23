@@ -302,7 +302,6 @@ module.exports.generalReplyRejectedTemplate = (reply, post) => {
   };
 };
 
-
 module.exports.partnerOtpTemplate = (otpCode, email) => {
   const subject = 'Your OTP for Partner Registration - Logiglo';
   const content = `

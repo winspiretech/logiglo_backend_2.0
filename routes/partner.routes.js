@@ -21,14 +21,13 @@ router.post('/send-otp', async (req, res) => {
     await prisma.partnerOtp.upsert({
       where: { email },
       update: { otpCode, expiresAt },
-      create: { email, otpCode, expiresAt }
+      create: { email, otpCode, expiresAt },
     });
 
     const { subject, html, text } = partnerOtpTemplate(otpCode, email);
     await sendEmail({ to: email, subject, html, text });
 
     return res.status(200).json({ message: 'OTP sent successfully' });
-
   } catch (error) {
     console.error('Send OTP error:', error);
     return res.status(500).json({ message: 'Failed to send OTP' });
@@ -45,16 +44,20 @@ router.post('/verify-otp', async (req, res) => {
     }
 
     const otpRecord = await prisma.partnerOtp.findFirst({
-      where: { email }
+      where: { email },
     });
 
     if (!otpRecord) {
-      return res.status(400).json({ message: 'OTP not found. Please request a new OTP' });
+      return res
+        .status(400)
+        .json({ message: 'OTP not found. Please request a new OTP' });
     }
 
     if (new Date() > new Date(otpRecord.expiresAt)) {
       await prisma.partnerOtp.delete({ where: { email } });
-      return res.status(400).json({ message: 'OTP has expired. Please request a new OTP' });
+      return res
+        .status(400)
+        .json({ message: 'OTP has expired. Please request a new OTP' });
     }
 
     if (otpRecord.otpCode !== otp) {
@@ -71,17 +74,16 @@ router.post('/verify-otp', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'token cf2b1348a8043a1:fc333cfd9592a3f',
-        }
-      }
+          Authorization: 'token cf2b1348a8043a1:fc333cfd9592a3f',
+        },
+      },
     );
 
     return res.status(200).json({
       message: 'Partner created successfully',
-      data: erpResponse.data
+      data: erpResponse.data,
     });
-
- } catch (error) {
+  } catch (error) {
     console.error('Verify OTP error:', error);
 
     // If error is from ERP API
@@ -95,13 +97,13 @@ router.post('/verify-otp', async (req, res) => {
         error?.response?.status === 409
       ) {
         return res.status(409).json({
-          message: 'Partner already exists with this email'
+          message: 'Partner already exists with this email',
         });
       }
 
       // Any other ERP error
       return res.status(400).json({
-        message: erpMessage || 'ERP registration failed'
+        message: erpMessage || 'ERP registration failed',
       });
     }
 
