@@ -74,7 +74,7 @@ router.post('/verify-otp', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'token cf2b1348a8043a1:fc333cfd9592a3f',
+         Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
         },
       },
     );
@@ -109,6 +109,65 @@ router.post('/verify-otp', async (req, res) => {
 
     // Any other server error
     return res.status(500).json({ message: 'Failed to verify OTP' });
+  }
+});
+
+
+// ─── STEP 3: Update Partner Details ─────────────────
+router.put('/update-details/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const {
+      partner_name,
+      business_name,
+      city,
+      state,
+      business_address_line_1,
+      business_address_line_2,
+      pincode,
+      country,
+      gst_applicable,
+      gst_number,
+      government_id,
+      government_id_number,
+      contact_number,
+    } = req.body;
+
+    const payload = {
+      partner_name,
+      business_name,
+      city,
+      state,
+      business_address_line_1,
+      business_address_line_2,
+      pincode,
+      country,
+      gst_applicable,
+      ...(gst_applicable === 'Yes' && { gst_number }),
+      government_id,
+      government_id_number,
+      contact_number,
+    };
+
+    const erpResponse = await axios.put(
+      `https://testerp.logiglo.com/api/resource/Partner%20List/${encodeURIComponent(email)}`,
+      payload,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+         Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+        },
+      }
+    );
+
+    return res.status(200).json({
+      message: 'Partner details updated successfully',
+      data: erpResponse.data,
+    });
+  } catch (error) {
+    console.error('Update partner error:', error);
+    const erpMessage = error?.response?.data?.message || '';
+    return res.status(400).json({ message: erpMessage || 'Failed to update partner details' });
   }
 });
 
