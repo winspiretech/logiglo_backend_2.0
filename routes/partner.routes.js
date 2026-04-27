@@ -172,4 +172,38 @@ router.put('/update-details/:email', async (req, res) => {
   }
 });
 
+// ─── STEP 4: Check if partner exists + form filled ───
+router.get('/check/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const erpResponse = await axios.get(
+      `https://testerp.logiglo.com/api/resource/Partner%20List?filters=[["Partner List","name","=","${encodeURIComponent(email)}"]]&fields=["contact_number","name"]`,
+      {
+        headers: {
+          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+        },
+      },
+    );
+
+    const partnerList = erpResponse.data?.data || [];
+
+    if (partnerList.length === 0) {
+      // Not registered in ERP at all
+      return res.status(404).json({ exists: false });
+    }
+
+    const partner = partnerList[0];
+    const formFilled = !!partner.contact_number; // if contact_number has value = form already filled
+
+    return res.status(200).json({
+      exists: true,
+      formFilled,
+    });
+  } catch (error) {
+    console.error('Check partner error:', error);
+    return res.status(500).json({ message: 'Failed to check partner' });
+  }
+});
+
 module.exports = router;
