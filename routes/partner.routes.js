@@ -172,7 +172,6 @@ router.put('/update-details/:email', async (req, res) => {
   }
 });
 
-
 // ─── STEP 4: Check if partner exists + form filled ───
 router.get('/check/:email', async (req, res) => {
   try {
@@ -184,7 +183,7 @@ router.get('/check/:email', async (req, res) => {
         headers: {
           Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
         },
-      }
+      },
     );
 
     const partnerList = erpResponse.data?.data || [];
