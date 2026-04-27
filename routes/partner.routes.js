@@ -74,7 +74,7 @@ router.post('/verify-otp', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-         Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
         },
       },
     );
@@ -111,7 +111,6 @@ router.post('/verify-otp', async (req, res) => {
     return res.status(500).json({ message: 'Failed to verify OTP' });
   }
 });
-
 
 // ─── STEP 3: Update Partner Details ─────────────────
 router.put('/update-details/:email', async (req, res) => {
@@ -155,9 +154,9 @@ router.put('/update-details/:email', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-         Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
         },
-      }
+      },
     );
 
     return res.status(200).json({
@@ -167,7 +166,9 @@ router.put('/update-details/:email', async (req, res) => {
   } catch (error) {
     console.error('Update partner error:', error);
     const erpMessage = error?.response?.data?.message || '';
-    return res.status(400).json({ message: erpMessage || 'Failed to update partner details' });
+    return res
+      .status(400)
+      .json({ message: erpMessage || 'Failed to update partner details' });
   }
 });
 
