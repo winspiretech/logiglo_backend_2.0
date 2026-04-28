@@ -364,6 +364,7 @@ model Event {
   author        User      @relation(fields: [authorId], references: [id])
   eventTitle    String
   organizer     String
+  eventLink     String? 
   countryCode   String?
   contactNumber String?
   emailAddress  String?
@@ -761,4 +762,12 @@ model SiteSettings {
   careersIframeUrl String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model PartnerOtp {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  otpCode   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
