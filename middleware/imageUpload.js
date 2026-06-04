@@ -103,7 +103,11 @@ const processFileUpload = async (req, res, next) => {
 
     next();
   } catch (error) {
-    if (await fs.access(filePath).catch(() => false)) {
+    const fileExists = await fs
+      .access(filePath)
+      .then(() => true)
+      .catch(() => false);
+    if (fileExists) {
       await fs.unlink(filePath).catch(console.error);
     }
     console.error(error);
