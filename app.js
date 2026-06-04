@@ -43,6 +43,9 @@ const cors = require('cors');
 
 const app = express();
 
+// Trust Nginx reverse proxy so req.protocol returns 'https' correctly
+app.set('trust proxy', 1);
+
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -52,7 +55,8 @@ app.use(
 );
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/Uploads', express.static(path.join(__dirname, 'Uploads')));
+const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, 'Uploads');
+app.use('/Uploads', express.static(uploadDir));
 
 const allowedOrigins = [
   'http://localhost:3004',
@@ -76,9 +80,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Serve static files from the uploads volume
-app.use('/Uploads', express.static('/root/backend/Uploads'));
 
 // =================================================================
 // SEO MIDDLEWARE - Apply to all requests
