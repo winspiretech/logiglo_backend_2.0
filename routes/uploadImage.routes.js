@@ -15,9 +15,11 @@ router.post(
   processFileUpload,
   (req, res) => {
     try {
+      const baseUrl =
+        process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
       res.status(200).json({
         message: 'File uploaded successfully',
-        fileUrl: `${req.protocol}://${req.get('host')}${req.fileUrl}`,
+        fileUrl: `${baseUrl}${req.fileUrl}`,
         metadata: req.fileMetadata,
       });
     } catch (error) {
