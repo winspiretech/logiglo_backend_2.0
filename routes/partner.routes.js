@@ -52,12 +52,16 @@ router.post('/verify-otp', async (req, res) => {
     const otpRecord = await prisma.partnerOtp.findFirst({ where: { email } });
 
     if (!otpRecord) {
-      return res.status(400).json({ message: 'OTP not found. Please request a new OTP' });
+      return res
+        .status(400)
+        .json({ message: 'OTP not found. Please request a new OTP' });
     }
 
     if (new Date() > new Date(otpRecord.expiresAt)) {
       await prisma.partnerOtp.delete({ where: { email } });
-      return res.status(400).json({ message: 'OTP has expired. Please request a new OTP' });
+      return res
+        .status(400)
+        .json({ message: 'OTP has expired. Please request a new OTP' });
     }
 
     if (otpRecord.otpCode !== otp) {
@@ -66,10 +70,9 @@ router.post('/verify-otp', async (req, res) => {
 
     await prisma.partnerOtp.delete({ where: { email } });
 
-    const erpResponse = await erpApi.post(
-      '/api/resource/Partner%20List',
-      { email_id: email }
-    );
+    const erpResponse = await erpApi.post('/api/resource/Partner%20List', {
+      email_id: email,
+    });
 
     return res.status(200).json({
       message: 'Partner created successfully',
@@ -84,9 +87,13 @@ router.post('/verify-otp', async (req, res) => {
         erpMessage.toLowerCase().includes('duplicate') ||
         error?.response?.status === 409
       ) {
-        return res.status(409).json({ message: 'Partner already exists with this email' });
+        return res
+          .status(409)
+          .json({ message: 'Partner already exists with this email' });
       }
-      return res.status(400).json({ message: erpMessage || 'ERP registration failed' });
+      return res
+        .status(400)
+        .json({ message: erpMessage || 'ERP registration failed' });
     }
     return res.status(500).json({ message: 'Failed to verify OTP' });
   }
@@ -97,23 +104,40 @@ router.put('/update-details/:email', async (req, res) => {
   try {
     const { email } = req.params;
     const {
-      partner_name, business_name, city, state,
-      business_address_line_1, business_address_line_2,
-      pincode, country, gst_applicable, gst_number,
-      government_id, government_id_number, contact_number,
+      partner_name,
+      business_name,
+      city,
+      state,
+      business_address_line_1,
+      business_address_line_2,
+      pincode,
+      country,
+      gst_applicable,
+      gst_number,
+      government_id,
+      government_id_number,
+      contact_number,
     } = req.body;
 
     const payload = {
-      partner_name, business_name, city, state,
-      business_address_line_1, business_address_line_2,
-      pincode, country, gst_applicable,
+      partner_name,
+      business_name,
+      city,
+      state,
+      business_address_line_1,
+      business_address_line_2,
+      pincode,
+      country,
+      gst_applicable,
       ...(gst_applicable === 'Yes' && { gst_number }),
-      government_id, government_id_number, contact_number,
+      government_id,
+      government_id_number,
+      contact_number,
     };
 
     const erpResponse = await erpApi.put(
       `/api/resource/Partner%20List/${encodeURIComponent(email)}`,
-      payload
+      payload,
     );
 
     return res.status(200).json({
@@ -123,7 +147,9 @@ router.put('/update-details/:email', async (req, res) => {
   } catch (error) {
     console.error('Update partner error:', error);
     const erpMessage = error?.response?.data?.message || '';
-    return res.status(400).json({ message: erpMessage || 'Failed to update partner details' });
+    return res
+      .status(400)
+      .json({ message: erpMessage || 'Failed to update partner details' });
   }
 });
 
@@ -133,7 +159,7 @@ router.get('/check/:email', async (req, res) => {
     const { email } = req.params;
 
     const erpResponse = await erpApi.get(
-      `/api/resource/Partner%20List?filters=[["Partner List","name","=","${encodeURIComponent(email)}"]]&fields=["contact_number","name"]`
+      `/api/resource/Partner%20List?filters=[["Partner List","name","=","${encodeURIComponent(email)}"]]&fields=["contact_number","name"]`,
     );
 
     const partnerList = erpResponse.data?.data || [];
@@ -152,36 +178,32 @@ router.get('/check/:email', async (req, res) => {
   }
 });
 
-
 // ─── STEP 5: Fetch Item Groups ───────────────────────
 router.get('/item-groups', async (req, res) => {
   try {
     const { parent_group = '', limit_start = 0, limit = 50 } = req.query;
 
-  // Build URL manually like Postman
-const baseUrl = `/api/method/logiglo_partner_management.api.item_group.get_item_groups`;
-const queryStr = parent_group
-  ? `?parent_group="${parent_group}"&limit_start=${limit_start}&limit=${limit}`
-  : `?limit_start=${limit_start}&limit=${limit}`;
+    // Build URL manually like Postman
+    const baseUrl = `/api/method/logiglo_partner_management.api.item_group.get_item_groups`;
+    const queryStr = parent_group
+      ? `?parent_group="${parent_group}"&limit_start=${limit_start}&limit=${limit}`
+      : `?limit_start=${limit_start}&limit=${limit}`;
 
-const fullUrl = `${process.env.ERP_BASE_URL}${baseUrl}${queryStr}`;
+    const fullUrl = `${process.env.ERP_BASE_URL}${baseUrl}${queryStr}`;
 
-const erpResponse = await axios.get(fullUrl, {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
-  }
-});
-
+    const erpResponse = await axios.get(fullUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+      },
+    });
 
     return res.status(200).json(erpResponse.data);
-
   } catch (error) {
     console.error('Fetch item groups error:', error);
     return res.status(500).json({ message: 'Failed to fetch item groups' });
   }
 });
-
 
 // ─── STEP 6: Fetch Major Item Groups (Categories) ───
 router.get('/major-item-groups', async (req, res) => {
@@ -189,13 +211,15 @@ router.get('/major-item-groups', async (req, res) => {
     const erpResponse = await erpApi.get(
       '/api/method/logiglo_partner_management.api.item_group.get_major_item_groups',
       {
-        params: { limit: 'all' }
-      }
+        params: { limit: 'all' },
+      },
     );
     return res.status(200).json(erpResponse.data);
   } catch (error) {
     console.error('Fetch major item groups error:', error);
-    return res.status(500).json({ message: 'Failed to fetch major item groups' });
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch major item groups' });
   }
 });
 
@@ -203,7 +227,7 @@ router.get('/major-item-groups', async (req, res) => {
 router.get('/all', async (req, res) => {
   try {
     const erpResponse = await erpApi.get(
-      '/api/method/logiglo_partner_management.api.partner_management.get_all_partners'
+      '/api/method/logiglo_partner_management.api.partner_management.get_all_partners',
     );
     return res.status(200).json(erpResponse.data);
   } catch (error) {
