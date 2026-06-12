@@ -5,11 +5,19 @@ const { sendEmail } = require('../utils/sendEmail');
 const prisma = require('../models/prismaClient');
 const { partnerOtpTemplate } = require('../utils/emailTemplates');
 
+// ─── ERP Axios Instance ──────────────────────────────
+const erpApi = axios.create({
+  baseURL: process.env.ERP_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+  },
+});
+
 // ─── STEP 1: Send OTP ───────────────────────────────
 router.post('/send-otp', async (req, res) => {
   try {
     const { email } = req.body;
-
     if (!email) {
       return res.status(400).json({ message: 'Email is required' });
     }
@@ -17,7 +25,6 @@ router.post('/send-otp', async (req, res) => {
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    // Save OTP in PartnerOtp table (no userId needed)
     await prisma.partnerOtp.upsert({
       where: { email },
       update: { otpCode, expiresAt },
@@ -38,14 +45,11 @@ router.post('/send-otp', async (req, res) => {
 router.post('/verify-otp', async (req, res) => {
   try {
     const { email, otp } = req.body;
-
     if (!email || !otp) {
       return res.status(400).json({ message: 'Email and OTP are required' });
     }
 
-    const otpRecord = await prisma.partnerOtp.findFirst({
-      where: { email },
-    });
+    const otpRecord = await prisma.partnerOtp.findFirst({ where: { email } });
 
     if (!otpRecord) {
       return res
@@ -64,20 +68,11 @@ router.post('/verify-otp', async (req, res) => {
       return res.status(400).json({ message: 'Invalid OTP. Please try again' });
     }
 
-    // OTP verified — delete from DB
     await prisma.partnerOtp.delete({ where: { email } });
 
-    // Call ERP API to create partner
-    const erpResponse = await axios.post(
-      'https://testerp.logiglo.com/api/resource/Partner%20List',
-      { email_id: email },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
-        },
-      },
-    );
+    const erpResponse = await erpApi.post('/api/resource/Partner%20List', {
+      email_id: email,
+    });
 
     return res.status(200).json({
       message: 'Partner created successfully',
@@ -85,29 +80,21 @@ router.post('/verify-otp', async (req, res) => {
     });
   } catch (error) {
     console.error('Verify OTP error:', error);
-
-    // If error is from ERP API
     if (error?.response?.data) {
       const erpMessage = error?.response?.data?.message || '';
-
-      // Check if partner already exists
       if (
         erpMessage.toLowerCase().includes('already exists') ||
         erpMessage.toLowerCase().includes('duplicate') ||
         error?.response?.status === 409
       ) {
-        return res.status(409).json({
-          message: 'Partner already exists with this email',
-        });
+        return res
+          .status(409)
+          .json({ message: 'Partner already exists with this email' });
       }
-
-      // Any other ERP error
-      return res.status(400).json({
-        message: erpMessage || 'ERP registration failed',
-      });
+      return res
+        .status(400)
+        .json({ message: erpMessage || 'ERP registration failed' });
     }
-
-    // Any other server error
     return res.status(500).json({ message: 'Failed to verify OTP' });
   }
 });
@@ -148,15 +135,9 @@ router.put('/update-details/:email', async (req, res) => {
       contact_number,
     };
 
-    const erpResponse = await axios.put(
-      `https://testerp.logiglo.com/api/resource/Partner%20List/${encodeURIComponent(email)}`,
+    const erpResponse = await erpApi.put(
+      `/api/resource/Partner%20List/${encodeURIComponent(email)}`,
       payload,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
-        },
-      },
     );
 
     return res.status(200).json({
@@ -172,38 +153,86 @@ router.put('/update-details/:email', async (req, res) => {
   }
 });
 
-// ─── STEP 4: Check if partner exists + form filled ───
+// ─── STEP 4: Check if partner exists ────────────────
 router.get('/check/:email', async (req, res) => {
   try {
     const { email } = req.params;
 
-    const erpResponse = await axios.get(
-      `https://testerp.logiglo.com/api/resource/Partner%20List?filters=[["Partner List","name","=","${encodeURIComponent(email)}"]]&fields=["contact_number","name"]`,
-      {
-        headers: {
-          Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
-        },
-      },
+    const erpResponse = await erpApi.get(
+      `/api/resource/Partner%20List?filters=[["Partner List","name","=","${encodeURIComponent(email)}"]]&fields=["contact_number","name"]`,
     );
 
     const partnerList = erpResponse.data?.data || [];
 
     if (partnerList.length === 0) {
-      // Not registered in ERP at all
       return res.status(404).json({ exists: false });
     }
 
     const partner = partnerList[0];
-    const formFilled = !!partner.contact_number; // if contact_number has value = form already filled
+    const formFilled = !!partner.contact_number;
 
-    return res.status(200).json({
-      exists: true,
-      formFilled,
-    });
+    return res.status(200).json({ exists: true, formFilled });
   } catch (error) {
     console.error('Check partner error:', error);
     return res.status(500).json({ message: 'Failed to check partner' });
   }
 });
 
+// ─── STEP 5: Fetch Item Groups ───────────────────────
+router.get('/item-groups', async (req, res) => {
+  try {
+    const { parent_group = '', limit_start = 0, limit = 50 } = req.query;
+
+    // Build URL manually like Postman
+    const baseUrl = `/api/method/logiglo_partner_management.api.item_group.get_item_groups`;
+    const queryStr = parent_group
+      ? `?parent_group="${parent_group}"&limit_start=${limit_start}&limit=${limit}`
+      : `?limit_start=${limit_start}&limit=${limit}`;
+
+    const fullUrl = `${process.env.ERP_BASE_URL}${baseUrl}${queryStr}`;
+
+    const erpResponse = await axios.get(fullUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `token ${process.env.ERP_API_KEY}:${process.env.ERP_API_SECRET}`,
+      },
+    });
+
+    return res.status(200).json(erpResponse.data);
+  } catch (error) {
+    console.error('Fetch item groups error:', error);
+    return res.status(500).json({ message: 'Failed to fetch item groups' });
+  }
+});
+
+// ─── STEP 6: Fetch Major Item Groups (Categories) ───
+router.get('/major-item-groups', async (req, res) => {
+  try {
+    const erpResponse = await erpApi.get(
+      '/api/method/logiglo_partner_management.api.item_group.get_major_item_groups',
+      {
+        params: { limit: 'all' },
+      },
+    );
+    return res.status(200).json(erpResponse.data);
+  } catch (error) {
+    console.error('Fetch major item groups error:', error);
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch major item groups' });
+  }
+});
+
+// ─── STEP 7: Get All Partners ────────────────────────
+router.get('/all', async (req, res) => {
+  try {
+    const erpResponse = await erpApi.get(
+      '/api/method/logiglo_partner_management.api.partner_management.get_all_partners',
+    );
+    return res.status(200).json(erpResponse.data);
+  } catch (error) {
+    console.error('Fetch all partners error:', error);
+    return res.status(500).json({ message: 'Failed to fetch partners' });
+  }
+});
 module.exports = router;
