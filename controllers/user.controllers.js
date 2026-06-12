@@ -75,7 +75,7 @@ const loginUser = async (req, res, next) => {
 
     if (!email || !pass || !captchaToken) {
       throw new ApiError(400, 'Missing required fields or CAPTCHA');
-    }
+    } 
 
     // 🔐 Verify CAPTCHA
     const captchaRes = await axios.post(

@@ -527,7 +527,7 @@ const getRequiredAmountEvents = async (req, res) => {
       take: amount,
       skip: skip,
       orderBy: {
-        startDate: 'desc',
+        startDate: 'asc',
       },
     });
     if (!eventsData) {
