@@ -11,6 +11,23 @@ const escapeHtml = (text) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;') || '';
 
+// Force absolute HTTPS for both logiglo.com and tester.logiglo.com image URLs
+// Facebook/LinkedIn reject http:// and relative image URLs
+const absoluteImage = (url) => {
+  if (!url) return 'https://logiglo.com/og-banner.jpg'; // fallback 1200×630
+
+  // Already a valid https URL (covers both logiglo.com and tester.logiglo.com)
+  if (url.startsWith('https://')) return url;
+
+  // Upgrade http:// to https:// for both domains
+  if (url.startsWith('http://')) return url.replace('http://', 'https://');
+
+  // Relative path — attach main domain
+  if (url.startsWith('/')) return `https://logiglo.com${url}`;
+
+  return url;
+};
+
 const generateMetaTags = ({
   title,
   description,
@@ -26,22 +43,27 @@ const generateMetaTags = ({
   <meta name="robots" content="index, follow" />
   <meta property="og:type" content="${type}" />
   <meta property="og:url" content="${url}" />
+  <meta property="og:site_name" content="Logiglo" />
   <meta property="og:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
   <meta property="og:description" content="${escapeHtml(description || '')}" />
-  ${image ? `<meta property="og:image" content="${escapeHtml(image)}" />` : ''}
+  <meta property="og:image" content="${absoluteImage(image)}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
+  <meta name="twitter:description" content="${escapeHtml(description || '')}" />
+  <meta name="twitter:image" content="${absoluteImage(image)}" />
   ${type === 'article' && publishedTime ? `<meta property="article:published_time" content="${publishedTime}" />` : ''}
   ${type === 'article' && author ? `<meta property="article:author" content="${escapeHtml(author)}" />` : ''}
   <link rel="canonical" href="${url}" />
 `.trim();
 
-// Universal SEO middleware
 const universalSEO = async (req, res, next) => {
   const path = req.path;
   const host = req.get('host') || 'logiglo.com';
 
-  // Blog: /blog/:id or /landing/blog/:id
-  const blogMatch = path.match(/\/(?:landing\/)?blog\/([a-zA-Z0-9-]+)$/);
+  // ✅ /blog/:id  — no /landing/ prefix
+  const blogMatch = path.match(/^\/blog\/([a-zA-Z0-9-]+)$/);
   if (blogMatch) {
     const id = blogMatch[1];
     try {
@@ -66,8 +88,8 @@ const universalSEO = async (req, res, next) => {
     }
   }
 
-  // Event: /event/:id or /landing/event/:id
-  const eventMatch = path.match(/\/(?:landing\/)?event\/([a-zA-Z0-9-]+)$/);
+  // ✅ /event/:id  — no /landing/ prefix
+  const eventMatch = path.match(/^\/event\/([a-zA-Z0-9-]+)$/);
   if (eventMatch) {
     const id = eventMatch[1];
     try {
