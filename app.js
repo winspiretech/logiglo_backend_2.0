@@ -87,21 +87,19 @@ app.use(cors(corsOptions));
 app.use(universalSEO);
 
 // =================================================================
-// SEO-OPTIMIZED ROUTES - Fetch from frontend and inject meta tags
-// ✅ Removed /landing/ prefix — routes are now /event/:id and /blog/:id
+// =================================================================
+// SEO-OPTIMIZED ROUTES
 // =================================================================
 app.get(/^\/(event|blog)\/[a-zA-Z0-9-]+$/, async (req, res) => {
   try {
     const http = require('http');
 
-    // Fetch HTML from frontend container (port 3001)
     const options = {
       hostname: 'localhost',
       port: 3001,
       path: req.path,
       method: 'GET',
       headers: {
-        // Use a neutral UA so the SPA server always returns index.html
         'User-Agent': 'Mozilla/5.0 (compatible; LogigloSEOBot/1.0)',
         Accept: 'text/html',
       },
@@ -116,14 +114,16 @@ app.get(/^\/(event|blog)\/[a-zA-Z0-9-]+$/, async (req, res) => {
 
       response.on('end', () => {
         if (req.seoMetaTags) {
-          // Inject at TOP of <head> so dynamic tags take priority
-          // over the static default OG tags baked into index.html.
-          // Facebook/LinkedIn always use the FIRST occurrence of each tag.
-          html = html.replace('<head>', `<head>\n${req.seoMetaTags}`);
+          // ✅ FIX: Strip ALL static og:/twitter: tags and <title> from index.html
+          // BEFORE injecting dynamic ones — guarantees crawlers only see one set
+          html = html
+            .replace(/<title>[^<]*<\/title>/i, '')
+            .replace(/<meta[^>]+property=["']og:[^"']*["'][^>]*\/?>/gi, '')
+            .replace(/<meta[^>]+name=["']twitter:[^"']*["'][^>]*\/?>/gi, '')
+            .replace('<head>', `<head>\n${req.seoMetaTags}`);
         }
 
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        // Tell crawlers not to cache this response
         res.setHeader('Cache-Control', 'no-store');
         res.send(html);
       });
@@ -134,7 +134,6 @@ app.get(/^\/(event|blog)\/[a-zA-Z0-9-]+$/, async (req, res) => {
       res.status(500).send('Server error');
     });
 
-    // 5 second timeout — don't hang crawler requests
     request.setTimeout(5000, () => {
       request.destroy();
       res.status(504).send('Gateway timeout');
