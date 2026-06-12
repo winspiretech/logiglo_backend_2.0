@@ -11,23 +11,16 @@ const escapeHtml = (text) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;') || '';
 
-// Force absolute HTTPS for both logiglo.com and tester.logiglo.com image URLs
-// Facebook/LinkedIn reject http:// and relative image URLs
-const absoluteImage = (url) => {
-  if (!url) return 'https://logiglo.com/og-banner.jpg'; // fallback 1200×630
-
-  // Already a valid https URL (covers both logiglo.com and tester.logiglo.com)
+// ✅ FIX: accept host so tester.logiglo.com images resolve correctly
+const absoluteImage = (url, host = 'logiglo.com') => {
+  if (!url) return 'https://logiglo.com/og-banner.jpg';
   if (url.startsWith('https://')) return url;
-
-  // Upgrade http:// to https:// for both domains
   if (url.startsWith('http://')) return url.replace('http://', 'https://');
-
-  // Relative path — attach main domain
-  if (url.startsWith('/')) return `https://logiglo.com${url}`;
-
+  if (url.startsWith('/')) return `https://${host}${url}`;
   return url;
 };
 
+// ✅ FIX: accept host and pass it down to absoluteImage
 const generateMetaTags = ({
   title,
   description,
@@ -36,6 +29,7 @@ const generateMetaTags = ({
   type = 'article',
   publishedTime,
   author,
+  host = 'logiglo.com',
 }) =>
   `
   <title>${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}</title>
@@ -46,13 +40,13 @@ const generateMetaTags = ({
   <meta property="og:site_name" content="Logiglo" />
   <meta property="og:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
   <meta property="og:description" content="${escapeHtml(description || '')}" />
-  <meta property="og:image" content="${absoluteImage(image)}" />
+  <meta property="og:image" content="${absoluteImage(image, host)}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
   <meta name="twitter:description" content="${escapeHtml(description || '')}" />
-  <meta name="twitter:image" content="${absoluteImage(image)}" />
+  <meta name="twitter:image" content="${absoluteImage(image, host)}" />
   ${type === 'article' && publishedTime ? `<meta property="article:published_time" content="${publishedTime}" />` : ''}
   ${type === 'article' && author ? `<meta property="article:author" content="${escapeHtml(author)}" />` : ''}
   <link rel="canonical" href="${url}" />
@@ -62,7 +56,6 @@ const universalSEO = async (req, res, next) => {
   const path = req.path;
   const host = req.get('host') || 'logiglo.com';
 
-  // ✅ /blog/:id  — no /landing/ prefix
   const blogMatch = path.match(/^\/blog\/([a-zA-Z0-9-]+)$/);
   if (blogMatch) {
     const id = blogMatch[1];
@@ -81,6 +74,7 @@ const universalSEO = async (req, res, next) => {
           url: `https://${host}${path}`,
           publishedTime: blog.createdAt?.toISOString(),
           author: blog.author?.name || 'Logiglo',
+          host, // ✅ FIX: pass host
         });
       }
     } catch (error) {
@@ -88,7 +82,6 @@ const universalSEO = async (req, res, next) => {
     }
   }
 
-  // ✅ /event/:id  — no /landing/ prefix
   const eventMatch = path.match(/^\/event\/([a-zA-Z0-9-]+)$/);
   if (eventMatch) {
     const id = eventMatch[1];
@@ -105,6 +98,7 @@ const universalSEO = async (req, res, next) => {
           image: event.coverImages?.[0],
           url: `https://${host}${path}`,
           publishedTime: event.createdAt?.toISOString(),
+          host, // ✅ FIX: pass host
         });
       }
     } catch (error) {
