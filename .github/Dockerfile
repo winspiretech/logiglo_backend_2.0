@@ -77,14 +77,28 @@ FROM node:20-slim AS sharp-builder
 
 WORKDIR /logiglo_backend_2.0
 
-# node-gyp needs python3/build-essential/pkg-config to compile; libglib2.0-dev
-# is needed because sharp's common.cc includes vips8, which pulls in
-# glib-object.h
+# node-gyp needs python3/build-essential/pkg-config to compile. vips-cpp.pc's
+# Requires: field lists every codec libvips was built with (expat, jpeg, png,
+# webp, tiff, rsvg/cairo, lcms2, exif, orc) - pkg-config resolves that whole
+# chain as one unit, so if any of them is missing it refuses to emit
+# --cflags for vips-cpp at all, not even glib's, which otherwise looks like a
+# missing-glib error. All of them need to be installed here too, matching
+# libvips-builder.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     build-essential \
     pkg-config \
     libglib2.0-dev \
+    libexpat1-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libwebp-dev \
+    libtiff-dev \
+    liblcms2-dev \
+    libexif-dev \
+    libcgif-dev \
+    librsvg2-dev \
+    liborc-0.4-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=libvips-builder /usr/local /usr/local
