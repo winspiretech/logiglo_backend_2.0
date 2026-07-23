@@ -107,6 +107,15 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 COPY --from=deps /logiglo_backend_2.0 /logiglo_backend_2.0
 
+# The `deps` stage's `npm ci` already satisfied sharp via its prebuilt
+# @img/sharp-linux-x64 binary (built for the x86-64-v2 microarchitecture).
+# Removing only that vendor package isn't enough to force a rebuild: npm
+# sees sharp's own folder is still present/unchanged and skips re-running
+# its install script below, so the v2-only prebuilt effectively survives.
+# Deleting sharp's own folder too makes npm treat it as genuinely missing,
+# forcing a real reinstall + compile from source.
+RUN rm -rf node_modules/sharp node_modules/@img/sharp-linux-x64 node_modules/@img/sharp-libvips-linux-x64
+
 # node-gyp and sharp must be installed in the same command: a node-gyp
 # installed by an earlier, separate `npm install` gets pruned as extraneous
 # (it's not recorded in package-lock.json) before a later install's
