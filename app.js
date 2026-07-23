@@ -87,20 +87,20 @@ app.use(cors(corsOptions));
 app.use(universalSEO);
 
 // =================================================================
-// SEO-OPTIMIZED ROUTES - Fetch from frontend and inject meta tags
 // =================================================================
-app.get(/^\/(landing\/)?(blog|event)\/[a-zA-Z0-9-]+$/, async (req, res) => {
+// SEO-OPTIMIZED ROUTES
+// =================================================================
+app.get(/^\/(event|blog)\/[a-zA-Z0-9-]+$/, async (req, res) => {
   try {
     const http = require('http');
 
-    // Fetch HTML from frontend container (port 3001)
     const options = {
       hostname: 'localhost',
       port: 3001,
       path: req.path,
       method: 'GET',
       headers: {
-        'User-Agent': req.get('User-Agent'),
+        'User-Agent': 'Mozilla/5.0 (compatible; LogigloSEOBot/1.0)',
         Accept: 'text/html',
       },
     };
@@ -113,22 +113,35 @@ app.get(/^\/(landing\/)?(blog|event)\/[a-zA-Z0-9-]+$/, async (req, res) => {
       });
 
       response.on('end', () => {
-        // Inject SEO meta tags if available
         if (req.seoMetaTags) {
-          html = html.replace('</head>', `${req.seoMetaTags}\n  </head>`);
+          // ✅ FIX: Strip ALL static og:/twitter: tags and <title> from index.html
+          // BEFORE injecting dynamic ones — guarantees crawlers only see one set
+          html = html
+            .replace(/<title>[^<]*<\/title>/i, '')
+            .replace(/<meta[^>]+property=["']og:[^"']*["'][^>]*\/?>/gi, '')
+            .replace(/<meta[^>]+name=["']twitter:[^"']*["'][^>]*\/?>/gi, '')
+            .replace('<head>', `<head>\n${req.seoMetaTags}`);
         }
+
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-store');
         res.send(html);
       });
     });
 
     request.on('error', (error) => {
-      console.error('Error fetching from frontend:', error);
+      console.error('[SEO Route] Error fetching from frontend:', error.message);
       res.status(500).send('Server error');
+    });
+
+    request.setTimeout(5000, () => {
+      request.destroy();
+      res.status(504).send('Gateway timeout');
     });
 
     request.end();
   } catch (error) {
-    console.error('SEO route error:', error);
+    console.error('[SEO Route] Unexpected error:', error.message);
     res.status(500).send('Server error');
   }
 });

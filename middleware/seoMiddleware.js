@@ -11,6 +11,16 @@ const escapeHtml = (text) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;') || '';
 
+// ✅ FIX: accept host so tester.logiglo.com images resolve correctly
+const absoluteImage = (url, host = 'logiglo.com') => {
+  if (!url) return 'https://logiglo.com/og-banner.jpg';
+  if (url.startsWith('https://')) return url;
+  if (url.startsWith('http://')) return url.replace('http://', 'https://');
+  if (url.startsWith('/')) return `https://${host}${url}`;
+  return url;
+};
+
+// ✅ FIX: accept host and pass it down to absoluteImage
 const generateMetaTags = ({
   title,
   description,
@@ -19,6 +29,7 @@ const generateMetaTags = ({
   type = 'article',
   publishedTime,
   author,
+  host = 'logiglo.com',
 }) =>
   `
   <title>${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}</title>
@@ -26,22 +37,26 @@ const generateMetaTags = ({
   <meta name="robots" content="index, follow" />
   <meta property="og:type" content="${type}" />
   <meta property="og:url" content="${url}" />
+  <meta property="og:site_name" content="Logiglo" />
   <meta property="og:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
   <meta property="og:description" content="${escapeHtml(description || '')}" />
-  ${image ? `<meta property="og:image" content="${escapeHtml(image)}" />` : ''}
+  <meta property="og:image" content="${absoluteImage(image, host)}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${escapeHtml(title ? `${title} | Logiglo` : 'Logiglo')}" />
+  <meta name="twitter:description" content="${escapeHtml(description || '')}" />
+  <meta name="twitter:image" content="${absoluteImage(image, host)}" />
   ${type === 'article' && publishedTime ? `<meta property="article:published_time" content="${publishedTime}" />` : ''}
   ${type === 'article' && author ? `<meta property="article:author" content="${escapeHtml(author)}" />` : ''}
   <link rel="canonical" href="${url}" />
 `.trim();
 
-// Universal SEO middleware
 const universalSEO = async (req, res, next) => {
   const path = req.path;
   const host = req.get('host') || 'logiglo.com';
 
-  // Blog: /blog/:id or /landing/blog/:id
-  const blogMatch = path.match(/\/(?:landing\/)?blog\/([a-zA-Z0-9-]+)$/);
+  const blogMatch = path.match(/^\/blog\/([a-zA-Z0-9-]+)$/);
   if (blogMatch) {
     const id = blogMatch[1];
     try {
@@ -59,6 +74,7 @@ const universalSEO = async (req, res, next) => {
           url: `https://${host}${path}`,
           publishedTime: blog.createdAt?.toISOString(),
           author: blog.author?.name || 'Logiglo',
+          host, // ✅ FIX: pass host
         });
       }
     } catch (error) {
@@ -66,8 +82,7 @@ const universalSEO = async (req, res, next) => {
     }
   }
 
-  // Event: /event/:id or /landing/event/:id
-  const eventMatch = path.match(/\/(?:landing\/)?event\/([a-zA-Z0-9-]+)$/);
+  const eventMatch = path.match(/^\/event\/([a-zA-Z0-9-]+)$/);
   if (eventMatch) {
     const id = eventMatch[1];
     try {
@@ -83,6 +98,7 @@ const universalSEO = async (req, res, next) => {
           image: event.coverImages?.[0],
           url: `https://${host}${path}`,
           publishedTime: event.createdAt?.toISOString(),
+          host, // ✅ FIX: pass host
         });
       }
     } catch (error) {
