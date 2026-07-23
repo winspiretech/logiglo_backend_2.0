@@ -27,18 +27,25 @@ FROM node:20-slim
 
 WORKDIR /logiglo_backend_2.0
 
-# Install runtime dependencies
+# Install runtime dependencies plus build tools needed to compile sharp
+# from source (npm's prebuilt linux-x64 binaries require x86-64-v2 CPU
+# instructions that some hosts don't support)
 RUN apt-get update && apt-get install -y \
-    libvips42 \
+    libvips-dev \
     libpq-dev \
     ca-certificates \
+    python3 \
+    build-essential \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy everything from build stage
 COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
-# Reinstall sharp for the production environment
-RUN npm install --os=linux --cpu=x64 sharp
+# Rebuild sharp from source against the system libvips instead of using the
+# prebuilt binary, which requires a CPU microarchitecture level not supported
+# on this deployment host
+RUN npm install --build-from-source sharp
 
 # Remove dev dependencies
 RUN npm prune --production
