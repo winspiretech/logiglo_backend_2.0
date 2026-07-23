@@ -107,8 +107,10 @@ COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 # the prebuilt binary, which requires a CPU microarchitecture level not
 # supported on this deployment host. sharp's build script does a local
 # `require('node-gyp')`, so node-gyp must be installed into node_modules
-# (not globally) to be found.
-RUN npm install --no-save node-gyp && npm install --build-from-source sharp
+# (not globally) to be found - and in the same command as sharp, since a
+# separate prior install of node-gyp gets pruned as extraneous before this
+# install's reconciliation pass runs sharp's build script.
+RUN npm install --no-save --build-from-source node-gyp sharp
 
 # Remove dev dependencies
 RUN npm prune --production
