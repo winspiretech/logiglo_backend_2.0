@@ -44,8 +44,9 @@ COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
 
 # Rebuild sharp from source against the system libvips instead of using the
 # prebuilt binary, which requires a CPU microarchitecture level not supported
-# on this deployment host
-RUN npm install --build-from-source sharp
+# on this deployment host. node-gyp is needed to compile it but isn't a
+# runtime dependency, so it's installed globally rather than saved to package.json.
+RUN npm install -g node-gyp && npm install --build-from-source sharp
 
 # Remove dev dependencies
 RUN npm prune --production
