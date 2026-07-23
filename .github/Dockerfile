@@ -1,39 +1,42 @@
-# Stage 1: Build stage
-FROM node:20-slim AS build
+# syntax=docker/dockerfile:1
+
+###############################################################################
+# Stage 1: install npm dependencies and generate the Prisma client
+###############################################################################
+FROM node:20-slim AS deps
 
 WORKDIR /logiglo_backend_2.0
 
-# Install required build tools
-RUN apt-get update && apt-get install -y \
+# python3/build-essential let npm compile any native deps (e.g. bcrypt) that
+# don't ship a prebuilt binary for this platform
+RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     build-essential \
-    pkg-config \
-    libvips-dev \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy the rest of the application
 COPY . .
-
-# Generate Prisma client
 RUN npx prisma generate
 
-# Stage 2: libvips build stage
+###############################################################################
+# Stage 2: compile libvips from source
 #
-# sharp's prebuilt linux-x64 binaries (and Debian's own libvips-dev package,
-# even on trixie) are too old / require CPU instructions (x86-64-v2) that
-# this deployment host doesn't support, so libvips is compiled from source
-# here, against the host toolchain's default (baseline x86-64) target, and
-# only the resulting /usr/local is carried into the production image.
+# sharp 0.34 requires libvips >=8.17.3, but Debian only packages 8.14.1
+# (bookworm) / 8.16.1 (trixie), and sharp's own prebuilt linux-x64 binaries
+# require x86-64-v2 CPU instructions unsupported on the deployment host.
+# Compiling libvips here, with the toolchain's default (baseline x86-64)
+# target, satisfies the version requirement and stays CPU-compatible. Only
+# /usr/local is carried forward - the compilers/build tools below never
+# reach a later stage.
+###############################################################################
 FROM debian:bookworm-slim AS libvips-builder
 
 WORKDIR /vips-src
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
     xz-utils \
@@ -64,20 +67,51 @@ RUN curl -LO https://github.com/libvips/libvips/releases/download/v${VIPS_VERSIO
     && ninja -C build \
     && ninja -C build install
 
-# Stage 3: Production image
+###############################################################################
+# Stage 3: compile sharp's native addon against the self-built libvips
+#
+# Kept separate from the production stage so its compilers and -dev headers
+# never end up in the final image.
+###############################################################################
+FROM node:20-slim AS sharp-builder
+
+WORKDIR /logiglo_backend_2.0
+
+# node-gyp needs python3/build-essential/pkg-config to compile; libglib2.0-dev
+# is needed because sharp's common.cc includes vips8, which pulls in
+# glib-object.h
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    build-essential \
+    pkg-config \
+    libglib2.0-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=libvips-builder /usr/local /usr/local
+RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf && ldconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+COPY --from=deps /logiglo_backend_2.0 /logiglo_backend_2.0
+
+# node-gyp and sharp must be installed in the same command: a node-gyp
+# installed by an earlier, separate `npm install` gets pruned as extraneous
+# (it's not recorded in package-lock.json) before a later install's
+# reconciliation pass runs sharp's build script, reintroducing
+# "Please add node-gyp to your dependencies".
+RUN npm install --no-save --build-from-source node-gyp sharp \
+    && npm prune --production
+
+###############################################################################
+# Stage 4: production image
+###############################################################################
 FROM node:20-slim
 
 WORKDIR /logiglo_backend_2.0
 
-# Install libpq-dev/ca-certificates, the toolchain needed to compile sharp's
-# native addon (node-gyp needs python3/build-essential/pkg-config), and the
-# runtime libraries the self-built libvips above was linked against
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
+# Only the runtime shared libraries the self-built libvips links against -
+# no compilers or -dev headers in the final image
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
-    python3 \
-    build-essential \
-    pkg-config \
     libglib2.0-0 \
     libexpat1 \
     zlib1g \
@@ -94,32 +128,13 @@ RUN apt-get update && apt-get install -y \
     liborc-0.4-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Bring in the self-built libvips (headers + .pc file are needed to compile
-# sharp against it below; only the .so files matter at runtime)
 COPY --from=libvips-builder /usr/local /usr/local
 RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/local.conf && ldconfig
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
-# Copy everything from build stage
-COPY --from=build /logiglo_backend_2.0 /logiglo_backend_2.0
+COPY --from=sharp-builder /logiglo_backend_2.0 /logiglo_backend_2.0
 
-# Rebuild sharp from source against the self-built libvips instead of using
-# the prebuilt binary, which requires a CPU microarchitecture level not
-# supported on this deployment host. sharp's build script does a local
-# `require('node-gyp')`, so node-gyp must be installed into node_modules
-# (not globally) to be found - and in the same command as sharp, since a
-# separate prior install of node-gyp gets pruned as extraneous before this
-# install's reconciliation pass runs sharp's build script.
-RUN npm install --no-save --build-from-source node-gyp sharp
-
-# Remove dev dependencies
-RUN npm prune --production
-
-# Set environment variables
 ENV NODE_ENV=production
 
-# Expose the app port
 EXPOSE 3000
 
-# Run DB migration and start the app
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
